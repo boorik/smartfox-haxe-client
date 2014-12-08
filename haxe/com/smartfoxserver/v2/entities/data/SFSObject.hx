@@ -5,7 +5,7 @@ import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
 import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
 import com.smartfoxserver.v2.protocol.serialization.ISFSDataSerializer;
 
-import flash.utils.ByteArray<Dynamic>;
+import flash.utils.ByteArray;
 
 /**
  * The<em>SFSObject</em>class is used by SmartFoxServer in client-server data transfer.
@@ -22,8 +22,8 @@ import flash.utils.ByteArray<Dynamic>;
  */
 class SFSObject implements ISFSObject
 {
-	private var dataHolder:Dynamic
-	private var serializer:ISFSDataSerializer
+	private var dataHolder:Dynamic;
+	private var serializer:ISFSDataSerializer;
 	
 	/**
 	 * Returns a new<em>SFSObject</em>instance.
@@ -59,7 +59,7 @@ class SFSObject implements ISFSObject
 	 */
 	public static function newFromBinaryData(ba:ByteArray):SFSObject
 	{
-		return DefaultSFSDataSerializer.getInstance().binary2object(ba)as SFSObject
+		return cast DefaultSFSDataSerializer.getInstance().binary2object(ba);
 	}
 	
 	/**
@@ -73,7 +73,7 @@ class SFSObject implements ISFSObject
 	 */
 	public static function newInstance():SFSObject
 	{
-		return new SFSObject()
+		return new SFSObject();
 	}
 	
 	/**
@@ -84,70 +84,70 @@ class SFSObject implements ISFSObject
 	 */
 	public function new()
 	{
-		dataHolder={}
-		serializer=DefaultSFSDataSerializer.getInstance()
+		dataHolder = { };
+		serializer = DefaultSFSDataSerializer.getInstance();
 	}
 
 	/** @inheritDoc */
 	public function isNull(key:String):Bool
 	{
-		var wrapper:SFSDataWrapper=dataHolder[key]
+		var wrapper:SFSDataWrapper = dataHolder[key];
 		
 		if(wrapper==null)
-			return true
+			return true;
 			
-		return wrapper.data==null
+		return wrapper.data == null;
 	}
 	
 	/** @inheritDoc */
 	public function containsKey(key:String):Bool
 	{
-		var found:Bool=false
+		var found:Bool = false;
 		
 		for(j in dataHolder)
 		{
 			if(j==key)
 			{
-				found=true
-				break
+				found = true;
+				break;
 			}
 		}
 		
-		return found
+		return found;
 	}
 	
 	/** @inheritDoc */
 	public function removeElement(key:String):Void
 	{
-		delete dataHolder[key]
+		dataHolder[key]=null;
 	}
 	
 	/** @inheritDoc */
 	public function getKeys():Array
 	{
-		var keyList:Array<Dynamic>=[]
+		var keyList:Array<Dynamic> = [];
 		
 		for(j in dataHolder)
-			keyList.push(j)
+			keyList.push(j);
 			
-		return keyList	
+		return keyList	;
 	}
 	
 	/** @inheritDoc */
 	public function size():Int
 	{
-		var count:Int=0
+		var count:Int = 0;
 		
 		for(j in dataHolder)
-			count++
+			count++;
 		
-		return count
+		return count;
 	}
 	
 	/** @inheritDoc */
 	public function toBinary():ByteArray
 	{
-		return serializer.object2binary(this)
+		return serializer.object2binary(this);
 	}
 	
 	/** 
@@ -160,76 +160,76 @@ class SFSObject implements ISFSObject
 	 */ 
 	public function toObject():Dynamic
 	{
-		return DefaultSFSDataSerializer.getInstance().sfsObjectToGenericObject(this)
+		return DefaultSFSDataSerializer.getInstance().sfsObjectToGenericObject(this);
 	}
 	
 	/** @inheritDoc */
 	public function getDump(format:Bool=true):String
 	{
 		if(!format)
-			return dump()
+			return dump();
 		else 
 		{
-			var prettyDump:String
+			var prettyDump:String;
 			
 			try
 			{
-				prettyDump=DefaultObjectDumpFormatter.prettyPrintDump(dump())
+				prettyDump = DefaultObjectDumpFormatter.prettyPrintDump(dump());
 			}
 			catch(err:Dynamic)
 			{
-				prettyDump="Unable to provide a dump of this object"
+				prettyDump = "Unable to provide a dump of this object";
 			}
 			
-			return prettyDump
+			return prettyDump;
 		}
 	}
 	
 	private function dump():String
 	{
-		var strDump:String=DefaultObjectDumpFormatter.TOKEN_INDENT_OPEN
-		var wrapper:SFSDataWrapper
-		var type:Int
+		var strDump:String = DefaultObjectDumpFormatter.TOKEN_INDENT_OPEN;
+		var wrapper:SFSDataWrapper;
+		var type:Int;
 		
 		for(key in dataHolder)
 		{
-			wrapper=getData(key)
-			type=wrapper.type
+			wrapper = getData(key);
+			type = wrapper.type;
 			
-			strDump +="(" + SFSDataType.fromId(wrapper.type).toLowerCase()+ ")"
-			strDump +=" " + key + ":" 
+			strDump += "(" + SFSDataType.fromId(wrapper.type).toLowerCase() + ")";
+			strDump += " " + key + ":" ;
 			
 			if(type==SFSDataType.SFS_OBJECT)
-				strDump +=(wrapper.data as SFSObject).getDump(false)
+				strDump += (wrapper.data as SFSObject).getDump(false);
 			
 			else if(type==SFSDataType.SFS_ARRAY)
-				strDump +=(wrapper.data as SFSArray).getDump(false)
+				strDump += (wrapper.data as SFSArray).getDump(false);
 					
 			else if(type==SFSDataType.BYTE_ARRAY)
-				strDump +=DefaultObjectDumpFormatter.prettyPrintByteArray((wrapper.data)as ByteArray)
+				strDump += DefaultObjectDumpFormatter.prettyPrintByteArray((wrapper.data) as ByteArray);
 				
 			else if(type>SFSDataType.UTF_STRING && type<SFSDataType.CLASS)
-				strDump +="[" + wrapper.data + "]"
+				strDump += "[" + wrapper.data + "]";
 				
 			else 
-				strDump +=wrapper.data
+				strDump += wrapper.data;
 			
-			strDump +=DefaultObjectDumpFormatter.TOKEN_DIVIDER
+			strDump += DefaultObjectDumpFormatter.TOKEN_DIVIDER;
 		}
 		
 		// We do this only if the object is not empty
 		if(size()>0)
-			strDump=strDump.slice(0, strDump.length - 1)
+			strDump = strDump.slice(0, strDump.length - 1);
 		
-		strDump +=DefaultObjectDumpFormatter.TOKEN_INDENT_CLOSE
+		strDump += DefaultObjectDumpFormatter.TOKEN_INDENT_CLOSE;
 		
-		return strDump
+		return strDump;
 	}
 	
 	/** @inheritDoc */
 	public function getHexDump():String
 	{
-		return DefaultObjectDumpFormatter.hexDump(this.toBinary())
+		return DefaultObjectDumpFormatter.hexDump(this.toBinary());
 	}
 			
 	/*
@@ -242,7 +242,7 @@ class SFSObject implements ISFSObject
 	/** @private */
 	public function getData(key:String):SFSDataWrapper
 	{
-		return dataHolder[key]
+		return dataHolder[key];
 	}
 	
 	// Primitives
@@ -250,159 +250,159 @@ class SFSObject implements ISFSObject
 	/** @inheritDoc */
 	public function getBool(key:String):Bool
 	{
-		var wrapper:SFSDataWrapper=dataHolder[key] as SFSDataWrapper
+		var wrapper:SFSDataWrapper = cast dataHolder[key];
 		
 		if(wrapper !=null)
-			return(wrapper.data as Bool)
+			return cast wrapper.data;
 		else 
-			return undefined // false
+			return false; // false
 	}
 	
 	/** @inheritDoc */
 	public function getByte(key:String):Int
 	{
-		return getInt(key)
+		return getInt(key);
 	}
 	
 	/** @inheritDoc */
 	public function getUnsignedByte(key:String):Int
 	{
-		return getInt(key)& 0x000000FF
+		return getInt(key) & 0x000000FF;
 	}
 	
 	/** @inheritDoc */
 	public function getShort(key:String):Int
 	{
-		return getInt(key)
+		return getInt(key);
 	}
 	
 	/** @inheritDoc */
 	public function getInt(key:String):Int
 	{
-		var wrapper:SFSDataWrapper=dataHolder[key] as SFSDataWrapper
+		var wrapper:SFSDataWrapper = cast dataHolder[key];
 		
 		if(wrapper !=null)
-			return(wrapper.data as Int)
+			return cast wrapper.data;
 		else 
-			return undefined //==0
+			return 0; //==0
 	}
 	
 	/** @inheritDoc */
 	public function getLong(key:String):Float
 	{
-		return getDouble(key)
+		return getDouble(key);
 	}
 	
 	/** @inheritDoc */
 	public function getFloat(key:String):Float
 	{
-		return getDouble(key)
+		return getDouble(key);
 	}
 	
 	/** @inheritDoc */
 	public function getDouble(key:String):Float
 	{
-		var wrapper:SFSDataWrapper=dataHolder[key] as SFSDataWrapper
+		var wrapper:SFSDataWrapper = cast dataHolder[key];
 		
 		if(wrapper !=null)
-			return(wrapper.data as Float)
+			return cast wrapper.data;
 		else 
-			return undefined //==NaN
+			return null; //==NaN
 	}
 	
 	/** @inheritDoc */
 	public function getUtfString(key:String):String
 	{
-		var wrapper:SFSDataWrapper=dataHolder[key] as SFSDataWrapper
+		var wrapper:SFSDataWrapper = cast dataHolder[key];
 		
 		if(wrapper !=null)
-			return(wrapper.data as String)
+			return cast wrapper.data;
 		else 
-			return null
+			return null;
 	}
 	
 	// Arrays
 	
 	private function getArray(key:String):Array
 	{
-		var wrapper:SFSDataWrapper=dataHolder[key] as SFSDataWrapper
+		var wrapper:SFSDataWrapper = cast dataHolder[key];
 		
 		if(wrapper !=null)
-			return(wrapper.data as Array)
+			return cast wrapper.data;
 		else 
-			return null
+			return null;
 	}
 	
 	/** @inheritDoc */
 	public function getBoolArray(key:String):Array
 	{
-		return getArray(key)	
+		return getArray(key);
 	}
 	
 	/** @inheritDoc */
 	public function getByteArray(key:String):ByteArray
 	{
-		var wrapper:SFSDataWrapper=dataHolder[key] as SFSDataWrapper
+		var wrapper:SFSDataWrapper = cast dataHolder[key];
 		
 		if(wrapper !=null)
-			return(wrapper.data as ByteArray)
+			return cast wrapper.data;
 		else 
-			return null
+			return null;
 	}
 	
 	/** @inheritDoc */
 	public function getUnsignedByteArray(key:String):Array
 	{
-		var ba:ByteArray<Dynamic>=getByteArray(key)
+		var ba:ByteArray<Dynamic> = getByteArray(key);
 		
 		if(ba==null)
-			return null
+			return null;
 		
 		ba.position=0
-		var unsignedBytes:Array<Dynamic>=[]
+		var unsignedBytes:Array<Dynamic> = [];
 		
 		for(i in 0...ba.length)
 		{
-			unsignedBytes.push(ba.readByte()& 0x000000FF)
+			unsignedBytes.push(ba.readByte() & 0x000000FF);
 		}
 		
-		return unsignedBytes
+		return unsignedBytes;
 	}
 	
 	/** @inheritDoc */
 	public function getShortArray(key:String):Array
 	{
-		return getArray(key)	
+		return getArray(key);
 	}
 	
 	/** @inheritDoc */
 	public function getIntArray(key:String):Array
 	{
-		return getArray(key)	
+		return getArray(key);	
 	}
 	
 	/** @inheritDoc */
 	public function getLongArray(key:String):Array
 	{
-		return getArray(key)	
+		return getArray(key);	
 	}
 	
 	/** @inheritDoc */
 	public function getFloatArray(key:String):Array
 	{
-		return getArray(key)
+		return getArray(key);
 	}
 	
 	/** @inheritDoc */
 	public function getDoubleArray(key:String):Array
 	{
-		return getArray(key)
+		return getArray(key);
 	}
 	
 	/** @inheritDoc */
 	public function getUtfStringArray(key:String):Array
 	{
-		return getArray(key)
+		return getArray(key);
 	}
 	
 	// Nested objects
@@ -410,23 +410,23 @@ class SFSObject implements ISFSObject
 	/** @inheritDoc */
 	public function getSFSArray(key:String):ISFSArray
 	{
-		var wrapper:SFSDataWrapper=dataHolder[key] as SFSDataWrapper
+		var wrapper:SFSDataWrapper = cast dataHolder[key];
 		
-		if(wrapper !=null)
-			return(wrapper.data as ISFSArray)
+		if (wrapper != null)
+			return cast wrapper.data;
 		else 
-			return null
+			return null;
 	}
 	
 	/** @inheritDoc */
 	public function getSFSObject(key:String):ISFSObject
 	{
-		var wrapper:SFSDataWrapper=dataHolder[key] as SFSDataWrapper
+		var wrapper:SFSDataWrapper = cast dataHolder[key];
 		
 		if(wrapper !=null)
-			return(wrapper.data as ISFSObject)
+			return cast wrapper.data;
 		else 
-			return null
+			return null;
 	}
 	
 	/**
@@ -436,12 +436,12 @@ class SFSObject implements ISFSObject
 	 */
 	public function getClass(key:String):Dynamic
 	{
-		var wrapper:SFSDataWrapper=dataHolder[key] as SFSDataWrapper
+		var wrapper:SFSDataWrapper = cast dataHolder[key];
 		
 		if(wrapper !=null)
-			return wrapper.data
+			return wrapper.data;
 		else 
-			return null
+			return null;
 	}
 	
 	/*
@@ -455,55 +455,55 @@ class SFSObject implements ISFSObject
 	/** @private */
 	public function putNull(key:String):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.NULL, null)
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.NULL, null);
 	}
 	
 	/** @inheritDoc */
 	public function putBool(key:String, value:Bool):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.BOOL, value)	
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.BOOL, value);
 	}
 	
 	/** @inheritDoc */
 	public function putByte(key:String, value:Int):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.BYTE, value)	
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.BYTE, value);
 	}
 	
 	/** @inheritDoc */
 	public function putShort(key:String, value:Int):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.SHORT, value)
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.SHORT, value);
 	}
 	
 	/** @inheritDoc */
 	public function putInt(key:String, value:Int):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.INT, value)
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.INT, value);
 	}
 	
 	/** @inheritDoc */
 	public function putLong(key:String, value:Float):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.LONG, value)
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.LONG, value);
 	}
 	
 	/** @inheritDoc */
 	public function putFloat(key:String, value:Float):Void
 	{	
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.FLOAT, value)
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.FLOAT, value);
 	}
 	
 	/** @inheritDoc */
 	public function putDouble(key:String, value:Float):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.DOUBLE, value)
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.DOUBLE, value);
 	}
 	
 	/** @inheritDoc */
 	public function putUtfString(key:String, value:String):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.UTF_STRING, value)
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.UTF_STRING, value);
 	}
 	
 	// Arrays
@@ -511,49 +511,49 @@ class SFSObject implements ISFSObject
 	/** @inheritDoc */
 	public function putBoolArray(key:String, value:Array):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.BOOL_ARRAY, value)	
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.BOOL_ARRAY, value);	
 	}
 	
 	/** @inheritDoc */
 	public function putByteArray(key:String, value:ByteArray):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.BYTE_ARRAY, value)
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.BYTE_ARRAY, value);
 	}
 	
 	/** @inheritDoc */
 	public function putShortArray(key:String, value:Array):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.SHORT_ARRAY, value)	
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.SHORT_ARRAY, value);	
 	}
 	
 	/** @inheritDoc */
 	public function putIntArray(key:String, value:Array):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.INT_ARRAY, value)	
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.INT_ARRAY, value);	
 	}
 	
 	/** @inheritDoc */
 	public function putLongArray(key:String, value:Array):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.LONG_ARRAY, value)	
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.LONG_ARRAY, value);	
 	}
 	
 	/** @inheritDoc */
 	public function putFloatArray(key:String, value:Array):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.FLOAT_ARRAY, value)	
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.FLOAT_ARRAY, value);	
 	}
 	
 	/** @inheritDoc */
 	public function putDoubleArray(key:String, value:Array):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.DOUBLE_ARRAY, value)
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.DOUBLE_ARRAY, value);
 	}
 	
 	/** @inheritDoc */
 	public function putUtfStringArray(key:String, value:Array):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.UTF_STRING_ARRAY, value)
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.UTF_STRING_ARRAY, value);
 	}
 	
 	// Nested objects
@@ -561,19 +561,19 @@ class SFSObject implements ISFSObject
 	/** @inheritDoc */
 	public function putSFSArray(key:String, value:ISFSArray):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.SFS_ARRAY, value)
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.SFS_ARRAY, value);
 	}
 	
 	/** @inheritDoc */
 	public function putSFSObject(key:String, value:ISFSObject):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.SFS_OBJECT, value)
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.SFS_OBJECT, value);
 	}
 	
 	/** @inheritDoc */
 	public function putClass(key:String, value:Dynamic):Void
 	{
-		dataHolder[key]=new SFSDataWrapper(SFSDataType.CLASS, value)
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.CLASS, value);
 	}
 	
 	// Generic putter
@@ -581,6 +581,6 @@ class SFSObject implements ISFSObject
 	/** @private */
 	public function put(key:String, value:SFSDataWrapper):Void
 	{
-		dataHolder[key]=value			
+		dataHolder[key] = value;			
 	}
 }

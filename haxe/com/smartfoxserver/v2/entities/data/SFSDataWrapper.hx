@@ -7,24 +7,24 @@ package com.smartfoxserver.v2.entities.data;
  */
 class SFSDataWrapper
 {
-	private var _type:Int
-	private var _data:Dynamic
+	private var _type:Int;
+	private var _data:Dynamic;
 	
 	public function new(type:Int, data:Dynamic)
 	{
-		this._type=type
-		this._data=data
+		this._type = type;
+		this._data = data;
 	}
 	
 	public var type(get_type, null):Int;
  	private function get_type():Int
 	{
-		return _type
+		return _type;
 	} 
 	
 	public var data(get_data, null):Dynamic;
  	private function get_data():Dynamic
 	{
-		return _data
+		return _data;
 	}
 }

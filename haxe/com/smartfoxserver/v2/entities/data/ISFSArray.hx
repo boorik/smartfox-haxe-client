@@ -22,7 +22,7 @@ interface ISFSArray
 	 * 
 	 * @return	<code>true</code>if the specified object is present.
 	 */
-	function contains(obj:Dynamic):Bool
+	function contains(obj:Dynamic):Bool;
 	
 	/** Returns the element at the specified index */
 	/**
@@ -32,10 +32,10 @@ interface ISFSArray
 	 * 
 	 * @return	The element at the specified index in this array.
 	 */
-	function getElementAt(index:Int):Dynamic
+	function getElementAt(index:Int):Dynamic;
 	
 	/** @private */
-	function getWrappedElementAt(index:Int):SFSDataWrapper
+	function getWrappedElementAt(index:Int):SFSDataWrapper;
 	
 	/**
 	 * Removes the element at the specified position in this array.
@@ -44,21 +44,21 @@ interface ISFSArray
 	 * 
 	 * @return	The element that was removed.
 	 */
-	function removeElementAt(index:Int):Dynamic
+	function removeElementAt(index:Int):Dynamic;
 	
 	/**
 	 * Indicates the number of elements in this array.
 	 * 
 	 * @return	The number of elements in this array.
 	 */
-	function size():Int
+	function size():Int;
 	
 	/**
 	 * Provides the binary form of this array.
 	 * 
 	 * @return	The binary data representing this array.
 	 */
-	function toBinary():ByteArray
+	function toBinary():ByteArray;
 	
 	/** 
 	 * Provides a formatted string representing this array.
@@ -68,7 +68,7 @@ interface ISFSArray
 	 * 
 	 * @return	The string representation of this array.
 	 */ 
-	function getDump(format:Bool=true):String
+	function getDump(format:Bool = true):String;
 	
 	/** 
 	 * Provides a detailed hexadecimal representation of this array.
@@ -76,7 +76,7 @@ interface ISFSArray
 	 * 
 	 * @return	The hexadecimal string representation of this array.
 	 */ 
-	function getHexDump():String
+	function getHexDump():String;
 	
 	/*
 	*:::::::::::::::::::::::::::::::::::::::::
@@ -87,14 +87,14 @@ interface ISFSArray
 	/**
 	 * Appends a<code>null</code>value to the end of this array.
 	 */
-	function addNull():Void
+	function addNull():Void;
 	
 	/**
 	 * Appends a boolean value to the end of this array.
 	 * 
 	 * @param	value	The value to be appended to this array.
 	 */
-	function addBool(value:Bool):Void
+	function addBool(value:Bool):Void;
 	
 	/**
 	 * Appends a byte(8 bit)value to the end of this array.
@@ -103,7 +103,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#BYTE
 	 */
-	function addByte(value:Int):Void
+	function addByte(value:Int):Void;
 	
 	/**
 	 * Appends a short Integer(16 bit)value to the end of this array.
@@ -112,14 +112,14 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#SHORT
 	 */
-	function addShort(value:Int):Void
+	function addShort(value:Int):Void;
 	
 	/**
 	 * Appends an Integer(32 bit)value to the end of this array.
 	 * 
 	 * @param	value	The value to be appended to this array.
 	 */
-	function addInt(value:Int):Void
+	function addInt(value:Int):Void;
 	
 	/**
 	 * Appends a long Integer(64 bit)value to the end of this array.
@@ -128,7 +128,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#LONG
 	 */
-	function addLong(value:Float):Void
+	function addLong(value:Float):Void;
 	
 	/**
 	 * Appends a floating point number(32 bit)value to the end of this array.
@@ -137,7 +137,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#FLOAT
 	 */
-	function addFloat(value:Float):Void
+	function addFloat(value:Float):Void;
 	
 	/**
 	 * Appends a double precision number(64 bit)value to the end of this array.
@@ -146,21 +146,21 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#DOUBLE
 	 */
-	function addDouble(value:Float):Void
+	function addDouble(value:Float):Void;
 	
 	/**
 	 * Appends a UTF-8 string value to the end of this array.
 	 * 
 	 * @param	value	The value to be appended to this array.
 	 */
-	function addUtfString(value:String):Void
+	function addUtfString(value:String):Void;
 	
 	/**
 	 * Appends an array of boolean values to the end of this array.
 	 * 
 	 * @param	value	The array of<em>Boolean</em>values to be appended to this array.
 	 */
-	function addBoolArray(value:Array):Void
+	function addBoolArray(value:Array):Void;
 	
 	/**
 	 * Appends an array of bytes to the end of this array.
@@ -169,7 +169,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#BYTE
 	 */
-	function addByteArray(value:ByteArray):Void
+	function addByteArray(value:ByteArray):Void;
 	
 	/**
 	 * Appends an array of short Integer values to the end of this array.
@@ -178,14 +178,14 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#SHORT
 	 */
-	function addShortArray(value:Array):Void
+	function addShortArray(value:Array):Void;
 	
 	/**
 	 * Appends an array of Integer values to the end of this array.
 	 * 
 	 * @param	value	The array of<em>int</em>values to be appended to this array.
 	 */
-	function addIntArray(value:Array):Void
+	function addIntArray(value:Array):Void;
 	
 	/**
 	 * Appends an array of long Integer values to the end of this array.
@@ -194,7 +194,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#LONG
 	 */
-	function addLongArray(value:Array):Void
+	function addLongArray(value:Array):Void;
 	
 	/**
 	 * Appends an array of floating point number values to the end of this array.
@@ -203,7 +203,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#FLOAT
 	 */
-	function addFloatArray(value:Array):Void
+	function addFloatArray(value:Array):Void;
 	
 	/**
 	 * Appends an array of double precision number values to the end of this array.
@@ -212,28 +212,28 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#DOUBLE
 	 */
-	function addDoubleArray(value:Array):Void
+	function addDoubleArray(value:Array):Void;
 	
 	/**
 	 * Appends an array of UTF-8 string values to the end of this array.
 	 * 
 	 * @param	value	The array of<em>String</em>values to be appended to this array.
 	 */
-	function addUtfStringArray(value:Array):Void
+	function addUtfStringArray(value:Array):Void;
 	
 	/**
 	 * Appends a<em>ISFSArray</em>object to the end of this array.
 	 * 
 	 * @param	value	The object implementing the<em>ISFSArray</em>interface to be appended to this array.
 	 */
-	function addSFSArray(value:ISFSArray):Void
+	function addSFSArray(value:ISFSArray):Void;
 	
 	/**
 	 * Appends a<em>ISFSObject</em>object to the end of this array.
 	 * 
 	 * @param	value	The object implementing the<em>ISFSObject</em>interface to be appended to this array.
 	 */
-	function addSFSObject(value:ISFSObject):Void
+	function addSFSObject(value:ISFSObject):Void;
 	
 	/**
 	 * Appends the passed custom class instance to the end of this array.
@@ -243,10 +243,10 @@ interface ISFSArray
 	 * 
 	 * @see #getClass()
 	 */
-	function addClass(value:Dynamic):Void
+	function addClass(value:Dynamic):Void;
 	
 	/** @private */
-	function add(wrappedObject:SFSDataWrapper):Void
+	function add(wrappedObject:SFSDataWrapper):Void;
 	
 	/*
 	*:::::::::::::::::::::::::::::::::::::::::
@@ -261,7 +261,7 @@ interface ISFSArray
 	 * 
 	 * @return<code>true</code>if the element of this array at the specified position is<code>null</code>.
 	 */
-	function isNull(index:Int):Bool
+	function isNull(index:Int):Bool;
 	
 	/**
 	 * Returns the element at the specified position as a boolean.
@@ -270,7 +270,7 @@ interface ISFSArray
 	 * 
 	 * @return	The element of this array at the specified index.
 	 */
-	function getBool(index:Int):Bool
+	function getBool(index:Int):Bool;
 	
 	/**
 	 * Returns the element at the specified position as a signed byte(8 bit).
@@ -281,7 +281,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#BYTE
 	 */
-	function getByte(index:Int):Int
+	function getByte(index:Int):Int;
 	
 	/**
 	 * Returns the element at the specified position as an unsigned byte(8 bit).
@@ -292,7 +292,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#BYTE
 	 */
-	function getUnsignedByte(index:Int):Int
+	function getUnsignedByte(index:Int):Int;
 	
 	/**
 	 * Returns the element at the specified position as a short Integer(16 bit).
@@ -303,7 +303,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#SHORT
 	 */
-	function getShort(index:Int):Int
+	function getShort(index:Int):Int;
 	
 	/**
 	 * Returns the element at the specified position as an Integer(32 bit).
@@ -312,7 +312,7 @@ interface ISFSArray
 	 * 
 	 * @return	The element of this array at the specified index.
 	 */
-	function getInt(index:Int):Int
+	function getInt(index:Int):Int;
 	
 	/**
 	 * Returns the element at the specified position as a long Integer(64 bit).
@@ -323,7 +323,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#LONG
 	 */
-	function getLong(index:Int):Float
+	function getLong(index:Int):Float;
 	
 	/**
 	 * Returns the element at the specified position as a floating point number.
@@ -334,7 +334,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#FLOAT
 	 */
-	function getFloat(index:Int):Float
+	function getFloat(index:Int):Float;
 	
 	/**
 	 * Returns the element at the specified position as a double precision number.
@@ -345,7 +345,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#DOUBLE
 	 */
-	function getDouble(index:Int):Float
+	function getDouble(index:Int):Float;
 	
 	/**
 	 * Returns the element at the specified position as a UTF-8 string.
@@ -354,7 +354,7 @@ interface ISFSArray
 	 * 
 	 * @return	The element of this array at the specified index.
 	 */
-	function getUtfString(index:Int):String
+	function getUtfString(index:Int):String;
 	
 	/**
 	 * Returns the element at the specified position as an array of booleans.
@@ -363,7 +363,7 @@ interface ISFSArray
 	 * 
 	 * @return	The element of this array as an array of<em>Boolean</em>values.
 	 */
-	function getBoolArray(index:Int):Array
+	function getBoolArray(index:Int):Array;
 	
 	/**
 	 * Returns the element at the specified position as an array of bytes.
@@ -372,7 +372,7 @@ interface ISFSArray
 	 * 
 	 * @return	The element of this array as a<em>ByteArray</em>.
 	 */
-	function getByteArray(index:Int):ByteArray
+	function getByteArray(index:Int):ByteArray;
 	
 	/**
 	 * Returns the element at the specified position as an array of unsigned bytes.
@@ -383,7 +383,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#BYTE
 	 */
-	function getUnsignedByteArray(index:Int):Array
+	function getUnsignedByteArray(index:Int):Array;
 	
 	/**
 	 * Returns the element at the specified position as an array of short Integers.
@@ -394,7 +394,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#SHORT
 	 */
-	function getShortArray(index:Int):Array
+	function getShortArray(index:Int):Array;
 	
 	/**
 	 * Returns the element at the specified position as an array of Integers.
@@ -403,7 +403,7 @@ interface ISFSArray
 	 * 
 	 * @return	The element of this array as an array of<em>int</em>values.
 	 */
-	function getIntArray(index:Int):Array
+	function getIntArray(index:Int):Array;
 	
 	/**
 	 * Returns the element at the specified position as an array of long Integers.
@@ -414,7 +414,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#LONG
 	 */
-	function getLongArray(index:Int):Array
+	function getLongArray(index:Int):Array;
 	
 	/**
 	 * Returns the element at the specified position as an array of floating point numbers.
@@ -425,7 +425,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#FLOAT
 	 */
-	function getFloatArray(index:Int):Array
+	function getFloatArray(index:Int):Array;
 	
 	/**
 	 * Returns the element at the specified position as an array of double precision numbers.
@@ -436,7 +436,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#DOUBLE
 	 */
-	function getDoubleArray(index:Int):Array
+	function getDoubleArray(index:Int):Array;
 	
 	/**
 	 * Returns the element at the specified position as an array of UTF-8 strings.
@@ -445,7 +445,7 @@ interface ISFSArray
 	 * 
 	 * @return	The element of this array as an array of<em>String</em>values.
 	 */
-	function getUtfStringArray(index:Int):Array
+	function getUtfStringArray(index:Int):Array;
 	
 	/**
 	 * Returns the element at the specified position as an<em>ISFSArray</em>object.
@@ -454,7 +454,7 @@ interface ISFSArray
 	 * 
 	 * @return	The element of this array as an object implementing the<em>ISFSArray</em>interface.
 	 */
-	function getSFSArray(index:Int):ISFSArray
+	function getSFSArray(index:Int):ISFSArray;
 	
 	/**
 	 * Returns the element at the specified position as an<em>ISFSObject</em>object.
@@ -463,7 +463,7 @@ interface ISFSArray
 	 * 
 	 * @return	The element of this array as an object implementing the<em>ISFSObject</em>interface.
 	 */
-	function getSFSObject(index:Int):ISFSObject
+	function getSFSObject(index:Int):ISFSObject;
 	
 	/**
 	 * Returns the element at the specified position as an instance of a custom class.
@@ -533,5 +533,5 @@ interface ISFSArray
 	 * var myShipData:SpaceShip=sfsArray.getClass(0)as SpaceShip;
 	 *</listing>
 	 */
-	function getClass(index:Int):Dynamic
+	function getClass(index:Int):Dynamic;
 }
