@@ -1045,7 +1045,7 @@ class SmartFox extends EventDispatcher
 		var value:Bool=false
 		
 		if(_bitSwarm !=null)
-			value=_bitSwarm.connected
+			value = _bitSwarm.connected;
 		
 		return value
 	}
@@ -1065,7 +1065,7 @@ class SmartFox extends EventDispatcher
 	public var connectionMode(get_connectionMode, set_connectionMode):String;
  	private function get_connectionMode():String
 	{
-		return _bitSwarm.connectionMode
+		return _bitSwarm.connectionMode;
 	}
 	
 	/**
@@ -1080,7 +1080,7 @@ class SmartFox extends EventDispatcher
 	public var version(get_version, set_version):String;
  	private function get_version():String
 	{
-		return "" + _majVersion + "." + _minVersion + "." + _subVersion
+		return "" + _majVersion + "." + _minVersion + "." + _subVersion;
 	}
 	
 	/**
@@ -1135,7 +1135,7 @@ class SmartFox extends EventDispatcher
 	public var config(get_config, set_config):ConfigData;
  	private function get_config():ConfigData
 	{
-		return _config
+		return _config;
 	}
 	
 	/**
@@ -1146,7 +1146,7 @@ class SmartFox extends EventDispatcher
 	public var compressionThreshold(get_compressionThreshold, set_compressionThreshold):Int;
  	private function get_compressionThreshold():Int
 	{
-		return _bitSwarm.compressionThreshold
+		return _bitSwarm.compressionThreshold;
 	}
 	
 	/**
@@ -1157,7 +1157,7 @@ class SmartFox extends EventDispatcher
 	public var maxMessageSize(get_maxMessageSize, set_maxMessageSize):Int;
  	private function get_maxMessageSize():Int
 	{
-		return _bitSwarm.maxMessageSize
+		return _bitSwarm.maxMessageSize;
 	}
 	
 	/**
@@ -1184,7 +1184,7 @@ class SmartFox extends EventDispatcher
 	 */
 	public function getRoomById(id:Int):Room
 	{
-		return roomManager.getRoomById(id)
+		return roomManager.getRoomById(id);
 	}
 	
 	/**
@@ -1211,7 +1211,7 @@ class SmartFox extends EventDispatcher
 	 */
 	public function getRoomByName(name:String):Room
 	{
-		return roomManager.getRoomByName(name)
+		return roomManager.getRoomByName(name);
 	}
 	
 	/**
@@ -1229,7 +1229,7 @@ class SmartFox extends EventDispatcher
 	 */
 	public function getRoomListFromGroup(groupId:String):Array
 	{
-		return roomManager.getRoomListFromGroup(groupId)	
+		return roomManager.getRoomListFromGroup(groupId);
 	}
 	
 	/**
@@ -1240,7 +1240,7 @@ class SmartFox extends EventDispatcher
 	 */
 	public function killConnection():Void
 	{
-		_bitSwarm.killConnection()
+		_bitSwarm.killConnection();
 	}
 	
 	/**
@@ -1274,38 +1274,38 @@ class SmartFox extends EventDispatcher
 	{
 		if(isConnected)
 		{
-			_log.warn("Already connected")
-			return
+			_log.warn("Already connected");
+			return;
 		}
 		
 		// Skip attempt, if already trying to connect
 		if(_isConnecting)
 		{
-			_log.warn("A connection attempt is already in progress")
-			return
+			_log.warn("A connection attempt is already in progress");
+			return;
 		}
 		
 		// Attempt to use external config(if exist)for missing params
 		if(config !=null)
 		{
 			if(host==null)
-				host=config.host
+				host = config.host;
 				
 			if(port==-1)
-				port=config.port
+				port = config.port;
 		}	
 		
 		// Apply basic validation
 		if(host==null || host.length==0)
-			throw new ArgumentError("Invalid connection host/address")
+			throw new ArgumentError("Invalid connection host/address");
 		
 		if(port<0 || port>65535)
-			throw new ArgumentError("Invalid connection port")
+			throw new ArgumentError("Invalid connection port");
 		
 		// All fine and dandy, let's proceed with the connection
-		_lastIpAddress=host
-		_isConnecting=true
-		_bitSwarm.connect(host, port)	
+		_lastIpAddress = host;
+		_isConnecting = true;
+		_bitSwarm.connect(host, port);	
 	}
 	
 	/**
@@ -1324,7 +1324,7 @@ class SmartFox extends EventDispatcher
 	public function connectWithConfig(cfg:ConfigData):Void
 	{
 		// Validate and store configuration
-		validateAndStoreConfig(cfg)
+		validateAndStoreConfig(cfg);
 		
 		// Connect
 		connect();
@@ -1342,20 +1342,20 @@ class SmartFox extends EventDispatcher
 		{
 			// If reconnection is active we need to tell the server that we don't want to reconnect
 			if(_bitSwarm.reconnectionSeconds>0)
-				send(new ManualDisconnectionRequest())
+				send(new ManualDisconnectionRequest());
 			
 			// Disconnect the socket
 			setTimeout
 			(
 				function():Void
 				{
-					_bitSwarm.disconnect(ClientDisconnectionReason.MANUAL)
+					_bitSwarm.disconnect(ClientDisconnectionReason.MANUAL);
 				},
 				100
 			)
 		}
 		else
-			_log.info("You are not connected")
+			_log.info("You are not connected");
 	}
 	
 	/**
@@ -1363,16 +1363,16 @@ class SmartFox extends EventDispatcher
 	 * If set to<code>true</code>, detailed debugging informations for all the incoming and outgoing messages are provided.
 	 *<p>Debugging can be enabled when instantiating the<em>SmartFox</em>class too.</p>
 	 */
-	public var debug(get_debug, set_debug):Bool;
+	public var debug(get_debug, set_debug):Bool;;
  	private function get_debug():Bool
 	{
-		return _debug
+		return _debug;
 	}
 	
 	/** @private */
 	private function set_debug(value:Bool):Void
 	{
-		_debug=value
+		_debug = value;
 	}
 	
 	/** 
@@ -1385,7 +1385,7 @@ class SmartFox extends EventDispatcher
 	public var currentIp(get_currentIp, set_currentIp):String;
  	private function get_currentIp():String
 	{
-		return _bitSwarm.connectionIp
+		return _bitSwarm.connectionIp;
 	}
 	
 	/** 
@@ -1398,7 +1398,7 @@ class SmartFox extends EventDispatcher
 	public var currentPort(get_currentPort, set_currentPort):Int;
  	private function get_currentPort():Int
 	{
-		return _bitSwarm.connectionPort
+		return _bitSwarm.connectionPort;
 	}
 	
 	/** 
@@ -1410,7 +1410,7 @@ class SmartFox extends EventDispatcher
 	public var currentZone(get_currentZone, set_currentZone):String;
  	private function get_currentZone():String
 	{
-		return _currentZone
+		return _currentZone;
 	}
 	
 	/**
@@ -1425,13 +1425,13 @@ class SmartFox extends EventDispatcher
 	public var mySelf(get_mySelf, set_mySelf):User;
  	private function get_mySelf():User
 	{
-		return _mySelf
+		return _mySelf;
 	}
 	
 	/** @private */
 	private function set_mySelf(value:User):Void
 	{
-		_mySelf=value
+		_mySelf = value;
 	}
 	
 	/**
@@ -1446,13 +1446,13 @@ class SmartFox extends EventDispatcher
 	public var useBlueBox(get_useBlueBox, set_useBlueBox):Bool;
  	private function get_useBlueBox():Bool
 	{
-		return _useBlueBox
+		return _useBlueBox;
 	}
 	
 	/** @private */
 	private function set_useBlueBox(value:Bool):Void
 	{
-		_useBlueBox=value
+		_useBlueBox = value;
 	}
 	
 	/**
@@ -1461,7 +1461,7 @@ class SmartFox extends EventDispatcher
 	public var logger(get_logger, set_logger):Logger;
  	private function get_logger():Logger
 	{
-		return _log
+		return _log;
 	}
 	
 	/**
@@ -1477,13 +1477,13 @@ class SmartFox extends EventDispatcher
 	public var lastJoinedRoom(get_lastJoinedRoom, set_lastJoinedRoom):Room;
  	private function get_lastJoinedRoom():Room
 	{
-		return _lastJoinedRoom
+		return _lastJoinedRoom;
 	}
 	
 	/** @private */
 	private function set_lastJoinedRoom(value:Room):Void
 	{
-		_lastJoinedRoom=value	
+		_lastJoinedRoom = value;	
 	}
 	
 	/**
@@ -1500,7 +1500,7 @@ class SmartFox extends EventDispatcher
 	public var joinedRooms(get_joinedRooms, set_joinedRooms):Array;
  	private function get_joinedRooms():Array
 	{
-		return roomManager.getJoinedRooms()
+		return roomManager.getJoinedRooms();
 	}
 	
 	/**
@@ -1520,7 +1520,7 @@ class SmartFox extends EventDispatcher
 	public var roomList(get_roomList, set_roomList):Array;
  	private function get_roomList():Array
 	{
-		return _roomManager.getRoomList()
+		return _roomManager.getRoomList();
 	}
 	
 	/**
@@ -1531,7 +1531,7 @@ class SmartFox extends EventDispatcher
 	public var roomManager(get_roomManager, set_roomManager):IRoomManager;
  	private function get_roomManager():IRoomManager
 	{
-		return _roomManager
+		return _roomManager;
 	}
 	
 	/**
@@ -1542,7 +1542,7 @@ class SmartFox extends EventDispatcher
 	public var userManager(get_userManager, set_userManager):IUserManager;
  	private function get_userManager():IUserManager
 	{
-		return _userManager
+		return _userManager;
 	}
 	
 	/**
@@ -1569,7 +1569,7 @@ class SmartFox extends EventDispatcher
 	public var udpAvailable(get_udpAvailable, set_udpAvailable):Bool;
  	private function get_udpAvailable():Bool
 	{
-		return isAirRuntime()
+		return isAirRuntime();
 	}
 	
 	/**
@@ -1648,26 +1648,26 @@ class SmartFox extends EventDispatcher
 		{
 			if(!isConnected)
 			{
-				_log.warn("Cannot initialize UDP protocol until the client is connected to SFS2X.")
-				return
+				_log.warn("Cannot initialize UDP protocol until the client is connected to SFS2X.");
+				return;
 			}
 			
 			// Attempt to use external config(if exist)for missing params
 			if(config !=null)
 			{
 				if(udpHost==null)
-					udpHost=config.udpHost
+					udpHost = config.udpHost;
 				
 				if(udpPort==-1)
-					udpPort=config.udpPort
+					udpPort = config.udpPort;
 			}	
 			
 			// Apply basic validation
 			if(udpHost==null || udpHost.length==0)
-				throw new ArgumentError("Invalid UDP host/address")
+				throw new ArgumentError("Invalid UDP host/address");
 			
 			if(udpPort<0 || udpPort>65535)
-				throw new ArgumentError("Invalid UDP port range")
+				throw new ArgumentError("Invalid UDP port range");
 			
 			/*
 			* If it's already inited with success we don't allow re-assigning a new UDP manager
@@ -1675,35 +1675,35 @@ class SmartFox extends EventDispatcher
 			*/
 			if(!_bitSwarm.udpManager.inited && _bitSwarm.udpManager is DefaultUDPManager)
 			{
-				manager.sfs=this
-				_bitSwarm.udpManager=manager
+				manager.sfs = this;
+				_bitSwarm.udpManager = manager;
 			}
 			
 			// Attempt initialization
-			_bitSwarm.udpManager.initialize(udpHost, udpPort)
+			_bitSwarm.udpManager.initialize(udpHost, udpPort);
 		}
 		
 		else
-			_log.warn("UDP Failure:the protocol is available only for the AIR 2.0 runtime.")
+			_log.warn("UDP Failure:the protocol is available only for the AIR 2.0 runtime.");
 	}
 	
 	// Checks if application is running as a standalone Adobe Air application
 	private function isAirRuntime():Bool
 	{
-		return Capabilities.playerType.toLowerCase()=="desktop"
+		return Capabilities.playerType.toLowerCase() == "desktop";
 	}
 	
 	/** @private */
 	public var isJoining(get_isJoining, set_isJoining):Bool;
  	private function get_isJoining():Bool
 	{
-		return _isJoining
+		return _isJoining;
 	}
 	
 	/** @private */
 	private function set_isJoining(value:Bool):Void
 	{
-		_isJoining=value
+		_isJoining = value;
 	}
 	
 	/**
@@ -1716,21 +1716,21 @@ class SmartFox extends EventDispatcher
 	public var sessionToken(get_sessionToken, null):String;
  	private function get_sessionToken():String
 	{
-		return _sessionToken
+		return _sessionToken;
 	}
 	
 	// No public docs for this, we use it Internally for starting a reconnection
 	/** @private */
 	public function getReconnectionSeconds():Int
 	{
-		return _bitSwarm.reconnectionSeconds
+		return _bitSwarm.reconnectionSeconds;
 	}
 	
 	// No public docs for this, we use it Internally for starting a reconnection
 	/** @private */
 	public function setReconnectionSeconds(seconds:Int):Void
 	{
-		_bitSwarm.reconnectionSeconds=seconds	
+		_bitSwarm.reconnectionSeconds = seconds;	
 	}
 	
 	/**
@@ -1770,8 +1770,8 @@ class SmartFox extends EventDispatcher
 		// Handshake is an exception, during a reconnection attempt
 		if(!isConnected)
 		{
-			_log.warn("You are not connected. Request cannot be sent:" + request)
-			return
+			_log.warn("You are not connected. Request cannot be sent:" + request);
+			return;
 		}
 		
 		try
@@ -1780,37 +1780,37 @@ class SmartFox extends EventDispatcher
 			if(Std.is(request, JoinRoomRequest))
 			{
 				if(_isJoining)
-					return
+					return;
 				
 				else
-					_isJoining=true	
+					_isJoining = true	;
 			}
 			
 			// Validate Request parameters
-			request.validate(this)
+			request.validate(this);
 			
 			// Execute Request logic
-			request.execute(this)
+			request.execute(this);
 			
 			// Send request to SmartFoxServer2X
-			_bitSwarm.send(request.getMessage())
+			_bitSwarm.send(request.getMessage());
 		}
 		
 		catch(problem:SFSValidationError)
 		{
-			var errMsg:String=problem.message
+			var errMsg:String = problem.message;
 			
 			for(var errorItem:String in problem.errors)
 			{
-				errMsg +="\t" + errorItem + "\n"
+				errMsg += "\t" + errorItem + "\n";
 			}
 			
-			_log.warn(errMsg)
+			_log.warn(errMsg);
 		}
 		
 		catch(error:SFSCodecError)
 		{
-			_log.warn(error.message)
+			_log.warn(error.message);
 		}
 	}
 	
@@ -1879,12 +1879,12 @@ class SmartFox extends EventDispatcher
 	 */
 	public function loadConfig(filePath:String="sfs-config.xml", connectOnSuccess:Bool=true):Void
 	{
-		var configLoader:ConfigLoader=new ConfigLoader()
-		configLoader.addEventListener(SFSEvent.CONFIG_LOAD_SUCCESS, onConfigLoadSuccess)
-		configLoader.addEventListener(SFSEvent.CONFIG_LOAD_FAILURE, onConfigLoadFailure)
+		var configLoader:ConfigLoader = new ConfigLoader();
+		configLoader.addEventListener(SFSEvent.CONFIG_LOAD_SUCCESS, onConfigLoadSuccess);
+		configLoader.addEventListener(SFSEvent.CONFIG_LOAD_FAILURE, onConfigLoadFailure);
 		
-		_autoConnectOnConfig=connectOnSuccess
-		configLoader.loadConfig(filePath)
+		_autoConnectOnConfig = connectOnSuccess;
+		configLoader.loadConfig(filePath);
 	}
 	
 	/** @private */
@@ -1892,26 +1892,26 @@ class SmartFox extends EventDispatcher
 	{
 		if(!roomManager.containsRoom(room.id))
 		{
-			roomManager.addRoom(room)
-			_lastJoinedRoom=room
+			roomManager.addRoom(room);
+			_lastJoinedRoom = room;
 		}
 		
 		// TODO:this is just for debugging
 		else
-			throw new SFSError("Unexpected:joined room already exists for this User:" + mySelf.name + ", Room:" + room)	
+			throw new SFSError("Unexpected:joined room already exists for this User:" + mySelf.name + ", Room:" + room);
 	}
 
 	/** @private */
 	public function removeJoinedRoom(room:Room):Void
 	{
-		roomManager.removeRoom(room)
+		roomManager.removeRoom(room);
 		
 		// remove room id
 		// delete _playerIdByRoomId[room.id]
 		
 		// point to the previous room, if any
 		if(joinedRooms.length>0)
-			_lastJoinedRoom=joinedRooms[joinedRooms.length - 1]
+			_lastJoinedRoom = joinedRooms[joinedRooms.length - 1];
 		
 	}
 	
@@ -1923,76 +1923,76 @@ class SmartFox extends EventDispatcher
 	{
 		if(evt.params.success)
 		{
-			sendHandshakeRequest(evt.params._isReconnection)
+			sendHandshakeRequest(evt.params._isReconnection);
 		}
 		
 		else
 		{
-			_log.warn("Connection attempt failed")
-			handleConnectionProblem(evt)
+			_log.warn("Connection attempt failed");
+			handleConnectionProblem(evt);
 		}
 	}
 	
 	private function onSocketClose(evt:BitSwarmEvent):Void
 	{
-		reset()
-		dispatchEvent(new SFSEvent(SFSEvent.CONNECTION_LOST, {reason:evt.params.reason}))
+		reset();
+		dispatchEvent(new SFSEvent(SFSEvent.CONNECTION_LOST, { reason:evt.params.reason } ));
 	}
 	
 	private function onSocketReconnectionTry(evt:BitSwarmEvent):Void
 	{
-		dispatchEvent(new SFSEvent(SFSEvent.CONNECTION_RETRY, {}))
+		dispatchEvent(new SFSEvent(SFSEvent.CONNECTION_RETRY, { } ));
 	}
 	
 	private function onSocketDataError(evt:BitSwarmEvent):Void
 	{
-		dispatchEvent(new SFSEvent(SFSEvent.SOCKET_ERROR,{errorMessage:evt.params.message, details:evt.params.details}))
+		dispatchEvent(new SFSEvent(SFSEvent.SOCKET_ERROR, { errorMessage:evt.params.message, details:evt.params.details } ));
 	}
 	
 	private function onSocketIOError(evt:BitSwarmEvent):Void
 	{
 		if(_isConnecting)
-			handleConnectionProblem(evt)
+			handleConnectionProblem(evt);
 	}
 	
 	private function onSocketSecurityError(evt:BitSwarmEvent):Void
 	{
 		if(_isConnecting)
-			handleConnectionProblem(evt)
+			handleConnectionProblem(evt);
 	}
 	
 	private function onConfigLoadSuccess(evt:SFSEvent):Void
 	{
-		var cfgLoader:ConfigLoader=evt.target as ConfigLoader
-		var cfgData:ConfigData=evt.params.cfg as ConfigData
+		var cfgLoader:ConfigLoader = cast evt.target;
+		var cfgData:ConfigData = cast evt.params.cfg;
 		
 		// Remove listeners
-		cfgLoader.removeEventListener(SFSEvent.CONFIG_LOAD_SUCCESS, onConfigLoadSuccess)
-		cfgLoader.removeEventListener(SFSEvent.CONFIG_LOAD_FAILURE, onConfigLoadFailure)
+		cfgLoader.removeEventListener(SFSEvent.CONFIG_LOAD_SUCCESS, onConfigLoadSuccess);
+		cfgLoader.removeEventListener(SFSEvent.CONFIG_LOAD_FAILURE, onConfigLoadFailure);
 		
 		// Validate and store configuration
-		validateAndStoreConfig(cfgData)
+		validateAndStoreConfig(cfgData);
 		
 		// Fire event
-		var sfsEvt:SFSEvent=new SFSEvent(SFSEvent.CONFIG_LOAD_SUCCESS, {config:cfgData})
-		dispatchEvent(sfsEvt)
+		var sfsEvt:SFSEvent = new SFSEvent(SFSEvent.CONFIG_LOAD_SUCCESS, { config:cfgData } );
+		dispatchEvent(sfsEvt);
 		
 		// AutoConnect?
 		if(_autoConnectOnConfig)
-			connect(_config.host, _config.port)
+			connect(_config.host, _config.port);
 	}
 	
 	private function onConfigLoadFailure(evt:SFSEvent):Void
 	{
-		var cfgLoader:ConfigLoader=evt.target as ConfigLoader
+		var cfgLoader:ConfigLoader = cast evt.target;
 		
 		// remove listeners
-		cfgLoader.removeEventListener(SFSEvent.CONFIG_LOAD_SUCCESS, onConfigLoadSuccess)
-		cfgLoader.removeEventListener(SFSEvent.CONFIG_LOAD_FAILURE, onConfigLoadFailure)
+		cfgLoader.removeEventListener(SFSEvent.CONFIG_LOAD_SUCCESS, onConfigLoadSuccess);
+		cfgLoader.removeEventListener(SFSEvent.CONFIG_LOAD_FAILURE, onConfigLoadFailure);
 		
-		// Fire event
-		var sfsEvt:SFSEvent=new SFSEvent(SFSEvent.CONFIG_LOAD_FAILURE, {})
-		dispatchEvent(sfsEvt)
+		// Fire event;
+		var sfsEvt:SFSEvent = new SFSEvent(SFSEvent.CONFIG_LOAD_FAILURE, { } );
+		dispatchEvent(sfsEvt);
 	}
 	
 	
@@ -2002,19 +2002,19 @@ class SmartFox extends EventDispatcher
 	
 	private function handleHandShake(evt:SFSEvent):Void
 	{
-		var msg:IMessage=evt.params.message
-		var obj:ISFSObject=msg.content
+		var msg:IMessage = evt.params.message;
+		var obj:ISFSObject = msg.content;
 		
 		// Success
 		if(obj.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
-			_sessionToken=obj.getUtfString(HandshakeRequest.KEY_SESSION_TOKEN)
-			_bitSwarm.compressionThreshold=obj.getInt(HandshakeRequest.KEY_COMPRESSION_THRESHOLD)
-			_bitSwarm.maxMessageSize=obj.getInt(HandshakeRequest.KEY_MAX_MESSAGE_SIZE)
+			_sessionToken = obj.getUtfString(HandshakeRequest.KEY_SESSION_TOKEN);
+			_bitSwarm.compressionThreshold = obj.getInt(HandshakeRequest.KEY_COMPRESSION_THRESHOLD);
+			_bitSwarm.maxMessageSize = obj.getInt(HandshakeRequest.KEY_MAX_MESSAGE_SIZE);
 
 			if(_bitSwarm.isReconnecting)
 			{
-				_bitSwarm.isReconnecting=false
+				_bitSwarm.isReconnecting = false;
 				
 				/*
 				* Reconnection success
@@ -2022,42 +2022,42 @@ class SmartFox extends EventDispatcher
 				* In case of failure the server will disconnect the temp socket.
 				*/
 				
-				dispatchEvent(new SFSEvent(SFSEvent.CONNECTION_RESUME, {}))
+				dispatchEvent(new SFSEvent(SFSEvent.CONNECTION_RESUME, { } ));
 			}
 			else
 			{
 				/*
 				* Regular connection success
 				*/
-				_isConnecting=false // reset flag
-				dispatchEvent(new SFSEvent(SFSEvent.CONNECTION, {success:true}))
+				_isConnecting = false; // reset flag
+				dispatchEvent(new SFSEvent(SFSEvent.CONNECTION, { success:true } ));
 			}
 		}
 		
 		// Failure(via socket)
 		else
 		{
-			var errorCd:Int=obj.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, obj.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			var params:Dynamic={success:false, errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = obj.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, obj.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			var params:Dynamic = { success:false, errorMessage:errorMsg, errorCode:errorCd };
 			
-			dispatchEvent(new SFSEvent(SFSEvent.CONNECTION, params))
+			dispatchEvent(new SFSEvent(SFSEvent.CONNECTION, params));
 		}			
 	}
 	
 	private function handleLogin(evt:SFSEvent):Void
 	{
-		_currentZone=evt.params.zone
+		_currentZone = evt.params.zone;
 	}
 	
 	/** @private */
 	kernel function handleClientDisconnection(reason:String):Void
 	{
 		// no reconnections
-		_bitSwarm.reconnectionSeconds=0
-		_bitSwarm.disconnect(reason)
+		_bitSwarm.reconnectionSeconds = 0;
+		_bitSwarm.disconnect(reason);
 		
-		reset()
+		reset();
 	}
 	
 	/** @private */
@@ -2065,17 +2065,17 @@ class SmartFox extends EventDispatcher
 	{
 		// TODO:Hide with custom namespace?
 		if(_lagMonitor !=null && _lagMonitor.isRunning)
-			_lagMonitor.stop()
+			_lagMonitor.stop();
 				
-		_userManager=new SFSGlobalUserManager(this)
-		_roomManager=new SFSRoomManager(this)
-		_isJoining=false
-		_lastJoinedRoom=null
-		_currentZone=null
-		_mySelf=null	
+		_userManager = new SFSGlobalUserManager(this);
+		_roomManager = new SFSRoomManager(this);
+		_isJoining = false;
+		_lastJoinedRoom = null;
+		_currentZone = null;
+		_mySelf = null;
 			
 		// Clear Buddy Manager
-		buddyManager.clearAll()
+		buddyManager.clearAll();
 		buddyManager.setInited(false);
 	}
 	
@@ -2098,49 +2098,49 @@ class SmartFox extends EventDispatcher
 		// Socket failed, attempt using the BBox
 		if(_bitSwarm.connectionMode==ConnectionMode.SOCKET && _useBlueBox)
 		{
-			_bitSwarm.forceBlueBox(true)
-			var bbPort:Int=config !=null ? config.httpPort:DEFAULT_HTTP_PORT
+			_bitSwarm.forceBlueBox(true);
+			var bbPort:Int = config != null ? config.httpPort:DEFAULT_HTTP_PORT;
 				
-			_bitSwarm.connect(_lastIpAddress, bbPort)
+			_bitSwarm.connect(_lastIpAddress, bbPort);
 				
-			dispatchEvent(new SFSEvent(SFSEvent.CONNECTION_ATTEMPT_HTTP, {}))
+			dispatchEvent(new SFSEvent(SFSEvent.CONNECTION_ATTEMPT_HTTP, { } ));
 		}
 		
 		// Connection failed
 		else
 		{
-			var params:Dynamic={ success:false, errorMessage:evt.params.message }
-			dispatchEvent(new SFSEvent(SFSEvent.CONNECTION, params))
-			_isConnecting=_isConnected=false
+			var params:Dynamic = { success:false, errorMessage:evt.params.message };
+			dispatchEvent(new SFSEvent(SFSEvent.CONNECTION, params));
+			_isConnecting = _isConnected = false;
 		}
 		
 	}
 	
 	private function sendHandshakeRequest(isReconnection:Bool=false):Void
 	{
-		var req:IRequest=new HandshakeRequest(this.version, _clientDetails, isReconnection ? _sessionToken:null)
-		send(req)
+		var req:IRequest = new HandshakeRequest(this.version, _clientDetails, isReconnection ? _sessionToken:null);
+		send(req);
 	}
 	
 	private function validateAndStoreConfig(cfgData:ConfigData):Void
 	{
 		// Validate mandatory params
 		if(cfgData.host==null || cfgData.host.length==0)
-			throw new ArgumentError("Invalid Host/IpAddress in external config file")
+			throw new ArgumentError("Invalid Host/IpAddress in external config file");
 		
 		if(cfgData.port<0 || cfgData.port>65535)
-			throw new ArgumentError("Invalid TCP port in external config file")
+			throw new ArgumentError("Invalid TCP port in external config file");
 		
 		if(cfgData.zone==null || cfgData.zone.length==0)
-			throw new ArgumentError("Invalid Zone name in external config file")
+			throw new ArgumentError("Invalid Zone name in external config file");
 		
 		// Activate debug
-		_debug=cfgData.debug
+		_debug = cfgData.debug;
 		
 		// Enable BlueBox
-		_useBlueBox=cfgData.useBlueBox
+		_useBlueBox = cfgData.useBlueBox;
 		
 		// Store globally
-		_config=cfgData
+		_config = cfgData;
 	}
 }
