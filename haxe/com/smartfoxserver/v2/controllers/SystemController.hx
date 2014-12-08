@@ -67,77 +67,77 @@ import com.smartfoxserver.v2.util.SFSErrorCodes;
 /** @private */
 class SystemController extends BaseController
 {
-	private var sfs:SmartFox
-	private var bitSwarm:BitSwarmClient
-	private var requestHandlers:Dynamic
+	private var sfs:SmartFox;
+	private var bitSwarm:BitSwarmClient;
+	private var requestHandlers:Dynamic;
 					
 	public function new(bitSwarm:BitSwarmClient)
 	{
-		super(bitSwarm)
-		this.bitSwarm=bitSwarm
-		this.sfs=bitSwarm.sfs
+		super(bitSwarm);
+		this.bitSwarm = bitSwarm;
+		this.sfs = bitSwarm.sfs;
 		
-		requestHandlers=new Dynamic()
-		initRequestHandlers()
+		requestHandlers = new Dynamic();
+		initRequestHandlers();
 	}
 	
 	private function initRequestHandlers():Void
 	{
 		// Request codes
-		requestHandlers[BaseRequest.Handshake]={ name:"Handshake", handler:this["fnHandshake"] }
-		requestHandlers[BaseRequest.Login]={ name:"Login", handler:this["fnLogin"] }
-		requestHandlers[BaseRequest.Logout]={ name:"Logout", handler:this["fnLogout"] }
-		requestHandlers[BaseRequest.JoinRoom]={ name:"JoinRoom", handler:this["fnJoinRoom"] }
-		requestHandlers[BaseRequest.CreateRoom]={ name:"CreateRoom", handler:this["fnCreateRoom"] }
-		requestHandlers[BaseRequest.GenericMessage]={ name:"GenericMessage", handler:this["fnGenericMessage"] }
-		requestHandlers[BaseRequest.ChangeRoomName]={ name:"ChangeRoomName", handler:this["fnChangeRoomName"] }
-		requestHandlers[BaseRequest.ChangeRoomPassword]={ name:"ChangeRoomPassword", handler:this["fnChangeRoomPassword"] }
-		requestHandlers[BaseRequest.ChangeRoomCapacity]={ name:"ChangeRoomCapacity", handler:this["fnChangeRoomCapacity"] }
-		requestHandlers[BaseRequest.SetRoomVariables]={ name:"SetRoomVariables", handler:this["fnSetRoomVariables"] }
-		requestHandlers[BaseRequest.SetUserVariables]={ name:"SetUserVariables", handler:this["fnSetUserVariables"] }
-		requestHandlers[BaseRequest.SubscribeRoomGroup]={ name:"SubscribeRoomGroup", handler:this["fnSubscribeRoomGroup"] }
-		requestHandlers[BaseRequest.UnsubscribeRoomGroup]={ name:"UnsubscribeRoomGroup", handler:this["fnUnsubscribeRoomGroup"] }
-		requestHandlers[BaseRequest.SpectatorToPlayer]={ name:"SpectatorToPlayer", handler:this["fnSpectatorToPlayer"] }
-		requestHandlers[BaseRequest.PlayerToSpectator]={ name:"PlayerToSpectator", handler:this["fnPlayerToSpectator"] }
-		requestHandlers[BaseRequest.InitBuddyList]={ name:"InitBuddyList", handler:this["fnInitBuddyList"] }
-		requestHandlers[BaseRequest.AddBuddy]={ name:"AddBuddy", handler:this["fnAddBuddy"] }
-		requestHandlers[BaseRequest.RemoveBuddy]={ name:"RemoveBuddy", handler:this["fnRemoveBuddy"] }
-		requestHandlers[BaseRequest.BlockBuddy]={ name:"BlockBuddy", handler:this["fnBlockBuddy"] }
-		requestHandlers[BaseRequest.GoOnline]={ name:"GoOnline", handler:this["fnGoOnline"] }
-		requestHandlers[BaseRequest.SetBuddyVariables]={ name:"SetBuddyVariables", handler:this["fnSetBuddyVariables"] }
-		requestHandlers[BaseRequest.FindRooms]={ name:"FindRooms", handler:this["fnFindRooms"] }
-		requestHandlers[BaseRequest.FindUsers]={ name:"FindUsers", handler:this["fnFindUsers"] }
-		requestHandlers[BaseRequest.InviteUser]={ name:"InviteUser", handler:this["fnInviteUsers"] }
-		requestHandlers[BaseRequest.InvitationReply]={ name:"InvitationReply", handler:this["fnInvitationReply"] }
-		requestHandlers[BaseRequest.QuickJoinGame]={ name:"QuickJoinGame", handler:this["fnQuickJoinGame"] }
-		requestHandlers[BaseRequest.PingPong]={ name:"PingPong", handler:this["fnPingPong"] }
-		requestHandlers[BaseRequest.SetUserPosition]={ name:"SetUserPosition", handler:this["fnSetUserPosition"] }
+		requestHandlers[BaseRequest.Handshake] = { name:"Handshake", handler:this["fnHandshake"] };
+		requestHandlers[BaseRequest.Login] = { name:"Login", handler:this["fnLogin"] };
+		requestHandlers[BaseRequest.Logout] = { name:"Logout", handler:this["fnLogout"] };
+		requestHandlers[BaseRequest.JoinRoom] = { name:"JoinRoom", handler:this["fnJoinRoom"] };
+		requestHandlers[BaseRequest.CreateRoom] = { name:"CreateRoom", handler:this["fnCreateRoom"] };
+		requestHandlers[BaseRequest.GenericMessage] = { name:"GenericMessage", handler:this["fnGenericMessage"] };
+		requestHandlers[BaseRequest.ChangeRoomName] = { name:"ChangeRoomName", handler:this["fnChangeRoomName"] };
+		requestHandlers[BaseRequest.ChangeRoomPassword] = { name:"ChangeRoomPassword", handler:this["fnChangeRoomPassword"] };
+		requestHandlers[BaseRequest.ChangeRoomCapacity] = { name:"ChangeRoomCapacity", handler:this["fnChangeRoomCapacity"] };
+		requestHandlers[BaseRequest.SetRoomVariables] = { name:"SetRoomVariables", handler:this["fnSetRoomVariables"] };
+		requestHandlers[BaseRequest.SetUserVariables] = { name:"SetUserVariables", handler:this["fnSetUserVariables"] };
+		requestHandlers[BaseRequest.SubscribeRoomGroup] = { name:"SubscribeRoomGroup", handler:this["fnSubscribeRoomGroup"] };
+		requestHandlers[BaseRequest.UnsubscribeRoomGroup] = { name:"UnsubscribeRoomGroup", handler:this["fnUnsubscribeRoomGroup"] };
+		requestHandlers[BaseRequest.SpectatorToPlayer] = { name:"SpectatorToPlayer", handler:this["fnSpectatorToPlayer"] };
+		requestHandlers[BaseRequest.PlayerToSpectator] = { name:"PlayerToSpectator", handler:this["fnPlayerToSpectator"] };
+		requestHandlers[BaseRequest.InitBuddyList] = { name:"InitBuddyList", handler:this["fnInitBuddyList"] };
+		requestHandlers[BaseRequest.AddBuddy] = { name:"AddBuddy", handler:this["fnAddBuddy"] };
+		requestHandlers[BaseRequest.RemoveBuddy] = { name:"RemoveBuddy", handler:this["fnRemoveBuddy"] };
+		requestHandlers[BaseRequest.BlockBuddy] = { name:"BlockBuddy", handler:this["fnBlockBuddy"] };
+		requestHandlers[BaseRequest.GoOnline] = { name:"GoOnline", handler:this["fnGoOnline"] };
+		requestHandlers[BaseRequest.SetBuddyVariables] = { name:"SetBuddyVariables", handler:this["fnSetBuddyVariables"] };
+		requestHandlers[BaseRequest.FindRooms] = { name:"FindRooms", handler:this["fnFindRooms"] };
+		requestHandlers[BaseRequest.FindUsers] = { name:"FindUsers", handler:this["fnFindUsers"] };
+		requestHandlers[BaseRequest.InviteUser] = { name:"InviteUser", handler:this["fnInviteUsers"] };
+		requestHandlers[BaseRequest.InvitationReply] = { name:"InvitationReply", handler:this["fnInvitationReply"] };
+		requestHandlers[BaseRequest.QuickJoinGame] = { name:"QuickJoinGame", handler:this["fnQuickJoinGame"] };
+		requestHandlers[BaseRequest.PingPong] = { name:"PingPong", handler:this["fnPingPong"] };
+		requestHandlers[BaseRequest.SetUserPosition] = { name:"SetUserPosition", handler:this["fnSetUserPosition"] };
 		
 		// Response only codes
-		requestHandlers[1000]={ name:"UserEnterRoom", handler:this["fnUserEnterRoom"] }
-		requestHandlers[1001]={ name:"UserCountChange", handler:this["fnUserCountChange"] }
-		requestHandlers[1002]={ name:"UserLost", handler:this["fnUserLost"] }
-		requestHandlers[1003]={ name:"RoomLost", handler:this["fnRoomLost"] }
-		requestHandlers[1004]={ name:"UserExitRoom", handler:this["fnUserExitRoom"] }
-		requestHandlers[1005]={ name:"ClientDisconnection", handler:this["fnClientDisconnection"] }
-		requestHandlers[1006]={ name:"ReconnectionFailure", handler:this["fnReconnectionFailure"] }
-		requestHandlers[1007]={ name:"SetMMOItemVariables", handler:this["fnSetMMOItemVariables"] }	
+		requestHandlers[1000] = { name:"UserEnterRoom", handler:this["fnUserEnterRoom"] };
+		requestHandlers[1001] = { name:"UserCountChange", handler:this["fnUserCountChange"] };
+		requestHandlers[1002] = { name:"UserLost", handler:this["fnUserLost"] };
+		requestHandlers[1003] = { name:"RoomLost", handler:this["fnRoomLost"] };
+		requestHandlers[1004] = { name:"UserExitRoom", handler:this["fnUserExitRoom"] };
+		requestHandlers[1005] = { name:"ClientDisconnection", handler:this["fnClientDisconnection"] };
+		requestHandlers[1006] = { name:"ReconnectionFailure", handler:this["fnReconnectionFailure"] };
+		requestHandlers[1007] = { name:"SetMMOItemVariables", handler:this["fnSetMMOItemVariables"] };
 	}
 	
 	public override function handleMessage(message:IMessage):Void
 	{
-		var command:Dynamic=requestHandlers[message.id]
+		var command:Dynamic = requestHandlers[message.id];
 			
 		if(command !=null)
 		{
 			if(sfs.debug)
-				log.info(command.name + ", " + message)
+				log.info(command.name + ", " + message);
 					
 			// Execute
-			command.handler(message)	
+			command.handler(message);
 		}
 		else
-			log.warn("Unknown message id:" + message.id)
+			log.warn("Unknown message id:" + message.id);
 	}
 	
 	/*
@@ -146,7 +146,7 @@ class SystemController extends BaseController
 	*/
 	kernel function addRequestHandler(code:Int, command:Dynamic):Void
 	{
-		requestHandlers[code]=command
+		requestHandlers[code] = command;
 	}
 	
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -154,20 +154,20 @@ class SystemController extends BaseController
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	private function fnHandshake(msg:IMessage):Void
 	{
-		var evtParams:Dynamic={message:msg}
-		sfs.dispatchEvent(new SFSEvent(SFSEvent.HANDSHAKE, evtParams))
+		var evtParams:Dynamic = { message:msg };
+		sfs.dispatchEvent(new SFSEvent(SFSEvent.HANDSHAKE, evtParams));
 	}
 	
 	private function fnLogin(msg:IMessage):Void
 	{
-		var obj:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var obj:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		// Success
 		if(obj.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
 			// Populate room list
-			populateRoomList(obj.getSFSArray(LoginRequest.KEY_ROOMLIST))
+			populateRoomList(obj.getSFSArray(LoginRequest.KEY_ROOMLIST));
 			
 			// create local user
 			sfs.mySelf=new SFSUser
@@ -177,80 +177,80 @@ class SystemController extends BaseController
 				true
 			)
 			
-			sfs.mySelf.userManager=sfs.userManager
-			sfs.mySelf.privilegeId=obj.getShort(LoginRequest.KEY_PRIVILEGE_ID)
-			sfs.userManager.addUser(sfs.mySelf)
+			sfs.mySelf.userManager = sfs.userManager;
+			sfs.mySelf.privilegeId = obj.getShort(LoginRequest.KEY_PRIVILEGE_ID);
+			sfs.userManager.addUser(sfs.mySelf);
 			
 			// set the reconnection seconds
-			sfs.setReconnectionSeconds(obj.getShort(LoginRequest.KEY_RECONNECTION_SECONDS))
+			sfs.setReconnectionSeconds(obj.getShort(LoginRequest.KEY_RECONNECTION_SECONDS));
 			
 			// Fire success event
-			evtParams.zone=obj.getUtfString(LoginRequest.KEY_ZONE_NAME)
-			evtParams.user=sfs.mySelf
-			evtParams.data=obj.getSFSObject(LoginRequest.KEY_PARAMS)
+			evtParams.zone = obj.getUtfString(LoginRequest.KEY_ZONE_NAME);
+			evtParams.user = sfs.mySelf;
+			evtParams.data = obj.getSFSObject(LoginRequest.KEY_PARAMS);
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.LOGIN, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.LOGIN, evtParams));
 		}
 		
 		// Failure
 		else
 		{
-			var errorCd:Int=obj.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, obj.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = obj.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, obj.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.LOGIN_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.LOGIN_ERROR, evtParams));
 		}
 	}
 	
 	private function fnCreateRoom(msg:IMessage):Void
 	{
-		var obj:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var obj:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		// Success
 		if(obj.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
-			var roomManager:IRoomManager=sfs.roomManager
-			var newRoom:Room=SFSRoom.fromSFSArray(obj.getSFSArray(CreateRoomRequest.KEY_ROOM))
-			newRoom.roomManager=sfs.roomManager
+			var roomManager:IRoomManager = sfs.roomManager;
+			var newRoom:Room = SFSRoom.fromSFSArray(obj.getSFSArray(CreateRoomRequest.KEY_ROOM));
+			newRoom.roomManager = sfs.roomManager;
 			
 			// Add room to room manager
-			roomManager.addRoom(newRoom)
+			roomManager.addRoom(newRoom);
 
-			evtParams.room=newRoom
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_ADD, evtParams))
+			evtParams.room = newRoom;
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_ADD, evtParams));
 		}
 		
 		// Failure
 		else
 		{
-			var errorCd:Int=obj.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, obj.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = obj.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, obj.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_CREATION_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_CREATION_ERROR, evtParams));
 		}
 	}
 	
 	private function fnJoinRoom(msg:IMessage):Void
 	{
-		var roomManager:IRoomManager=sfs.roomManager
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var roomManager:IRoomManager = sfs.roomManager;
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		// set flag off
-		sfs.isJoining=false
+		sfs.isJoining = false;
 		
 		// Success
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
-			var roomObj:ISFSArray<Dynamic>=sfso.getSFSArray(JoinRoomRequest.KEY_ROOM)
-			var userList:ISFSArray<Dynamic>=sfso.getSFSArray(JoinRoomRequest.KEY_USER_LIST)
+			var roomObj:ISFSArray<Dynamic> = sfso.getSFSArray(JoinRoomRequest.KEY_ROOM);
+			var userList:ISFSArray<Dynamic> = sfso.getSFSArray(JoinRoomRequest.KEY_USER_LIST);
 			
 			// Get the joined Room data
-			var room:Room=SFSRoom.fromSFSArray(roomObj)
-			room.roomManager=sfs.roomManager
+			var room:Room = SFSRoom.fromSFSArray(roomObj);
+			room.roomManager = sfs.roomManager;
 			
 			/*
 			* We make sure that the associated Group is checked against the subscribed group list
@@ -261,56 +261,56 @@ class SystemController extends BaseController
 			* In other words all Rooms that are NOT managed belong to Group(s)to which the User
 			* is not subscribed, therefore the server does not keep us updated.
 			*/
-			room=roomManager.replaceRoom(room, roomManager.containsGroup(room.groupId))
+			room = roomManager.replaceRoom(room, roomManager.containsGroup(room.groupId));
 			
 			// Populate room's user list
 			for(var j:Int=0;j<userList.size();j++)
 			{
-				var userObj:ISFSArray<Dynamic>=userList.getSFSArray(j)
+				var userObj:ISFSArray<Dynamic> = userList.getSFSArray(j);
 				
 				// Get user if exist from main UserManager or create a new one
-				var user:User=getOrCreateUser(userObj, true, room)
+				var user:User = getOrCreateUser(userObj, true, room);
 				
 				// Set the playerId
-				user.setPlayerId(userObj.getShort(3), room)
+				user.setPlayerId(userObj.getShort(3), room);
 				
-				room.addUser(user)
+				room.addUser(user);
 			}
 			
 			// Set as joined
-			room.isJoined=true
+			room.isJoined = true;
 			
 			// Set as the last joined Room
-			sfs.lastJoinedRoom=room
+			sfs.lastJoinedRoom = room;
 
-			evtParams.room=room
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_JOIN, evtParams))
+			evtParams.room = room;
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_JOIN, evtParams));
 		}
 		
 		// Failure
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_JOIN_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_JOIN_ERROR, evtParams));
 		}
 	}
 	
 	private function fnUserEnterRoom(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 
-		var room:Room=sfs.roomManager.getRoomById(sfso.getInt("r"))
+		var room:Room = sfs.roomManager.getRoomById(sfso.getInt("r"));
 		
 		if(room !=null)
 		{
-			var userObj:ISFSArray<Dynamic>=sfso.getSFSArray("u")
-			var user:User=getOrCreateUser(userObj, true, room)
+			var userObj:ISFSArray<Dynamic> = sfso.getSFSArray("u");
+			var user:User = getOrCreateUser(userObj, true, room);
 			
-			room.addUser(user)
+			room.addUser(user);
 			
 			sfs.dispatchEvent(new SFSEvent(SFSEvent.USER_ENTER_ROOM, {user:user, room:room}));	
 		} 
@@ -318,24 +318,24 @@ class SystemController extends BaseController
 	
 	private function fnUserCountChange(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
-		var room:Room=sfs.roomManager.getRoomById(sfso.getInt("r"))
+		var room:Room = sfs.roomManager.getRoomById(sfso.getInt("r"));
 		
 		if(room !=null)
 		{
-			var uCount:Int=sfso.getShort("uc")
-			var sCount:Int=0
+			var uCount:Int = sfso.getShort("uc");
+			var sCount:Int = 0;
 			
 			// Check for optional spectator count
-			if(sfso.containsKey("sc"))
-				sCount=sfso.getShort("sc")
+			if (sfso.containsKey("sc"))
+				sCount = sfso.getShort("sc");
 
-			room.userCount=uCount
-			room.spectatorCount=sCount
+			room.userCount = uCount;
+			room.spectatorCount = sCount;
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.USER_COUNT_CHANGE, {room:room, uCount:uCount, sCount:sCount}))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.USER_COUNT_CHANGE, { room:room, uCount:uCount, sCount:sCount } ));
 		}
 	}
 	
@@ -345,148 +345,142 @@ class SystemController extends BaseController
 	*/
 	private function fnUserLost(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
+		var sfso:ISFSObject = msg.content;
 		
-		var uId:Int=sfso.getInt("u")
-		var user:User=sfs.userManager.getUserById(uId)
+		var uId:Int = sfso.getInt("u");
+		var user:User = sfs.userManager.getUserById(uId);
 		
 		if(user !=null)
 		{
 			// keep a copy of the rooms joined by this user
-			var joinedRooms:Array<Dynamic>=sfs.roomManager.getUserRooms(user)
+			var joinedRooms:Array<Dynamic> = sfs.roomManager.getUserRooms(user);
 			
 			// remove from all rooms
-			sfs.roomManager.removeUser(user)
+			sfs.roomManager.removeUser(user);
 			
 			// remove from global user manager
-			var globalUserMan:SFSGlobalUserManager=sfs.userManager as SFSGlobalUserManager
+			var globalUserMan:SFSGlobalUserManager = cast sfs.userManager;
 			globalUserMan.removeUserReference(user, true);
 				
 			// Fire one event in each room
 			for(var room:Room in joinedRooms)
 			{
-				sfs.dispatchEvent(new SFSEvent(SFSEvent.USER_EXIT_ROOM, {user:user, room:room}))
+				sfs.dispatchEvent(new SFSEvent(SFSEvent.USER_EXIT_ROOM, { user:user, room:room } ));
 			}
 		}
 	}
 	
 	private function fnRoomLost(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
-		var rId:Int=sfso.getInt("r")
-		var room:Room=sfs.roomManager.getRoomById(rId)
-		var globalUserManager:IUserManager=sfs.userManager 
+		var rId:Int = sfso.getInt("r");
+		var room:Room = sfs.roomManager.getRoomById(rId);
+		var globalUserManager:IUserManager = sfs.userManager ;
 		
 		if(room !=null)
 		{
 			// remove from all rooms
-			sfs.roomManager.removeRoom(room)
+			sfs.roomManager.removeRoom(room);
 			
 			// remove users in this room from user manager
 			for(var user:User in room.userList)
-				globalUserManager.removeUser(user)
+				globalUserManager.removeUser(user);
 			
 			// Fire event			
-			evtParams.room=room
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_REMOVE, evtParams))
+			evtParams.room = room;
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_REMOVE, evtParams));
 		}
 	}
 	
 	private function checkIfIamLastPlayer(room:Room):Bool
 	{
 		var count:Int=room.isGame ?(room.userCount + room.spectatorCount):room.userCount;
-		return(count==1 && room.containsUser(sfs.mySelf))
+		return(count == 1 && room.containsUser(sfs.mySelf));
 	}
 	
 	private function fnGenericMessage(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var msgType:Int=sfso.getByte(GenericMessageRequest.KEY_MESSAGE_TYPE)
+		var sfso:ISFSObject = msg.content;
+		var msgType:Int = sfso.getByte(GenericMessageRequest.KEY_MESSAGE_TYPE);
 		
 		switch(msgType)
 		{
 			case GenericMessageType.PUBLIC_MSG:
-				handlePublicMessage(sfso)
-				break
+				handlePublicMessage(sfso);
 				
 			case GenericMessageType.PRIVATE_MSG:
-				handlePrivateMessage(sfso)
-				break
+				handlePrivateMessage(sfso);
 				
 			case GenericMessageType.BUDDY_MSG:
-				handleBuddyMessage(sfso)
-				break
+				handleBuddyMessage(sfso);
 				
 			case GenericMessageType.MODERATOR_MSG:
-				handleModMessage(sfso)
-				break
+				handleModMessage(sfso);
 				
 			case GenericMessageType.ADMING_MSG:
-				handleAdminMessage(sfso)
-				break
+				handleAdminMessage(sfso);
 				
 			case GenericMessageType.OBJECT_MSG:
-				handleObjectMessage(sfso)
-				break
+				handleObjectMessage(sfso);
 		}
 	}
 	
 	private function handlePublicMessage(sfso:ISFSObject):Void
 	{
-		var evtParams:Dynamic={}
+		var evtParams:Dynamic = { };
 		
-		var rId:Int=sfso.getInt(GenericMessageRequest.KEY_ROOM_ID)
-		var room:Room=sfs.roomManager.getRoomById(rId)
+		var rId:Int = sfso.getInt(GenericMessageRequest.KEY_ROOM_ID);
+		var room:Room = sfs.roomManager.getRoomById(rId);
 
 		if(room !=null)
 		{
-			evtParams.room=room
-			evtParams.sender=sfs.userManager.getUserById(sfso.getInt(GenericMessageRequest.KEY_USER_ID))
-			evtParams.message=sfso.getUtfString(GenericMessageRequest.KEY_MESSAGE)
-			evtParams.data=sfso.getSFSObject(GenericMessageRequest.KEY_XTRA_PARAMS)
+			evtParams.room = room;
+			evtParams.sender = sfs.userManager.getUserById(sfso.getInt(GenericMessageRequest.KEY_USER_ID));
+			evtParams.message = sfso.getUtfString(GenericMessageRequest.KEY_MESSAGE);
+			evtParams.data = sfso.getSFSObject(GenericMessageRequest.KEY_XTRA_PARAMS);
 			
 			 // Fire event
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.PUBLIC_MESSAGE, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.PUBLIC_MESSAGE, evtParams));
 		}
 		else
-			log.warn("Unexpected, PublicMessage target room doesn't exist. RoomId:" + rId)
+			log.warn("Unexpected, PublicMessage target room doesn't exist. RoomId:" + rId);
 		
 	}
 	
 	public function handlePrivateMessage(sfso:ISFSObject):Void
 	{
-		var evtParams:Dynamic={}
-		var senderId:Int=sfso.getInt(GenericMessageRequest.KEY_USER_ID)
+		var evtParams:Dynamic = { };
+		var senderId:Int = sfso.getInt(GenericMessageRequest.KEY_USER_ID);
 		
 		// See if user exists locally
-		var sender:User=sfs.userManager.getUserById(senderId)
+		var sender:User = sfs.userManager.getUserById(senderId);
 		
 		// Not found locally, see if user details where passed by the Server
 		if(sender==null)
 		{
 			if(!sfso.containsKey(GenericMessageRequest.KEY_SENDER_DATA))
 			{
-				log.warn("Unexpected. Private message has no Sender details!")
-				return
+				log.warn("Unexpected. Private message has no Sender details!");
+				return;
 			}
 			
-			sender=SFSUser.fromSFSArray(sfso.getSFSArray(GenericMessageRequest.KEY_SENDER_DATA))
+			sender = SFSUser.fromSFSArray(sfso.getSFSArray(GenericMessageRequest.KEY_SENDER_DATA));
 		}
 		
-		evtParams.sender=sender
-		evtParams.message=sfso.getUtfString(GenericMessageRequest.KEY_MESSAGE)
-		evtParams.data=sfso.getSFSObject(GenericMessageRequest.KEY_XTRA_PARAMS)
+		evtParams.sender = sender;
+		evtParams.message = sfso.getUtfString(GenericMessageRequest.KEY_MESSAGE);
+		evtParams.data = sfso.getSFSObject(GenericMessageRequest.KEY_XTRA_PARAMS);
 		
 		 // Fire event
-		sfs.dispatchEvent(new SFSEvent(SFSEvent.PRIVATE_MESSAGE, evtParams))
+		sfs.dispatchEvent(new SFSEvent(SFSEvent.PRIVATE_MESSAGE, evtParams));
 	}
 	
 	public function handleBuddyMessage(sfso:ISFSObject):Void
 	{
-		var evtParams:Dynamic={}
-		var senderId:Int=sfso.getInt(GenericMessageRequest.KEY_USER_ID)
+		var evtParams:Dynamic = { };
+		var senderId:Int = sfso.getInt(GenericMessageRequest.K; EY_USER_ID);
 		
 		/*
 		* Look for Buddy
@@ -495,101 +489,101 @@ class SystemController extends BaseController
 		* When there's no mutual Buddy adding(default)and the receiver doesn't have the sender in his BList
 		* If your turn on the useTempBuddy feature, a Temp Buddy will be added to the BList before the message arrives
 		*/
-		var senderBuddy:Buddy=sfs.buddyManager.getBuddyById(senderId)
+		var senderBuddy:Buddy = sfs.buddyManager.getBuddyById(senderId);
 		
-		evtParams.isItMe=sfs.mySelf.id==senderId
-		evtParams.buddy=senderBuddy
-		evtParams.message=sfso.getUtfString(GenericMessageRequest.KEY_MESSAGE)
-		evtParams.data=sfso.getSFSObject(GenericMessageRequest.KEY_XTRA_PARAMS)
+		evtParams.isItMe = sfs.mySelf.id == senderId;
+		evtParams.buddy = senderBuddy;
+		evtParams.message = sfso.getUtfString(GenericMessageRequest.KEY_MESSAGE);
+		evtParams.data = sfso.getSFSObject(GenericMessageRequest.KEY_XTRA_PARAMS);
 		
 		 // Fire event
-		sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_MESSAGE, evtParams))
+		sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_MESSAGE, evtParams));
 	}
 	
 	public function handleModMessage(sfso:ISFSObject):Void
 	{
-		var evtParams:Dynamic={}
+		var evtParams:Dynamic = { };
 		
-		evtParams.sender=SFSUser.fromSFSArray(sfso.getSFSArray(GenericMessageRequest.KEY_SENDER_DATA))
-		evtParams.message=sfso.getUtfString(GenericMessageRequest.KEY_MESSAGE)
-		evtParams.data=sfso.getSFSObject(GenericMessageRequest.KEY_XTRA_PARAMS)
+		evtParams.sender = SFSUser.fromSFSArray(sfso.getSFSArray(GenericMessageRequest.KEY_SENDER_DATA));
+		evtParams.message = sfso.getUtfString(GenericMessageRequest.KEY_MESSAGE);
+		evtParams.data = sfso.getSFSObject(GenericMessageRequest.KEY_XTRA_PARAMS);
 		
 		 // Fire event
-		sfs.dispatchEvent(new SFSEvent(SFSEvent.MODERATOR_MESSAGE, evtParams))
+		sfs.dispatchEvent(new SFSEvent(SFSEvent.MODERATOR_MESSAGE, evtParams));
 	}
 	
 	public function handleAdminMessage(sfso:ISFSObject):Void
 	{
-		var evtParams:Dynamic={}
+		var evtParams:Dynamic = { };
 		
-		evtParams.sender=SFSUser.fromSFSArray(sfso.getSFSArray(GenericMessageRequest.KEY_SENDER_DATA))
-		evtParams.message=sfso.getUtfString(GenericMessageRequest.KEY_MESSAGE)
-		evtParams.data=sfso.getSFSObject(GenericMessageRequest.KEY_XTRA_PARAMS)
+		evtParams.sender = SFSUser.fromSFSArray(sfso.getSFSArray(GenericMessageRequest.KEY_SENDER_DATA));
+		evtParams.message = sfso.getUtfString(GenericMessageRequest.KEY_MESSAGE);
+		evtParams.data = sfso.getSFSObject(GenericMessageRequest.KEY_XTRA_PARAMS);
 		
 		 // Fire event
-		sfs.dispatchEvent(new SFSEvent(SFSEvent.ADMIN_MESSAGE, evtParams))
+		sfs.dispatchEvent(new SFSEvent(SFSEvent.ADMIN_MESSAGE, evtParams));
 	}
 	
 	public function handleObjectMessage(sfso:ISFSObject):Void
 	{
-		var evtParams:Dynamic={}
-		var senderId:Int=sfso.getInt(GenericMessageRequest.KEY_USER_ID)
+		var evtParams:Dynamic = { };
+		var senderId:Int = sfso.getInt(GenericMessageRequest.KEY_USER_ID);
 		
-		evtParams.sender=sfs.userManager.getUserById(senderId)
-		evtParams.message=sfso.getSFSObject(GenericMessageRequest.KEY_XTRA_PARAMS)
+		evtParams.sender = sfs.userManager.getUserById(senderId);
+		evtParams.message = sfso.getSFSObject(GenericMessageRequest.KEY_XTRA_PARAMS);
 		
 		 // Fire event
-		sfs.dispatchEvent(new SFSEvent(SFSEvent.OBJECT_MESSAGE, evtParams))
+		sfs.dispatchEvent(new SFSEvent(SFSEvent.OBJECT_MESSAGE, evtParams));
 	}
 	
 	private function fnUserExitRoom(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
-		var rId:Int=sfso.getInt("r")
-		var uId:Int=sfso.getInt("u")
-		var room:Room=sfs.roomManager.getRoomById(rId)
-		var user:User=sfs.userManager.getUserById(uId)
+		var rId:Int = sfso.getInt("r");
+		var uId:Int = sfso.getInt("u");
+		var room:Room = sfs.roomManager.getRoomById(rId);
+		var user:User = sfs.userManager.getUserById(uId);
 			
 		if(room !=null && user !=null)
 		{
-			room.removeUser(user)
-			sfs.userManager.removeUser(user)
+			room.removeUser(user);
+			sfs.userManager.removeUser(user);
 			
 			// If I have left a room I need to mark the room as NOT JOINED
 			if(user.isItMe && room.isJoined)
 			{
 				// Turn of the Room's joined flag
-				room.isJoined=false
+				room.isJoined = false;
 				
 				// Reset the lastJoinedRoom reference if no Room is currently joined
 				if(sfs.joinedRooms.length==0)
-					sfs.lastJoinedRoom=null
+					sfs.lastJoinedRoom = null;
 				
 				/*
 				* Room is NOT managed, we need to remove it
 				*/	
 				if(!room.isManaged)
-					sfs.roomManager.removeRoom(room)
+					sfs.roomManager.removeRoom(room);
 			}
 			
-			evtParams.user=user
-			evtParams.room=room
+			evtParams.user = user;
+			evtParams.room = room;
 			
 			// Fire event
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.USER_EXIT_ROOM, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.USER_EXIT_ROOM, evtParams));
 		}
 		else
-			log.debug("Failed to handle UserExit event. Room:" + room + ", User:" + user)
+			log.debug("Failed to handle UserExit event. Room:" + room + ", User:" + user);
 	}
 	
 	private function fnClientDisconnection(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var reasonId:Int=sfso.getByte("dr")
+		var sfso:ISFSObject = msg.content;
+		var reasonId:Int = sfso.getByte("dr");
 			
-		sfs.kernel::handleClientDisconnection(ClientDisconnectionReason.getReason(reasonId))
+		sfs.kernel::handleClientDisconnection(ClientDisconnectionReason.getReason(reasonId));
 	}
 	
 	private function fnReconnectionFailure(msg:IMessage):Void
@@ -599,197 +593,197 @@ class SystemController extends BaseController
 	
 	private function fnSetRoomVariables(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
-		var rId:Int=sfso.getInt(SetRoomVariablesRequest.KEY_VAR_ROOM)
-		var varListData:ISFSArray<Dynamic>=sfso.getSFSArray(SetRoomVariablesRequest.KEY_VAR_LIST)
+		var rId:Int = sfso.getInt(SetRoomVariablesRequest.KEY_VAR_ROOM);
+		var varListData:ISFSArray<Dynamic> = sfso.getSFSArray(SetRoomVariablesRequest.KEY_VAR_LIST);
 		
-		var targetRoom:Room=sfs.roomManager.getRoomById(rId)
-		var changedVarNames:Array<Dynamic>=[]
+		var targetRoom:Room = sfs.roomManager.getRoomById(rId);
+		var changedVarNames:Array<Dynamic> = [];
 		
 		if(targetRoom !=null)
 		{
 			for(var j:Int=0;j<varListData.size();j++)
 			{
-				var roomVar:RoomVariable=SFSRoomVariable.fromSFSArray(varListData.getSFSArray(j))
-				targetRoom.setVariable(roomVar)
+				var roomVar:RoomVariable = SFSRoomVariable.fromSFSArray(varListData.getSFSArray(j));
+				targetRoom.setVariable(roomVar);
 				
-				changedVarNames.push(roomVar.name)
+				changedVarNames.push(roomVar.name);
 			}
 			
-			evtParams.changedVars=changedVarNames
-			evtParams.room=targetRoom
+			evtParams.changedVars = changedVarNames;
+			evtParams.room = targetRoom;
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_VARIABLES_UPDATE, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_VARIABLES_UPDATE, evtParams));
 		} 
 		
 		else
-			log.warn("RoomVariablesUpdate, unknown Room id=" + rId)
+			log.warn("RoomVariablesUpdate, unknown Room id=" + rId);
 	}
 	
 	private function fnSetUserVariables(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
-		var uId:Int=sfso.getInt(SetUserVariablesRequest.KEY_USER)
-		var varListData:ISFSArray<Dynamic>=sfso.getSFSArray(SetUserVariablesRequest.KEY_VAR_LIST)
+		var uId:Int = sfso.getInt(SetUserVariablesRequest.KEY_USER);
+		var varListData:ISFSArray<Dynamic> = sfso.getSFSArray(SetUserVariablesRequest.KEY_VAR_LIST);
 		
-		var user:User=sfs.userManager.getUserById(uId)
-		var changedVarNames:Array<Dynamic>=[]
+		var user:User = sfs.userManager.getUserById(uId);
+		var changedVarNames:Array<Dynamic> = [];
 		
 		if(user !=null)
 		{
 			for(var j:Int=0;j<varListData.size();j++)
 			{
-				var userVar:UserVariable=SFSUserVariable.fromSFSArray(varListData.getSFSArray(j))
-				user.setVariable(userVar)
+				var userVar:UserVariable = SFSUserVariable.fromSFSArray(varListData.getSFSArray(j));
+				user.setVariable(userVar);
 				
-				changedVarNames.push(userVar.name)
+				changedVarNames.push(userVar.name);
 			}
 			
-			evtParams.changedVars=changedVarNames
-			evtParams.user=user
+			evtParams.changedVars = changedVarNames;
+			evtParams.user = user;
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.USER_VARIABLES_UPDATE, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.USER_VARIABLES_UPDATE, evtParams));
 		}
 		else
-			log.warn("UserVariablesUpdate:unknown user id=" + uId)
+			log.warn("UserVariablesUpdate:unknown user id=" + uId);
 	}
 	
 	private function fnSubscribeRoomGroup(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::Success::::::::::::::::::::::::::::::::::::::::::::::::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
-			var groupId:String=sfso.getUtfString(SubscribeRoomGroupRequest.KEY_GROUP_ID)
-			var roomListData:ISFSArray<Dynamic>=sfso.getSFSArray(SubscribeRoomGroupRequest.KEY_ROOM_LIST)
+			var groupId:String = sfso.getUtfString(SubscribeRoomGroupRequest.KEY_GROUP_ID);
+			var roomListData:ISFSArray<Dynamic> = sfso.getSFSArray(SubscribeRoomGroupRequest.KEY_ROOM_LIST);
 			
 			// Integrity Check
 			if(sfs.roomManager.containsGroup(groupId))
-				log.warn("SubscribeGroup Dynamic. Group:", groupId, "already subscribed!")
+				log.warn("SubscribeGroup Dynamic. Group:", groupId, "already subscribed!");
 				
-			populateRoomList(roomListData)
+			populateRoomList(roomListData);
 			
 			// Pass the groupId
-			evtParams.groupId=groupId
+			evtParams.groupId = groupId;
 			
 			// Pass the new rooms that are present in the subscribed group
-			evtParams.newRooms=sfs.roomManager.getRoomListFromGroup(groupId)
+			evtParams.newRooms = sfs.roomManager.getRoomListFromGroup(groupId);
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_GROUP_SUBSCRIBE, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_GROUP_SUBSCRIBE, evtParams));
 		}
 		
 		//:::Failure:::::::::::::::::::::::::::::::::::::::::::::::::::::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_GROUP_SUBSCRIBE_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_GROUP_SUBSCRIBE_ERROR, evtParams));
 		}
 	}
 	
 	private function fnUnsubscribeRoomGroup(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::SUCCESS::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
-			var groupId:String=sfso.getUtfString(UnsubscribeRoomGroupRequest.KEY_GROUP_ID)
+			var groupId:String = sfso.getUtfString(UnsubscribeRoomGroupRequest.KEY_GROUP_ID);
 			
 			// Integrity Check
 			if(!sfs.roomManager.containsGroup(groupId))
-				log.warn("UnsubscribeGroup Dynamic. Group:", groupId, "is not subscribed!")
+				log.warn("UnsubscribeGroup Dynamic. Group:", groupId, "is not subscribed!");
 				
-			sfs.roomManager.removeGroup(groupId)
+			sfs.roomManager.removeGroup(groupId);
 			
 			// Pass the groupId
-			evtParams.groupId=groupId
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_GROUP_UNSUBSCRIBE, evtParams))
+			evtParams.groupId = groupId;
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_GROUP_UNSUBSCRIBE, evtParams));
 		}
 		
 		//:::FAILURE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_GROUP_UNSUBSCRIBE_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_GROUP_UNSUBSCRIBE_ERROR, evtParams));
 		}
 	}
 	
 	
 	private function fnChangeRoomName(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::SUCCESS::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
 			// Obtain the target Room
-			var roomId:Int=sfso.getInt(ChangeRoomNameRequest.KEY_ROOM)
-			var targetRoom:Room=sfs.roomManager.getRoomById(roomId)
+			var roomId:Int = sfso.getInt(ChangeRoomNameRequest.KEY_ROOM);
+			var targetRoom:Room = sfs.roomManager.getRoomById(roomId);
 
 			if(targetRoom !=null)
 			{
-				evtParams.oldName=targetRoom.name
-				sfs.roomManager.changeRoomName(targetRoom, sfso.getUtfString(ChangeRoomNameRequest.KEY_NAME))
+				evtParams.oldName = targetRoom.name;
+				sfs.roomManager.changeRoomName(targetRoom, sfso.getUtfString(ChangeRoomNameRequest.KEY_NAME));
 				
-				evtParams.room=targetRoom
-				sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_NAME_CHANGE, evtParams))	
+				evtParams.room = targetRoom;
+				sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_NAME_CHANGE, evtParams));	
 			}
 			
 			// Room not found locally, log error
 			else
 			{
-				log.warn("Room not found, ID:", roomId, ", Room name change failed.")	
+				log.warn("Room not found, ID:", roomId, ", Room name change failed.");	
 			}
 		}
 		
 		//:::FAILURE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_NAME_CHANGE_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_NAME_CHANGE_ERROR, evtParams));
 		}
 		
 	}
 	
 	private function fnChangeRoomPassword(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::SUCCESS::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
 			// Obtain the target Room
-			var roomId:Int=sfso.getInt(ChangeRoomPasswordStateRequest.KEY_ROOM)
-			var targetRoom:Room=sfs.roomManager.getRoomById(roomId)
+			var roomId:Int = sfso.getInt(ChangeRoomPasswordStateRequest.KEY_ROOM);
+			var targetRoom:Room = sfs.roomManager.getRoomById(roomId);
 			
 			if(targetRoom !=null)
 			{
-				sfs.roomManager.changeRoomPasswordState(targetRoom, sfso.getBool(ChangeRoomPasswordStateRequest.KEY_PASS))
-				evtParams.room=targetRoom
-				sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_PASSWORD_STATE_CHANGE, evtParams))
+				sfs.roomManager.changeRoomPasswordState(targetRoom, sfso.getBool(ChangeRoomPasswordStateRequest.KEY_PASS));
+				evtParams.room = targetRoom;
+				sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_PASSWORD_STATE_CHANGE, evtParams));
 			}
 			
 			else
 			{
-				log.warn("Room not found, ID:", roomId, ", Room password change failed.")
+				log.warn("Room not found, ID:", roomId, ", Room password change failed.");
 			}
 			
 		}
@@ -797,25 +791,25 @@ class SystemController extends BaseController
 		//:::FAILURE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_PASSWORD_STATE_CHANGE_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_PASSWORD_STATE_CHANGE_ERROR, evtParams));
 		}
 	}
 	
 	private function fnChangeRoomCapacity(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::SUCCESS::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
 			// Obtain the target Room
-			var roomId:Int=sfso.getInt(ChangeRoomCapacityRequest.KEY_ROOM)
-			var targetRoom:Room=sfs.roomManager.getRoomById(roomId)
+			var roomId:Int = sfso.getInt(ChangeRoomCapacityRequest.KEY_ROOM);
+			var targetRoom:Room = sfs.roomManager.getRoomById(roomId);
 			
 			if(targetRoom !=null)
 			{
@@ -826,13 +820,13 @@ class SystemController extends BaseController
 					sfso.getInt(ChangeRoomCapacityRequest.KEY_SPEC_SIZE)
 				)
 				
-				evtParams.room=targetRoom
-				sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_CAPACITY_CHANGE, evtParams))
+				evtParams.room = targetRoom;
+				sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_CAPACITY_CHANGE, evtParams));
 			}
 			
 			else
 			{
-				log.warn("Room not found, ID:", roomId, ", Room capacity change failed.")
+				log.warn("Room not found, ID:", roomId, ", Room capacity change failed.");
 			}
 			
 		}
@@ -840,41 +834,41 @@ class SystemController extends BaseController
 		//:::FAILURE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_CAPACITY_CHANGE_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_CAPACITY_CHANGE_ERROR, evtParams));
 		}
 	}
 	
 	private function fnLogout(msg:IMessage):Void
 	{
-		sfs.kernel::handleLogout()
+		sfs.handleLogout();
 		
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
-		evtParams.zoneName=sfso.getUtfString(LogoutRequest.KEY_ZONE_NAME)
-		sfs.dispatchEvent(new SFSEvent(SFSEvent.LOGOUT, evtParams))
+		evtParams.zoneName = sfso.getUtfString(LogoutRequest.KEY_ZONE_NAME);
+		sfs.dispatchEvent(new SFSEvent(SFSEvent.LOGOUT, evtParams));
 		
 	}
 	
 	private function fnSpectatorToPlayer(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::SUCCESS::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
 			// Obtain the target Room
-			var roomId:Int=sfso.getInt(SpectatorToPlayerRequest.KEY_ROOM_ID)
-			var userId:Int=sfso.getInt(SpectatorToPlayerRequest.KEY_USER_ID)
-			var playerId:Int=sfso.getShort(SpectatorToPlayerRequest.KEY_PLAYER_ID)
+			var roomId:Int = sfso.getInt(SpectatorToPlayerRequest.KEY_ROOM_ID);
+			var userId:Int = sfso.getInt(SpectatorToPlayerRequest.KEY_USER_ID);
+			var playerId:Int = sfso.getShort(SpectatorToPlayerRequest.KEY_PLAYER_ID);
 			
-			var user:User=sfs.userManager.getUserById(userId)
-			var targetRoom:Room=sfs.roomManager.getRoomById(roomId)
+			var user:User = sfs.userManager.getUserById(userId);
+			var targetRoom:Room = sfs.roomManager.getRoomById(roomId);
 			
 			if(targetRoom !=null)
 			{
@@ -883,50 +877,50 @@ class SystemController extends BaseController
 					if(user.isJoinedInRoom(targetRoom))
 					{
 						// Update the playerId
-						user.setPlayerId(playerId, targetRoom)
+						user.setPlayerId(playerId, targetRoom);
 													
-						evtParams.room=targetRoom			// where it happened
-						evtParams.user=user				// who did it
-						evtParams.playerId=playerId		// the new playerId
+						evtParams.room = targetRoom	;		// where it happened
+						evtParams.user = user;				// who did it
+						evtParams.playerId = playerId;		// the new playerId
 						
-						sfs.dispatchEvent(new SFSEvent(SFSEvent.SPECTATOR_TO_PLAYER, evtParams))
+						sfs.dispatchEvent(new SFSEvent(SFSEvent.SPECTATOR_TO_PLAYER, evtParams));
 					}
 					else
-						log.warn("User:" + user + " not joined in Room:", targetRoom, ", SpectatorToPlayer failed.")
+						log.warn("User:" + user + " not joined in Room:", targetRoom, ", SpectatorToPlayer failed.");
 				}
 				else
-					log.warn("User not found, ID:", userId, ", SpectatorToPlayer failed.")
+					log.warn("User not found, ID:", userId, ", SpectatorToPlayer failed.");
 			}
 			
 			else
-				log.warn("Room not found, ID:", roomId, ", SpectatorToPlayer failed.")
+				log.warn("Room not found, ID:", roomId, ", SpectatorToPlayer failed.");
 		}
 		
 		//:::FAILURE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.SPECTATOR_TO_PLAYER_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.SPECTATOR_TO_PLAYER_ERROR, evtParams));
 		}
 	}
 	
 	private function fnPlayerToSpectator(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::SUCCESS::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
 			// Obtain the target Room
-			var roomId:Int=sfso.getInt(PlayerToSpectatorRequest.KEY_ROOM_ID)
-			var userId:Int=sfso.getInt(PlayerToSpectatorRequest.KEY_USER_ID)
+			var roomId:Int = sfso.getInt(PlayerToSpectatorRequest.KEY_ROOM_ID);
+			var userId:Int = sfso.getInt(PlayerToSpectatorRequest.KEY_USER_ID);
 			
-			var user:User=sfs.userManager.getUserById(userId)
-			var targetRoom:Room=sfs.roomManager.getRoomById(roomId)
+			var user:User = sfs.userManager.getUserById(userId);
+			var targetRoom:Room = sfs.roomManager.getRoomById(roomId);
 			
 			if(targetRoom !=null)
 			{
@@ -935,31 +929,31 @@ class SystemController extends BaseController
 					if(user.isJoinedInRoom(targetRoom))
 					{
 						// Update the playerId
-						user.setPlayerId(-1, targetRoom)
+						user.setPlayerId( -1, targetRoom);
 						
-						evtParams.room=targetRoom			// where it happened
-						evtParams.user=user				// who did it
+						evtParams.room = targetRoom;			// where it happened
+						evtParams.user = user;				// who did it
 						
-						sfs.dispatchEvent(new SFSEvent(SFSEvent.PLAYER_TO_SPECTATOR, evtParams))
+						sfs.dispatchEvent(new SFSEvent(SFSEvent.PLAYER_TO_SPECTATOR, evtParams));
 					}
 					else
-						log.warn("User:" + user + " not joined in Room:", targetRoom, ", PlayerToSpectator failed.")
+						log.warn("User:" + user + " not joined in Room:", targetRoom, ", PlayerToSpectator failed.");
 				}
 				else
-					log.warn("User not found, ID:", userId, ", PlayerToSpectator failed.")
+					log.warn("User not found, ID:", userId, ", PlayerToSpectator failed.");
 			}
 			else
-				log.warn("Room not found, ID:", roomId, ", PlayerToSpectator failed.")
+				log.warn("Room not found, ID:", roomId, ", PlayerToSpectator failed.");
 		}
 		
 		//:::FAILURE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 				
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.PLAYER_TO_SPECTATOR_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.PLAYER_TO_SPECTATOR_ERROR, evtParams));
 		}
 	}
 	
@@ -970,171 +964,171 @@ class SystemController extends BaseController
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	private function fnInitBuddyList(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::SUCCESS:::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
 			//var buddyList:Array<Dynamic>=[]
-			var bListData:ISFSArray<Dynamic>=sfso.getSFSArray(InitBuddyListRequest.KEY_BLIST)
-			var myVarsData:ISFSArray<Dynamic>=sfso.getSFSArray(InitBuddyListRequest.KEY_MY_VARS)
-			var buddyStates:Array<Dynamic>=sfso.getUtfStringArray(InitBuddyListRequest.KEY_BUDDY_STATES)
+			var bListData:ISFSArray<Dynamic> = sfso.getSFSArray(InitBuddyListRequest.KEY_BLIST);
+			var myVarsData:ISFSArray<Dynamic> = sfso.getSFSArray(InitBuddyListRequest.KEY_MY_VARS);
+			var buddyStates:Array<Dynamic> = sfso.getUtfStringArray(InitBuddyListRequest.KEY_BUDDY_STATES);
 			
 			// Clear BuddyManager
-			sfs.buddyManager.clearAll()
+			sfs.buddyManager.clearAll();
 			
 			// Populate the BuddyList
-			for(var i:Int=0;i<bListData.size();i++)
+			for(i in 0...bListData.size())
 			{
-				var b:Buddy=SFSBuddy.fromSFSArray(bListData.getSFSArray(i))
-				sfs.buddyManager.addBuddy(b)
+				var b:Buddy = SFSBuddy.fromSFSArray(bListData.getSFSArray(i));
+				sfs.buddyManager.addBuddy(b);
 			}
 			
 			// Set the buddy states
 			if(buddyStates !=null)
-				sfs.buddyManager.setBuddyStates(buddyStates)
+				sfs.buddyManager.setBuddyStates(buddyStates);
 			
 			// Populate MyBuddyVariables
-			var myBuddyVariables:Array<Dynamic>=[]
+			var myBuddyVariables:Array<Dynamic> = [];
 			
-			for(i=0;i<myVarsData.size();i++)
+			for(i in 0...myVarsData.size())
 			{
-				myBuddyVariables.push(SFSBuddyVariable.fromSFSArray(myVarsData.getSFSArray(i)))
+				myBuddyVariables.push(SFSBuddyVariable.fromSFSArray(myVarsData.getSFSArray(i)));
 			}
 			
-			sfs.buddyManager.setMyVariables(myBuddyVariables)
-			sfs.buddyManager.setInited(true)
+			sfs.buddyManager.setMyVariables(myBuddyVariables);
+			sfs.buddyManager.setInited(true);
 			
 			// Fire event
-			evtParams.buddyList=sfs.buddyManager.buddyList
-			evtParams.myVariables=sfs.buddyManager.myVariables
+			evtParams.buddyList = sfs.buddyManager.buddyList;
+			evtParams.myVariables = sfs.buddyManager.myVariables;
 						
-			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_LIST_INIT, evtParams))
+			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_LIST_INIT, evtParams));
 
 		}
 		
 		//:::FAILURE:::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ERROR, evtParams));
 		}
 	}
 
 	
 	private function fnAddBuddy(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::SUCCESS:::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
-			var buddy:Buddy=SFSBuddy.fromSFSArray(sfso.getSFSArray(AddBuddyRequest.KEY_BUDDY_NAME))
-			sfs.buddyManager.addBuddy(buddy)
+			var buddy:Buddy = SFSBuddy.fromSFSArray(sfso.getSFSArray(AddBuddyRequest.KEY_BUDDY_NAME));
+			sfs.buddyManager.addBuddy(buddy);
 			
 			// Fire event
-			evtParams.buddy=buddy
-			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ADD, evtParams))
+			evtParams.buddy = buddy;
+			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ADD, evtParams));
 		}
 		
 		//:::FAILURE:::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ERROR, evtParams));
 		}
 	}
 	
 	private function fnRemoveBuddy(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::SUCCESS:::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
-			var buddyName:String=sfso.getUtfString(RemoveBuddyRequest.KEY_BUDDY_NAME)
-			var buddy:Buddy=sfs.buddyManager.removeBuddyByName(buddyName)
+			var buddyName:String = sfso.getUtfString(RemoveBuddyRequest.KEY_BUDDY_NAME);
+			var buddy:Buddy = sfs.buddyManager.removeBuddyByName(buddyName);
 			
 			if(buddy !=null)
 			{
 				// Fire event
-				evtParams.buddy=buddy
-				sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_REMOVE, evtParams))
+				evtParams.buddy = buddy;
+				sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_REMOVE, evtParams));
 			}
 			else
-				log.warn("RemoveBuddy failed, buddy not found:" + buddyName)
+				log.warn("RemoveBuddy failed, buddy not found:" + buddyName);
 		}
 		
 		//:::FAILURE:::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ERROR, evtParams));
 		}
 	}
 	
 	private function fnBlockBuddy(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::SUCCESS:::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
-			var buddyName:String=sfso.getUtfString(BlockBuddyRequest.KEY_BUDDY_NAME)
-			var buddy:Buddy=sfs.buddyManager.getBuddyByName(buddyName)
+			var buddyName:String = sfso.getUtfString(BlockBuddyRequest.KEY_BUDDY_NAME);
+			var buddy:Buddy = sfs.buddyManager.getBuddyByName(buddyName);
 			
 			if(buddy !=null)
 			{
 				// Set the BuddyBlock State
-				buddy.setBlocked(sfso.getBool(BlockBuddyRequest.KEY_BUDDY_BLOCK_STATE))
+				buddy.setBlocked(sfso.getBool(BlockBuddyRequest.KEY_BUDDY_BLOCK_STATE));
 				
 				// Fire event
-				evtParams.buddy=buddy
-				sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_BLOCK, evtParams))
+				evtParams.buddy = buddy;
+				sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_BLOCK, evtParams));
 			}
 			else
-				log.warn("BlockBuddy failed, buddy not found:" + buddyName + ", in local BuddyList")
+				log.warn("BlockBuddy failed, buddy not found:" + buddyName + ", in local BuddyList");
 		}
 		
 		//:::FAILURE:::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ERROR, evtParams));
 		}
 	}
 	
 	private function fnGoOnline(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::SUCCESS:::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
-			var buddyName:String=sfso.getUtfString(GoOnlineRequest.KEY_BUDDY_NAME)
-			var buddy:Buddy=sfs.buddyManager.getBuddyByName(buddyName)
-			var isItMe:Bool=buddyName==sfs.mySelf.name
-			var onlineValue:Int=sfso.getByte(GoOnlineRequest.KEY_ONLINE)
-			var onlineState:Bool=onlineValue==BuddyOnlineState.ONLINE 
+			var buddyName:String = sfso.getUtfString(GoOnlineRequest.KEY_BUDDY_NAME);
+			var buddy:Buddy = sfs.buddyManager.getBuddyByName(buddyName);
+			var isItMe:Bool = buddyName == sfs.mySelf.name;
+			var onlineValue:Int = sfso.getByte(GoOnlineRequest.KEY_ONLINE);
+			var onlineState:Bool = onlineValue == BuddyOnlineState.ONLINE ;
 			
-			var fireEvent:Bool=true
+			var fireEvent:Bool = true;
 			
 			if(isItMe)
 			{
@@ -1145,8 +1139,8 @@ class SystemController extends BaseController
 				*/
 				if(sfs.buddyManager.myOnlineState !=onlineState)
 				{
-					log.warn("Unexpected:MyOnlineState is not in synch with the server. Resynching:" + onlineState)
-					sfs.buddyManager.setMyOnlineState(onlineState)
+					log.warn("Unexpected:MyOnlineState is not in synch with the server. Resynching:" + onlineState);
+					sfs.buddyManager.setMyOnlineState(onlineState);
 				}
 			}
 			
@@ -1154,133 +1148,133 @@ class SystemController extends BaseController
 			else if(buddy !=null)
 			{
 				// Set the BuddyBlock State
-				buddy.setId(sfso.getInt(GoOnlineRequest.KEY_BUDDY_ID))
-				buddy.setVariable(new SFSBuddyVariable(ReservedBuddyVariables.BV_ONLINE, onlineState))
+				buddy.setId(sfso.getInt(GoOnlineRequest.KEY_BUDDY_ID));
+				buddy.setVariable(new SFSBuddyVariable(ReservedBuddyVariables.BV_ONLINE, onlineState));
 				
 				/*
 				* Did the buddy leave the server?
 				* If so we need to remove the volatile buddy variables(not persistent)
 				*/
 				if(onlineValue==BuddyOnlineState.LEFT_THE_SERVER)
-					buddy.clearVolatileVariables()
+					buddy.clearVolatileVariables();
 					
 				/*
 				* Event is NOT fired if a buddy goes on/offline while I am off-line
 				* This is equivalent to checking(buddy !=null && sfs.buddyManager.myOnlineState)before firing the event
 				*/
-				fireEvent=sfs.buddyManager.myOnlineState
+				fireEvent = sfs.buddyManager.myOnlineState;
 			}
 			
 			// Buddy not found, it's not me... something is wrong
 			else
 			{
 				// Log and Exit
-				log.warn("GoOnline error, buddy not found:" + buddyName + ", in local BuddyList.")
-				return
+				log.warn("GoOnline error, buddy not found:" + buddyName + ", in local BuddyList.");
+				return;
 			}
 			
 			if(fireEvent)
 			{
-				evtParams.buddy=buddy
-				evtParams.isItMe=isItMe
-				sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ONLINE_STATE_UPDATE, evtParams))
+				evtParams.buddy = buddy;
+				evtParams.isItMe = isItMe;
+				sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ONLINE_STATE_UPDATE, evtParams));
 			} 
 		}
 		
 		//:::FAILURE:::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ERROR, evtParams));
 		}
 	}
 	
 	private function fnSetBuddyVariables(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::SUCCESS:::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
-			var buddyName:String=sfso.getUtfString(SetBuddyVariablesRequest.KEY_BUDDY_NAME)
-			var buddyVarsData:ISFSArray<Dynamic>=sfso.getSFSArray(SetBuddyVariablesRequest.KEY_BUDDY_VARS)
+			var buddyName:String = sfso.getUtfString(SetBuddyVariablesRequest.KEY_BUDDY_NAME);
+			var buddyVarsData:ISFSArray<Dynamic> = sfso.getSFSArray(SetBuddyVariablesRequest.KEY_BUDDY_VARS);
 			
-			var buddy:Buddy=sfs.buddyManager.getBuddyByName(buddyName)
+			var buddy:Buddy = sfs.buddyManager.getBuddyByName(buddyName);
 			
-			var isItMe:Bool=buddyName==sfs.mySelf.name
+			var isItMe:Bool = buddyName == sfs.mySelf.name;
 			
-			var changedVarNames:Array<Dynamic>=[]
-			var variables:Array<Dynamic>=[]
+			var changedVarNames:Array<Dynamic> = [];
+			var variables:Array<Dynamic> = [];
 			
-			var fireEvent:Bool=true
+			var fireEvent:Bool = true;
 			
 			// Rebuild variables
 			for(var j:Int=0;j<buddyVarsData.size();j++)
 			{
-				var buddyVar:BuddyVariable=SFSBuddyVariable.fromSFSArray(buddyVarsData.getSFSArray(j))
+				var buddyVar:BuddyVariable = SFSBuddyVariable.fromSFSArray(buddyVarsData.getSFSArray(j));
 				
-				variables.push(buddyVar)
-				changedVarNames.push(buddyVar.name)
+				variables.push(buddyVar);
+				changedVarNames.push(buddyVar.name);
 			}
 			
 			// If it's my user, change my local variables
 			if(isItMe)
 			{
-				sfs.buddyManager.setMyVariables(variables)
+				sfs.buddyManager.setMyVariables(variables);
 			}
 			
 			// or ... change the variables of one of my buddies
 			else if(buddy !=null)
 			{
-				buddy.setVariables(variables)
+				buddy.setVariables(variables);
 				
 				// See GoOnline handler for more details on this
-				fireEvent=sfs.buddyManager.myOnlineState
+				fireEvent = sfs.buddyManager.myOnlineState;
 			}
 			
 			// Unexpected:it's not me, it's not one of my buddies. Log and quit
 			else
 			{
-				log.warn("Unexpected. Target of BuddyVariables update not found:" + buddyName)
-				return
+				log.warn("Unexpected. Target of BuddyVariables update not found:" + buddyName);
+				return;
 			}
 			
 			if(fireEvent)
 			{
-				evtParams.isItMe=isItMe
-				evtParams.changedVars=changedVarNames
-				evtParams.buddy=buddy
+				evtParams.isItMe = isItMe;
+				evtParams.changedVars = changedVarNames;
+				evtParams.buddy = buddy;
 				
-				sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_VARIABLES_UPDATE, evtParams))
+				sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_VARIABLES_UPDATE, evtParams));
 			}
 		}
 		
 		//:::FAILURE:::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSBuddyEvent(SFSBuddyEvent.BUDDY_ERROR, evtParams));
 		}
 	}
 	
 	private function fnFindRooms(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
-		var roomListData:ISFSArray<Dynamic>=sfso.getSFSArray(FindRoomsRequest.KEY_FILTERED_ROOMS)
-		var roomList:Array<Dynamic>=[]
+		var roomListData:ISFSArray<Dynamic> = sfso.getSFSArray(FindRoomsRequest.KEY_FILTERED_ROOMS);
+		var roomList:Array<Dynamic> = [];
 		
 		for(var i:Int=0;i<roomListData.size();i++)
 		{
-			var theRoom:Room=SFSRoom.fromSFSArray(roomListData.getSFSArray(i))
+			var theRoom:Room = SFSRoom.fromSFSArray(roomListData.getSFSArray(i));
 				
 			// Flag Rooms that are joined locally
 			var localRoom:Room=sfs.roomManager.getRoomById(theRoom.id);
@@ -1291,111 +1285,111 @@ class SystemController extends BaseController
 			roomList.push(theRoom);	
 		}
 		
-		evtParams.rooms=roomList
-		sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_FIND_RESULT, evtParams))
+		evtParams.rooms = roomList;
+		sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_FIND_RESULT, evtParams));
 	}
 	
 	private function fnFindUsers(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
-		var userListData:ISFSArray<Dynamic>=sfso.getSFSArray(FindUsersRequest.KEY_FILTERED_USERS)
-		var userList:Array<Dynamic>=[]
-		var mySelf:User=sfs.mySelf
+		var userListData:ISFSArray<Dynamic> = sfso.getSFSArray(FindUsersRequest.KEY_FILTERED_USERS);
+		var userList:Array<Dynamic> = [];
+		var mySelf:User = sfs.mySelf;
 			
 		for(var i:Int=0;i<userListData.size();i++)
 		{
-			var u:User=SFSUser.fromSFSArray(userListData.getSFSArray(i))
+			var u:User = SFSUser.fromSFSArray(userListData.getSFSArray(i));
 			
 			/*
 			* Since 0.9.6
 			* Swap the original object, this way we have the isItMe flag correctly populated
 			*/
 			if(u.id==mySelf.id)
-				u=mySelf
+				u = mySelf;
 					
-			userList.push(u)	
+			userList.push(u);
 		}
 		
-		evtParams.users=userList
-		sfs.dispatchEvent(new SFSEvent(SFSEvent.USER_FIND_RESULT, evtParams))
+		evtParams.users = userList;
+		sfs.dispatchEvent(new SFSEvent(SFSEvent.USER_FIND_RESULT, evtParams));
 	}
 	
 	private function fnInviteUsers(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
-		var inviter:User=null
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
+		var inviter:User = null;
 		
 		// Determine if the user is local(id was sent)or not(whole User object was sent)
 		if(sfso.containsKey(InviteUsersRequest.KEY_USER_ID))
-			inviter=sfs.userManager.getUserById(sfso.getInt(InviteUsersRequest.KEY_USER_ID))
+			inviter = sfs.userManager.getUserById(sfso.getInt(InviteUsersRequest.KEY_USER_ID));
 		else
-			inviter=SFSUser.fromSFSArray(sfso.getSFSArray(InviteUsersRequest.KEY_USER))
+			inviter = SFSUser.fromSFSArray(sfso.getSFSArray(InviteUsersRequest.KEY_USER));
 			
-		var expiryTime:Int=sfso.getShort(InviteUsersRequest.KEY_TIME)
-		var invitationId:Int=sfso.getInt(InviteUsersRequest.KEY_INVITATION_ID)
-		var invParams:ISFSObject=sfso.getSFSObject(InviteUsersRequest.KEY_PARAMS)
-		var invitation:Invitation=new SFSInvitation(inviter, sfs.mySelf, expiryTime, invParams)
-		invitation.id=invitationId
+		var expiryTime:Int = sfso.getShort(InviteUsersRequest.KEY_TIME);
+		var invitationId:Int = sfso.getInt(InviteUsersRequest.KEY_INVITATION_ID);
+		var invParams:ISFSObject = sfso.getSFSObject(InviteUsersRequest.KEY_PARAMS);
+		var invitation:Invitation = new SFSInvitation(inviter, sfs.mySelf, expiryTime, invParams);
+		invitation.id = invitationId;
 		
-		evtParams.invitation=invitation
-		sfs.dispatchEvent(new SFSEvent(SFSEvent.INVITATION, evtParams))
+		evtParams.invitation = invitation;
+		sfs.dispatchEvent(new SFSEvent(SFSEvent.INVITATION, evtParams));
 	}
 	
 	private function fnInvitationReply(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::SUCCESS:::
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
-			var invitee:User=null
+			var invitee:User = null;
 			
 			// Determine if the invitee is local(id was sent)or not(whole User object was sent)
 			if(sfso.containsKey(InviteUsersRequest.KEY_USER_ID))
-				invitee=sfs.userManager.getUserById(sfso.getInt(InviteUsersRequest.KEY_USER_ID))
+				invitee = sfs.userManager.getUserById(sfso.getInt(InviteUsersRequest.KEY_USER_ID));
 			else
-				invitee=SFSUser.fromSFSArray(sfso.getSFSArray(InviteUsersRequest.KEY_USER))
+				invitee = SFSUser.fromSFSArray(sfso.getSFSArray(InviteUsersRequest.KEY_USER));
 				
-			var reply:Int=sfso.getUnsignedByte(InviteUsersRequest.KEY_REPLY_ID)
-			var data:ISFSObject=sfso.getSFSObject(InviteUsersRequest.KEY_PARAMS)
+			var reply:Int = sfso.getUnsignedByte(InviteUsersRequest.KEY_REPLY_ID);
+			var data:ISFSObject = sfso.getSFSObject(InviteUsersRequest.KEY_PARAMS);
 			
-			evtParams.invitee=invitee
-			evtParams.reply=reply
-			evtParams.data=data
+			evtParams.invitee = invitee;
+			evtParams.reply = reply;
+			evtParams.data = data;
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.INVITATION_REPLY, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.INVITATION_REPLY, evtParams));
 			
 		}
 		
 		//:::FAILURE:::
 		else
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.INVITATION_REPLY_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.INVITATION_REPLY_ERROR, evtParams));
 		}
 	}
 	
 	private function fnQuickJoinGame(msg:IMessage):Void
 	{
 		// NOTE:this is called only in case of error, when no Games to join where found
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
 		//:::GRAB ERROR:::
 		if(sfso.containsKey(BaseRequest.KEY_ERROR_CODE))
 		{
-			var errorCd:Int=sfso.getShort(BaseRequest.KEY_ERROR_CODE)
-			var errorMsg:String=SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS))
-			evtParams={errorMessage:errorMsg, errorCode:errorCd}
+			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
+			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
+			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
-			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_JOIN_ERROR, evtParams))
+			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_JOIN_ERROR, evtParams));
 		}
 	}
 	
@@ -1404,7 +1398,7 @@ class SystemController extends BaseController
 		var avg:Int=sfs.kernel::lagMonitor.onPingPong();
 
 		// Redispatch at the user level
-		var newEvt:SFSEvent=new SFSEvent(SFSEvent.PING_PONG, {lagValue:avg})
+		var newEvt:SFSEvent = new SFSEvent(SFSEvent.PING_PONG, { lagValue:avg } );
 		sfs.dispatchEvent(newEvt);
 	}
 	
@@ -1413,10 +1407,10 @@ class SystemController extends BaseController
 	*/
 	private function fnSetUserPosition(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 		
-		var roomId:Int=sfso.getInt(SetUserPositionRequest.KEY_ROOM);	
+		var roomId:Int = sfso.getInt(SetUserPositionRequest.KEY_ROOM);	
 		var minusUserList:Array<Dynamic>=sfso.getIntArray(SetUserPositionRequest.KEY_MINUS_USER_LIST);
 		var plusUserList:ISFSArray<Dynamic>=sfso.getSFSArray(SetUserPositionRequest.KEY_PLUS_USER_LIST);
 		
@@ -1425,7 +1419,7 @@ class SystemController extends BaseController
 		
 		var theRoom:Room=sfs.roomManager.getRoomById(roomId);
 		
-		var addedUsers:Array<Dynamic>=[]
+		var addedUsers:Array<Dynamic> = [];
 		var removedUsers:Array<Dynamic>=[];
 		var addedItems:Array<Dynamic>=[];
 		var removedItems:Array<Dynamic>=[];
@@ -1448,7 +1442,7 @@ class SystemController extends BaseController
 		// Add new users that are now in proximity
 		if(plusUserList !=null)
 		{
-			for(i=0;i<plusUserList.size();i++)
+			for(i in 0...plusUserList.size())
 			{
 				var encodedUser:ISFSArray<Dynamic>=plusUserList.getSFSArray(i);
 				
@@ -1521,19 +1515,19 @@ class SystemController extends BaseController
 		evtParams.addedUsers=addedUsers;
 		evtParams.room=cast(theRoom, MMORoom);
 		
-		sfs.dispatchEvent(new SFSEvent(SFSEvent.PROXIMITY_LIST_UPDATE, evtParams))
+		sfs.dispatchEvent(new SFSEvent(SFSEvent.PROXIMITY_LIST_UPDATE, evtParams));
 	}
 	
 	private function fnSetMMOItemVariables(msg:IMessage):Void
 	{
-		var sfso:ISFSObject=msg.content
-		var evtParams:Dynamic={}
+		var sfso:ISFSObject = msg.content;
+		var evtParams:Dynamic = { };
 			
 		var roomId:Int=sfso.getInt(SetMMOItemVariables.KEY_ROOM_ID);
 		var mmoItemId:Int=sfso.getInt(SetMMOItemVariables.KEY_ITEM_ID);
 		var varList:ISFSArray<Dynamic>=sfso.getSFSArray(SetMMOItemVariables.KEY_VAR_LIST);
 		
-		var mmoRoom:MMORoom=sfs.getRoomById(roomId)as MMORoom;
+		var mmoRoom:MMORoom= cast sfs.getRoomById(roomId);
 		var changedVarNames:Array<Dynamic>=[];
 			
 		if(mmoRoom !=null)
@@ -1563,29 +1557,29 @@ class SystemController extends BaseController
 	
 	private function populateRoomList(roomList:ISFSArray):Void
 	{
-		var roomManager:IRoomManager=sfs.roomManager
+		var roomManager:IRoomManager = sfs.roomManager;
 		
 		// Cycle through each room object
 		for(var j:Int=0;j<roomList.size();j++)
 		{
-			var roomObj:ISFSArray<Dynamic>=roomList.getSFSArray(j)
-			var newRoom:Room=SFSRoom.fromSFSArray(roomObj)
+			var roomObj:ISFSArray<Dynamic> = roomList.getSFSArray(j);
+			var newRoom:Room = SFSRoom.fromSFSArray(roomObj);
 			
-			roomManager.replaceRoom(newRoom)
+			roomManager.replaceRoom(newRoom);
 		}
 	}
 	
 	private function getOrCreateUser(userObj:ISFSArray, addToGlobalManager:Bool=false, room:Room=null):User
 	{
 		// Get id
-		var uId:Int=userObj.getInt(0)
-		var user:User=sfs.userManager.getUserById(uId)
+		var uId:Int = userObj.getInt(0);
+		var user:User = sfs.userManager.getUserById(uId);
 		
 		// User is not managed, build the object from Server data
 		if(user==null)
 		{
-			user=SFSUser.fromSFSArray(userObj, room)
-			user.userManager=sfs.userManager
+			user = SFSUser.fromSFSArray(userObj, room);
+			user.userManager = sfs.userManager;
 		}
 		
 		// User is already managed, make sure to update the playerId
@@ -1594,18 +1588,18 @@ class SystemController extends BaseController
 		// Also the user could have updated his variables, so change them as well
 		else if(room !=null)
 		{
-			user.setPlayerId(userObj.getShort(3), room)
+			user.setPlayerId(userObj.getShort(3), room);
 			
-			var uVars:ISFSArray<Dynamic>=userObj.getSFSArray(4)
+			var uVars:ISFSArray<Dynamic> = userObj.getSFSArray(4);
 			for(var i:Int=0;i<uVars.size();i++)
 			{
-				user.setVariable(SFSUserVariable.fromSFSArray(uVars.getSFSArray(i)))
+				user.setVariable(SFSUserVariable.fromSFSArray(uVars.getSFSArray(i)));
 			}
 		}
 			
 		// Add if new
 		if(addToGlobalManager)
-			sfs.userManager.addUser(user)
+			sfs.userManager.addUser(user);
 		
 		return user
 	}

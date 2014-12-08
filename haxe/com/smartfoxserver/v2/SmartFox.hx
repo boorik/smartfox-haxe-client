@@ -2061,7 +2061,7 @@ class SmartFox extends EventDispatcher
 	}
 	
 	/** @private */
-	function handleLogout():Void
+	public function handleLogout():Void
 	{
 		// TODO:Hide with custom namespace?
 		if(_lagMonitor !=null && _lagMonitor.isRunning)
@@ -2080,7 +2080,7 @@ class SmartFox extends EventDispatcher
 	}
 	
 	/** @private */
-	function handleReconnectionFailure():Void
+	public function handleReconnectionFailure():Void
 	{
 		// Reset reconnection seconds, this way no more reconnections will be available in this session.
 		setReconnectionSeconds(0);
