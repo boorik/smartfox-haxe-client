@@ -1,0 +1,131 @@
+package com.smartfoxserver.v2.entities
+{
+	import com.smartfoxserver.v2.entities.variables.BuddyVariable;
+	
+	/**
+	 * The <em>Buddy</em> interface defines all the methods and properties that an object representing a SmartFoxServer Buddy entity exposes.
+	 * <p>In the SmartFoxServer 2X client API this interface is implemented by the <em>SFSBuddy</em> class. Read the class description for additional informations.</p>
+	 * 
+	 * @see 	SFSBuddy
+	 */
+	public interface Buddy
+	{
+		/**
+		 * Indicates the id of this buddy.
+		 * This is equal to the id assigned by SmartFoxServer to the corresponding user.
+		 * 
+		 * @see		User#id
+		 */
+		function get id():int
+		
+		/**
+		 * Indicates the name of this buddy.
+		 * This is equal to the name of the corresponding user.
+		 * 
+		 * @see		User#name
+		 */
+		function get name():String
+		
+		/**
+		 * Indicates whether this buddy is blocked in the current user's buddies list or not.
+		 * A buddy can be blocked by means of a <em>BlockBuddyRequest</em> request.
+		 * 
+		 * @see 	com.smartfoxserver.v2.requests.buddylist.BlockBuddyRequest BlockBuddyRequest
+		 */
+		function get isBlocked():Boolean
+		
+		/**
+		 * Indicates whether this buddy is online in the Buddy List system or not.
+		 */
+		function get isOnline():Boolean
+		
+		/**
+		 * Indicates whether this buddy is temporary (non-persistent) in the current user's buddies list or not.
+		 */
+		function get isTemp():Boolean
+		
+		/**
+		 * Returns the custom state of this buddy.
+		 * Examples of custom states are "Available", "Busy", "Be right back", etc. If the custom state is not set, <code>null</code> is returned.
+		 * 
+		 * <p>The list of available custom states is returned by the <em>IBuddyManager.buddyStates</em> property.</p>
+		 * 
+		 * @see		com.smartfoxserver.v2.entities.managers.IBuddyManager#buddyStates IBuddyManager.buddyStates
+		 */
+		function get state():String
+		
+		/**
+		 * Returns the nickname of this buddy.
+		 * If the nickname is not set, <code>null</code> is returned.
+		 */
+		function get nickName():String
+		
+		/**
+		 * Returns a list of <em>BuddyVariable</em> objects associated with the buddy.
+		 * 
+		 * @see		com.smartfoxserver.v2.entities.variables.BuddyVariable BuddyVariable
+		 * @see		#getVariable()
+		 */ 
+		function get variables():Array
+		
+		/**
+		 * Retrieves a Buddy Variable from its name.
+		 * 
+		 * @param	varName	The name of the Buddy Variable to be retrieved.
+		 * 
+		 * @return	The <em>BuddyVariable</em> object representing the Buddy Variable, or <code>null</code> if no Buddy Variable with the passed name is associated with this buddy.
+		 * 
+		 * @see		#variables
+		 * @see 	com.smartfoxserver.v2.requests.buddylist.SetBuddyVariablesRequest SetBuddyVariablesRequest
+		 */ 
+		function getVariable(varName:String):BuddyVariable
+		
+		/**
+		 * Return true if a BuddyVariable with the provided name exists
+		 */
+		/**
+		 * Indicates whether this buddy has the specified Buddy Variable set or not.
+		 * 
+		 * @param	name	The name of the Buddy Variable whose existance must be checked.
+		 * 
+		 * @return	<code>true</code> if a Buddy Variable with the passed name is set for this buddy.
+		 */
+		function containsVariable(varName:String):Boolean
+		
+		/**
+		 * Retrieves the list of persistent Buddy Variables of this buddy.
+		 * 
+		 * @return	An array of <em>BuddyVariable</em> objects.
+		 * 
+		 * @see		com.smartfoxserver.v2.entities.variables.BuddyVariable#isOffline BuddyVariable.isOffline
+		 */
+		function getOfflineVariables():Array
+		
+		/**
+		 * Retrieves the list of non-persistent Buddy Variables of this buddy.
+		 * 
+		 * @return	An array of <em>BuddyVariable</em> objects.
+		 * 
+		 * @see		com.smartfoxserver.v2.entities.variables.BuddyVariable#isOffline BuddyVariable.isOffline
+		 */
+		function getOnlineVariables():Array
+		
+		/** @private */
+		function setVariable(bVar:BuddyVariable):void
+		
+		/** @private */
+		function setVariables(variables:Array):void
+		
+		/** @private */
+		function setId(id:int):void
+		
+		/** @private */
+		function setBlocked(value:Boolean):void
+		
+		/** @private */
+		function removeVariable(varName:String):void
+		
+		/** @private */
+		function clearVolatileVariables():void
+	}
+}
