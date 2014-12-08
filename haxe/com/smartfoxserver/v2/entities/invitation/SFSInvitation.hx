@@ -19,19 +19,19 @@ class SFSInvitation implements Invitation
 {
 	// The id is only used when the Invitation is built from a Server Side Invitation
 	/** @private */
-	private var _id:Int
+	private var _id:Int;
 	
 	/** @private */
-	private var _inviter:User
+	private var _inviter:User;
 	
 	/** @private */
-	private var _invitee:User
+	private var _invitee:User;
 	
 	/** @private */
-	private var _secondsForAnswer:Int
+	private var _secondsForAnswer:Int;
 	
 	/** @private */
-	private var _params:ISFSObject
+	private var _params:ISFSObject;
 	
 	/**
 	 * Creates a new<em>SFSInvitation</em>instance.
@@ -50,50 +50,50 @@ class SFSInvitation implements Invitation
 	 */
 	public function new(inviter:User, invitee:User, secondsForAnswer:Int=15, params:ISFSObject=null)
 	{
-		_inviter=inviter
-		_invitee=invitee
-		_secondsForAnswer=secondsForAnswer
-		_params=params	
+		_inviter = inviter;
+		_invitee = invitee;
+		_secondsForAnswer = secondsForAnswer;
+		_params = params;
 	}
 	
 	/** @inheritDoc */
 	public var id(get_id, set_id):Int;
  	private function get_id():Int
 	{
-	 	return _id
+	 	return _id;
 	}
 	
 	/** @private */
 	private function set_id(value:Int):Void
 	{
-		_id=value
+		_id = value;
 	}
 	
 	/** @inheritDoc */
 	public var inviter(get_inviter, null):User;
  	private function get_inviter():User
 	{
-		return _inviter
+		return _inviter;
 	}
 	
 	/** @inheritDoc */
 	public var invitee(get_invitee, null):User;
  	private function get_invitee():User
 	{
-		return _invitee
+		return _invitee;
 	}
 	
 	/** @inheritDoc */
 	public var secondsForAnswer(get_secondsForAnswer, null):Int;
  	private function get_secondsForAnswer():Int
 	{
-		return _secondsForAnswer
+		return _secondsForAnswer;
 	}
 	
 	/** @inheritDoc */
 	public var params(get_params, null):ISFSObject;
  	private function get_params():ISFSObject
 	{
-		return _params
+		return _params;
 	}
 }
