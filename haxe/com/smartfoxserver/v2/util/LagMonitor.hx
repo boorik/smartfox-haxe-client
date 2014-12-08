@@ -63,7 +63,7 @@ class LagMonitor extends EventDispatcher
 	public var isRunning(get_isRunning, null):Bool;
  	private function get_isRunning():Bool
 	{
-		return _thread.running
+		return _thread.running;
 	}
 	
 	public function onPingPong():Int
@@ -73,10 +73,10 @@ class LagMonitor extends EventDispatcher
 		
 		// Remove older value
 		if(_valueQueue.length>=_queueSize)
-			_valueQueue.shift()
+			_valueQueue.shift();
 				
 		// Add new lag
-		_valueQueue.push(lagValue)
+		_valueQueue.push(lagValue);
 			
 		return averagePingTime;
 	}
@@ -98,7 +98,7 @@ class LagMonitor extends EventDispatcher
 		
 		var lagAverage:Int=0;
 		for(var lagValue:Int in _valueQueue)
-			lagAverage +=lagValue
+			lagAverage += lagValue;
 				
 		return lagAverage / _valueQueue.length;
 	}

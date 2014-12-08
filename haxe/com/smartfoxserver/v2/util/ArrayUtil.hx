@@ -10,28 +10,28 @@ class ArrayUtil
 	
 	public static function removeElement(arr:Array, item:Dynamic):Void
 	{
-		var p:Int=arr.indexOf(item)
+		var p:Int = arr.indexOf(item);
 	
 		if(p>-1)
-			arr.splice(p, 1)
+			arr.splice(p, 1);
 	}
 	
 	public static function copy(arr:Array):Array
 	{
-		var arrCopy:Array<Dynamic>=new Array()
+		var arrCopy:Array<Dynamic> = new Array();
 		for(j in 0...arr.length)
-			arrCopy[j]=arr[j]
+			arrCopy[j] = arr[j];
 			
-		return arrCopy
+		return arrCopy;
 	}
 	
 	public static function objToArray(obj:Dynamic):Array
 	{
-		var array:Array<Dynamic>=[]
+		var array:Array<Dynamic> = [];
 		
 		for(var o:Dynamic in obj)
-			array.push(o)
+			array.push(o);
 			
-		return array
+		return array;
 	}
 }

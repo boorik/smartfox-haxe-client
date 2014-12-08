@@ -999,7 +999,7 @@ class SmartFox extends EventDispatcher
 	 * 
 	 * Available under the kernel namespace
 	 */
-	kernel function setAlternateIOHandler(ioHandler:IoHandler):Void
+	function setAlternateIOHandler(ioHandler:IoHandler):Void
 	{
 		if(!_isConnected && !_isConnecting)
 			_bitSwarm.ioHandler = ioHandler;
@@ -1012,7 +1012,7 @@ class SmartFox extends EventDispatcher
 	 * 
 	 * Available under the kernel namespace
 	 */
-	kernel var socketEngine(get_socketEngine, set_socketEngine):BitSwarmClient;
+	var socketEngine(get_socketEngine, set_socketEngine):BitSwarmClient;
  	private function get_socketEngine():BitSwarmClient;
 	{
 		return _bitSwarm;
@@ -1024,7 +1024,7 @@ class SmartFox extends EventDispatcher
 	 * 
 	 * Available under the Kernel namespace
 	 */
-	kernel var lagMonitor(get_lagMonitor, set_lagMonitor):LagMonitor;
+	var lagMonitor(get_lagMonitor, set_lagMonitor):LagMonitor;
  	private function get_lagMonitor():LagMonitor
 	{
 		return _lagMonitor;
@@ -2051,7 +2051,7 @@ class SmartFox extends EventDispatcher
 	}
 	
 	/** @private */
-	kernel function handleClientDisconnection(reason:String):Void
+	function handleClientDisconnection(reason:String):Void
 	{
 		// no reconnections
 		_bitSwarm.reconnectionSeconds = 0;
@@ -2061,7 +2061,7 @@ class SmartFox extends EventDispatcher
 	}
 	
 	/** @private */
-	kernel function handleLogout():Void
+	function handleLogout():Void
 	{
 		// TODO:Hide with custom namespace?
 		if(_lagMonitor !=null && _lagMonitor.isRunning)
@@ -2080,7 +2080,7 @@ class SmartFox extends EventDispatcher
 	}
 	
 	/** @private */
-	kernel function handleReconnectionFailure():Void
+	function handleReconnectionFailure():Void
 	{
 		// Reset reconnection seconds, this way no more reconnections will be available in this session.
 		setReconnectionSeconds(0);

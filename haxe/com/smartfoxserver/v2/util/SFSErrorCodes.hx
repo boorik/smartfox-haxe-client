@@ -60,7 +60,7 @@ class SFSErrorCodes
 	/** @private */
 	public function new()
 	{
-		throw new Dynamic("This class cannot be instantiated. Please check the documentation for more details on its usage")
+		throw new Dynamic("This class cannot be instantiated. Please check the documentation for more details on its usage");
 	}
 	
 	/**
@@ -82,29 +82,29 @@ class SFSErrorCodes
 	 */
 	public static function setErrorMessage(code:Int, message:String):Void
 	{
-		errorsByCode[code]=message
+		errorsByCode[code] = message;
 	}
 	
 	/** @private */
 	public static function getErrorMessage(code:Int, params:Array<Dynamic>=null):String
 	{
-		return stringFormat(errorsByCode[code], params)
+		return stringFormat(errorsByCode[code], params);
 	}
 	
 	private static function stringFormat(ss:String, params:Array):String
 	{
 		if(ss==null)
-			return ""
+			return "";
 			
 		if(params !=null)
 		{
 			for(j in 0...params.length)
 			{
-				var src:String="{" + j + "}"
-				ss=ss.replace(src, params[j])
+				var src:String = "{" + j + "}";
+				ss = ss.replace(src, params[j]);
 			}
 		}
 		
-		return ss
+		return ss;
 	}
 }
