@@ -9,8 +9,8 @@ import flash.utils.ByteArray<Dynamic>;
 interface IUDPManager
 {
 	function initialize(udpAddr:String, udpPort:Int):Void;
-	function get inited():Bool
-	function set sfs(sfs:SmartFox):Void
+	function get inited():Bool;
+	function set sfs(sfs:SmartFox):Void;
 	function nextUdpPacketId():Float;
 	function send(binaryData:ByteArray):Void;
 	function reset():Void;

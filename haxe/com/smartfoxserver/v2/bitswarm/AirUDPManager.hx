@@ -78,7 +78,7 @@ class AirUDPManager implements IUDPManager
 	public function new()
 	{
 		_packetId=0;
-		_currentAttempt=1
+		_currentAttempt = 1;
 	}
 	
 	/**
@@ -88,8 +88,8 @@ class AirUDPManager implements IUDPManager
 	{
 		if(_initSuccess)
 		{
-			_log.warn("UDP Channel already initialized!")
-			return
+			_log.warn("UDP Channel already initialized!");
+			return;
 		}
 		
 		if(!_locked)
@@ -98,7 +98,7 @@ class AirUDPManager implements IUDPManager
 			_locked=true;
 			
 			_udpSocket=new DatagramSocket();
-			_udpSocket.addEventListener(DatagramSocketDataEvent.DATA, onUDPData)
+			_udpSocket.addEventListener(DatagramSocketDataEvent.DATA, onUDPData);
 			_udpSocket.addEventListener(IOErrorEvent.IO_ERROR, onUDPError);
 			
 			_udpSocket.connect(udpAddr, udpPort);
@@ -110,7 +110,7 @@ class AirUDPManager implements IUDPManager
 			sendInitializationRequest();
 		}
 		else
-			_log.warn("UPD initialization is already in progress!")
+			_log.warn("UPD initialization is already in progress!");
 	}
 	
 	/**
@@ -137,11 +137,11 @@ class AirUDPManager implements IUDPManager
 			}
 			catch(err:IOError)
 			{
-				_log.warn("WriteUDP operation failed due to I/O Dynamic:" + err.toString())
+				_log.warn("WriteUDP operation failed due to I/O Dynamic:" + err.toString());
 			}
 		}
 		else
-			_log.warn("UDP protocol is not initialized yet. Please use the initUDP()method.")
+			_log.warn("UDP protocol is not initialized yet. Please use the initUDP()method.");
 				
 	}
 	
@@ -160,8 +160,8 @@ class AirUDPManager implements IUDPManager
 	public var sfs(null, set_sfs):SmartFox;
  	private function set_sfs(sfs:SmartFox):Void
 	{
-		this._sfs=sfs
-		_log=sfs.logger
+		this._sfs = sfs;
+		_log = sfs.logger;
 	}
 	
 	/**
@@ -170,13 +170,13 @@ class AirUDPManager implements IUDPManager
 	public function reset():Void
 	{
 		if(_initThread !=null && _initThread.running)
-			_initThread.stop()
+			_initThread.stop();
 		
-		_currentAttempt=1
-		_inited=false
-		_initSuccess=false
-		_locked=false
-		_packetId=0
+		_currentAttempt = 1;
+		_inited = false;
+		_initSuccess = false;
+		_locked = false;
+		_packetId = 0;
 	}
 	
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -184,17 +184,17 @@ class AirUDPManager implements IUDPManager
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	private function onUDPData(evt:DatagramSocketDataEvent):Void
 	{
-		var bytes:ByteArray<Dynamic>=evt.data as ByteArray
+		var bytes:ByteArray<Dynamic> = cast evt.data;
 		
 		// Not enough data!
 		if(bytes.bytesAvailable<4)
 		{
-			_log.warn("Too small UDP packet. Len:" + bytes.length)
-			return
+			_log.warn("Too small UDP packet. Len:" + bytes.length);
+			return;
 		}
 		
 		if(_sfs.debug)
-			_log.info("UDP Data Read:" + DefaultObjectDumpFormatter.hexDump(bytes))
+			_log.info("UDP Data Read:" + DefaultObjectDumpFormatter.hexDump(bytes));
 		
 		// Get the header byte
 		var header:Int=bytes.readByte();
@@ -207,37 +207,37 @@ class AirUDPManager implements IUDPManager
 		
 		if(dataSize !=bytes.bytesAvailable)
 		{
-			_log.warn("Insufficient UDP data. Expected:" + dataSize + ", got:" + bytes.bytesAvailable)
-			return
+			_log.warn("Insufficient UDP data. Expected:" + dataSize + ", got:" + bytes.bytesAvailable);
+			return;
 		}
 		
 		// Grab the message body and deserialize it
-		var objBytes:ByteArray<Dynamic>=new ByteArray();
+		var objBytes:ByteArray<Dynamic> = new ByteArray();;
 		bytes.readBytes(objBytes, 0, bytes.bytesAvailable);
-		var reqObj:ISFSObject=SFSObject.newFromBinaryData(objBytes)
+		var reqObj:ISFSObject = SFSObject.newFromBinaryData(objBytes);
 
 		// Check if this is an UDP Handshake response. If so, fire event and stop here.
 		if(reqObj.containsKey("h"))
 		{
 			// Unlock
-			_initThread.stop()
-			_locked=false
-			_initSuccess=true
+			_initThread.stop();
+			_locked = false;
+			_initSuccess = true;
 				
-			var evtParams:Dynamic={}
-			evtParams.success=true
-			_sfs.dispatchEvent(new SFSEvent(SFSEvent.UDP_INIT, evtParams))
+			var evtParams:Dynamic = { };
+			evtParams.success = true;
+			_sfs.dispatchEvent(new SFSEvent(SFSEvent.UDP_INIT, evtParams));
 				
 			return
 		}
 		
 		// Hand it to the ProtocolCodec
-		_sfs.kernel::socketEngine.ioHandler.codec.onPacketRead(reqObj)
+		_sfs.socketEngine.ioHandler.codec.onPacketRead(reqObj);
 	}
 	
 	private function onUDPError(evt:IOErrorEvent):Void
 	{
-		_log.warn("Unexpected UDP I/O Dynamic. " + evt.text)
+		_log.warn("Unexpected UDP I/O Dynamic. " + evt.text);
 	}
 	
 	private function sendInitializationRequest():Void
@@ -267,7 +267,7 @@ class AirUDPManager implements IUDPManager
 		_udpSocket.send(writeBuffer);
 		
 		// Start the timeout thread
-		_initThread.start()
+		_initThread.start();
 	}
 	
 	private function onTimeout(evt:Event):Void
@@ -275,11 +275,11 @@ class AirUDPManager implements IUDPManager
 		if(_currentAttempt<MAX_RETRY)
 		{
 			// Try again
-			_currentAttempt++
-			_log.debug("UDP Init Attempt:" + _currentAttempt)
+			_currentAttempt++;
+			_log.debug("UDP Init Attempt:" + _currentAttempt);
 				
-			sendInitializationRequest()
-			_initThread.start()
+			sendInitializationRequest();
+			_initThread.start();
 		}
 		
 		else
@@ -292,7 +292,7 @@ class AirUDPManager implements IUDPManager
 			evtParams.success=false;
 			
 			// Fire failure event
-			_sfs.dispatchEvent(new SFSEvent(SFSEvent.UDP_INIT, evtParams))
+			_sfs.dispatchEvent(new SFSEvent(SFSEvent.UDP_INIT, evtParams));
 		}
 	}
 }

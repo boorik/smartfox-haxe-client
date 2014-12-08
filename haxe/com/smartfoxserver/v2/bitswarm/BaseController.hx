@@ -11,26 +11,26 @@ class BaseController implements IController
 	
 	public function new(bitSwarm:BitSwarmClient)
 	{
-		log=bitSwarm.sfs.logger
+		log = bitSwarm.sfs.logger;
 	}
 	
 	public var id(get_id, set_id):Int;
  	private function get_id():Int
 	{
-		return _id
+		return _id;
 	}
 	
 	private function set_id(value:Int):Void
 	{
 		if(_id==-1)
-			_id=value
+			_id = value;
 		else
-			throw new SFSError("Controller ID is already set:" + _id + ". Can't be changed at runtime!")	
+			throw new SFSError("Controller ID is already set:" + _id + ". Can't be changed at runtime!");
 	}
 
 	public function handleMessage(message:IMessage):Void
 	{
-		trace("System controller got request:" + message)
+		trace("System controller got request:" + message);
 	}
 
 }

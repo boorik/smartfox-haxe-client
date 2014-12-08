@@ -13,7 +13,7 @@ class BBEvent extends BaseEvent
 	
 	public function new(type:String, params:Dynamic=null)
 	{
-		super(type)
-		this.params=params
+		super(type);
+		this.params = params;
 	}
 }

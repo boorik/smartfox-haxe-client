@@ -24,59 +24,59 @@ import flash.utils.setTimeout;
 /** @private */
 class BitSwarmClient extends EventDispatcher 
 {
-	private var _socket:Socket
-	private var _bbClient:BBClient
-	private var _ioHandler:IoHandler
-	private var _controllers:Dynamic
+	private var _socket:Socket;
+	private var _bbClient:BBClient;
+	private var _ioHandler:IoHandler;
+	private var _controllers:Dynamic;
 	private var _compressionThreshold:Int=2000000;
-	private var _maxMessageSize:Int=10000
-	private var _sfs:SmartFox
-	private var _connected:Bool
-	private var _lastIpAddress:String
-	private var _lastTcpPort:Int 
-	private var _reconnectionDelayMillis:Int=1000
-	private var _reconnectionSeconds:Int=0
-	private var _attemptingReconnection:Bool=false
-	private var _sysController:SystemController
-	private var _extController:ExtensionController
-	private var _udpManager:IUDPManager
-	private var _controllersInited:Bool=false
+	private var _maxMessageSize:Int = 10000;
+	private var _sfs:SmartFox;
+	private var _connected:Bool;
+	private var _lastIpAddress:String;
+	private var _lastTcpPort:Int ;
+	private var _reconnectionDelayMillis:Int = 1000;
+	private var _reconnectionSeconds:Int = 0;
+	private var _attemptingReconnection:Bool = false;
+	private var _sysController:SystemController;
+	private var _extController:ExtensionController;
+	private var _udpManager:IUDPManager;
+	private var _controllersInited:Bool = false;
 	
-	private var _useBlueBox:Bool=false
-	private var _connectionMode:String
+	private var _useBlueBox:Bool = false;
+	private var _connectionMode:String;
 	private var _firstReconnAttempt:Float=-1;
 	private var _reconnCounter:Int=1;
 		
 	public function new(sfs:SmartFox=null)
 	{
-		_controllers={}
-		_sfs=sfs
-		_connected=false
-		_udpManager=new DefaultUDPManager(sfs)
+		_controllers = { };
+		_sfs = sfs;
+		_connected = false;
+		_udpManager = new DefaultUDPManager(sfs);
 	}
 	
 	public var sfs(get_sfs, set_sfs):SmartFox;
  	private function get_sfs():SmartFox
 	{
-		return _sfs
+		return _sfs;
 	}
 	
 	public var connected(get_connected, set_connected):Bool;
  	private function get_connected():Bool
 	{
-		return _connected
+		return _connected;
 	}
 	
 	public var connectionMode(get_connectionMode, set_connectionMode):String;
  	private function get_connectionMode():String
 	{
-		return _connectionMode
+		return _connectionMode;
 	}
 	
 	public var ioHandler(get_ioHandler, set_ioHandler):IoHandler;
  	private function get_ioHandler():IoHandler
 	{
-		return _ioHandler
+		return _ioHandler;
 	}
 	
 	private function set_ioHandler(value:IoHandler):Void
@@ -84,24 +84,24 @@ class BitSwarmClient extends EventDispatcher
 		//if(_ioHandler !=null)
 			//throw new SFSError("IOHandler is already set!")
 			
-		_ioHandler=value
+		_ioHandler = value;
 	}
 	
 	public var maxMessageSize(get_maxMessageSize, set_maxMessageSize):Int;
  	private function get_maxMessageSize():Int
 	{
-		return _maxMessageSize
+		return _maxMessageSize;
 	}
 	
 	private function set_maxMessageSize(value:Int):Void
 	{
-		_maxMessageSize=value
+		_maxMessageSize = value;
 	}
 	
 	public var compressionThreshold(get_compressionThreshold, set_compressionThreshold):Int;
  	private function get_compressionThreshold():Int
 	{
-		return _compressionThreshold	
+		return _compressionThreshold;
 	}
 	
 	/*
@@ -111,39 +111,39 @@ class BitSwarmClient extends EventDispatcher
 	private function set_compressionThreshold(value:Int):Void
 	{
 		if(value>100)
-			_compressionThreshold=value
+			_compressionThreshold = value;
 		else
-			throw new ArgumentError("Compression threshold cannot be<100 bytes.")
+			throw new ArgumentError("Compression threshold cannot be<100 bytes.");
 	}
 	
 	public var reconnectionDelayMillis(get_reconnectionDelayMillis, set_reconnectionDelayMillis):Int;
  	private function get_reconnectionDelayMillis():Int
 	{
-		return _reconnectionDelayMillis	
+		return _reconnectionDelayMillis;
 	}
 	
 	public var useBlueBox(get_useBlueBox, set_useBlueBox):Bool;
  	private function get_useBlueBox():Bool
 	{
-		return _useBlueBox	
+		return _useBlueBox;	
 	}
 	
 	public function forceBlueBox(value:Bool):Void
 	{
 		if(!connected)
-			_useBlueBox=value
+			_useBlueBox = value;
 		else
 			throw new IllegalOperationError("You can't change the BlueBox mode while the connection is running");
 	}
 	
 	private function set_reconnectionDelayMillis(millis:Int):Void
 	{
-		_reconnectionDelayMillis=millis
+		_reconnectionDelayMillis = millis;
 	}
 	
 	public function enableBBoxDebug(value:Bool):Void
 	{
-		_bbClient.isDebug=value
+		_bbClient.isDebug = value;
 	}
 	
 	public function init():Void
@@ -151,162 +151,162 @@ class BitSwarmClient extends EventDispatcher
 		// Do it once
 		if(!_controllersInited)
 		{
-			initControllers()
-			_controllersInited=true
+			initControllers();
+			_controllersInited = true;
 		}
 
-		_socket=new Socket()
+		_socket = new Socket();
 		
 		if(_socket.hasOwnProperty("timeout"))// condition required to avoide FP<10.0 to throw an error at runtime
-			_socket.timeout=5000
+			_socket.timeout = 5000;
 		
-		_socket.addEventListener(Event.CONNECT, onSocketConnect)
-		_socket.addEventListener(Event.CLOSE, onSocketClose)
-		_socket.addEventListener(ProgressEvent.SOCKET_DATA, onSocketData)
-		_socket.addEventListener(IOErrorEvent.IO_ERROR, onSocketIOError)
-		_socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSocketSecurityError)
+		_socket.addEventListener(Event.CONNECT, onSocketConnect);
+		_socket.addEventListener(Event.CLOSE, onSocketClose);
+		_socket.addEventListener(ProgressEvent.SOCKET_DATA, onSocketData);
+		_socket.addEventListener(IOErrorEvent.IO_ERROR, onSocketIOError);
+		_socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSocketSecurityError);
 			
-		_bbClient=new BBClient()
-		_bbClient.addEventListener(BBEvent.CONNECT, onBBConnect)
-		_bbClient.addEventListener(BBEvent.DATA, onBBData)
-		_bbClient.addEventListener(BBEvent.DISCONNECT, onBBDisconnect)
-		_bbClient.addEventListener(BBEvent.IO_ERROR, onBBError)
-		_bbClient.addEventListener(BBEvent.SECURITY_ERROR, onBBError)
+		_bbClient = new BBClient();
+		_bbClient.addEventListener(BBEvent.CONNECT, onBBConnect);
+		_bbClient.addEventListener(BBEvent.DATA, onBBData);
+		_bbClient.addEventListener(BBEvent.DISCONNECT, onBBDisconnect);
+		_bbClient.addEventListener(BBEvent.IO_ERROR, onBBError);
+		_bbClient.addEventListener(BBEvent.SECURITY_ERROR, onBBError);
 	}
 	
 	public function destroy():Void
 	{
-		_socket.removeEventListener(Event.CONNECT, onSocketConnect)
-		_socket.removeEventListener(Event.CLOSE, onSocketClose)
-		_socket.removeEventListener(ProgressEvent.SOCKET_DATA, onSocketData)
-		_socket.removeEventListener(IOErrorEvent.IO_ERROR, onSocketIOError)
-		_socket.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, onSocketSecurityError)
+		_socket.removeEventListener(Event.CONNECT, onSocketConnect);
+		_socket.removeEventListener(Event.CLOSE, onSocketClose);
+		_socket.removeEventListener(ProgressEvent.SOCKET_DATA, onSocketData);
+		_socket.removeEventListener(IOErrorEvent.IO_ERROR, onSocketIOError);
+		_socket.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, onSocketSecurityError);
 		
 		if(_socket.connected)
-			_socket.close()
+			_socket.close();
 			
-		_socket=null
+		_socket = null;
 	}
 	
 	public function getController(id:Int):IController
 	{
-		return _controllers[id] as IController
+		return cast _controllers[id];
 	}
 	
 	public var systemController(get_systemController, set_systemController):SystemController;
  	private function get_systemController():SystemController
 	{
-		return _sysController
+		return _sysController;
 	}
 	
 	public var extensionController(get_extensionController, set_extensionController):ExtensionController;
  	private function get_extensionController():ExtensionController
 	{
-		return _extController
+		return _extController;
 	}
 	
 	public var isReconnecting(get_isReconnecting, set_isReconnecting):Bool;
  	private function get_isReconnecting():Bool
 	{
-		return _attemptingReconnection
+		return _attemptingReconnection;
 	}
 	
 	private function set_isReconnecting(value:Bool):Void
 	{
-		_attemptingReconnection=value	
+		_attemptingReconnection = value;	
 	}
 	
 	public function getControllerById(id:Int):IController
 	{
-		return _controllers[id]	
+		return _controllers[id];
 	}
 	
 	public var connectionIp(get_connectionIp, set_connectionIp):String;
  	private function get_connectionIp():String
 	{
 		if(!connected)
-			return "Not Connected"
+			return "Not Connected";
 		else
-			return _lastIpAddress
+			return _lastIpAddress;
 	}
 	
 	public var connectionPort(get_connectionPort, set_connectionPort):Int;
  	private function get_connectionPort():Int
 	{
 		if(!connected)
-			return -1
+			return -1;
 		else
-			return _lastTcpPort
+			return _lastTcpPort;
 	}
 	
 	private function addController(id:Int, controller:IController):Void
 	{
 		if(controller==null)
-			throw new ArgumentError("Controller is null, it can't be added.")
+			throw new ArgumentError("Controller is null, it can't be added.");
 		
 		if(_controllers[id] !=null)
-			throw new ArgumentError("A controller with id:" + id + " already exists! Controller can't be added:" + controller)
+			throw new ArgumentError("A controller with id:" + id + " already exists! Controller can't be added:" + controller);
 			
-		_controllers[id]=controller	
+		_controllers[id] = controller;
 	}
 	
 	public function addCustomController(id:Int, controllerClass:Class):Void
 	{
-		var controller:IController=controllerClass(this)
-		addController(id, controller)
+		var controller:IController = controllerClass(this);
+		addController(id, controller);
 	}
 	
 	public function connect(host:String="127.0.0.1", port:Int=9933):Void
 	{
-		_lastIpAddress=host
-		_lastTcpPort=port
-			
+		_lastIpAddress = host;
+		_lastTcpPort = port;
+		
 		if(_useBlueBox)
 		{
 			_bbClient.pollSpeed=(sfs.config !=null)? sfs.config.blueBoxPollingRate:750;
-			_bbClient.connect(host, port)
-			_connectionMode=ConnectionMode.HTTP
+			_bbClient.connect(host, port);
+			_connectionMode = ConnectionMode.HTTP;
 		}
 		else
 		{
-			_socket.connect(host, port)
-			_connectionMode=ConnectionMode.SOCKET
+			_socket.connect(host, port);
+			_connectionMode = ConnectionMode.SOCKET;
 		}
 	}
 	
 	public function send(message:IMessage):Void
 	{	
-		_ioHandler.codec.onPacketWrite(message)
+		_ioHandler.codec.onPacketWrite(message);
 	}
 	
 	public var socket(get_socket, set_socket):Socket;
  	private function get_socket():Socket
 	{
-		return _socket
+		return _socket;
 	}
 	
 	public var httpSocket(get_httpSocket, set_httpSocket):BBClient;
  	private function get_httpSocket():BBClient
 	{
-		return _bbClient
+		return _bbClient;
 	}
 	
 	public function disconnect(reason:String=null):Void
 	{
 		if(_useBlueBox)
-			_bbClient.close()
+			_bbClient.close();
 		else
 		{
 			if(socket.connected)
-				_socket.close()
+				_socket.close();
 		}
 				
-		onSocketClose(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, {reason:reason}))
+		onSocketClose(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, { reason:reason } ));
 	}
 	
 	public function nextUdpPacketId():Float
 	{
-		return _udpManager.nextUdpPacketId()
+		return _udpManager.nextUdpPacketId();
 	}
 	
 	/*
@@ -315,8 +315,8 @@ class BitSwarmClient extends EventDispatcher
 	*/
 	public function killConnection():Void
 	{
-		_socket.close()
-		onSocketClose(new Event(Event.CLOSE))
+		_socket.close();
+		onSocketClose(new Event(Event.CLOSE));
 	}
 	
 	public function stopReconnection():Void
@@ -333,12 +333,12 @@ class BitSwarmClient extends EventDispatcher
 	public var udpManager(get_udpManager, set_udpManager):IUDPManager;
  	private function get_udpManager():IUDPManager
 	{
-		return _udpManager
+		return _udpManager;
 	}
 	
 	private function set_udpManager(manager:IUDPManager):Void
 	{
-		_udpManager=manager
+		_udpManager = manager;
 	}
 	
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -346,25 +346,25 @@ class BitSwarmClient extends EventDispatcher
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	private function initControllers():Void
 	{
-		_sysController=new SystemController(this)
-		_extController=new ExtensionController(this)
+		_sysController = new SystemController(this);
+		_extController = new ExtensionController(this);
 		
-		addController(0, _sysController)
-		addController(1, _extController)
+		addController(0, _sysController);
+		addController(1, _extController);
 	}
 	
 	public var reconnectionSeconds(get_reconnectionSeconds, set_reconnectionSeconds):Int;
  	private function get_reconnectionSeconds():Int
 	{
-		return _reconnectionSeconds
+		return _reconnectionSeconds;
 	}
 	
 	private function set_reconnectionSeconds(seconds:Int):Void
 	{
 		if(seconds<0)
-			_reconnectionSeconds=0
+			_reconnectionSeconds = 0;
 		else
-			_reconnectionSeconds=seconds	
+			_reconnectionSeconds = seconds;	
 	}
 	
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -374,26 +374,26 @@ class BitSwarmClient extends EventDispatcher
 	{
 		_connected=true
 		
-		var event:BitSwarmEvent=new BitSwarmEvent(BitSwarmEvent.CONNECT)
+		var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.CONNECT);
 		
 		// 2nd argument not publicly documented, used Internally
-		event.params={success:true, _isReconnection:_attemptingReconnection}  
+		event.params = { success:true, _isReconnection:_attemptingReconnection } ; 
 		
-		dispatchEvent(event)
+		dispatchEvent(event);
 	}
 	
 	private function onSocketClose(evt:Event):Void
 	{
 		// Connection is off
-		_connected=false
+		_connected = false;
 		
-		var isRegularDisconnection:Bool=!_attemptingReconnection && sfs.getReconnectionSeconds()==0
-		var isManualDisconnection:Bool=(Std.is(evt, BitSwarmEvent))&&(evt as BitSwarmEvent).params.reason==ClientDisconnectionReason.MANUAL
+		var isRegularDisconnection:Bool = !_attemptingReconnection && sfs.getReconnectionSeconds() == 0;
+		var isManualDisconnection:Bool = (Std.is(evt, BitSwarmEvent)) && (evt as BitSwarmEvent).params.reason == ClientDisconnectionReason.MANUAL;
 
 		if(isRegularDisconnection || isManualDisconnection)
 		{
 			// Reset UDP Manager
-			_udpManager.reset()
+			_udpManager.reset();
 			_firstReconnAttempt=-1;
 			
 			executeDisconnection(evt);					
@@ -412,7 +412,7 @@ class BitSwarmClient extends EventDispatcher
 			* If we aren't in any of the above three cases then it's time to attempt a
 			* reconnection to the server.
 			*/
-			_attemptingReconnection=true
+			_attemptingReconnection = true;
 			_firstReconnAttempt=getTimer();
 			_reconnCounter=1;
 				
@@ -455,42 +455,42 @@ class BitSwarmClient extends EventDispatcher
 		* The event includes a reason for the disconnection(idle, kick, ban...)
 		*/
 		if(Std.is(evt, BitSwarmEvent))
-			dispatchEvent(evt)
+			dispatchEvent(evt);
 			
 			/*
 			* Disconnection at socket level
 			*/
 		else
-			dispatchEvent(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, {reason:ClientDisconnectionReason.UNKNOWN}))
+			dispatchEvent(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, { reason:ClientDisconnectionReason.UNKNOWN } ));
 	}
 	
 	private function onSocketData(evt:ProgressEvent):Void
 	{
 		try
 		{
-			var buffer:ByteArray<Dynamic>=new ByteArray()
-			_socket.readBytes(buffer)
+			var buffer:ByteArray<Dynamic> = new ByteArray();
+			_socket.readBytes(buffer);
 		
-			_ioHandler.onDataRead(buffer)
+			_ioHandler.onDataRead(buffer);
 		}
 		catch(error:SFSError)
 		{
-			trace("## SocketDataError:" + error.message)
+			trace("## SocketDataError:" + error.message);
 			
-			var event:BitSwarmEvent=new BitSwarmEvent(BitSwarmEvent.DATA_ERROR)
-			event.params={message:error.message, details:error.details}
+			var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.DATA_ERROR);
+			event.params = { message:error.message, details:error.details };
 			
-			dispatchEvent(event)
+			dispatchEvent(event);
 		}
 	}
 	
 	private function onSocketIOError(evt:IOErrorEvent):Void
 	{
-		trace("## SocketError:" + evt.toString())
-		var event:BitSwarmEvent=new BitSwarmEvent(BitSwarmEvent.IO_ERROR)
-		event.params={message:evt.toString()}
+		trace("## SocketError:" + evt.toString());
+		var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.IO_ERROR);
+		event.params = { message:evt.toString() };
 		
-		dispatchEvent(event)
+		dispatchEvent(event);
 	}
 	
 	private function onSocketSecurityError(evt:SecurityErrorEvent):Void
@@ -502,11 +502,11 @@ class BitSwarmClient extends EventDispatcher
 			return;
 		}
 		
-		trace("## SecurityError:" + evt.toString())
-		var event:BitSwarmEvent=new BitSwarmEvent(BitSwarmEvent.SECURITY_ERROR)
-		event.params={message:evt.text}
+		trace("## SecurityError:" + evt.toString());
+		var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.SECURITY_ERROR);
+		event.params = { message:evt.text };
 		
-		dispatchEvent(event)
+		dispatchEvent(event);
 	}
 	
 	
@@ -516,38 +516,38 @@ class BitSwarmClient extends EventDispatcher
 	
 	private function onBBConnect(evt:BBEvent):Void
 	{
-		_connected=true
+		_connected = true;
 		
-		var event:BitSwarmEvent=new BitSwarmEvent(BitSwarmEvent.CONNECT)
-		event.params={success:true}
+		var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.CONNECT);
+		event.params = { success:true };
 			
-		dispatchEvent(event)		
+		dispatchEvent(event);		
 	}
 	
 	private function onBBData(evt:BBEvent):Void
 	{
-		var buffer:ByteArray<Dynamic>=evt.params.data
+		var buffer:ByteArray<Dynamic> = evt.params.data;
 		
 		if(buffer !=null)			
-			_ioHandler.onDataRead(buffer)
+			_ioHandler.onDataRead(buffer);
 	}
 	
 	private function onBBDisconnect(evt:BBEvent):Void
 	{
 		// Connection is off
-		_connected=false
+		_connected = false;
 			
 		// Fire event
-		dispatchEvent(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, {reason:ClientDisconnectionReason.UNKNOWN}))
+		dispatchEvent(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, { reason:ClientDisconnectionReason.UNKNOWN } ));
 	}
 	
 	private function onBBError(evt:BBEvent):Void
 	{
-		trace("## BlueBox Dynamic:" + evt.params.message)
-		var event:BitSwarmEvent=new BitSwarmEvent(BitSwarmEvent.IO_ERROR)
-		event.params={message:evt.params.message}
+		trace("## BlueBox Dynamic:" + evt.params.message);
+		var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.IO_ERROR);
+		event.params = { message:evt.params.message };
 		
-		dispatchEvent(event)
+		dispatchEvent(event);
 	}		
 	
 }

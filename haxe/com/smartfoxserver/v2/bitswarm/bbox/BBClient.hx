@@ -99,7 +99,7 @@ class BBClient extends EventDispatcher
 	
 	private function set_isDebug(value:Bool):Void
 	{
-		_debug=value
+		_debug = value;
 	}
 	
 	
@@ -112,12 +112,12 @@ class BBClient extends EventDispatcher
 		if(isConnected)
 			throw new IllegalOperationError("BlueBox session is already connected");
 		
-		_host=host
-		_port=port
+		_host = host;
+		_port = port;
 			
-		_bbUrl="http://" + _host + ":" + port + "/" + BB_SERVLET
+		_bbUrl = "http://" + _host + ":" + port + "/" + BB_SERVLET;
 			
-		sendRequest(CMD_CONNECT)
+		sendRequest(CMD_CONNECT);
 	}
 	
 	public function send(binData:ByteArray):Void
@@ -141,7 +141,7 @@ class BBClient extends EventDispatcher
 	*/
 	public function close():Void
 	{
-		handleConnectionLost(false)
+		handleConnectionLost(false);
 	}
 	
 	
@@ -155,7 +155,7 @@ class BBClient extends EventDispatcher
 		var rawData:String=loader.data as String;
 		
 		if(_debug)
-			trace("[ BB-Receive ]:" + rawData)
+			trace("[ BB-Receive ]:" + rawData);
 		
 		// Obtain splitted params
 		var reqBits:Array<Dynamic>=rawData.split(SEP);
@@ -176,24 +176,24 @@ class BBClient extends EventDispatcher
 		
 		else if(cmd==CMD_POLL)
 		{
-			var binData:ByteArray<Dynamic>=null
+			var binData:ByteArray<Dynamic> = null;
 			
 			// Decode Base64-Encoded string to real ByteArray
 			if(data !=BB_NULL)
-				binData=decodeResponse(data)
+				binData = decodeResponse(data);
 				
 			// Pre-launch next polling request
 			if(_isConnected)
 				setTimeout(poll, _pollSpeed);
 				
 			// Dispatch the event
-			dispatchEvent(new BBEvent(BBEvent.DATA, {data:binData}))
+			dispatchEvent(new BBEvent(BBEvent.DATA, { data:binData } ));
 		}
 		
 		// Connection was lost
 		else if(cmd==ERR_INVALID_SESSION)
 		{
-			handleConnectionLost()
+			handleConnectionLost();
 		}
 		
 	}
@@ -279,7 +279,7 @@ class BBClient extends EventDispatcher
 		
 		// Encode from ByteArray to Base64-String
 		else if(Std.is(data, ByteArray))
-			data=Base64.encodeByteArray(data)
+			data = Base64.encodeByteArray(data);
 		
 		encoded +=(_sessId==null ? BB_NULL:_sessId)+ SEP + cmd + SEP + data;
 		

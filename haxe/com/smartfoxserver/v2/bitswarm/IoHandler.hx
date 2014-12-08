@@ -7,7 +7,7 @@ import flash.utils.ByteArray<Dynamic>;
 /** @private */
 interface IoHandler
 {
-	function onDataRead(buffer:ByteArray):Void
-	function onDataWrite(message:IMessage):Void
-	function get codec():IProtocolCodec
+	function onDataRead(buffer:ByteArray):Void;
+	function onDataWrite(message:IMessage):Void;
+	function get codec():IProtocolCodec;
 }

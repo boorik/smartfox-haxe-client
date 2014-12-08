@@ -8,16 +8,16 @@ import flash.utils.ByteArray<Dynamic>;
 /** @private */
 class DefaultUDPManager implements IUDPManager
 {
-	private var _sfs:SmartFox
+	private var _sfs:SmartFox;
 	
 	public function new(sfs:SmartFox)
 	{
-		_sfs=sfs
+		_sfs = sfs;
 	}
 	
 	public function initialize(udpAddr:String, udpPort:Int):Void
 	{
-		logUsageError()
+		logUsageError();
 	}
 	
 	public function nextUdpPacketId():Float
@@ -33,7 +33,7 @@ class DefaultUDPManager implements IUDPManager
 	public var inited(get_inited, set_inited):Bool;
  	private function get_inited():Bool
 	{
-		return false
+		return false;
 	}
 	
 	public var sfs(null, set_sfs):SmartFox;
@@ -52,7 +52,7 @@ class DefaultUDPManager implements IUDPManager
 	private function logUsageError():Void
 	{
 		if(_sfs.udpAvailable)
-			_sfs.logger.warn("UDP protocol is not initialized yet. Pleas use the initUDP()method. If you have any doubts please refer to the documentation of initUDP()")
+			_sfs.logger.warn("UDP protocol is not initialized yet. Pleas use the initUDP()method. If you have any doubts please refer to the documentation of initUDP()");
 		else
 			_sfs.logger.warn("You are not currently enabled to use UDP protocol. UDP is available only for Air 2 runtime and higher.");	
 	}
