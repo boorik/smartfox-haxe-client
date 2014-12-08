@@ -17,13 +17,13 @@ import com.smartfoxserver.v2.util.ArrayUtil;
 class SFSBuddyManager implements IBuddyManager
 {
 	/** @private */
-	private var _buddiesByName:Dynamic
+	private var _buddiesByName:Dynamic;
 	
 	/** @private */
-	private var _myVariables:Dynamic
+	private var _myVariables:Dynamic;
 	
 	/** @private */
-	private var _myOnlineState:Bool
+	private var _myOnlineState:Bool;
 	
 	/** @private 
 	private var _myNickName:String
@@ -31,10 +31,10 @@ class SFSBuddyManager implements IBuddyManager
 	*/
 	
 	/** @private */
-	private var _inited:Bool
+	private var _inited:Bool;
 	
-	private var _buddyStates:Array
-	private var _sfs:SmartFox
+	private var _buddyStates:Array;
+	private var _sfs:SmartFox;
 	
 	/**
 	 * Creates a new<em>SFSBuddyManager</em>instance.
@@ -48,17 +48,17 @@ class SFSBuddyManager implements IBuddyManager
 	 */
 	public function new(sfs:SmartFox)
 	{
-		_sfs=sfs
-		_buddiesByName={}
-		_myVariables={}
-		_inited=false	
+		_sfs = sfs;
+		_buddiesByName = { };
+		_myVariables = { };
+		_inited = false	;
 	}
 	
 	/** @inheritDoc */ 
 	public var isInited(get_isInited, null):Bool;
  	private function get_isInited():Bool
 	{
-		return _inited
+		return _inited;
 	}
 	
 	/** @private */
@@ -70,35 +70,35 @@ class SFSBuddyManager implements IBuddyManager
 	/** @private */
 	public function addBuddy(buddy:Buddy):Void
 	{
-		_buddiesByName[buddy.name]=buddy	
+		_buddiesByName[buddy.name] = buddy	;
 	}
 	
 	/** @private */
 	public function clearAll():Void
 	{
-		_buddiesByName={}
+		_buddiesByName = { };
 	}
 	
 	/** @private */
 	public function removeBuddyById(id:Int):Buddy
 	{
-		var buddy:Buddy=getBuddyById(id)
+		var buddy:Buddy = getBuddyById(id);
 		
 		if(buddy !=null)
-			delete _buddiesByName[buddy.name]	
+			delete _buddiesByName[buddy.name];
 		
-		return buddy
+		return buddy;
 	}
 	
 	/** @private */
 	public function removeBuddyByName(name:String):Buddy
 	{
-		var buddy:Buddy=getBuddyByName(name)
+		var buddy:Buddy = getBuddyByName(name);
 		
 		if(buddy !=null)
-			delete _buddiesByName[name]	
+			_buddiesByName[name]=null;
 			
-		return buddy
+		return buddy;
 	}
 	
 	/** @inheritDoc */
@@ -106,26 +106,26 @@ class SFSBuddyManager implements IBuddyManager
 	{
 		if(id>-1)
 		{			
-			for(var buddy:Buddy in _buddiesByName)
+			for(buddy in _buddiesByName)
 			{
 				if(buddy.id==id)
-					return buddy
+					return buddy;
 			}
 		}
 		
-		return null
+		return null;
 	}
 	
 	/** @inheritDoc */
 	public function containsBuddy(name:String):Bool
 	{
-		return getBuddyByName(name)!=null
+		return getBuddyByName(name) != null;
 	}
 	
 	/** @inheritDoc */
 	public function getBuddyByName(name:String):Buddy
 	{
-		return _buddiesByName[name]
+		return _buddiesByName[name];
 	}
 	
 	/** @inheritDoc */
@@ -134,60 +134,60 @@ class SFSBuddyManager implements IBuddyManager
 		for(var buddy:Buddy in _buddiesByName)
 		{
 			if(buddy.nickName==nickName)
-				return buddy
+				return buddy;
 		}
 		
-		return null
+		return null;
 	}
 	
 	/** @inheritDoc */
 	public var offlineBuddies(get_offlineBuddies, null):Array;
  	private function get_offlineBuddies():Array
 	{
-		var buddies:Array<Dynamic>=[]
+		var buddies:Array<Dynamic> = [];
 		
 		for(var buddy:Buddy in _buddiesByName)
 		{
 			if(!buddy.isOnline)
-				buddies.push(buddy)
+				buddies.push(buddy);
 		}
 		
-		return buddies
+		return buddies;
 	}
 	
 	/** @inheritDoc */
 	public var onlineBuddies(get_onlineBuddies, null):Array;
  	private function get_onlineBuddies():Array
 	{
-		var buddies:Array<Dynamic>=[]
+		var buddies:Array<Dynamic> = [];
 		
 		for(var buddy:Buddy in _buddiesByName)
 		{
 			if(buddy.isOnline)
-				buddies.push(buddy)
+				buddies.push(buddy);
 		}
 		
-		return buddies
+		return buddies;
 	}
 	
 	/** @inheritDoc */
 	public var buddyList(get_buddyList, null):Array;
  	private function get_buddyList():Array
 	{
-		return ArrayUtil.objToArray(_buddiesByName)
+		return ArrayUtil.objToArray(_buddiesByName);
 	}
 	
 	/** @inheritDoc */
 	public function getMyVariable(varName:String):BuddyVariable
 	{
-		return _myVariables[varName] as BuddyVariable
+		return cast _myVariables[varName];
 	}
 	
 	/** @inheritDoc */
 	public var myVariables(get_myVariables, null):Array;
  	private function get_myVariables():Array
 	{
-		return ArrayUtil.objToArray(_myVariables)	
+		return ArrayUtil.objToArray(_myVariables);	
 	}
 	
 	/** @inheritDoc */
@@ -196,45 +196,45 @@ class SFSBuddyManager implements IBuddyManager
 	{
 		// Manager not inited, we're offline
 		if(!_inited)
-			return false
+			return false;
 	
 		// If the online var is not defined we take it as online=true(default)
-		var onlineState:Bool=true
-		var onlineVar:BuddyVariable=getMyVariable(ReservedBuddyVariables.BV_ONLINE)
+		var onlineState:Bool = true;
+		var onlineVar:BuddyVariable = getMyVariable(ReservedBuddyVariables.BV_ONLINE);
 		
 		if(onlineVar !=null)
-			onlineState=onlineVar.getBoolValue()
+			onlineState = onlineVar.getBoolValue();
 		
-		return onlineState	
+		return onlineState;
 	}
 	
 	/** @inheritDoc */
 	public var myNickName(get_myNickName, null):String;
  	private function get_myNickName():String
 	{
-		var nickNameVar:BuddyVariable=getMyVariable(ReservedBuddyVariables.BV_NICKNAME)
-		return(nickNameVar !=null)? nickNameVar.getStringValue():null 
+		var nickNameVar:BuddyVariable = getMyVariable(ReservedBuddyVariables.BV_NICKNAME);
+		return(nickNameVar != null)? nickNameVar.getStringValue():null ;
 	}
 	
 	/** @inheritDoc */
 	public var myState(get_myState, null):String;
  	private function get_myState():String
 	{
-		var stateVar:BuddyVariable=getMyVariable(ReservedBuddyVariables.BV_STATE)
-		return(stateVar !=null)? stateVar.getStringValue():null 
+		var stateVar:BuddyVariable = getMyVariable(ReservedBuddyVariables.BV_STATE);
+		return(stateVar != null)? stateVar.getStringValue():null ;
 	}
 	
 	/** @inheritDoc */
 	public var buddyStates(get_buddyStates, null):Array;
  	private function get_buddyStates():Array
 	{
-		return _buddyStates
+		return _buddyStates;
 	}
 	
 	/** @private */
 	public function setMyVariable(bVar:BuddyVariable):Void
 	{
-		_myVariables[bVar.name]=bVar
+		_myVariables[bVar.name] = bVar;
 	}
 	
 	// Replaces all
@@ -243,31 +243,31 @@ class SFSBuddyManager implements IBuddyManager
 	{
 		for(var bVar:BuddyVariable in variables)
 		{
-			setMyVariable(bVar)
+			setMyVariable(bVar);
 		}
 	}
 	
 	/** @private */
 	public function setMyOnlineState(isOnline:Bool):Void
 	{
-		setMyVariable(new SFSBuddyVariable(ReservedBuddyVariables.BV_ONLINE, isOnline))
+		setMyVariable(new SFSBuddyVariable(ReservedBuddyVariables.BV_ONLINE, isOnline));
 	}
 	
 	/** @private */
 	public function setMyNickName(nickName:String):Void
 	{
-		setMyVariable(new SFSBuddyVariable(ReservedBuddyVariables.BV_NICKNAME, nickName))	
+		setMyVariable(new SFSBuddyVariable(ReservedBuddyVariables.BV_NICKNAME, nickName));	
 	}
 	
 	/** @private */
 	public function setMyState(state:String):Void
 	{
-		setMyVariable(new SFSBuddyVariable(ReservedBuddyVariables.BV_STATE, state))
+		setMyVariable(new SFSBuddyVariable(ReservedBuddyVariables.BV_STATE, state));
 	}
 	
 	/** @private */
 	public function setBuddyStates(states:Array):Void
 	{
-		_buddyStates=states
+		_buddyStates = states;
 	}
 }

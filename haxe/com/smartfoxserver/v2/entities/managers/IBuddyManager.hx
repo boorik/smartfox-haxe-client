@@ -22,19 +22,20 @@ interface IBuddyManager
 	 * 
 	 * @see com.smartfoxserver.v2.requests.buddylist.InitBuddyListRequest InitBuddyListRequest
 	 */
-	function get isInited():Bool
+	var isInited(get_isInited, null):Bool;
+	//function get isInited():Bool
 	
 	/** @private */
-	function setInited(flag:Bool):Void
+	function setInited(flag:Bool):Void;
 	
 	/** @private */
-	function addBuddy(buddy:Buddy):Void
+	function addBuddy(buddy:Buddy):Void;
 	
 	/** @private */
-	function removeBuddyById(id:Int):Buddy
+	function removeBuddyById(id:Int):Buddy;
 	
 	/** @private */
-	function removeBuddyByName(name:String):Buddy
+	function removeBuddyByName(name:String):Buddy;
 	
 	/**
 	 * Indicates whether a buddy exists in user's buddies list or not.
@@ -45,7 +46,7 @@ interface IBuddyManager
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.Buddy#name Buddy.name
 	 */
-	function containsBuddy(name:String):Bool
+	function containsBuddy(name:String):Bool;
 	
 	/**
 	 * Retrieves a<em>Buddy</em>object from its<em>id</em>property.
@@ -58,7 +59,7 @@ interface IBuddyManager
 	 * @see		#getBuddyByName()
 	 * @see		#getBuddyByNickName()
 	 */ 
-	function getBuddyById(id:Int):Buddy
+	function getBuddyById(id:Int):Buddy;
 	
 	/**
 	 * Retrieves a<em>Buddy</em>object from its<em>name</em>property.
@@ -71,7 +72,7 @@ interface IBuddyManager
 	 * @see		#getBuddyById()
 	 * @see		#getBuddyByNickName()
 	 */ 
-	function getBuddyByName(name:String):Buddy
+	function getBuddyByName(name:String):Buddy;
 	
 	/**
 	 * Retrieves a<em>Buddy</em>object from its<em>nickName</em>property(if set).
@@ -84,21 +85,22 @@ interface IBuddyManager
 	 * @see		#getBuddyById()
 	 * @see		#getBuddyByName()
 	 */ 
-	function getBuddyByNickName(nickName:String):Buddy
+	function getBuddyByNickName(nickName:String):Buddy;
 	
 	/**
 	 * Returns a list of<em>Buddy</em>objects representing all the offline buddies in the user's buddies list.
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.Buddy#isOnline Buddy.isOnline
 	 */
-	function get offlineBuddies():Array
+	var offlineBuddies(get_offlineBuddies, null):Array;
+	//function get offlineBuddies():Array
 	
 	/**
 	 * Returns a list of<em>Buddy</em>objects representing all the online buddies in the user's buddies list.
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.Buddy#isOnline Buddy.isOnline
 	 */
-	function get onlineBuddies():Array
+	var  onlineBuddies(get_onlineBuddies, null):Array;
 	
 	/**
 	 * Returns a list of<em>Buddy</em>objects representing all the buddies in the user's buddies list.
@@ -106,7 +108,8 @@ interface IBuddyManager
 	 * 
 	 * @see #isInited
 	 */
-	function get buddyList():Array
+	var buddyList(get_buddyList, null):Array;
+	//function get buddyList():Array
 	
 	/**
 	 * Returns a list of strings representing the available custom buddy states.
@@ -114,7 +117,8 @@ interface IBuddyManager
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.Buddy#state Buddy.state
 	 */
-	function get buddyStates():Array
+	//function get buddyStates():Array
+	var buddyStates(get_buddyStates, null):Array;
 	
 	/**
 	 * Retrieves a Buddy Variable from its name.
@@ -126,7 +130,7 @@ interface IBuddyManager
 	 * @see		#myVariables
 	 * @see 	com.smartfoxserver.v2.requests.buddylist.SetBuddyVariablesRequest SetBuddyVariablesRequest
 	 */ 
-	function getMyVariable(varName:String):BuddyVariable
+	function getMyVariable(varName:String):BuddyVariable;
 	
 	/**
 	 * Returns all the Buddy Variables associated with the current user.
@@ -134,7 +138,8 @@ interface IBuddyManager
 	 * @see		com.smartfoxserver.v2.entities.variables.BuddyVariable BuddyVariable
 	 * @see		#getMyVariable()
 	 */ 
-	function get myVariables():Array
+	var myVariables(get_myVariables, null):Array;
+	//function get myVariables():Array
 	
 	/**
 	 * Returns the current user's online/offline state.
@@ -146,7 +151,8 @@ interface IBuddyManager
 	 * @see		com.smartfoxserver.v2.entities.variables.ReservedBuddyVariables ReservedBuddyVariables
 	 * @see 	com.smartfoxserver.v2.requests.buddylist.GoOnlineRequest GoOnlineRequest
 	 */
-	function get myOnlineState():Bool
+	var myOnlineState(get_myOnlineState, null):Bool;
+	//function get myOnlineState():Bool
 	
 	/**
 	 * Returns the current user's nickname(if set).
@@ -158,7 +164,8 @@ interface IBuddyManager
 	 * @see		com.smartfoxserver.v2.entities.variables.ReservedBuddyVariables ReservedBuddyVariables
 	 * @see 	com.smartfoxserver.v2.requests.buddylist.SetBuddyVariablesRequest SetBuddyVariablesRequest
 	 */
-	function get myNickName():String
+	var myNickName(get_myNickName, null):String;
+	//function get myNickName():String
 	
 	/**
 	 * Returns the current user's custom state(if set).
@@ -170,26 +177,27 @@ interface IBuddyManager
 	 * @see		com.smartfoxserver.v2.entities.variables.ReservedBuddyVariables ReservedBuddyVariables
 	 * @see 	com.smartfoxserver.v2.requests.buddylist.SetBuddyVariablesRequest SetBuddyVariablesRequest
 	 */
-	function get myState():String
+	var myState(get_myState, null):String;
+	//function get myState():String
 	
 	/** @private */
-	function setMyVariable(bVar:BuddyVariable):Void
+	function setMyVariable(bVar:BuddyVariable):Void;
 	
 	/** @private */
-	function setMyVariables(variables:Array):Void
+	function setMyVariables(variables:Array):Void;
 	
 	/** @private */
-	function setMyOnlineState(isOnline:Bool):Void
+	function setMyOnlineState(isOnline:Bool):Void;
 	
 	/** @private */
-	function setMyNickName(nickName:String):Void
+	function setMyNickName(nickName:String):Void;
 	
 	/** @private */
-	function setMyState(state:String):Void
+	function setMyState(state:String):Void;
 	
 	/** @private */
-	function setBuddyStates(states:Array):Void
+	function setBuddyStates(states:Array):Void;
 	
 	/** @private */
-	function clearAll():Void
+	function clearAll():Void;
 }

@@ -5,9 +5,8 @@ import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.kernel;
 import com.smartfoxserver.v2.util.ArrayUtil;
-
-import de.polygonal.ds.HashMap;
-import de.polygonal.ds.Itr;
+import haxe.ds.IntMap;
+import haxe.ds.StringMap;
 
 /**
  * The<em>SFSRoomManager</em>class is the entity in charge of managing the client-side Rooms list.
@@ -18,13 +17,13 @@ import de.polygonal.ds.Itr;
  */
 class SFSRoomManager implements IRoomManager
 {
-	private var _ownerZone:String
-	private var _groups:Array
-	private var _roomsById:HashMap
-	private var _roomsByName:HashMap
+	private var _ownerZone:String;
+	private var _groups:Array;
+	private var _roomsById:IntMap<Room>;
+	private var _roomsByName:StringMap<Room>;
 	
 	/** @private */
-	private var _smartFox:SmartFox 
+	private var _smartFox:SmartFox ;
 	
 	/**
 	 * Creates a new<em>SFSRoomManager</em>instance.
@@ -38,42 +37,42 @@ class SFSRoomManager implements IRoomManager
 	 */
 	public function new(sfs:SmartFox)
 	{
-		_groups=new Array()
-		_roomsById=new HashMap()
-		_roomsByName=new HashMap()
+		_groups = new Array();
+		_roomsById = new IntMap();
+		_roomsByName = new StringMap();
 	}
 	
 	/** @private */
 	public var ownerZone(get_ownerZone, set_ownerZone):String;
  	private function get_ownerZone():String
 	{
-		return _ownerZone
+		return _ownerZone;
 	}
 	
 	/** @private */
 	private function set_ownerZone(value:String):Void
 	{
-		_ownerZone=value
+		_ownerZone = value;
 	}
 	
 	/** @private */
 	public var smartFox(get_smartFox, null):SmartFox;
  	private function get_smartFox():SmartFox
 	{
-		return _smartFox
+		return _smartFox;
 	}
 	
 	/** @private */
 	public function addRoom(room:Room, addGroupIfMissing:Bool=true):Void
 	{
-		_roomsById.set(room.id, room)
-		_roomsByName.set(room.name, room)
+		_roomsById.set(room.id, room);
+		_roomsByName.set(room.name, room);
 		
 		// If group is not known, add it to the susbscribed list
 		if(addGroupIfMissing)
 		{
 			if(!containsGroup(room.groupId))
-				addGroup(room.groupId)
+				addGroup(room.groupId);
 		}
 		
 		/*
@@ -82,14 +81,14 @@ class SFSRoomManager implements IRoomManager
 		* RoomList as soon as we leave it
 		*/
 		else
-			room.isManaged=false	
+			room.isManaged = false	;
 	}
 	
 	/** @private */
 	public function replaceRoom(room:Room, addToGroupIfMissing:Bool=true):Room
 	{
 		// Take the Room object that should be replaced
-		var oldRoom:Room=getRoomById(room.id)
+		var oldRoom:Room = getRoomById(room.id);
 			
 		/*
 		* If found, the Room is already in the RoomList and we don't want 
@@ -97,61 +96,61 @@ class SFSRoomManager implements IRoomManager
 		*/
 		if(oldRoom !=null)
 		{
-			oldRoom.kernel::merge(room)
-			return oldRoom
+			oldRoom.merge(room);
+			return oldRoom;
 		}
 				
 		// There's no previous instance, just add it			
 		else
 		{
-			addRoom(room, addToGroupIfMissing)
-			return room
+			addRoom(room, addToGroupIfMissing);
+			return room;
 		}
 	}
 	
 	/** @private */
 	public function changeRoomName(room:Room, newName:String):Void
 	{
-		var oldName:String=room.name
-		room.name=newName
+		var oldName:String = room.name;
+		room.name = newName;
 		
 		// Update keys in the byName collection
-		_roomsByName.set(newName, room)
-		_roomsByName.clr(oldName)
+		_roomsByName.set(newName, room);
+		_roomsByName.clr(oldName);
 	}
 	
 	/** @private */
 	public function changeRoomPasswordState(room:Room, isPassProtected:Bool):Void
 	{
-		room.setPasswordProtected(isPassProtected)
+		room.setPasswordProtected(isPassProtected);
 	}
 	
 	/** @private */
 	public function changeRoomCapacity(room:Room, maxUsers:Int, maxSpect:Int):Void
 	{
-		room.maxUsers=maxUsers
-		room.maxSpectators=maxSpect
+		room.maxUsers = maxUsers;
+		room.maxSpectators = maxSpect;
 	}
 	
 	/** @inheritDoc */
 	public function getRoomGroups():Array
 	{
-		return _groups
+		return _groups;
 	}
 	
 	/** @private */
 	public function addGroup(groupId:String):Void
 	{
-		_groups.push(groupId)
+		_groups.push(groupId);
 	}
 	
 	/** @private */
 	public function removeGroup(groupId:String):Void
 	{
 		// Remove group
-		ArrayUtil.removeElement(_groups, groupId)
+		ArrayUtil.removeElement(_groups, groupId);
 		
-		var roomsInGroup:Array<Dynamic>=getRoomListFromGroup(groupId)
+		var roomsInGroup:Array<Dynamic> = getRoomListFromGroup(groupId);
 		
 		/*
 		* We remove all rooms from the Group with the exception
@@ -163,9 +162,9 @@ class SFSRoomManager implements IRoomManager
 		for(var room:Room in roomsInGroup)
 		{
 			if(!room.isJoined)
-				removeRoom(room)
+				removeRoom(room);
 			else
-				room.isManaged=false
+				room.isManaged = false;
 		}
 		
 	}
@@ -173,144 +172,139 @@ class SFSRoomManager implements IRoomManager
 	/** @inheritDoc */
 	public function containsGroup(groupId:String):Bool
 	{
-		return(_groups.indexOf(groupId)>-1)
+		return(_groups.indexOf(groupId) > -1);
 	}
 	
 	/** @inheritDoc */
 	public function containsRoom(idOrName:Dynamic):Bool
 	{
 		if(typeof idOrName=="number")
-			return _roomsById.hasKey(idOrName)
+			return _roomsById.exists(idOrName);
 		else
-			return _roomsByName.hasKey(idOrName)
+			return _roomsByName.exists(idOrName);
 	}
 	
 	/** @inheritDoc */
 	public function containsRoomInGroup(idOrName:Dynamic, groupId:String):Bool
 	{
-		var roomList:Array<Dynamic>=getRoomListFromGroup(groupId)
-		var found:Bool=false			
-		var searchById:Bool=(typeof idOrName=="number")
+		var roomList:Array<Dynamic> = getRoomListFromGroup(groupId);
+		var found:Bool = false;	
+		var searchById:Bool = (Std.is(idOrName,Float));
 		
-		for(var room:Room in roomList)
+		for(room in roomList)
 		{
 			if(searchById)
 			{
 				if(room.id==idOrName)
 				{
-					found=true
-					break
+					found = true;
+					break;
 				}
 			}
 			else
 			{
 				if(room.name==idOrName)
 				{
-					found=true
-					break
+					found = true;
+					break;
 				}	
 			}
 		}
 		
-		return found
+		return found;
 	}
 	
 	/** @inheritDoc */
 	public function getRoomById(id:Int):Room
 	{
-		return _roomsById.get(id)as Room
+		return cast _roomsById.get(id);
 	}
 	
 	/** @inheritDoc */
 	public function getRoomByName(name:String):Room
 	{
-	 	return _roomsByName.get(name)as Room
+	 	return cast _roomsByName.get(name);
 	}
 	
 	/** @inheritDoc */
-	public function getRoomList():Array
+	public function getRoomList():Array<Room>
 	{
-		return _roomsById.toDA().getArray()
+		return Lambda.array(_roomsById);
 	}
 	
 	/** @inheritDoc */
 	public function getRoomCount():Int
 	{
-		return _roomsById.size()
+		return Lambda.count(_roomsById);
 	}
 	
 	/** @inheritDoc */
-	public function getRoomListFromGroup(groupId:String):Array
+	public function getRoomListFromGroup(groupId:String):Array<Room>
 	{
-		var roomList:Array<Dynamic>=new Array()
-		var it:Itr=_roomsById.iterator()
-		
-		while(it.hasNext())
+		var roomList:Array<Room> = new Array();
+		while(_roomsById.iterator().hasNext())
 		{
-			var room:Room=it.next()as Room
+			var room:Room = cast _roomsById.iterator().next();
 			
 			if(room.groupId==groupId)
-				roomList.push(room)
+				roomList.push(room);
 		}
 		
-		return roomList
+		return roomList;
 	}
 	
 	/** @private */
 	public function removeRoom(room:Room):Void
 	{
-		_removeRoom(room.id, room.name)
+		_removeRoom(room.id, room.name);
 	}
 	
 	/** @private */
 	public function removeRoomById(id:Int):Void
 	{
-		var room:Room=_roomsById.get(id)as Room
+		var room:Room = _roomsById.get(id);
 		
 		if(room !=null)
-			_removeRoom(id, room.name)
+			_removeRoom(id, room.name);
 	}
 	
 	/** @private */
 	public function removeRoomByName(name:String):Void
 	{
-		var room:Room=_roomsByName.get(name)as Room
+		var room:Room = _roomsByName.get(name);
 		
 		if(room !=null)
-			_removeRoom(room.id, name)
+			_removeRoom(room.id, name);
 	}
 	
 	// Return rooms joined by local user
 	/** @inheritDoc */
 	public function getJoinedRooms():Array
 	{
-		var rooms:Array<Dynamic>=[]
-		var it:Itr=_roomsById.iterator()
-		
-		while(it.hasNext())
+		var rooms:Array<Room> = [];
+		while(_roomsById.iterator().hasNext())
 		{
-			var room:Room=it.next()as Room
+			var room:Room = _roomsById.iterator()..next();
 			
 			if(room.isJoined)
-				rooms.push(room)
+				rooms.push(room);
 		}
 		
-		return rooms
+		return rooms;
 	}
 	
 	/** @inheritDoc */
-	public function getUserRooms(user:User):Array
+	public function getUserRooms(user:User):Array<Room>
 	{
 		var rooms:Array<Dynamic>=[]
-		var it:Itr=_roomsById.iterator()
 		
 		// Cycle through all Rooms
-		while(it.hasNext())
+		while(_roomsById.iterator().hasNext())
 		{
-			var room:Room=it.next()as Room
+			var room:Room = _roomsById.iterator().next();
 			
 			if(room.containsUser(user))
-				rooms.push(room)
+				rooms.push(room);
 		}
 		
 		return rooms
@@ -319,15 +313,14 @@ class SFSRoomManager implements IRoomManager
 	/** @private */
 	public function removeUser(user:User):Void
 	{
-		var it:Itr=_roomsById.iterator()
 		
 		// Cycle through all Rooms
-		while(it.hasNext())
+		while(_roomsById.iterator().hasNext())
 		{
-			var room:Room=it.next()as Room
+			var room:Room = _roomsById.iterator().next();
 			
 			if(room.containsUser(user))
-				room.removeUser(user)
+				room.removeUser(user);
 		}
 	}
 	
@@ -337,7 +330,7 @@ class SFSRoomManager implements IRoomManager
 	
 	private function _removeRoom(id:Int, name:String):Void
 	{
-		_roomsById.clr(id)
-		_roomsByName.clr(name)
+		_roomsById.remove(id);
+		_roomsByName.remove(name);
 	}
 }

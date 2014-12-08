@@ -4,9 +4,8 @@ import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.kernel;
 import com.smartfoxserver.v2.logging.Logger;
-
-import de.polygonal.ds.HashMap;
-import de.polygonal.ds.Itr;
+import haxe.ds.IntMap;
+import haxe.ds.StringMap;
 
 /**
  * The<em>SFSUserManager</em>class is the entity in charge of managing the local(client-side)users list.
@@ -17,11 +16,11 @@ import de.polygonal.ds.Itr;
  */
 class SFSUserManager implements IUserManager
 {
-	private var _usersByName:HashMap
-	private var _usersById:HashMap
+	private var _usersByName:StringMap<User>;
+	private var _usersById:IntMap<User>;
 	
 	/** @private */
-	private var _smartFox:SmartFox
+	private var _smartFox:SmartFox;
 	
 	/**
 	 * Creates a new<em>SFSUserManager</em>instance.
@@ -35,103 +34,97 @@ class SFSUserManager implements IUserManager
 	 */
 	public function new(sfs:SmartFox)
 	{
-		_smartFox=sfs
-		_usersByName=new HashMap()
-		_usersById=new HashMap()
+		_smartFox = sfs;
+		_usersByName = new StringMap();
+		_usersById = new IntMap();
 	}
 	
 	/** @inheritDoc */
 	public function containsUserName(userName:String):Bool
 	{
-		return _usersByName.hasKey(userName)
+		return _usersByName.exists(userName);
 	}
 	
 	/** @inheritDoc */
 	public function containsUserId(userId:Int):Bool
 	{
-		return _usersById.hasKey(userId)
+		return _usersById.exists(userId)
 	}
 	
 	/** @inheritDoc */
 	public function containsUser(user:User):Bool
 	{
-		return _usersByName.contains(user)
+		return _usersByName.exists(user.name);
 	}
 	
 	/** @inheritDoc */
 	public function getUserByName(userName:String):User
 	{
-		return _usersByName.get(userName)as User
+		return _usersByName.get(userName);
 	}
 	
 	/** @inheritDoc */
 	public function getUserById(userId:Int):User
 	{
-		return _usersById.get(userId)as User
+		return _usersById.get(userId);
 	}
 	
 	/** @private */
 	public function addUser(user:User):Void
 	{
 		// TODO:very defensive, no need to fire exception, however we keep it for debugging
-		if(_usersById.hasKey(user.id))
-			_smartFox.logger.warn("Unexpected:duplicate user in UserManager:" + user)
+		if(_usersById.exists(user.id))
+			_smartFox.logger.warn("Unexpected:duplicate user in UserManager:" + user);
 			
-		_addUser(user)
+		_addUser(user);
 	}
 	
 	/** @private */
 	private function _addUser(user:User):Void
 	{
-		_usersByName.set(user.name, user)
-		_usersById.set(user.id, user)
+		_usersByName.set(user.name, user);
+		_usersById.set(user.id, user);
 	}
 	
 	/** @private */
 	public function removeUser(user:User):Void
 	{
-		_usersByName.clr(user.name)
-		_usersById.clr(user.id)
+		_usersByName.remove(user.name);
+		_usersById.remove(user.id);
 	}
 	
 	/** @private */
 	public function removeUserById(id:Int):Void
 	{
-		var user:User=_usersById.get(id)as User
+		var user:User = _usersById.get(id);
 		
 		if(user !=null)
-			removeUser(user)
+			removeUser(user);
 	}
 	
 	/** @inheritDoc */
 	public var userCount(get_userCount, null):Int;
  	private function get_userCount():Int
 	{
-		return _usersById.size()
+		return _usersById.size();
 	}
 	
 	/** @private */
 	public var smartFox(get_smartFox, null):SmartFox;
  	private function get_smartFox():SmartFox
 	{
-		return _smartFox
+		return _smartFox;
 	}
 	
 	/** @inheritDoc */
-	public function getUserList():Array
+	public function getUserList():Array<User>
 	{
-		var userList:Array<Dynamic>=[]
-		var iter:Itr=_usersById.iterator()
-		
-		while(iter.hasNext())
-			userList.push(iter.next())
-		
-		return userList
+		return Lambda.array(_usersById);
 	}
 	
 	kernel function clearAll():Void
 	{
-		_usersByName=new HashMap()
-		_usersById=new HashMap()
+		_usersByName = new StringMap<User>();
+		_usersById = new IntMap<User>();
 	}
 }

@@ -6,12 +6,12 @@ import com.smartfoxserver.v2.entities.User;
 /** @private */
 class SFSGlobalUserManager extends SFSUserManager
 {
-	private var _roomRefCount:Array
+	private var _roomRefCount:Array;
 	
 	public function new(sfs:SmartFox)
 	{
-		super(sfs)
-		_roomRefCount=[]
+		super(sfs);
+		_roomRefCount = [];
 	}
 	
 	/*
@@ -23,15 +23,15 @@ class SFSGlobalUserManager extends SFSUserManager
 		if(_roomRefCount[user]==null)
 		{
 			//trace("User duplicate NOT FOUND. Adding as new")
-			super._addUser(user)
-			_roomRefCount[user]=1
+			super._addUser(user);
+			_roomRefCount[user] = 1;
 		}
 		
 		else
 		{
 			//trace("User duplicate FOUND. Incrementing value")
-			super._addUser(user)
-			_roomRefCount[user]++		
+			super._addUser(user);
+			_roomRefCount[user]++;	
 		}			
 	}
 	
@@ -47,20 +47,20 @@ class SFSGlobalUserManager extends SFSUserManager
 			/* Debug Only */
 			if(_roomRefCount[user]<1)
 			{
-				_smartFox.logger.warn("GlobalUserManager RefCount is already at zero. User:" + user)
-				return
+				_smartFox.logger.warn("GlobalUserManager RefCount is already at zero. User:" + user);
+				return;
 			}
 			
-			_roomRefCount[user]--
+			_roomRefCount[user]--;
 			
 			if(_roomRefCount[user]==0 || disconnected)
 			{
-				super.removeUser(user)
-				delete _roomRefCount[user]
+				super.removeUser(user);
+				delete _roomRefCount[user];
 			}
 		}
 		else
-			_smartFox.logger.warn("Can't remove User from GlobalUserManager. RefCount missing. User:" + user)
+			_smartFox.logger.warn("Can't remove User from GlobalUserManager. RefCount missing. User:" + user);
 	}
 	
 	private function dumpRefCount():Void

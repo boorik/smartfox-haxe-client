@@ -13,19 +13,20 @@ import com.smartfoxserver.v2.entities.User;
 interface IRoomManager
 {
 	/** @private */
-	function get ownerZone():String
+	var ownerZone(get_ownerZone, null):String;
+	//function get ownerZone():String
 	
 	/** @private */
-	function addRoom(room:Room, addGroupIfMissing:Bool=true):Void
+	function addRoom(room:Room, addGroupIfMissing:Bool = true):Void;
 	
 	/** @private */
-	function addGroup(groupId:String):Void
+	function addGroup(groupId:String):Void;
 	
 	/** @private */
-	function replaceRoom(room:Room, addToGroupIfMissing:Bool=true):Room
+	function replaceRoom(room:Room, addToGroupIfMissing:Bool = true):Room;
 	
 	/** @private */
-	function removeGroup(groupId:String):Void
+	function removeGroup(groupId:String):Void;
 	
 	/**
 	 * Indicates whether the specified Group has been subscribed by the client or not.
@@ -34,7 +35,7 @@ interface IRoomManager
 	 * 
 	 * @return	<code>true</code>if the client subscribed the passed Group.
 	 */
-	function containsGroup(groupId:String):Bool
+	function containsGroup(groupId:String):Bool;
 	
 	/**
 	 * Indicates whether a Room exists in the Rooms list or not.
@@ -46,7 +47,7 @@ interface IRoomManager
 	 * @see		com.smartfoxserver.v2.entities.Room#id Room.id
 	 * @see		com.smartfoxserver.v2.entities.Room#name Room.name
 	 */
-	function containsRoom(idOrName:Dynamic):Bool
+	function containsRoom(idOrName:Dynamic):Bool;
 	
 	/**
 	 * Indicates whether the Rooms list contains a Room belonging to the specified Group or not.
@@ -60,16 +61,16 @@ interface IRoomManager
 	 * @see		com.smartfoxserver.v2.entities.Room#name Room.name
 	 * @see		com.smartfoxserver.v2.entities.Room#groupId Room.groupId
 	 */
-	function containsRoomInGroup(idOrName:Dynamic, groupId:String):Bool
+	function containsRoomInGroup(idOrName:Dynamic, groupId:String):Bool;
 	
 	/** @private */
-	function changeRoomName(room:Room, newName:String):Void
+	function changeRoomName(room:Room, newName:String):Void;
 	
 	/** @private */
-	function changeRoomPasswordState(room:Room, isPassProtected:Bool):Void
+	function changeRoomPasswordState(room:Room, isPassProtected:Bool):Void;
 	
 	/** @private */
-	function changeRoomCapacity(room:Room, maxUsers:Int, maxSpect:Int):Void
+	function changeRoomCapacity(room:Room, maxUsers:Int, maxSpect:Int):Void;
 	
 	/**
 	 * Retrieves a<em>Room</em>object from its id.
@@ -88,7 +89,7 @@ interface IRoomManager
 	 * 
 	 * @see		#getRoomByName()
 	 */
-	function getRoomById(id:Int):Room
+	function getRoomById(id:Int):Room;
 	
 	/**
 	 * Retrieves a<em>Room</em>object from its name.
@@ -107,7 +108,7 @@ interface IRoomManager
 	 * 
 	 * @see		#getRoomById()
 	 */
-	function getRoomByName(name:String):Room
+	function getRoomByName(name:String):Room;
 	
 	/**
 	 * Returns a list of Rooms currently "known" by the client.
@@ -122,14 +123,14 @@ interface IRoomManager
 	 * @see 	com.smartfoxserver.v2.requests.SubscribeRoomGroupRequest SubscribeRoomGroupRequest
 	 * @see 	com.smartfoxserver.v2.requests.UnsubscribeRoomGroupRequest UnsubscribeRoomGroupRequest
 	 */
-	function getRoomList():Array
+	function getRoomList():Array;
 	
 	/**
 	 * Returns the current number of Rooms in the Rooms list.
 	 * 
 	 * @return	The number of Rooms in the Rooms list.
 	 */
-	function getRoomCount():Int
+	function getRoomCount():Int;
 	
 	/**
 	 * Returns the names of Room Groups currently subscribed by the client.
@@ -142,7 +143,7 @@ interface IRoomManager
 	 * @see 	com.smartfoxserver.v2.requests.SubscribeRoomGroupRequest SubscribeRoomGroupRequest
 	 * @see 	com.smartfoxserver.v2.requests.UnsubscribeRoomGroupRequest UnsubscribeRoomGroupRequest
 	 */
-	function getRoomGroups():Array
+	function getRoomGroups():Array;
 	
 	/**
 	 * Retrieves the list of Rooms which are part of the specified Room Group.
@@ -153,7 +154,7 @@ interface IRoomManager
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.Room Room
 	 */
-	function getRoomListFromGroup(groupId:String):Array
+	function getRoomListFromGroup(groupId:String):Array;
 	
 	/**
 	 * Returns a list of Rooms currently joined by the client.
@@ -163,7 +164,7 @@ interface IRoomManager
 	 * @see		com.smartfoxserver.v2.entities.Room Room
 	 * @see		com.smartfoxserver.v2.requests.JoinRoomRequest JoinRoomRequest
 	 */
-	function getJoinedRooms():Array
+	function getJoinedRooms():Array;
 	
 	/**
 	 * Retrieves a list of Rooms joined by the specified user.
@@ -173,20 +174,21 @@ interface IRoomManager
 	 * 
 	 * @return	The list of Rooms joined by the passed user.
 	 */
-	function getUserRooms(user:User):Array
+	function getUserRooms(user:User):Array;
 	
 	/** @private */
-	function removeRoom(room:Room):Void
+	function removeRoom(room:Room):Void;
 	
 	/** @private */
-	function removeRoomById(id:Int):Void
+	function removeRoomById(id:Int):Void;
 	
 	/** @private */
-	function removeRoomByName(name:String):Void
+	function removeRoomByName(name:String):Void;
 	
 	/** @private */
-	function removeUser(user:User):Void
+	function removeUser(user:User):Void;
 	
 	/** @private */
-	function get smartFox():SmartFox
+	var  smartFox(get_smartFox, null):SmartFox;
+	//function get smartFox():SmartFox
 }

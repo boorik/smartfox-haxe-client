@@ -20,7 +20,7 @@ interface IUserManager
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.User#name User.name
 	 */
-	function containsUserName(userName:String):Bool
+	function containsUserName(userName:String):Bool;
 	
 	/**
 	 * Indicates whether a user exists in the local users list or not from the id.
@@ -31,7 +31,7 @@ interface IUserManager
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.User#id User.id
 	 */
-	function containsUserId(userId:Int):Bool
+	function containsUserId(userId:Int):Bool;
 	
 	/**
 	 * Indicates whether a user exists in the local users list or not.
@@ -40,7 +40,7 @@ interface IUserManager
 	 * 
 	 * @return	<code>true</code>if the passed user exists in the users list.
 	 */
-	function containsUser(user:User):Bool
+	function containsUser(user:User):Bool;
 	
 	/**
 	 * Retrieves a<em>User</em>object from its<em>name</em>property.
@@ -52,7 +52,7 @@ interface IUserManager
 	 * @see		com.smartfoxserver.v2.entities.User#name User.name
 	 * @see		#getUserById()
 	 */ 
-	function getUserByName(userName:String):User
+	function getUserByName(userName:String):User;
 	
 	/**
 	 * Retrieves a<em>User</em>object from its<em>id</em>property.
@@ -64,29 +64,31 @@ interface IUserManager
 	 * @see		com.smartfoxserver.v2.entities.User#id User.id
 	 * @see		#getUserByName()
 	 */ 
-	function getUserById(userId:Int):User
+	function getUserById(userId:Int):User;
 	
 	/** @private */
-	function addUser(user:User):Void
+	function addUser(user:User):Void;
 	
 	/** @private */
-	function removeUser(user:User):Void
+	function removeUser(user:User):Void;
 	
 	/** @private */
-	function removeUserById(id:Int):Void
+	function removeUserById(id:Int):Void;
 	
 	/**
 	 * Returns the total number of users in the local users list.
 	 */
-	function get userCount():Int
+	var userCount(get_userCount, null):Int;
+	//function get userCount():Int
 	
 	/**
 	 * Get the whole list of users inside the Rooms joined by the client.
 	 * 
 	 * @return	The list of<em>User</em>objects representing the users in the local users list.
 	 */
-	function getUserList():Array
+	function getUserList():Array;
 	
 	/** @private */
-	function get smartFox():SmartFox
+	var smartFox(get_smartFox, null):SmartFox;
+	//function get smartFox():SmartFox
 }
