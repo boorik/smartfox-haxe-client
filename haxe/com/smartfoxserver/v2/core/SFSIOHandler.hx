@@ -19,24 +19,24 @@ import flash.utils.ByteArray<Dynamic>;
 /** @private */
 class SFSIOHandler implements IoHandler
 {
-	public static inline var SHORT_BYTE_SIZE:Int=2
-	public static inline var INT_BYTE_SIZE:Int=4
+	public static inline var SHORT_BYTE_SIZE:Int = 2;
+	public static inline var INT_BYTE_SIZE:Int = 4;
 	
-	private var bitSwarm:BitSwarmClient
-	private var log:Logger
-	private var readState:Int
-	private var pendingPacket:PendingPacket
-	private var protocolCodec:IProtocolCodec
+	private var bitSwarm:BitSwarmClient;
+	private var log:Logger;
+	private var readState:Int;
+	private var pendingPacket:PendingPacket;
+	private var protocolCodec:IProtocolCodec;
 	private var fullPacketDump:Bool=false;
 	
-	private static inline var EMPTY_BUFFER:ByteArray<Dynamic>=new ByteArray()
+	private static inline var EMPTY_BUFFER:ByteArray<Dynamic> = new ByteArray();
 	
 	public function new(bitSwarm:BitSwarmClient)
 	{
-		this.bitSwarm=bitSwarm
-		this.log=bitSwarm.sfs.logger
-		this.readState=PacketReadState.WAIT_NEW_PACKET
-		this.protocolCodec=new SFSProtocolCodec(this, bitSwarm)
+		this.bitSwarm = bitSwarm;
+		this.log = bitSwarm.sfs.logger;
+		this.readState = PacketReadState.WAIT_NEW_PACKET;
+		this.protocolCodec = new SFSProtocolCodec(this, bitSwarm);
 	}
 	
 	public function enableFullPacketDump(b:Bool):Void
@@ -47,7 +47,7 @@ class SFSIOHandler implements IoHandler
 	public var codec(get_codec, set_codec):IProtocolCodec;
  	private function get_codec():IProtocolCodec
 	{
-		return protocolCodec
+		return protocolCodec;
 	}
 	
 	/*
@@ -55,7 +55,7 @@ class SFSIOHandler implements IoHandler
 	*/
 	private function set_codec(codec:IProtocolCodec):Void
 	{
-		this.protocolCodec=codec
+		this.protocolCodec = codec;
 	}
 	
 	/*
@@ -71,7 +71,7 @@ class SFSIOHandler implements IoHandler
 	public function onDataRead(data:ByteArray):Void
 	{
 		if(data.length==0)
-			throw new SFSError("Unexpected empty packet data:no readable bytes available!")
+			throw new SFSError("Unexpected empty packet data:no readable bytes available!");
 			
 		/*
 		trace("GOT DATA:", data.length, data.position)
@@ -83,68 +83,68 @@ class SFSIOHandler implements IoHandler
 		if(bitSwarm !=null && bitSwarm.sfs.debug)
 		{
 			if(data.length>1024 && fullPacketDump==false)
-				log.info("Data Read:Size>1024, dump omitted")
+				log.info("Data Read:Size>1024, dump omitted");
 			else
-				log.info("Data Read:" + DefaultObjectDumpFormatter.hexDump(data))
+				log.info("Data Read:" + DefaultObjectDumpFormatter.hexDump(data));
 		}
 		
-		data.position=0
+		data.position = 0;
 		
 		while(data.length>0)
 		{
 			if(readState==PacketReadState.WAIT_NEW_PACKET)
 			{
-				data=handleNewPacket(data)
+				data = handleNewPacket(data);
 			}
 			
 			if(readState==PacketReadState.WAIT_DATA_SIZE)
 			{
-				data=handleDataSize(data)
+				data = handleDataSize(data);
 			}
 			
 			if(readState==PacketReadState.WAIT_DATA_SIZE_FRAGMENT)
 			{
-				data=handleDataSizeFragment(data)
+				data = handleDataSizeFragment(data);
 			}
 			
 			if(readState==PacketReadState.WAIT_DATA)
 			{
-				data=handlePacketData(data)	
+				data = handlePacketData(data);
 			}
 		}
 	}
 	
 	private function handleNewPacket(data:ByteArray):ByteArray
 	{
-		log.debug("Handling New Packet")
+		log.debug("Handling New Packet");
 		
 		// Decode the header byte
-		var headerByte:Int=data.readByte()
+		var headerByte:Int = data.readByte();
 		
 		if(!(headerByte & 128)>0)
 		{
 			// NOTE:Added extra debug info, for unexpected packets
-			throw new SFSError("Unexpected header byte:" + headerByte, 0, DefaultObjectDumpFormatter.hexDump(data))
+			throw new SFSError("Unexpected header byte:" + headerByte, 0, DefaultObjectDumpFormatter.hexDump(data));
 		}
 			
-		var header:PacketHeader=PacketHeader.fromBinary(headerByte)
+		var header:PacketHeader = PacketHeader.fromBinary(headerByte);
 		
 		// Store the pending packet
-		pendingPacket=new PendingPacket(header)
+		pendingPacket = new PendingPacket(header);
 		
 		// Change state
-		readState=PacketReadState.WAIT_DATA_SIZE
+		readState = PacketReadState.WAIT_DATA_SIZE;
 		
 		// Resize the array
-		return resizeByteArray(data, 1, length - 1)
+		return resizeByteArray(data, 1, length - 1);
 	}
 	
 	private function handleDataSize(data:ByteArray):ByteArray
 	{
-		log.debug("Handling Header Size. Size:" + data.length + "(" +(pendingPacket.header.bigSized ? "big":"small")+ ")")
+		log.debug("Handling Header Size. Size:" + data.length + "(" +(pendingPacket.header.bigSized ? "big":"small") + ")");
 		
-		var dataSize:Int=-1
-		var sizeBytes:Int=2 // default==2 bytes
+		var dataSize:Int = -1;
+		var sizeBytes:Int = 2; // default==2 bytes
 		
 		// Size is expressed in 4 bytes(signed Int)
 		if(pendingPacket.header.bigSized)
@@ -152,10 +152,10 @@ class SFSIOHandler implements IoHandler
 			// Check if we have the full header
 			if(data.length>=4)
 			{
-				dataSize=data.readUnsignedInt()
+				dataSize = data.readUnsignedInt();
 			}
 			
-			sizeBytes=4
+			sizeBytes = 4;
 		}
 		
 		// Size is expressed in 2 bytes(unsigned short)
@@ -163,83 +163,83 @@ class SFSIOHandler implements IoHandler
 		{
 			if(data.length>=2)
 			{
-				dataSize=data.readUnsignedShort()
+				dataSize = data.readUnsignedShort();
 			}
 		}
 		
 		if(dataSize !=-1)
 		{
 			// Store expected packet size
-			pendingPacket.header.expectedLen=dataSize
+			pendingPacket.header.expectedLen = dataSize;
 			
-			data=resizeByteArray(data, sizeBytes, data.length - sizeBytes)
-			readState=PacketReadState.WAIT_DATA
+			data = resizeByteArray(data, sizeBytes, data.length - sizeBytes);
+			readState = PacketReadState.WAIT_DATA;
 		}
 		
 		// We didn't decode the whole size
 		else
 		{
-			readState=PacketReadState.WAIT_DATA_SIZE_FRAGMENT
+			readState = PacketReadState.WAIT_DATA_SIZE_FRAGMENT;
 			
 			// Store the data we have
-			pendingPacket.buffer.writeBytes(data)
+			pendingPacket.buffer.writeBytes(data);
 			
 			// An empty data will signal that we need to wait the next fragment
-			data=EMPTY_BUFFER 
+			data = EMPTY_BUFFER;
 		}
 		
-		return data
+		return data;
 	}
 	
 	private function handleDataSizeFragment(data:ByteArray):ByteArray
 	{
-		log.debug("Handling Size fragment. Data:" + data.length)
+		log.debug("Handling Size fragment. Data:" + data.length);
 		
-		var remaining:Int=pendingPacket.header.bigSized ? 4 - pendingPacket.buffer.position:2 - pendingPacket.buffer.position
+		var remaining:Int = pendingPacket.header.bigSized ? 4 - pendingPacket.buffer.position:2 - pendingPacket.buffer.position;
 		
 		// Ok, we have enough data to finish
 		if(data.length>=remaining)
 		{
-			pendingPacket.buffer.writeBytes(data, 0, remaining)
-			pendingPacket.buffer.position=0
-			var dataSize:Int=pendingPacket.header.bigSized ? pendingPacket.buffer.readInt():pendingPacket.buffer.readShort()
+			pendingPacket.buffer.writeBytes(data, 0, remaining);
+			pendingPacket.buffer.position = 0;
+			var dataSize:Int = pendingPacket.header.bigSized ? pendingPacket.buffer.readInt():pendingPacket.buffer.readShort();
 			
-			log.debug("DataSize is ready:", dataSize, "bytes")
-			pendingPacket.header.expectedLen=dataSize
-			pendingPacket.buffer=new ByteArray()
+			log.debug("DataSize is ready:", dataSize, "bytes");
+			pendingPacket.header.expectedLen = dataSize;
+			pendingPacket.buffer = new ByteArray();
 			
 			// Next state
-			readState=PacketReadState.WAIT_DATA
+			readState = PacketReadState.WAIT_DATA;
 			
 			// Remove bytes that were analyzed
 			if(data.length>remaining)
-				data=resizeByteArray(data, remaining, data.length - remaining)
+				data = resizeByteArray(data, remaining, data.length - remaining);
 			else
-				data=EMPTY_BUFFER
+				data = EMPTY_BUFFER;
 		}
 		
 		// Nope, we're not done yet
 		else
 		{
-			pendingPacket.buffer.writeBytes(data)
-			data=EMPTY_BUFFER
+			pendingPacket.buffer.writeBytes(data);
+			data = EMPTY_BUFFER;
 		}
 		
-		return data
+		return data;
 	}
 	
 	private function handlePacketData(data:ByteArray):ByteArray
 	{	
 		// is there more data for the next incoming packet?
-		var remaining:Int=pendingPacket.header.expectedLen - pendingPacket.buffer.length
-		var isThereMore:Bool=(data.length>remaining)
+		var remaining:Int = pendingPacket.header.expectedLen - pendingPacket.buffer.length;
+		var isThereMore:Bool = (data.length > remaining);
 		
-		log.debug("Handling Data:" + data.length + ", previous state:" + pendingPacket.buffer.length + "/" + pendingPacket.header.expectedLen)
+		log.debug("Handling Data:" + data.length + ", previous state:" + pendingPacket.buffer.length + "/" + pendingPacket.header.expectedLen);
 
 		if(data.length>=remaining)
 		{
-			pendingPacket.buffer.writeBytes(data, 0, remaining)
-			log.debug("<<<Packet Complete>>>")
+			pendingPacket.buffer.writeBytes(data, 0, remaining);
+			log.debug("<<<Packet Complete>>>");
 			
 			/*
 			* Encryption handling code goes here
@@ -247,52 +247,52 @@ class SFSIOHandler implements IoHandler
 			
 			// Handle compression
 			if(pendingPacket.header.compressed)
-				pendingPacket.buffer.uncompress()
+				pendingPacket.buffer.uncompress();
 			
 			// Send to protocol codec
-			protocolCodec.onPacketRead(pendingPacket.buffer)
+			protocolCodec.onPacketRead(pendingPacket.buffer);
 			
-			readState=PacketReadState.WAIT_NEW_PACKET
+			readState = PacketReadState.WAIT_NEW_PACKET;
 		}
 		
 		// Not enough data to complete the packet
 		else
 		{
 			// Add bytes to buffer and let's wait for the rest to come over th network
-			pendingPacket.buffer.writeBytes(data)
+			pendingPacket.buffer.writeBytes(data);
 		}
 		
 		if(isThereMore)
-			data=resizeByteArray(data, remaining, data.length - remaining)
+			data = resizeByteArray(data, remaining, data.length - remaining);
 		else
-			data=EMPTY_BUFFER
+			data = EMPTY_BUFFER;
 		
-		return data
+		return data;
 	}
 	
 	private function resizeByteArray(array:ByteArray, pos:Int, len:Int):ByteArray
 	{
-		var newArray:ByteArray<Dynamic>=new ByteArray()
-		newArray.writeBytes(array, pos, len)
-		newArray.position=0
+		var newArray:ByteArray<Dynamic> = new ByteArray();
+		newArray.writeBytes(array, pos, len);
+		newArray.position = 0;
 		
-		return newArray
+		return newArray;
 	}
 	
 	
 	public function onDataWrite(message:IMessage):Void
 	{
-		var writeBuffer:ByteArray<Dynamic>=new ByteArray()
-		var binData:ByteArray<Dynamic>=message.content.toBinary()
-		var isCompressed:Bool=false
+		var writeBuffer:ByteArray<Dynamic> = new ByteArray();
+		var binData:ByteArray<Dynamic> = message.content.toBinary();
+		var isCompressed:Bool = false;
 		
 		// 1. Handle Compression
 		if(binData.length>bitSwarm.compressionThreshold)
 		{
 			//trace("Before compression:" + binData.length)
-			binData.compress()
+			binData.compress();
 			//trace("After compression:" + binData.length)
-			isCompressed=true
+			isCompressed = true;
 		}	
 		
 		if(binData.length>bitSwarm.maxMessageSize)
@@ -303,44 +303,44 @@ class SFSIOHandler implements IoHandler
 			* We should stop here and provide an error to the developer
 			*/
 			
-			throw new SFSCodecError("Message size is too big:" + binData.length + ", the server limit is:" + bitSwarm.maxMessageSize)
+			throw new SFSCodecError("Message size is too big:" + binData.length + ", the server limit is:" + bitSwarm.maxMessageSize);
 		}
 		
 		// 2. Handle Encryption
 		// Not implemented yet
 		
-		var sizeBytes:Int=SHORT_BYTE_SIZE
+		var sizeBytes:Int = SHORT_BYTE_SIZE;
 		
 		if(binData.length>65535)
-			sizeBytes=INT_BYTE_SIZE
+			sizeBytes = INT_BYTE_SIZE;
 		
 		// BlueBoxed flag is not implemented yet
-		var packetHeader:PacketHeader=new PacketHeader(message.isEncrypted, isCompressed, false, sizeBytes==INT_BYTE_SIZE)
+		var packetHeader:PacketHeader = new PacketHeader(message.isEncrypted, isCompressed, false, sizeBytes == INT_BYTE_SIZE);
 		
 		// 1. Write packet header byte
-		writeBuffer.writeByte(packetHeader.encode())
+		writeBuffer.writeByte(packetHeader.encode());
 		
 		// 2. Write packet size
 		if(sizeBytes>SHORT_BYTE_SIZE)
-			writeBuffer.writeInt(binData.length)
+			writeBuffer.writeInt(binData.length);
 		else
-			writeBuffer.writeShort(binData.length)
+			writeBuffer.writeShort(binData.length);
 		
 		// 3. Write actual packet data
-		writeBuffer.writeBytes(binData)
+		writeBuffer.writeBytes(binData);
 			
 		// 4. Send in hyperspace!
 		if(bitSwarm.useBlueBox)
-			bitSwarm.httpSocket.send(writeBuffer)	
+			bitSwarm.httpSocket.send(writeBuffer);
 
 		else
 		{
 			if(bitSwarm.socket.connected)
 			{
 				if(message.isUDP)
-					writeUDP(message, writeBuffer)
+					writeUDP(message, writeBuffer);
 				else
-					writeTCP(message, writeBuffer)
+					writeTCP(message, writeBuffer);
 			}
 		}
 	}
@@ -349,21 +349,21 @@ class SFSIOHandler implements IoHandler
 	{
 		try
 		{
-			bitSwarm.socket.writeBytes(writeBuffer)
-			bitSwarm.socket.flush()
+			bitSwarm.socket.writeBytes(writeBuffer);
+			bitSwarm.socket.flush();
 			
-			if(bitSwarm.sfs.debug)
-				log.info("Data written:" + message.content.getHexDump())
+			if (bitSwarm.sfs.debug)
+				log.info("Data written:" + message.content.getHexDump());
 		}
 		catch(error:IOError)
 		{
-			log.warn("WriteTCP operation failed due to I/O Dynamic:" + error.toString())
+			log.warn("WriteTCP operation failed due to I/O Dynamic:" + error.toString());
 		}
 	}
 	
 	private function writeUDP(message:IMessage, writeBuffer:ByteArray):Void
 	{
-		bitSwarm.udpManager.send(writeBuffer)
+		bitSwarm.udpManager.send(writeBuffer);
 	}
 	
 }

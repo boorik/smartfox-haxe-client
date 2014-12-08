@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.core;
 
-import flash.events.Event
+import flash.events.Event;
 
 /**
  * This is the base class of all the events dispatched by the SmartFoxServer 2X ActionScript 3 API.
@@ -15,7 +15,7 @@ class BaseEvent extends Event
 	/**
 	 * Specifies the object containing the parameters of the event.
 	 */
-	public var params:Dynamic
+	public var params:Dynamic;
 	
 	/**
 	 * @private
@@ -27,8 +27,8 @@ class BaseEvent extends Event
 	 */
 	public function new(type:String, params:Dynamic=null)
 	{
-		super(type)
-		this.params=params
+		super(type);
+		this.params = params;
 	}
 	
 	/**
@@ -40,7 +40,7 @@ class BaseEvent extends Event
 	 */
 	public override function clone():Event
 	{
-		return new BaseEvent(this.type, this.params)
+		return new BaseEvent(this.type, this.params);
 	}
 	
 	/**
@@ -52,6 +52,6 @@ class BaseEvent extends Event
 	 */
 	public override function toString():String
 	{
-		return formatToString("BaseEvent", "type", "bubbles", "cancelable", "eventPhase", "params")
+		return formatToString("BaseEvent", "type", "bubbles", "cancelable", "eventPhase", "params");
 	}
 }

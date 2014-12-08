@@ -54,7 +54,7 @@ class SFSBuddyEvent extends BaseEvent
 	 * 
 	 * @see		#BUDDY_ERROR
 	 */
-	public static inline var BUDDY_LIST_INIT:String="buddyListInit"
+	public static inline var BUDDY_LIST_INIT:String = "buddyListInit";
 	
 	/**
 	 * The<em>SFSBuddyEvent.BUDDY_ADD</em>constant defines the value of the<em>type</em>property of the event object for a<em>buddyAdd</em>event.
@@ -93,7 +93,7 @@ class SFSBuddyEvent extends BaseEvent
 	 * @see		#BUDDY_REMOVE
 	 * @see		#BUDDY_ERROR
 	 */
-	public static inline var BUDDY_ADD:String="buddyAdd"
+	public static inline var BUDDY_ADD:String = "buddyAdd";
 	
 	/**
 	 * The<em>SFSBuddyEvent.BUDDY_REMOVE</em>constant defines the value of the<em>type</em>property of the event object for a<em>buddyRemove</em>event.
@@ -132,7 +132,7 @@ class SFSBuddyEvent extends BaseEvent
 	 * @see		#BUDDY_ADD
 	 * @see		#BUDDY_ERROR
 	 */
-	public static inline var BUDDY_REMOVE:String="buddyRemove"
+	public static inline var BUDDY_REMOVE:String = "buddyRemove";
 	
 	/**
 	 * The<em>SFSBuddyEvent.BUDDY_BLOCK</em>constant defines the value of the<em>type</em>property of the event object for a<em>buddyBlock</em>event.
@@ -171,7 +171,7 @@ class SFSBuddyEvent extends BaseEvent
 	 * 
 	 * @see		#BUDDY_ERROR
 	 */
-	public static inline var BUDDY_BLOCK:String="buddyBlock"
+	public static inline var BUDDY_BLOCK:String = "buddyBlock";
 	
 	/**
 	 * The<em>SFSBuddyEvent.BUDDY_ERROR</em>constant defines the value of the<em>type</em>property of the event object for a<em>buddyError</em>event.
@@ -189,7 +189,7 @@ class SFSBuddyEvent extends BaseEvent
 	 * 
 	 * @see		#BUDDY_ADD
 	 */
-	public static inline var BUDDY_ERROR:String="buddyError"
+	public static inline var BUDDY_ERROR:String = "buddyError";
 	
 	/**
 	 * The<em>SFSBuddyEvent.BUDDY_ONLINE_STATE_UPDATE</em>constant defines the value of the<em>type</em>property of the event object for a<em>buddyOnlineStateChange</em>event.
@@ -228,7 +228,7 @@ class SFSBuddyEvent extends BaseEvent
 	 * 
 	 * @eventType	buddyOnlineStateChange
 	 */
-	public static inline var BUDDY_ONLINE_STATE_UPDATE:String="buddyOnlineStateChange"
+	public static inline var BUDDY_ONLINE_STATE_UPDATE:String = "buddyOnlineStateChange";
 	
 	/**
 	 * The<em>SFSBuddyEvent.BUDDY_VARIABLES_UPDATE</em>constant defines the value of the<em>type</em>property of the event object for a<em>buddyVariablesUpdate</em>event.
@@ -297,7 +297,7 @@ class SFSBuddyEvent extends BaseEvent
 	 * 
 	 * @eventType	buddyVariablesUpdate
 	 */
-	public static inline var BUDDY_VARIABLES_UPDATE:String="buddyVariablesUpdate"
+	public static inline var BUDDY_VARIABLES_UPDATE:String = "buddyVariablesUpdate";
 	
 	/**
 	 * The<em>SFSBuddyEvent.BUDDY_MESSAGE</em>constant defines the value of the<em>type</em>property of the event object for a<em>buddyMessage</em>event.
@@ -342,7 +342,7 @@ class SFSBuddyEvent extends BaseEvent
 	 * 
 	 * @eventType	buddyMessage
 	 */
-	public static inline var BUDDY_MESSAGE:String="buddyMessage"
+	public static inline var BUDDY_MESSAGE:String = "buddyMessage";
 	
 	
 	//========================================================
@@ -356,8 +356,8 @@ class SFSBuddyEvent extends BaseEvent
 	 */
 	public function new(type:String, params:Dynamic)
 	{
-		super(type)
-		this.params=params
+		super(type);
+		this.params = params;
 	}
 	
 	/**
@@ -367,7 +367,7 @@ class SFSBuddyEvent extends BaseEvent
 	 */
 	public override function clone():Event
 	{
-		return new SFSBuddyEvent(this.type, this.params)
+		return new SFSBuddyEvent(this.type, this.params);
 	}
 	
 	/**
@@ -377,7 +377,7 @@ class SFSBuddyEvent extends BaseEvent
 	 */
 	public override function toString():String
 	{
-		return formatToString("SFSBuddyEvent", "type", "bubbles", "cancelable", "eventPhase", "params")
+		return formatToString("SFSBuddyEvent", "type", "bubbles", "cancelable", "eventPhase", "params");
 	}
 
 }
