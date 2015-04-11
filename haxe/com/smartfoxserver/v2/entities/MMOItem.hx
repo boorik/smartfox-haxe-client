@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.entities;
 
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.variables.IMMOItemVariable;
 import com.smartfoxserver.v2.entities.variables.MMOItemVariable;
@@ -33,7 +33,7 @@ class MMOItem implements IMMOItem
 		// Decode ItemVariables(Index=1 of the SFSArray)
 		var encodedVars:ISFSArray<Dynamic>=encodedItem.getSFSArray(1);
 		
-		for(var i:Int=0;i<encodedVars.size();i++)
+		for(i in 0...encodedVars.size())
 		{
 			item.setVariable(MMOItemVariable.fromSFSArray(encodedVars.getSFSArray(i)));
 		}
@@ -67,8 +67,8 @@ class MMOItem implements IMMOItem
 		// Return a copy of the Internal data structure as array
 		var variables:Array<Dynamic>=[];
 			
-		for(var uv:IMMOItemVariable in _variables);
-		variables.push(uv);
+		for(uv in Reflect.fields(_variables))
+			variables.push(getVariable(uv));
 		
 		return variables;
 	}
@@ -76,7 +76,7 @@ class MMOItem implements IMMOItem
 	/** @inheritDoc */
 	public function getVariable(name:String):IMMOItemVariable
 	{
-		return _variables[name];
+		return Reflect.field(_variables,name);
 	}
 	
 	/** @inheritDoc */
@@ -86,16 +86,16 @@ class MMOItem implements IMMOItem
 		{
 			// If varType==NULL delete var
 			if(itemVariable.isNull())
-				delete _variables[itemVariable.name];
+				Reflect.deleteField(_variables,itemVariable.name);
 			else
-				_variables[itemVariable.name]=itemVariable;
+				Reflect.setField(_variables,itemVariable.name,itemVariable);
 		}
 	}
 	
 	/** @inheritDoc */
 	public function setVariables(itemVariables:Array):Void
 	{
-		for(var itemVar:IMMOItemVariable in itemVariables)
+		for(itemVar in itemVariables)
 		{
 			setVariable(itemVar);
 		}
@@ -104,7 +104,7 @@ class MMOItem implements IMMOItem
 	/** @inheritDoc */
 	public function containsVariable(name:String):Bool
 	{
-		return _variables[name] !=null
+		return Reflect.field(_variables,name) != null;
 	}
 	
 	/** @inheritDoc */

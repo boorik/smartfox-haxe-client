@@ -15,5 +15,5 @@ interface BuddyVariable extends UserVariable
 	 * Persistent Buddy Variables are also referred to as "offline variables" because they are available to all users
 	 * who have the owner in their Buddy Lists, whether that Buddy is online or not.</p>
 	 */
-	function get isOffline():Bool
+	function get_isOffline():Bool;
 }

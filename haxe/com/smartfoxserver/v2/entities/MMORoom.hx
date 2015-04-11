@@ -1,8 +1,8 @@
 package com.smartfoxserver.v2.entities;
 
 import com.smartfoxserver.v2.entities.data.Vec3D;
-import com.smartfoxserver.v2.kernel;
 import com.smartfoxserver.v2.util.ArrayUtil;
+import haxe.ds.IntMap;
 
 /**
  * The<em>MMORoom</em>object represents a specialized type of Room entity on the client.
@@ -35,12 +35,13 @@ class MMORoom extends SFSRoom
 	private var _defaultAOI:Vec3D;
 	private var _lowerMapLimit:Vec3D;
 	private var _higherMapLimit:Vec3D;
-	private var _itemsById:Dynamic={};
+	private var _itemsById:IntMap<IMMOItem>;
 	
 	/** @inheritDoc */
 	public function new(id:Int, name:String, groupId:String="default")
 	{
 		super(id, name, groupId);
+		_itemsById = new IntMap();
 	}
 	
 	/**
@@ -82,7 +83,7 @@ class MMORoom extends SFSRoom
 	private function set_defaultAOI(value:Vec3D):Void
 	{
 		if(_defaultAOI !=null)
-			throw new ArgumentError("This value is read-only")
+			throw new ArgumentError("This value is read-only");
 			
 		_defaultAOI=value;
 	}
@@ -91,7 +92,7 @@ class MMORoom extends SFSRoom
 	private function set_lowerMapLimit(value:Vec3D):Void
 	{
 		if(_lowerMapLimit !=null)
-			throw new ArgumentError("This value is read-only")
+			throw new ArgumentError("This value is read-only");
 
 		_lowerMapLimit=value;
 	}
@@ -100,7 +101,7 @@ class MMORoom extends SFSRoom
 	private function set_higherMapLimit(value:Vec3D):Void
 	{
 		if(_higherMapLimit !=null)
-			throw new ArgumentError("This value is read-only")
+			throw new ArgumentError("This value is read-only");
 		
 		_higherMapLimit=value;
 	}
@@ -115,7 +116,7 @@ class MMORoom extends SFSRoom
 	 */ 
 	public function getMMOItem(id:Int):IMMOItem
 	{
-		return _itemsById[id];
+		return _itemsById.get(id);
 	}
 	
 	/**
@@ -127,19 +128,19 @@ class MMORoom extends SFSRoom
 	 */
 	public function getMMOItems():Array
 	{
-		return ArrayUtil.objToArray(_itemsById);	
+		return Lambda.array(_itemsById);	
 	}
 	
 	
 	//:::Hidden methods:::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	
-	kernel function addMMOItem(item:IMMOItem):Void
+	public function addMMOItem(item:IMMOItem):Void
 	{
-		_itemsById[item.id]=item;
+		_itemsById.set(item.id,item);
 	}
 	
-	kernel function removeItem(id:Int):Void
+	public function removeItem(id:Int):Void
 	{
-		delete _itemsById[id];
+		_itemsById.remove(id);
 	}
 }

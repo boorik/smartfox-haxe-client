@@ -15,7 +15,7 @@ import com.smartfoxserver.v2.entities.SFSBuddy;
 import com.smartfoxserver.v2.entities.SFSRoom;
 import com.smartfoxserver.v2.entities.SFSUser;
 import com.smartfoxserver.v2.entities.User;
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.invitation.Invitation;
@@ -144,7 +144,7 @@ class SystemController extends BaseController
 	* New for Grid support
 	* Allows wrapping API to inject new SystemController Request handlers
 	*/
-	kernel function addRequestHandler(code:Int, command:Dynamic):Void
+	function addRequestHandler(code:Int, command:Dynamic):Void
 	{
 		requestHandlers[code] = command;
 	}
@@ -175,7 +175,7 @@ class SystemController extends BaseController
 				obj.getInt(LoginRequest.KEY_ID), 
 				obj.getUtfString(LoginRequest.KEY_USER_NAME), 
 				true
-			)
+			);
 			
 			sfs.mySelf.userManager = sfs.userManager;
 			sfs.mySelf.privilegeId = obj.getShort(LoginRequest.KEY_PRIVILEGE_ID);
@@ -264,7 +264,7 @@ class SystemController extends BaseController
 			room = roomManager.replaceRoom(room, roomManager.containsGroup(room.groupId));
 			
 			// Populate room's user list
-			for(var j:Int=0;j<userList.size();j++)
+			for(j in 0...userList.size())
 			{
 				var userObj:ISFSArray<Dynamic> = userList.getSFSArray(j);
 				
@@ -363,7 +363,7 @@ class SystemController extends BaseController
 			globalUserMan.removeUserReference(user, true);
 				
 			// Fire one event in each room
-			for(var room:Room in joinedRooms)
+			for(room in joinedRooms)
 			{
 				sfs.dispatchEvent(new SFSEvent(SFSEvent.USER_EXIT_ROOM, { user:user, room:room } ));
 			}
@@ -385,7 +385,7 @@ class SystemController extends BaseController
 			sfs.roomManager.removeRoom(room);
 			
 			// remove users in this room from user manager
-			for(var user:User in room.userList)
+			for(user in room.userList)
 				globalUserManager.removeUser(user);
 			
 			// Fire event			
@@ -480,7 +480,7 @@ class SystemController extends BaseController
 	public function handleBuddyMessage(sfso:ISFSObject):Void
 	{
 		var evtParams:Dynamic = { };
-		var senderId:Int = sfso.getInt(GenericMessageRequest.K; EY_USER_ID);
+		var senderId:Int = sfso.getInt(GenericMessageRequest.KEY_USER_ID);
 		
 		/*
 		* Look for Buddy
@@ -583,12 +583,12 @@ class SystemController extends BaseController
 		var sfso:ISFSObject = msg.content;
 		var reasonId:Int = sfso.getByte("dr");
 			
-		sfs.kernel::handleClientDisconnection(ClientDisconnectionReason.getReason(reasonId));
+		sfs.handleClientDisconnection(ClientDisconnectionReason.getReason(reasonId));
 	}
 	
 	private function fnReconnectionFailure(msg:IMessage):Void
 	{
-		sfs.kernel::handleReconnectionFailure();
+		sfs.handleReconnectionFailure();
 	}
 	
 	private function fnSetRoomVariables(msg:IMessage):Void
@@ -604,7 +604,7 @@ class SystemController extends BaseController
 		
 		if(targetRoom !=null)
 		{
-			for(var j:Int=0;j<varListData.size();j++)
+			for(j in 0...varListData.size())
 			{
 				var roomVar:RoomVariable = SFSRoomVariable.fromSFSArray(varListData.getSFSArray(j));
 				targetRoom.setVariable(roomVar);
@@ -635,7 +635,7 @@ class SystemController extends BaseController
 		
 		if(user !=null)
 		{
-			for(var j:Int=0;j<varListData.size();j++)
+			for(j in 0...varListData.size())
 			{
 				var userVar:UserVariable = SFSUserVariable.fromSFSArray(varListData.getSFSArray(j));
 				user.setVariable(userVar);
@@ -818,7 +818,7 @@ class SystemController extends BaseController
 					targetRoom,
 					sfso.getInt(ChangeRoomCapacityRequest.KEY_USER_SIZE), 
 					sfso.getInt(ChangeRoomCapacityRequest.KEY_SPEC_SIZE)
-				)
+				);
 				
 				evtParams.room = targetRoom;
 				sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_CAPACITY_CHANGE, evtParams));
@@ -1213,7 +1213,7 @@ class SystemController extends BaseController
 			var fireEvent:Bool = true;
 			
 			// Rebuild variables
-			for(var j:Int=0;j<buddyVarsData.size();j++)
+			for(j in 0...buddyVarsData.size())
 			{
 				var buddyVar:BuddyVariable = SFSBuddyVariable.fromSFSArray(buddyVarsData.getSFSArray(j));
 				
@@ -1272,7 +1272,7 @@ class SystemController extends BaseController
 		var roomListData:ISFSArray<Dynamic> = sfso.getSFSArray(FindRoomsRequest.KEY_FILTERED_ROOMS);
 		var roomList:Array<Dynamic> = [];
 		
-		for(var i:Int=0;i<roomListData.size();i++)
+		for(i in 0...roomListData.size())
 		{
 			var theRoom:Room = SFSRoom.fromSFSArray(roomListData.getSFSArray(i));
 				
@@ -1298,7 +1298,7 @@ class SystemController extends BaseController
 		var userList:Array<Dynamic> = [];
 		var mySelf:User = sfs.mySelf;
 			
-		for(var i:Int=0;i<userListData.size();i++)
+		for(i in 0...userListData.size())
 		{
 			var u:User = SFSUser.fromSFSArray(userListData.getSFSArray(i));
 			
@@ -1395,7 +1395,7 @@ class SystemController extends BaseController
 	
 	private function fnPingPong(msg:IMessage):Void
 	{
-		var avg:Int=sfs.kernel::lagMonitor.onPingPong();
+		var avg:Int=sfs.lagMonitor.onPingPong();
 
 		// Redispatch at the user level
 		var newEvt:SFSEvent = new SFSEvent(SFSEvent.PING_PONG, { lagValue:avg } );
@@ -1428,7 +1428,7 @@ class SystemController extends BaseController
 		// Remove users that no longer are in proximity
 		if(minusUserList !=null && minusUserList.length>0)
 		{
-			for(var uid:Int in minusUserList)
+			for(uid in minusUserList)
 			{
 				var removedUser:User=theRoom.getUserById(uid);
 				if(removedUser !=null)
@@ -1457,7 +1457,7 @@ class SystemController extends BaseController
 				var userEntryPos:Array<Dynamic>=encodedUser.getElementAt(5);
 				
 				if(userEntryPos !=null)
-					(newUser as SFSUser).aoiEntryPoint=Vec3D.fromArray(encodedUser.getElementAt(5));
+					cast(newUser,SFSUser).aoiEntryPoint=Vec3D.fromArray(encodedUser.getElementAt(5));
 			}
 		}
 		
@@ -1466,7 +1466,7 @@ class SystemController extends BaseController
 		// If there are items to remove simply pass the list of MMOItem ids
 		if(minusItemList !=null)
 		{
-			for(i=0;i<minusItemList.length;i++)
+			for(i in 0...minusItemList.length)
 			{
 				var itemId:Int=minusItemList[i];
 				var mmoItem:IMMOItem=mmoRoom.getMMOItem(itemId);
@@ -1474,7 +1474,7 @@ class SystemController extends BaseController
 				if(mmoItem !=null)
 				{
 					// Remove from Room Item list
-					mmoRoom.kernel::removeItem(itemId);
+					mmoRoom.removeItem(itemId);
 					
 					// Add to event list
 					removedItems.push(mmoItem);	
@@ -1485,7 +1485,7 @@ class SystemController extends BaseController
 		// Prepare a list of new MMOItems in view
 		if(plusItemList !=null)
 		{
-			for(i=0;i<plusItemList.size();i++)
+			for(i in 0...plusItemList.size())
 			{
 				var encodedItem:ISFSArray<Dynamic>=plusItemList.getSFSArray(i);
 				
@@ -1496,7 +1496,7 @@ class SystemController extends BaseController
 				addedItems.push(newItem);
 				
 				// Add to Room Item List
-				mmoRoom.kernel::addMMOItem(newItem);
+				mmoRoom.addMMOItem(newItem);
 				
 				/*
 				* From the encoded Item(as SFSArray)we extract the 2nd extra/optional parameter 
@@ -1505,7 +1505,7 @@ class SystemController extends BaseController
 				var itemEntryPos:Array<Dynamic>=encodedItem.getElementAt(2);
 				
 				if(itemEntryPos !=null)
-					(newItem as MMOItem).aoiEntryPoint=Vec3D.fromArray(encodedItem.getElementAt(2));
+					cast(newItem, MMOItem).aoiEntryPoint=Vec3D.fromArray(encodedItem.getElementAt(2));
 			}
 		}
 		
@@ -1536,7 +1536,7 @@ class SystemController extends BaseController
 			
 			if(mmoItem !=null)
 			{
-				for(var j:Int=0;j<varList.size();j++)
+				for(j in 0...varList.size())
 				{
 					var itemVar:IMMOItemVariable=MMOItemVariable.fromSFSArray(varList.getSFSArray(j));
 					mmoItem.setVariable(itemVar);
@@ -1560,7 +1560,7 @@ class SystemController extends BaseController
 		var roomManager:IRoomManager = sfs.roomManager;
 		
 		// Cycle through each room object
-		for(var j:Int=0;j<roomList.size();j++)
+		for(j in 0...roomList.size())
 		{
 			var roomObj:ISFSArray<Dynamic> = roomList.getSFSArray(j);
 			var newRoom:Room = SFSRoom.fromSFSArray(roomObj);
@@ -1591,7 +1591,7 @@ class SystemController extends BaseController
 			user.setPlayerId(userObj.getShort(3), room);
 			
 			var uVars:ISFSArray<Dynamic> = userObj.getSFSArray(4);
-			for(var i:Int=0;i<uVars.size();i++)
+			for(i in 0...uVars.size())
 			{
 				user.setVariable(SFSUserVariable.fromSFSArray(uVars.getSFSArray(i)));
 			}
@@ -1601,7 +1601,7 @@ class SystemController extends BaseController
 		if(addToGlobalManager)
 			sfs.userManager.addUser(user);
 		
-		return user
+		return user;
 	}
 	
 	

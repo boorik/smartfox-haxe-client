@@ -73,15 +73,15 @@ import flash.events.EventDispatcher;
  */
 class Logger extends EventDispatcher
 {
-	private var _enableConsoleTrace:Bool=true
-	private var _enableEventDispatching:Bool=false
-	private var _loggingLevel:Int=LogLevel.INFO
-	private var _loggingPrefix:String
+	private var _enableConsoleTrace:Bool = true;
+	private var _enableEventDispatching:Bool = false;
+	private var _loggingLevel:Int = LogLevel.INFO;
+	private var _loggingPrefix:String;
 	
 	/** @private */
 	function new(prefix:String="SFS2X")
 	{
-		_loggingPrefix=prefix
+		_loggingPrefix = prefix;
 	}
 	
 	/**
@@ -90,13 +90,13 @@ class Logger extends EventDispatcher
 	public var enableConsoleTrace(get_enableConsoleTrace, set_enableConsoleTrace):Bool;
  	private function get_enableConsoleTrace():Bool
 	{
-		return _enableConsoleTrace
+		return _enableConsoleTrace;
 	}
 	
 	/** @private */
 	private function set_enableConsoleTrace(value:Bool):Void
 	{
-		_enableConsoleTrace=value
+		_enableConsoleTrace = value;
 	}
 	
 	/**
@@ -110,13 +110,13 @@ class Logger extends EventDispatcher
 	public var enableEventDispatching(get_enableEventDispatching, set_enableEventDispatching):Bool;
  	private function get_enableEventDispatching():Bool
 	{
-		return _enableEventDispatching
+		return _enableEventDispatching;
 	}
 	
 	/** @private */
 	private function set_enableEventDispatching(value:Bool):Void
 	{
-		_enableEventDispatching=value	
+		_enableEventDispatching = value	;
 	}
 	
 	/**
@@ -129,37 +129,37 @@ class Logger extends EventDispatcher
 	public var loggingLevel(get_loggingLevel, set_loggingLevel):Int;
  	private function get_loggingLevel():Int
 	{
-		return _loggingLevel	
+		return _loggingLevel;	
 	}
 	
 	/** @private */
 	private function set_loggingLevel(level:Int):Void
 	{
-		_loggingLevel=level	
+		_loggingLevel = level;
 	}
 	
 	/** @private */
-	public function debug(...arguments):Void
+	public function debug(msg:String):Void
 	{
-		log(LogLevel.DEBUG, arguments.join(" "))
+		log(LogLevel.DEBUG, msg);
 	}
 	
 	/** @private */
-	public function info(...arguments):Void
+	public function info(msg:String):Void
 	{
-		log(LogLevel.INFO, arguments.join(" "))
+		log(LogLevel.INFO, msg);
 	}
 	
 	/** @private */
-	public function warn(...arguments):Void
+	public function warn(msg:String):Void
 	{
-		log(LogLevel.WARN, arguments.join(" "))
+		log(LogLevel.WARN, msg);
 	}
 	
 	/** @private */
-	public function error(...arguments):Void
+	public function error(msg:String):Void
 	{
-		log(LogLevel.ERROR, arguments.join(" "))
+		log(LogLevel.ERROR, msg);
 	}
 	
 	/**
@@ -168,22 +168,22 @@ class Logger extends EventDispatcher
 	private function log(level:Int, message:String):Void
 	{
 		if(level<_loggingLevel)
-			return	
+			return;
 		
-		var levelStr:String=LogLevel.toString(level)
+		var levelStr:String = LogLevel.toString(level);
 		
 		// Trace message in console
 		if(_enableConsoleTrace)
-			trace("[" + _loggingPrefix + "|" + levelStr + "]", message)
+			trace("[" + _loggingPrefix + "|" + levelStr + "]", message);
 		
 		if(_enableEventDispatching)
 		{
 			// Dispatch event
-			var params:Dynamic={}
-			params.message=message
+			var params:Dynamic = { };
+			params.message = message;
 
-			var evt:LoggerEvent=new LoggerEvent(levelStr.toLowerCase(), params)
-			dispatchEvent(evt)
+			var evt:LoggerEvent = new LoggerEvent(levelStr.toLowerCase(), params);
+			dispatchEvent(evt);
 		}
 	}
 }

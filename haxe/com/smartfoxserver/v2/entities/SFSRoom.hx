@@ -498,7 +498,7 @@ class SFSRoom implements Room
 	// Private methods
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	
-	kernel function merge(anotherRoom:Room):Void
+	public function merge(anotherRoom:Room):Void
 	{
 		// Clear all vars
 		_variables=[];

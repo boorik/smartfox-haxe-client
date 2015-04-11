@@ -16,7 +16,7 @@ interface Buddy
 	 * 
 	 * @see		User#id
 	 */
-	function get id():Int
+	function get_id():Int;
 	
 	/**
 	 * Indicates the name of this buddy.
@@ -24,7 +24,7 @@ interface Buddy
 	 * 
 	 * @see		User#name
 	 */
-	function get name():String
+	function get_name():String;
 	
 	/**
 	 * Indicates whether this buddy is blocked in the current user's buddies list or not.
@@ -32,17 +32,17 @@ interface Buddy
 	 * 
 	 * @see 	com.smartfoxserver.v2.requests.buddylist.BlockBuddyRequest BlockBuddyRequest
 	 */
-	function get isBlocked():Bool
+	function get_isBlocked():Bool;
 	
 	/**
 	 * Indicates whether this buddy is online in the Buddy List system or not.
 	 */
-	function get isOnline():Bool
+	function get_isOnline():Bool;
 	
 	/**
 	 * Indicates whether this buddy is temporary(non-persistent)in the current user's buddies list or not.
 	 */
-	function get isTemp():Bool
+	function get_isTemp():Bool;
 	
 	/**
 	 * Returns the custom state of this buddy.
@@ -52,13 +52,13 @@ interface Buddy
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.managers.IBuddyManager#buddyStates IBuddyManager.buddyStates
 	 */
-	function get state():String
+	function get_state():String;
 	
 	/**
 	 * Returns the nickname of this buddy.
 	 * If the nickname is not set,<code>null</code>is returned.
 	 */
-	function get nickName():String
+	function get_nickName():String;
 	
 	/**
 	 * Returns a list of<em>BuddyVariable</em>objects associated with the buddy.
@@ -66,7 +66,7 @@ interface Buddy
 	 * @see		com.smartfoxserver.v2.entities.variables.BuddyVariable BuddyVariable
 	 * @see		#getVariable()
 	 */ 
-	function get variables():Array
+	function get_variables():Array;
 	
 	/**
 	 * Retrieves a Buddy Variable from its name.
@@ -78,7 +78,7 @@ interface Buddy
 	 * @see		#variables
 	 * @see 	com.smartfoxserver.v2.requests.buddylist.SetBuddyVariablesRequest SetBuddyVariablesRequest
 	 */ 
-	function getVariable(varName:String):BuddyVariable
+	function getVariable(varName:String):BuddyVariable;
 	
 	/**
 	 * Return true if a BuddyVariable with the provided name exists
@@ -90,7 +90,7 @@ interface Buddy
 	 * 
 	 * @return	<code>true</code>if a Buddy Variable with the passed name is set for this buddy.
 	 */
-	function containsVariable(varName:String):Bool
+	function containsVariable(varName:String):Bool;
 	
 	/**
 	 * Retrieves the list of persistent Buddy Variables of this buddy.
@@ -99,7 +99,7 @@ interface Buddy
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.variables.BuddyVariable#isOffline BuddyVariable.isOffline
 	 */
-	function getOfflineVariables():Array
+	function getOfflineVariables():Array;
 	
 	/**
 	 * Retrieves the list of non-persistent Buddy Variables of this buddy.
@@ -108,23 +108,23 @@ interface Buddy
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.variables.BuddyVariable#isOffline BuddyVariable.isOffline
 	 */
-	function getOnlineVariables():Array
+	function getOnlineVariables():Array;
 	
 	/** @private */
-	function setVariable(bVar:BuddyVariable):Void
+	function setVariable(bVar:BuddyVariable):Void;
 	
 	/** @private */
-	function setVariables(variables:Array):Void
+	function setVariables(variables:Array):Void;
 	
 	/** @private */
-	function setId(id:Int):Void
+	function setId(id:Int):Void;
 	
 	/** @private */
-	function setBlocked(value:Bool):Void
+	function setBlocked(value:Bool):Void;
 	
 	/** @private */
-	function removeVariable(varName:String):Void
+	function removeVariable(varName:String):Void;
 	
 	/** @private */
-	function clearVolatileVariables():Void
+	function clearVolatileVariables():Void;
 }

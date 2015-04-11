@@ -7,7 +7,7 @@ class SFSError extends Dynamic
 	
 	public function new(message:String, errorId:Int=0, extra:String=null)
 	{
-		super(message, errorId)
+		super(message, errorId);
 		_details=extra;
 	}
 	

@@ -17,7 +17,7 @@ import flash.events.IOErrorEvent;
 import flash.events.ProgressEvent;
 import flash.events.SecurityErrorEvent;
 import flash.net.Socket;
-import flash.utils.ByteArray<Dynamic>;
+import flash.utils.ByteArray;
 import flash.utils.getTimer;
 import flash.utils.setTimeout;
 
@@ -372,7 +372,7 @@ class BitSwarmClient extends EventDispatcher
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	private function onSocketConnect(evt:Event):Void
 	{
-		_connected=true
+		_connected = true;
 		
 		var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.CONNECT);
 		
@@ -388,7 +388,7 @@ class BitSwarmClient extends EventDispatcher
 		_connected = false;
 		
 		var isRegularDisconnection:Bool = !_attemptingReconnection && sfs.getReconnectionSeconds() == 0;
-		var isManualDisconnection:Bool = (Std.is(evt, BitSwarmEvent)) && (evt as BitSwarmEvent).params.reason == ClientDisconnectionReason.MANUAL;
+		var isManualDisconnection:Bool = (Std.is(evt, BitSwarmEvent)) && cast(evt,BitSwarmEvent).params.reason == ClientDisconnectionReason.MANUAL;
 
 		if(isRegularDisconnection || isManualDisconnection)
 		{
@@ -397,7 +397,7 @@ class BitSwarmClient extends EventDispatcher
 			_firstReconnAttempt=-1;
 			
 			executeDisconnection(evt);					
-			return
+			return;
 		}
 		
 		// Already trying to reconnect...
@@ -437,7 +437,7 @@ class BitSwarmClient extends EventDispatcher
 			sfs.logger.info("Reconnection attempt:", _reconnCounter, " - time left:", Std.int(timeLeft/1000), "sec.");
 
 			// Retry connection:pause 1 second and retry
-			setTimeout(function():Void {connect(_lastIpAddress, _lastTcpPort)}, _reconnectionDelayMillis);
+			setTimeout(function():Void { connect(_lastIpAddress, _lastTcpPort); }, _reconnectionDelayMillis);
 			_reconnCounter++;
 		}
 		

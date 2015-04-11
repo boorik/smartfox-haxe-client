@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.entities.variables;
 
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 
 /**
  * The<em>MMOItemVariable</em>object represents a SmartFoxServer MMOItem Variable entity on the client.

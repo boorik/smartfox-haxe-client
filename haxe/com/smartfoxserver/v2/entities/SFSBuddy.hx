@@ -1,10 +1,11 @@
 package com.smartfoxserver.v2.entities;
 
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.variables.BuddyVariable;
 import com.smartfoxserver.v2.entities.variables.ReservedBuddyVariables;
 import com.smartfoxserver.v2.entities.variables.SFSBuddyVariable;
 import com.smartfoxserver.v2.util.ArrayUtil;
+import haxe.ds.StringMap;
 
 /**
  * The<em>SFSBuddy</em>object represents a buddy in the current user's buddies list.
@@ -29,19 +30,19 @@ import com.smartfoxserver.v2.util.ArrayUtil;
 class SFSBuddy implements Buddy
 {
 	/** @private */
-	private var _name:String
+	private var _name:String;
 	
 	/** @private */
-	private var _id:Int
+	private var _id:Int;
 	
 	/** @private */
-	private var _isBlocked:Bool
+	private var _isBlocked:Bool;
 	
 	/** @private */
-	private var _variables:Dynamic
+	private var _variables:StringMap<BuddyVariable>;
 	
 	/** @private */
-	private var _isTemp:Bool
+	private var _isTemp:Bool;
 	
 	/** @private */
 	public static function fromSFSArray(arr:ISFSArray):Buddy
@@ -52,16 +53,16 @@ class SFSBuddy implements Buddy
 			arr.getUtfString(1), 							// name
 			arr.getBool(2),									// blocked
 			arr.size()>3 ? arr.getBool(4):false			// isTemp is optional, we have to check
-		)
+		);
 		
-		var bVarsData:ISFSArray<Dynamic>=arr.getSFSArray(3)// variables data array
+		var bVarsData:ISFSArray<Dynamic> = arr.getSFSArray(3);// variables data array
 		
-		for(var j:Int=0;j<bVarsData.size();j++)
+		for(j in 0...bVarsData.size())
 		{
-			buddy.setVariable(SFSBuddyVariable.fromSFSArray(bVarsData.getSFSArray(j)))
+			buddy.setVariable(SFSBuddyVariable.fromSFSArray(bVarsData.getSFSArray(j)));
 		}
 		
-		return buddy
+		return buddy;
 	}
 	
 	/**
@@ -76,46 +77,46 @@ class SFSBuddy implements Buddy
 	 */
 	public function new(id:Int, name:String, isBlocked:Bool=false, isTemp:Bool=false)
 	{
-		_id=id
-		_name=name
-		_isBlocked=isBlocked
-		_variables={}
-		_isTemp=isTemp
+		_id = id;
+		_name = name;
+		_isBlocked = isBlocked;
+		_variables = new StringMap();
+		_isTemp = isTemp;
 	}
 	
 	/** @inheritDoc */
 	public var id(get_id, null):Int;
  	private function get_id():Int
 	{
-		return _id
+		return _id;
 	}
 	
 	/** @inheritDoc */
 	public var name(get_name, null):String;
  	private function get_name():String
 	{
-		return _name
+		return _name;
 	}
 	
 	/** @inheritDoc */
 	public var isBlocked(get_isBlocked, null):Bool;
  	private function get_isBlocked():Bool
 	{
-		return _isBlocked
+		return _isBlocked;
 	}
 	
 	/** @inheritDoc */
 	public var isTemp(get_isTemp, null):Bool;
  	private function get_isTemp():Bool
 	{
-		return _isTemp
+		return _isTemp;
 	}
 	
 	/** @inheritDoc */
 	public var isOnline(get_isOnline, null):Bool;
  	private function get_isOnline():Bool
 	{
-		var bv:BuddyVariable=getVariable(ReservedBuddyVariables.BV_ONLINE)
+		var bv:BuddyVariable = getVariable(ReservedBuddyVariables.BV_ONLINE);
 		
 		// An non-inited ONLINE state==online
 		var onlineStateVar:Bool=bv==null ? true:bv.getBoolValue();
@@ -124,7 +125,7 @@ class SFSBuddy implements Buddy
 		* 	1. he is connectected in the system
 		*	2. his online variable is set to true
 		*/			
-		return onlineStateVar && _id>-1		
+		return onlineStateVar && _id > -1;
 	}
 	
 	/** @inheritDoc */
@@ -135,69 +136,70 @@ class SFSBuddy implements Buddy
 		* TOOD:what if state was not inited yet?
 		* Do we return null or a default state?
 		*/
-		var bv:BuddyVariable=getVariable(ReservedBuddyVariables.BV_STATE)
-		return bv==null ? null:bv.getStringValue()
+		var bv:BuddyVariable = getVariable(ReservedBuddyVariables.BV_STATE);
+		return bv == null ? null:bv.getStringValue();
 	}
 
 	/** @inheritDoc */		
 	public var nickName(get_nickName, null):String;
  	private function get_nickName():String
 	{
-		var bv:BuddyVariable=getVariable(ReservedBuddyVariables.BV_NICKNAME)
-		return bv==null ? null:bv.getStringValue()
+		var bv:BuddyVariable = getVariable(ReservedBuddyVariables.BV_NICKNAME);
+		return bv == null ? null:bv.getStringValue();
 	}
 	
 	/** @inheritDoc */
 	public var variables(get_variables, null):Array;
- 	private function get_variables():Array
+ 	private function get_variables():Array<BuddyVariable>
 	{
-		return ArrayUtil.objToArray(_variables)
+		return Lambda.array(_variables);
 	}
 	
 	/** @inheritDoc */
 	public function getVariable(varName:String):BuddyVariable
 	{
-		return _variables[varName]
+		return _variables.get(varName);
 	}
 	
 	/** @inheritDoc */
-	public function getOfflineVariables():Array
+	public function getOfflineVariables():Array<Dynamic>
 	{
-		var offlineVars:Array<Dynamic>=[]
+		var offlineVars:Array<Dynamic> = [];
 		
-		for(var item:BuddyVariable in _variables)
+		for(item in _variables.iterator())
 		{
 			if(item.name.charAt(0)==SFSBuddyVariable.OFFLINE_PREFIX)
-				offlineVars.push(item)
+				offlineVars.push(item);
+				
 		}
 		
-		return offlineVars
+		return offlineVars;
 	}
 	
 	/** @inheritDoc */
 	public function getOnlineVariables():Array
 	{
-		var onlineVars:Array<Dynamic>=[]
+		var onlineVars:Array<Dynamic> = [];
 		
-		for(var item:BuddyVariable in _variables)
+		for(item in _variables.iterator())
 		{
 			if(item.name.charAt(0)!=SFSBuddyVariable.OFFLINE_PREFIX)
-				onlineVars.push(item)
+				onlineVars.push(item);
 		}
 		
-		return onlineVars
+		return onlineVars;
 	}
 	
 	/** @inheritDoc */
 	public function containsVariable(varName:String):Bool
 	{
-		return _variables[varName]  !=null
+		return _variables.get(varName)  != null;
 	}
 	
 	/** @private */
 	public function setVariable(bVar:BuddyVariable):Void
 	{
-		_variables[bVar.name]=bVar			
+		_variables.set(bVar.name, bVar);			
 	}
 	
 	/*
@@ -205,39 +207,39 @@ class SFSBuddy implements Buddy
 	*/
 	
 	/** @private */
-	public function setVariables(variables:Array):Void
+	public function setVariables(variables:Array<BuddyVariable>):Void
 	{
-		for(var bVar:BuddyVariable in variables)
+		for(bVar in variables)
 		{
-			setVariable(bVar)
+			setVariable(bVar);
 		}
 	}
 	
 	/** @private */
 	public function setId(id:Int):Void
 	{
-		_id=id
+		_id = id;
 	}
 	
 	/** @private */
 	public function setBlocked(value:Bool):Void
 	{
-		_isBlocked=value	
+		_isBlocked = value;
 	}
 	
 	/** @private */
 	public function removeVariable(varName:String):Void
 	{
-		delete _variables[varName]
+		_variables.remove(varName);
 	}
 	
 	/** @private */
 	public function clearVolatileVariables():Void
 	{
-		for(var bVar:BuddyVariable in variables)
+		for(bVar in variables)
 		{
 			if(bVar.name.charAt(0)!=SFSBuddyVariable.OFFLINE_PREFIX)
-				removeVariable(bVar.name)
+				removeVariable(bVar.name);
 		}
 	}
 	
@@ -248,6 +250,6 @@ class SFSBuddy implements Buddy
 	 */
 	public function toString():String
 	{
-		return "[Buddy:" + name + ", id:" + id + "]"
+		return "[Buddy:" + name + ", id:" + id + "]";
 	}
 }

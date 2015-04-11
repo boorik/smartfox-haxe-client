@@ -939,7 +939,7 @@ class SmartFox extends EventDispatcher
 	/** @private */
 	public function enableFullPacketDump(b:Bool):Void
 	{
-		(_bitSwarm.ioHandler as SFSIOHandler).enableFullPacketDump(b);
+		cast(_bitSwarm.ioHandler,SFSIOHandler).enableFullPacketDump(b);
 	}
 	
 	/**
@@ -1013,7 +1013,7 @@ class SmartFox extends EventDispatcher
 	 * Available under the kernel namespace
 	 */
 	var socketEngine(get_socketEngine, set_socketEngine):BitSwarmClient;
- 	private function get_socketEngine():BitSwarmClient;
+ 	private function get_socketEngine():BitSwarmClient
 	{
 		return _bitSwarm;
 	}
@@ -1042,12 +1042,12 @@ class SmartFox extends EventDispatcher
 	public var isConnected(get_isConnected, set_isConnected):Bool;
  	private function get_isConnected():Bool
 	{
-		var value:Bool=false
+		var value:Bool = false;
 		
 		if(_bitSwarm !=null)
 			value = _bitSwarm.connected;
 		
-		return value
+		return value;
 	}
 	
 	/**
@@ -1352,7 +1352,7 @@ class SmartFox extends EventDispatcher
 					_bitSwarm.disconnect(ClientDisconnectionReason.MANUAL);
 				},
 				100
-			)
+			);
 		}
 		else
 			_log.info("You are not connected");
@@ -1363,7 +1363,7 @@ class SmartFox extends EventDispatcher
 	 * If set to<code>true</code>, detailed debugging informations for all the incoming and outgoing messages are provided.
 	 *<p>Debugging can be enabled when instantiating the<em>SmartFox</em>class too.</p>
 	 */
-	public var debug(get_debug, set_debug):Bool;;
+	public var debug(get_debug, set_debug):Bool;
  	private function get_debug():Bool
 	{
 		return _debug;
@@ -1553,7 +1553,7 @@ class SmartFox extends EventDispatcher
 	public var buddyManager(get_buddyManager, set_buddyManager):IBuddyManager;
  	private function get_buddyManager():IBuddyManager
 	{
-		return _buddyManager
+		return _buddyManager;
 	}
 	
 	/**
@@ -1673,7 +1673,7 @@ class SmartFox extends EventDispatcher
 			* If it's already inited with success we don't allow re-assigning a new UDP manager
 			* Also we make sure that we overwrite the class only if it's the default type(==DefaultUDPManager)
 			*/
-			if(!_bitSwarm.udpManager.inited && _bitSwarm.udpManager is DefaultUDPManager)
+			if(!_bitSwarm.udpManager.inited && Std.is(_bitSwarm.udpManager,DefaultUDPManager))
 			{
 				manager.sfs = this;
 				_bitSwarm.udpManager = manager;
@@ -1800,7 +1800,7 @@ class SmartFox extends EventDispatcher
 		{
 			var errMsg:String = problem.message;
 			
-			for(var errorItem:String in problem.errors)
+			for(errorItem in problem.errors)
 			{
 				errMsg += "\t" + errorItem + "\n";
 			}
@@ -2051,7 +2051,7 @@ class SmartFox extends EventDispatcher
 	}
 	
 	/** @private */
-	function handleClientDisconnection(reason:String):Void
+	public function handleClientDisconnection(reason:String):Void
 	{
 		// no reconnections
 		_bitSwarm.reconnectionSeconds = 0;

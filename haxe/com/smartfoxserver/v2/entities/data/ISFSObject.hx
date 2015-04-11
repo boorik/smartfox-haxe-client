@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.entities.data;
 
-import flash.utils.ByteArray<Dynamic>;
+import flash.utils.ByteArray;
 
 /**
  * The<em>ISFSObject</em>interface defines all the public methods and properties

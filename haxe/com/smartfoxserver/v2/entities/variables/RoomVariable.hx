@@ -15,7 +15,7 @@ interface RoomVariable extends UserVariable
 	 *<p><b>NOTE</b>:setting the<em>isPrivate</em>property manually on an existing Room Variable returned by the API has no effect on the server and can disrupt the API functioning.
 	 * This flag can be set when the Room Variable object is created by the developer only(using the<em>new</em>keyword).</p>
 	 */
-	function get isPrivate():Bool
+	function get_isPrivate():Bool;
 	
 	/**
 	 * Indicates whether this Room Variable is persistent or not.
@@ -24,11 +24,11 @@ interface RoomVariable extends UserVariable
 	 *<p><b>NOTE</b>:setting the<em>isPersistent</em>property manually on an existing Room Variable returned by the API has no effect on the server and can disrupt the API functioning.
 	 * This flag can be set when the Room Variable object is created by the developer only(using the<em>new</em>keyword).</p>
 	 */
-	function get isPersistent():Bool
+	function get_isPersistent():Bool;
 	
 	/** @private */
-	function set isPrivate(value:Bool):Void
+	function set_isPrivate(value:Bool):Void;
 	
 	/** @private */
-	function set isPersistent(value:Bool):Void
+	function set_isPersistent(value:Bool):Void;
 }

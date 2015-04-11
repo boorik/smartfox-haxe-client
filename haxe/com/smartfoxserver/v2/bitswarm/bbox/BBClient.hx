@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.bitswarm.bbox;
 
-import com.hurlant.util.Base64;
+//import com.hurlant.util.Base64;
 
 import flash.errors.IllegalOperationError;
 import flash.events.Event;
@@ -12,8 +12,8 @@ import flash.net.URLLoaderDataFormat;
 import flash.net.URLRequest;
 import flash.net.URLRequestMethod;
 import flash.net.URLVariables;
-import flash.utils.ByteArray<Dynamic>;
-import flash.utils.setTimeout;
+import flash.utils.ByteArray;
+import haxe.crypto.Base64;
 
 /** @private */
 class BBClient extends EventDispatcher
@@ -151,8 +151,8 @@ class BBClient extends EventDispatcher
 	
 	private function onHttpResponse(evt:Event):Void
 	{
-		var loader:URLLoader=evt.target as URLLoader;
-		var rawData:String=loader.data as String;
+		var loader:URLLoader=cast evt.target;
+		var rawData:String=cast loader.data;
 		
 		if(_debug)
 			trace("[ BB-Receive ]:" + rawData);
@@ -168,7 +168,7 @@ class BBClient extends EventDispatcher
 			_sessId=data;
 			_isConnected=true;
 			
-			dispatchEvent(new BBEvent(BBEvent.CONNECT, {}))
+			dispatchEvent(new BBEvent(BBEvent.CONNECT, { } ));
 			
 			// Start the polling cycle
 			poll();
@@ -248,7 +248,7 @@ class BBClient extends EventDispatcher
 		urlLoader.addEventListener(IOErrorEvent.NETWORK_ERROR, onHttpIOError);
 		urlLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
 		
-		return urlLoader
+		return urlLoader;
 	}
 	
 	private function handleConnectionLost(fireEvent:Bool=true):Void

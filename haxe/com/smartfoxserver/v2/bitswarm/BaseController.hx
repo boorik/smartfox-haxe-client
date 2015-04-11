@@ -6,8 +6,8 @@ import com.smartfoxserver.v2.logging.Logger;
 /** @private */
 class BaseController implements IController
 {
-	private var _id:Int=-1 
-	private var log:Logger
+	private var _id:Int = -1;
+	private var log:Logger;
 	
 	public function new(bitSwarm:BitSwarmClient)
 	{
