@@ -200,13 +200,13 @@ class SFSObject implements ISFSObject
 			strDump += " " + key + ":" ;
 			
 			if(type==SFSDataType.SFS_OBJECT)
-				strDump += (wrapper.data as SFSObject).getDump(false);
+				strDump += cast(wrapper.data, SFSObject).getDump(false);
 			
 			else if(type==SFSDataType.SFS_ARRAY)
-				strDump += (wrapper.data as SFSArray).getDump(false);
+				strDump += cast(wrapper.data, SFSArray).getDump(false);
 					
 			else if(type==SFSDataType.BYTE_ARRAY)
-				strDump += DefaultObjectDumpFormatter.prettyPrintByteArray((wrapper.data) as ByteArray);
+				strDump += DefaultObjectDumpFormatter.prettyPrintByteArray(cast(wrapper.data,ByteArray));
 				
 			else if(type>SFSDataType.UTF_STRING && type<SFSDataType.CLASS)
 				strDump += "[" + wrapper.data + "]";
@@ -358,7 +358,7 @@ class SFSObject implements ISFSObject
 		if(ba==null)
 			return null;
 		
-		ba.position=0
+		ba.position = 0;
 		var unsignedBytes:Array<Dynamic> = [];
 		
 		for(i in 0...ba.length)

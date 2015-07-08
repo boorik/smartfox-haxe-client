@@ -2,7 +2,6 @@ package com.smartfoxserver.v2.entities.managers;
 
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.User;
-import com.smartfoxserver.v2.kernel;
 import com.smartfoxserver.v2.logging.Logger;
 import haxe.ds.IntMap;
 import haxe.ds.StringMap;
@@ -48,7 +47,7 @@ class SFSUserManager implements IUserManager
 	/** @inheritDoc */
 	public function containsUserId(userId:Int):Bool
 	{
-		return _usersById.exists(userId)
+		return _usersById.exists(userId);
 	}
 	
 	/** @inheritDoc */
@@ -122,7 +121,7 @@ class SFSUserManager implements IUserManager
 		return Lambda.array(_usersById);
 	}
 	
-	kernel function clearAll():Void
+	public function clearAll():Void
 	{
 		_usersByName = new StringMap<User>();
 		_usersById = new IntMap<User>();

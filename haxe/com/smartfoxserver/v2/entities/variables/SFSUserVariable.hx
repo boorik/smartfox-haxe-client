@@ -1,10 +1,8 @@
 package com.smartfoxserver.v2.entities.variables;
 
-import as3reflect.Type;
-
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
-import com.smartfoxserver.v2.entities.data.SFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.exceptions.SFSError;
 
 /**
@@ -23,13 +21,13 @@ import com.smartfoxserver.v2.exceptions.SFSError;
 class SFSUserVariable implements UserVariable
 {
 	/** @private */
-	private var _name:String
+	private var _name:String;
 	
 	/** @private */
-	private var _type:String
+	private var _type:String;
 	
 	/** @private */
-	private var _value:Dynamic
+	private var _value:Dynamic;
 	
 	/** @private */
 	public static function fromSFSArray(sfsa:ISFSArray):UserVariable
@@ -38,8 +36,8 @@ class SFSUserVariable implements UserVariable
 																	sfsa.getUtfString(0), 	// name
 																	sfsa.getElementAt(2),	// typed value
 																	sfsa.getByte(1)			// type id
-																)
-		return variable
+																);
+		return variable;
 	}
 	
 	/**
@@ -53,97 +51,97 @@ class SFSUserVariable implements UserVariable
 	 */
 	function new(name:String, value:Dynamic, type:Int=-1)
 	{
-		_name=name
+		_name = name;
 		
 		// If type is specfied let's use it
 		if(type>-1)
 		{
-			_value=value
-			_type=VariableType.getTypeName(type)
+			_value = value;
+			_type = VariableType.getTypeName(type);
 		}
 		
 		// Otherwise let's autodetect the type
 		else
-			setValue(value)	
+			setValue(value)	;
 	}
 	
 	/** @inheritDoc */
 	public var name(get_name, null):String;
  	private function get_name():String
 	{
-		return _name
+		return _name;
 	}
 	
 	/** @inheritDoc */
 	public var type(get_type, null):String;
  	private function get_type():String
 	{
-		return _type
+		return _type;
 	}
 	
 	/** @inheritDoc */
 	public function getValue():Dynamic
 	{
-		return _value
+		return _value;
 	}
 	
 	/** @inheritDoc */
 	public function getBoolValue():Bool
 	{
-		return _value as Bool
+		return cast(_value, Bool);
 	}
 	
 	/** @inheritDoc */
 	public function getIntValue():Int
 	{
-		return _value as Int	
+		return cast(_value, Int);	
 	}
 	
 	/** @inheritDoc */
 	public function getDoubleValue():Float
 	{
-		return _value as Float
+		return cast(_value, Float);
 	}
 	
 	/** @inheritDoc */
 	public function getStringValue():String
 	{
-		return _value as String	
+		return cast(_value, String);	
 	}
 	
 	/** @inheritDoc */
 	public function getSFSObjectValue():ISFSObject
 	{
-		return _value as ISFSObject	
+		return cast(_value, ISFSObject);
 	}
 	
 	/** @inheritDoc */
 	public function getSFSArrayValue():ISFSArray
 	{
-		return _value as ISFSArray
+		return cast(_value, ISFSArray);
 	}
 	
 	/** @inheritDoc */
 	public function isNull():Bool
 	{
-		return type==VariableType.getTypeName(VariableType.NULL)
+		return type == VariableType.getTypeName(VariableType.NULL);
 	}
 	
 	/** @private */
 	public function toSFSArray():ISFSArray
 	{
-		var sfsa:ISFSArray<Dynamic>=SFSArray.newInstance()
+		var sfsa:ISFSArray<Dynamic> = SFSArray.newInstance();
 		
 		// var name(0)
-		sfsa.addUtfString(_name)
+		sfsa.addUtfString(_name);
 		
 		// var type(1)
-		sfsa.addByte(VariableType.getTypeFromName(_type))
+		sfsa.addByte(VariableType.getTypeFromName(_type));
 		
 		// var value(2)
-		populateArrayWithValue(sfsa)
+		populateArrayWithValue(sfsa);
 			
-		return sfsa
+		return sfsa;
 	}
 	
 	/**
@@ -153,67 +151,60 @@ class SFSUserVariable implements UserVariable
 	 */
 	public function toString():String
 	{
-		return "[UVar:" + _name + ", type:" + _type + ", value:" + _value + "]"
+		return "[UVar:" + _name + ", type:" + _type + ", value:" + _value + "]";
 	}
 	
 	private function populateArrayWithValue(arr:ISFSArray):Void
 	{
-		var typeId:Int=VariableType.getTypeFromName(_type)
+		var typeId:Int = VariableType.getTypeFromName(_type);
 		
 		switch(typeId)
 		{
 			case VariableType.NULL:
-				arr.addNull()
-				break
+				arr.addNull();
 				
 			case VariableType.BOOL:
-				arr.addBool(getBoolValue())
-				break
+				arr.addBool(getBoolValue());
 				
 			case VariableType.INT:
-				arr.addInt(getIntValue())
-				break
+				arr.addInt(getIntValue());
 				
 			case VariableType.DOUBLE:
-				arr.addDouble(getDoubleValue())
-				break
+				arr.addDouble(getDoubleValue());
 				
 			case VariableType.STRING:
-				arr.addUtfString(getStringValue())
-				break
+				arr.addUtfString(getStringValue());
 				
 			case VariableType.OBJECT:
-				arr.addSFSObject(getSFSObjectValue())
-				break
+				arr.addSFSObject(getSFSObjectValue());
 				
 			case VariableType.ARRAY:
-				arr.addSFSArray(getSFSArrayValue())
-				break				
+				arr.addSFSArray(getSFSArrayValue());			
 		}
 	}
 	
 	private function setValue(value:Dynamic):Void
 	{
-		_value=value
+		_value = value;
 		
 		if(value==null)
-			_type=VariableType.getTypeName(VariableType.NULL)
+			_type = VariableType.getTypeName(VariableType.NULL);
 			
 		else
 		{
-			var typeName:String=typeof value
+			var typeName:String = Type.value;
 			
 			if(typeName=="boolean")
-				_type=VariableType.getTypeName(VariableType.BOOL)
+				_type = VariableType.getTypeName(VariableType.BOOL);
 			
 			// Check if number is Int or Double
 			else if(typeName=="number")
 			{
 				// check if is Int or double
 				if(int(value)==value)
-					_type=VariableType.getTypeName(VariableType.INT)
+					_type = VariableType.getTypeName(VariableType.INT);
 				else
-					_type=VariableType.getTypeName(VariableType.DOUBLE)
+					_type = VariableType.getTypeName(VariableType.DOUBLE);
 			}
 			
 			else if(typeName=="string")
@@ -222,16 +213,16 @@ class SFSUserVariable implements UserVariable
 			// Check which type of object is this	
 			else if(typeName=="object")
 			{
-				var className:String=Type.forInstance(value).name
+				var className:String = Type.forInstance(value).name;
 				
 				if(className=="SFSObject")
-					_type=VariableType.getTypeName(VariableType.OBJECT)
+					_type = VariableType.getTypeName(VariableType.OBJECT);
 					
 				else if(className=="SFSArray")
-					_type=VariableType.getTypeName(VariableType.ARRAY)
+					_type = VariableType.getTypeName(VariableType.ARRAY);
 					
 				else 
-					throw new SFSError("Unsupport SFS Variable type:" + className)		
+					throw new SFSError("Unsupport SFS Variable type:" + className);	
 			}
 		}	
 	}	

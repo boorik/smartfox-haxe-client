@@ -1,9 +1,9 @@
 package com.smartfoxserver.v2.entities.invitation;
 
 import com.smartfoxserver.v2.entities.User;
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
-import com.smartfoxserver.v2.entities.data.SFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 
 /**
  * The<em>SFSInvitation</em>object contains all the informations about an invitation received by the current user.

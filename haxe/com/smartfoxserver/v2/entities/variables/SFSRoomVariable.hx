@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.entities.variables;
 
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 
 /**
  * The<em>SFSRoomVariable</em>object represents a SmartFoxServer Room Variable entity on the client.
@@ -26,8 +26,8 @@ import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
  */
 class SFSRoomVariable extends SFSUserVariable implements RoomVariable
 {
-	private var _isPersistent:Bool
-	private var _isPrivate:Bool
+	private var _isPersistent:Bool;
+	private var _isPrivate:Bool;
 	
 	/** @private */
 	public static function fromSFSArray(sfsa:ISFSArray):RoomVariable
@@ -37,12 +37,12 @@ class SFSRoomVariable extends SFSUserVariable implements RoomVariable
 			sfsa.getUtfString(0), 	// name
 			sfsa.getElementAt(2),	// typed value
 			sfsa.getByte(1)			// type id
-		)
+		);
 		
-		roomVariable.isPrivate=sfsa.getBool(3)// Private
-		roomVariable.isPersistent=sfsa.getBool(4)// Persistent
+		roomVariable.isPrivate = sfsa.getBool(3);// Private
+		roomVariable.isPersistent = sfsa.getBool(4);// Persistent
 							
-		return roomVariable
+		return roomVariable;
 	}
 	
 	/**
@@ -56,33 +56,33 @@ class SFSRoomVariable extends SFSUserVariable implements RoomVariable
 	 */
 	public function new(name:String, value:Dynamic, type:Int=-1)
 	{
-		super(name, value, type)
+		super(name, value, type);
 	}
 	
 	/** @inheritDoc */
 	public var isPrivate(get_isPrivate, set_isPrivate):Bool;
  	private function get_isPrivate():Bool
 	{
-		return _isPrivate
+		return _isPrivate;
 	}
 	
 	/** @inheritDoc */
 	public var isPersistent(get_isPersistent, set_isPersistent):Bool;
  	private function get_isPersistent():Bool
 	{
-		return _isPersistent
+		return _isPersistent;
 	}
 	
 	/** @inheritDoc */
 	private function set_isPrivate(value:Bool):Void
 	{
-		_isPrivate=value	
+		_isPrivate = value;	
 	}
 	
 	/** @private */
 	private function set_isPersistent(value:Bool):Void
 	{
-		_isPersistent=value	
+		_isPersistent = value;	
 	}
 	
 	/**
@@ -92,20 +92,20 @@ class SFSRoomVariable extends SFSUserVariable implements RoomVariable
 	 */
 	override public function toString():String
 	{
-		return "[RVar:" + _name + ", type:" + _type + ", value:" + _value + ", isPriv:" + isPrivate + "]"
+		return "[RVar:" + _name + ", type:" + _type + ", value:" + _value + ", isPriv:" + isPrivate + "]";
 	}
 	
 	/** @private */
 	override public function toSFSArray():ISFSArray
 	{
-		var arr:ISFSArray<Dynamic>=super.toSFSArray()
+		var arr:ISFSArray<Dynamic> = super.toSFSArray();
 		
 		// isPrivate(3)
-		arr.addBool(_isPrivate)
+		arr.addBool(_isPrivate);
 		
 		// isPersistent(4)
-		arr.addBool(_isPersistent)
+		arr.addBool(_isPersistent);
 		
-		return arr
+		return arr;
 	}
 }

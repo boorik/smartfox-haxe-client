@@ -1,46 +1,42 @@
 package com.smartfoxserver.v2.protocol.serialization;
 
-import as3reflect.ClassUtils;
-import as3reflect.Field;
-import as3reflect.Type;
-
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
-import com.smartfoxserver.v2.entities.data.SFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.SFSDataType;
 import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSCodecError;
 
-import flash.utils.ByteArray<Dynamic>;
+import flash.utils.ByteArray;
 
 /** @private */
 class DefaultSFSDataSerializer implements ISFSDataSerializer
 {
-	private static inline var CLASS_MARKER_KEY:String="$C"
-	private static inline var CLASS_FIELDS_KEY:String="$F"
-	private static inline var FIELD_NAME_KEY:String="N"
-	private static inline var FIELD_VALUE_KEY:String="V"
+	private static inline var CLASS_MARKER_KEY:String = "$C";
+	private static inline var CLASS_FIELDS_KEY:String = "$F";
+	private static inline var FIELD_NAME_KEY:String = "N";
+	private static inline var FIELD_VALUE_KEY:String = "V";
 		
-	private static var _instance:DefaultSFSDataSerializer 
-	private static var _lock:Bool=true
+	private static var _instance:DefaultSFSDataSerializer ;
+	private static var _lock:Bool = true;
 	
 	public static function getInstance():DefaultSFSDataSerializer
 	{
 		if(_instance==null)
 		{
-			_lock=false
-			_instance=new DefaultSFSDataSerializer()
-			_lock=true
+			_lock = false;
+			_instance = new DefaultSFSDataSerializer();
+			_lock = true;
 		}
 		
-		return _instance
+		return _instance;
 	}
 	
 	public function new()
 	{
 		if(_lock)
-			throw new Dynamic("Can't use constructor, please use getInstance()method")			
+			throw new Dynamic("Can't use constructor, please use getInstance()method");		
 	}
 	
 	/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -49,30 +45,30 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 */
 	public function object2binary(obj:ISFSObject):ByteArray
 	{
-		var buffer:ByteArray<Dynamic>=new ByteArray()
-		buffer.writeByte(SFSDataType.SFS_OBJECT)
-		buffer.writeShort(obj.size())
+		var buffer:ByteArray<Dynamic> = new ByteArray();
+		buffer.writeByte(SFSDataType.SFS_OBJECT);
+		buffer.writeShort(obj.size());
 		
-		return obj2bin(obj, buffer)
+		return obj2bin(obj, buffer);
 	}
 	
 	private function obj2bin(obj:ISFSObject, buffer:ByteArray):ByteArray
 	{
-		var keys:Array<Dynamic>=obj.getKeys()
-		var wrapper:SFSDataWrapper
+		var keys:Array<Dynamic> = obj.getKeys();
+		var wrapper:SFSDataWrapper;
 		
-		for(var key:String in keys)
+		for(key in keys)
 		{
-			wrapper=obj.getData(key)
+			wrapper = obj.getData(key);
 
 			// Store the key
-			buffer=encodeSFSObjectKey(buffer, key)
+			buffer = encodeSFSObjectKey(buffer, key);
 			
 			// Convert 2 binary
-			buffer=encodeObject(buffer, wrapper.type, wrapper.data)
+			buffer = encodeObject(buffer, wrapper.type, wrapper.data);
 		}
 		
-		return buffer
+		return buffer;
 	}
 	
 	/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -81,24 +77,24 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 */
 	public function array2binary(array:ISFSArray):ByteArray
 	{
-		var buffer:ByteArray<Dynamic>=new ByteArray()
-		buffer.writeByte(SFSDataType.SFS_ARRAY)
-		buffer.writeShort(array.size())
+		var buffer:ByteArray<Dynamic> = new ByteArray();
+		buffer.writeByte(SFSDataType.SFS_ARRAY);
+		buffer.writeShort(array.size());
 		
-		return arr2bin(array, buffer)
+		return arr2bin(array, buffer);
 	}
 	
 	private function arr2bin(array:ISFSArray, buffer:ByteArray):ByteArray
 	{
-		var wrapper:SFSDataWrapper
+		var wrapper:SFSDataWrapper;
 		
-		for(var i:Int=0;i<array.size();i++)
+		for(i in 0...array.size())
 		{
-			wrapper=array.getWrappedElementAt(i)
-			buffer=encodeObject(buffer, wrapper.type, wrapper.data)	
+			wrapper = array.getWrappedElementAt(i);
+			buffer = encodeObject(buffer, wrapper.type, wrapper.data)	;
 		}
 		
-		return buffer
+		return buffer;
 	}
 	
 	/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -110,26 +106,26 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		if(data.length<3)
 			throw new SFSCodecError("Can't decode an SFSObject. Byte data is insufficient. Size:" + data.length + " byte(s)");
 		
-		data.position=0
-		return decodeSFSObject(data)
+		data.position = 0;
+		return decodeSFSObject(data);
 	}
 	
 	private function decodeSFSObject(buffer:ByteArray):ISFSObject
 	{
-		var sfsObject:SFSObject=SFSObject.newInstance()
+		var sfsObject:SFSObject = SFSObject.newInstance();
 		
 		// Get tpyeId
-		var headerByte:Int=buffer.readByte()
+		var headerByte:Int = buffer.readByte();
 		
 		// Validate typeId
 		if(headerByte !=SFSDataType.SFS_OBJECT)
-			throw new SFSCodecError("Invalid SFSDataType. Expected:" + SFSDataType.SFS_OBJECT + ", found:" + headerByte)
+			throw new SFSCodecError("Invalid SFSDataType. Expected:" + SFSDataType.SFS_OBJECT + ", found:" + headerByte);
 			
-		var size:Int=buffer.readShort()
+		var size:Int = buffer.readShort();
 		
 		// Validate size
 		if(size<0)
-			throw new SFSCodecError("Can't decode SFSObject. Size is negative:" + size)
+			throw new SFSCodecError("Can't decode SFSObject. Size is negative:" + size);
 		
 		/*
 		 * NOTE:we catch codec exceptions OUTSIDE of the loop
@@ -142,16 +138,16 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		 	for(i in 0...size)
 		 	{
 		 		// Decode object key
-		 		var key:String=buffer.readUTF()
+		 		var key:String = buffer.readUTF();
 		 		
 		 		// Decode the next object
-		 		var decodedObject:SFSDataWrapper=decodeObject(buffer)
+		 		var decodedObject:SFSDataWrapper = decodeObject(buffer);
 		 		
 		 		// Store decoded object and keep going
 		 		if(decodedObject !=null)
-		 			sfsObject.put(key, decodedObject)
+		 			sfsObject.put(key, decodedObject);
 		 		else
-		 			throw new SFSCodecError("Could not decode value for SFSObject with key:" + key)
+		 			throw new SFSCodecError("Could not decode value for SFSObject with key:" + key);
 		 	}	
 		 }
 		 catch(err:SFSCodecError)
@@ -159,7 +155,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		 	throw err;
 		 }
 	
-		return sfsObject
+		return sfsObject;
 	}
 	
 	/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -171,26 +167,26 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		if(data.length<3)
 			throw new SFSCodecError("Can't decode an SFSArray. Byte data is insufficient. Size:" + data.length + " byte(s)");
 		
-		data.position=0
-		return decodeSFSArray(data)
+		data.position = 0;
+		return decodeSFSArray(data);
 	}
 	
 	private function decodeSFSArray(buffer:ByteArray):ISFSArray
 	{
-		var sfsArray:ISFSArray<Dynamic>=SFSArray.newInstance()
+		var sfsArray:ISFSArray<Dynamic> = SFSArray.newInstance();
 		
 		// Get tpyeId
-		var headerByte:Int=buffer.readByte()
+		var headerByte:Int = buffer.readByte();
 		
 		// Validate typeId
 		if(headerByte !=SFSDataType.SFS_ARRAY)
-			throw new SFSCodecError("Invalid SFSDataType. Expected:" + SFSDataType.SFS_ARRAY + ", found:" + headerByte)
+			throw new SFSCodecError("Invalid SFSDataType. Expected:" + SFSDataType.SFS_ARRAY + ", found:" + headerByte);
 			
-		var size:Int=buffer.readShort()
+		var size:Int = buffer.readShort();
 		
 		// Validate size
 		if(size<0)
-			throw new SFSCodecError("Can't decode SFSArray. Size is negative:" + size)
+			throw new SFSCodecError("Can't decode SFSArray. Size is negative:" + size);
 			
 		/*
 		 * NOTE:we catch codec exceptions OUTSIDE of the loop
@@ -203,13 +199,13 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		 	for(i in 0...size)
 		 	{
 		 		// Decode the next object
-		 		var decodedObject:SFSDataWrapper=decodeObject(buffer)
+		 		var decodedObject:SFSDataWrapper = decodeObject(buffer);
 
 		 		// Store decoded object and keep going
 		 		if(decodedObject !=null)
-		 			sfsArray.add(decodedObject)
+		 			sfsArray.add(decodedObject);
 		 		else
-		 			throw new SFSCodecError("Could not decode SFSArray item at index:" + i)
+		 			throw new SFSCodecError("Could not decode SFSArray item at index:" + i);
 		 	}	
 		 }
 		 catch(err:SFSCodecError)
@@ -217,7 +213,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		 	throw err;
 		 }
 		 
-		 return sfsArray
+		 return sfsArray;
 	}
 	
 	/*
@@ -226,77 +222,77 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
  	*/
 	private function decodeObject(buffer:ByteArray):SFSDataWrapper
 	{
-		var decodedObject:SFSDataWrapper 
-		var headerByte:Int=buffer.readByte()
+		var decodedObject:SFSDataWrapper;
+		var headerByte:Int = buffer.readByte();
 		
 		if(headerByte==SFSDataType.NULL)
-		 	decodedObject=binDecode_NULL(buffer)
+		 	decodedObject = binDecode_NULL(buffer);
 		 	
 		else if(headerByte==SFSDataType.BOOL)
-			decodedObject=binDecode_BOOL(buffer)
+			decodedObject = binDecode_BOOL(buffer);
 		
 		else if(headerByte==SFSDataType.BOOL_ARRAY)
-			decodedObject=binDecode_BOOL_ARRAY(buffer)
+			decodedObject = binDecode_BOOL_ARRAY(buffer);
 		
 		else if(headerByte==SFSDataType.BYTE)
-			decodedObject=binDecode_BYTE(buffer)
+			decodedObject = binDecode_BYTE(buffer);
 		
 		else if(headerByte==SFSDataType.BYTE_ARRAY)
-			decodedObject=binDecode_BYTE_ARRAY(buffer)
+			decodedObject = binDecode_BYTE_ARRAY(buffer);
 		
 		else if(headerByte==SFSDataType.SHORT)
-			decodedObject=binDecode_SHORT(buffer)
+			decodedObject = binDecode_SHORT(buffer);
 		
 		else if(headerByte==SFSDataType.SHORT_ARRAY)
-			decodedObject=binDecode_SHORT_ARRAY(buffer)
+			decodedObject = binDecode_SHORT_ARRAY(buffer);
 		
 		else if(headerByte==SFSDataType.INT)
-			decodedObject=binDecode_INT(buffer)
+			decodedObject = binDecode_INT(buffer);
 		
 		else if(headerByte==SFSDataType.INT_ARRAY)
-			decodedObject=binDecode_INT_ARRAY(buffer)
+			decodedObject = binDecode_INT_ARRAY(buffer);
 		
 		else if(headerByte==SFSDataType.LONG)
-			decodedObject=binDecode_LONG(buffer)
+			decodedObject = binDecode_LONG(buffer);
 		
 		else if(headerByte==SFSDataType.LONG_ARRAY)
-			decodedObject=binDecode_LONG_ARRAY(buffer)
+			decodedObject = binDecode_LONG_ARRAY(buffer);
 		
 		else if(headerByte==SFSDataType.FLOAT)
-			decodedObject=binDecode_FLOAT(buffer)
+			decodedObject = binDecode_FLOAT(buffer);
 		
 		else if(headerByte==SFSDataType.FLOAT_ARRAY)
-			decodedObject=binDecode_FLOAT_ARRAY(buffer)
+			decodedObject = binDecode_FLOAT_ARRAY(buffer);
 		
 		else if(headerByte==SFSDataType.DOUBLE)
-			decodedObject=binDecode_DOUBLE(buffer)
+			decodedObject = binDecode_DOUBLE(buffer);
 		
 		else if(headerByte==SFSDataType.DOUBLE_ARRAY)
-			decodedObject=binDecode_DOUBLE_ARRAY(buffer)
+			decodedObject = binDecode_DOUBLE_ARRAY(buffer);
 		
 		else if(headerByte==SFSDataType.UTF_STRING)
-			decodedObject=binDecode_UTF_STRING(buffer)
+			decodedObject = binDecode_UTF_STRING(buffer);
 		
 		else if(headerByte==SFSDataType.UTF_STRING_ARRAY)
-			decodedObject=binDecode_UTF_STRING_ARRAY(buffer)
+			decodedObject = binDecode_UTF_STRING_ARRAY(buffer);
 		
 		else if(headerByte==SFSDataType.SFS_ARRAY)
 		{
 			// pointer goes back 1 position
-			buffer.position=buffer.position - 1
-			decodedObject=new SFSDataWrapper(SFSDataType.SFS_ARRAY, decodeSFSArray(buffer))
+			buffer.position = buffer.position - 1;
+			decodedObject = new SFSDataWrapper(SFSDataType.SFS_ARRAY, decodeSFSArray(buffer));
 		}
 		else if(headerByte==SFSDataType.SFS_OBJECT)
 		{
 			// pointer goes back 1 position
-			buffer.position=buffer.position -1 
+			buffer.position = buffer.position -1 ;
 			
 			/*
 		 	* See if this is a special type of SFSObject, the one that actually describes a Class
 		 	*/
-		 	var sfsObj:ISFSObject=decodeSFSObject(buffer)
-		 	var type:Int=SFSDataType.SFS_OBJECT
-		 	var finalSfsObj:Dynamic=sfsObj
+		 	var sfsObj:ISFSObject = decodeSFSObject(buffer);
+		 	var type:Int = SFSDataType.SFS_OBJECT;
+		 	var finalSfsObj:Dynamic = sfsObj;
 			
 			if(sfsObj.containsKey(CLASS_MARKER_KEY)&& sfsObj.containsKey(CLASS_FIELDS_KEY))
 			{
@@ -304,7 +300,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 				finalSfsObj=sfs2as(sfsObj);//<--- convert to its original classes
 			}
 			
-			decodedObject=new SFSDataWrapper(type, finalSfsObj)
+			decodedObject = new SFSDataWrapper(type, finalSfsObj);
 		}
 		
 		// What is this typeID??
@@ -320,90 +316,70 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		switch(typeId)
 		{
 			case SFSDataType.NULL:
-				buffer=binEncode_NULL(buffer)
-				break
+				buffer = binEncode_NULL(buffer);
 				
 			case SFSDataType.BOOL:
-				buffer=binEncode_BOOL(buffer, data as Bool)
-				break
+				buffer = binEncode_BOOL(buffer, data);
 				
 			case SFSDataType.BYTE:
-				buffer=binEncode_BYTE(buffer, data as Int)
-				break
+				buffer = binEncode_BYTE(buffer, data);
 				
 			case SFSDataType.SHORT:
-				buffer=binEncode_SHORT(buffer, data as Int)
-				break
-				
+				buffer = binEncode_SHORT(buffer, data);
+
 			case SFSDataType.INT:
-				buffer=binEncode_INT(buffer, data as Int)
-				break
+				buffer = binEncode_INT(buffer, data);
 				
 			case SFSDataType.LONG:
-				buffer=binEncode_LONG(buffer, data as Float)
-				break
+				buffer = binEncode_LONG(buffer, data);
 				
 			case SFSDataType.FLOAT:
-				buffer=binEncode_FLOAT(buffer, data as Float)
-				break
+				buffer = binEncode_FLOAT(buffer, data);
 				
 			case SFSDataType.DOUBLE:
-				buffer=binEncode_DOUBLE(buffer, data as Float)
-				break
+				buffer = binEncode_DOUBLE(buffer, datat);
 				
 			case SFSDataType.UTF_STRING:
-				buffer=binEncode_UTF_STRING(buffer, data as String)
-				break
+				buffer = binEncode_UTF_STRING(buffer, data);
 				
 			case SFSDataType.BOOL_ARRAY:
-				buffer=binEncode_BOOL_ARRAY(buffer, data as Array)
-				break
+				buffer = binEncode_BOOL_ARRAY(buffer, data);
 				
 			case SFSDataType.BYTE_ARRAY:
-				buffer=binEncode_BYTE_ARRAY(buffer, data as ByteArray)
-				break
+				buffer = binEncode_BYTE_ARRAY(buffer, data);
 				
 			case SFSDataType.SHORT_ARRAY:
-				buffer=binEncode_SHORT_ARRAY(buffer, data as Array)
-				break
+				buffer = binEncode_SHORT_ARRAY(buffer, data);
 				
 			case SFSDataType.INT_ARRAY:
-				buffer=binEncode_INT_ARRAY(buffer, data as Array)
-				break
-				
+				buffer = binEncode_INT_ARRAY(buffer, data);
+
 			case SFSDataType.LONG_ARRAY:
-				buffer=binEncode_LONG_ARRAY(buffer, data as Array)
-				break
+				buffer = binEncode_LONG_ARRAY(buffer, data);
 				
 			case SFSDataType.FLOAT_ARRAY:
-				buffer=binEncode_FLOAT_ARRAY(buffer, data as Array)
-				break
+				buffer = binEncode_FLOAT_ARRAY(buffer, data);
 				
 			case SFSDataType.DOUBLE_ARRAY:
-				buffer=binEncode_DOUBLE_ARRAY(buffer, data as Array)
-				break
+				buffer = binEncode_DOUBLE_ARRAY(buffer, data);
 				
 			case SFSDataType.UTF_STRING_ARRAY:
-				buffer=binEncode_UTF_STRING_ARRAY(buffer, data as Array)
-				break
+				buffer = binEncode_UTF_STRING_ARRAY(buffer, data);
 				
 			case SFSDataType.SFS_ARRAY:
-				buffer=addData(buffer, array2binary(data as SFSArray))
-				break
+				buffer = addData(buffer, array2binary(data));
 				
 			case SFSDataType.SFS_OBJECT:
-				buffer=addData(buffer, object2binary(data as SFSObject))
-				break
+				buffer = addData(buffer, object2binary(data));
 				
 			case SFSDataType.CLASS:
 				buffer=addData(buffer, object2binary(as2sfs(data)));
-				break;
 				
 			default:
 				throw new SFSCodecError("Unrecognized type in SFSObject serialization:" + typeId);
 		}
 		
-		return buffer
+		return buffer;
 	}
 	
 	
@@ -418,56 +394,56 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binDecode_NULL(buffer:ByteArray):SFSDataWrapper
 	{
-		return new SFSDataWrapper(SFSDataType.NULL, null)
+		return new SFSDataWrapper(SFSDataType.NULL, null);
 	}
 	
 	private function binDecode_BOOL(buffer:ByteArray):SFSDataWrapper
 	{
-		return new SFSDataWrapper(SFSDataType.BOOL, buffer.readBoolean())
+		return new SFSDataWrapper(SFSDataType.BOOL, buffer.readBoolean());
 	}
 	
 	private function binDecode_BYTE(buffer:ByteArray):SFSDataWrapper
 	{
-		return new SFSDataWrapper(SFSDataType.BYTE, buffer.readByte())	
+		return new SFSDataWrapper(SFSDataType.BYTE, buffer.readByte());
 	}
 	
 	private function binDecode_SHORT(buffer:ByteArray):SFSDataWrapper
 	{
-		return new SFSDataWrapper(SFSDataType.SHORT, buffer.readShort())
+		return new SFSDataWrapper(SFSDataType.SHORT, buffer.readShort());
 	}
 	
 	private function binDecode_INT(buffer:ByteArray):SFSDataWrapper
 	{
-		return new SFSDataWrapper(SFSDataType.INT, buffer.readInt())
+		return new SFSDataWrapper(SFSDataType.INT, buffer.readInt());
 	}
 	
 	private function binDecode_LONG(buffer:ByteArray):SFSDataWrapper
 	{			
-		return new SFSDataWrapper(SFSDataType.LONG, decodeLongValue(buffer))
+		return new SFSDataWrapper(SFSDataType.LONG, decodeLongValue(buffer));
 	}
 	
 	// TODO:Needs Testing!
 	private function decodeLongValue(buffer:ByteArray):Float
 	{
-		var hi32:Int=buffer.readInt()// preserve long sign
-		var lo32:Int=buffer.readUnsignedInt()// low 32bits can be unsigned
+		var hi32:Int = buffer.readInt();// preserve long sign
+		var lo32:Int = buffer.readUnsignedInt();// low 32bits can be unsigned
 			
 		// return 64 bit long value
-		return(hi32 * Math.pow(2,32))+ lo32
+		return(hi32 * Math.pow(2, 32)) + lo32;
 	}
 	
 	private function encodeLongValue(long:Float, buffer:ByteArray):Void
 	{
-		var hi32:Int=0
-		var lo32:Int=0
+		var hi32:Int = 0;
+		var lo32:Int = 0;
 			
 		//trace("Long:" + long + "=>" + long.toString(2))
 		
 		// Encode positive long
 		if(long>-1)
 		{
-			hi32=long / Math.pow(2, 32)
-			lo32=long % Math.pow(2, 32)
+			hi32 = long / Math.pow(2, 32);
+			lo32 = long % Math.pow(2, 32);
 		}	
 		
 		/*
@@ -480,152 +456,152 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		*/
 		else
 		{
-			var absVal:Float=Math.abs(long)
-			var negLong:Float=absVal - 1
+			var absVal:Float = Math.abs(long);
+			var negLong:Float = absVal - 1;
 			
-			hi32=negLong / Math.pow(2, 32)
-			lo32=negLong % Math.pow(2, 32)
+			hi32 = negLong / Math.pow(2, 32);
+			lo32 = negLong % Math.pow(2, 32);
 			
 			// Swap bits
-			hi32=~hi32
-			lo32=~lo32
+			hi32 = ~hi32;
+			lo32 = ~lo32;
 		}
 		
-		buffer.writeUnsignedInt(hi32)
-		buffer.writeUnsignedInt(lo32)
+		buffer.writeUnsignedInt(hi32);
+		buffer.writeUnsignedInt(lo32);
 			
 		//trace(DefaultObjectDumpFormatter.hexDump(buffer))
 	}
 	
 	private function binDecode_FLOAT(buffer:ByteArray):SFSDataWrapper
 	{
-		return new SFSDataWrapper(SFSDataType.FLOAT, buffer.readFloat())
+		return new SFSDataWrapper(SFSDataType.FLOAT, buffer.readFloat());
 	}
 	
 	private function binDecode_DOUBLE(buffer:ByteArray):SFSDataWrapper
 	{
-		return new SFSDataWrapper(SFSDataType.DOUBLE, buffer.readDouble())
+		return new SFSDataWrapper(SFSDataType.DOUBLE, buffer.readDouble());
 	}
 	
 	private function binDecode_UTF_STRING(buffer:ByteArray):SFSDataWrapper
 	{
-	 	return new SFSDataWrapper(SFSDataType.UTF_STRING, buffer.readUTF())
+	 	return new SFSDataWrapper(SFSDataType.UTF_STRING, buffer.readUTF());
 	}
 	
 	private function binDecode_BOOL_ARRAY(buffer:ByteArray):SFSDataWrapper
 	{
-		var size:Int=getTypedArraySize(buffer)
-		var array:Array<Dynamic>=[]
+		var size:Int = getTypedArraySize(buffer);
+		var array:Array<Dynamic> = [];
 		
 		for(j in 0...size)
 		{
-			array.push(buffer.readBoolean())
+			array.push(buffer.readBoolean());
 		}
 		
-		return new SFSDataWrapper(SFSDataType.BOOL_ARRAY, array)
+		return new SFSDataWrapper(SFSDataType.BOOL_ARRAY, array);
 	}
 	
 	private function binDecode_BYTE_ARRAY(buffer:ByteArray):SFSDataWrapper
 	{
-		var size:Int=buffer.readInt()
+		var size:Int = buffer.readInt();
 		
 		if(size<0)
-			throw new SFSCodecError("Array negative size:" + size)
+			throw new SFSCodecError("Array negative size:" + size);
 		
-		var array:ByteArray<Dynamic>=new ByteArray()
+		var array:ByteArray<Dynamic> = new ByteArray();
 		
 		// copy bytes
-		buffer.readBytes(array, 0, size)
+		buffer.readBytes(array, 0, size);
 		
-		return new SFSDataWrapper(SFSDataType.BYTE_ARRAY, array)
+		return new SFSDataWrapper(SFSDataType.BYTE_ARRAY, array);
 	}
 	
 	private function binDecode_SHORT_ARRAY(buffer:ByteArray):SFSDataWrapper
 	{
-		var size:Int=getTypedArraySize(buffer)
-		var array:Array<Dynamic>=[]
+		var size:Int = getTypedArraySize(buffer);
+		var array:Array<Dynamic> = [];
 		
 		for(j in 0...size)
 		{
-			array.push(buffer.readShort())
+			array.push(buffer.readShort());
 		}
 		
-		return new SFSDataWrapper(SFSDataType.SHORT_ARRAY, array)
+		return new SFSDataWrapper(SFSDataType.SHORT_ARRAY, array);
 	}
 	
 	private function binDecode_INT_ARRAY(buffer:ByteArray):SFSDataWrapper
 	{
-		var size:Int=getTypedArraySize(buffer)
-		var array:Array<Dynamic>=[]
+		var size:Int = getTypedArraySize(buffer);
+		var array:Array<Dynamic> = [];
 		
 		for(j in 0...size)
 		{
-			array.push(buffer.readInt())
+			array.push(buffer.readInt());
 		}
 		
-		return new SFSDataWrapper(SFSDataType.INT_ARRAY, array)
+		return new SFSDataWrapper(SFSDataType.INT_ARRAY, array);
 	}
 	
 	private function binDecode_LONG_ARRAY(buffer:ByteArray):SFSDataWrapper
 	{
-		var size:Int=getTypedArraySize(buffer)
-		var array:Array<Dynamic>=[]
+		var size:Int = getTypedArraySize(buffer);
+		var array:Array<Dynamic> = [];
 		
 		for(j in 0...size)
 		{
-			array.push(decodeLongValue(buffer))
+			array.push(decodeLongValue(buffer));
 		}
 		
-		return new SFSDataWrapper(SFSDataType.LONG_ARRAY, array)
+		return new SFSDataWrapper(SFSDataType.LONG_ARRAY, array);
 	}
 	
 	private function binDecode_FLOAT_ARRAY(buffer:ByteArray):SFSDataWrapper
 	{
-		var size:Int=getTypedArraySize(buffer)
-		var array:Array<Dynamic>=[]
+		var size:Int = getTypedArraySize(buffer);
+		var array:Array<Dynamic> = [];
 		
 		for(j in 0...size)
 		{
-			array.push(buffer.readFloat())
+			array.push(buffer.readFloat());
 		}
 		
-		return new SFSDataWrapper(SFSDataType.FLOAT_ARRAY, array)
+		return new SFSDataWrapper(SFSDataType.FLOAT_ARRAY, array);
 	}
 	
 	private function binDecode_DOUBLE_ARRAY(buffer:ByteArray):SFSDataWrapper
 	{
-		var size:Int=getTypedArraySize(buffer)
-		var array:Array<Dynamic>=[]
+		var size:Int = getTypedArraySize(buffer);
+		var array:Array<Dynamic> = [];
 		
 		for(j in 0...size)
 		{
-			array.push(buffer.readDouble())
+			array.push(buffer.readDouble());
 		}
 		
-		return new SFSDataWrapper(SFSDataType.DOUBLE_ARRAY, array)
+		return new SFSDataWrapper(SFSDataType.DOUBLE_ARRAY, array);
 	}
 	
 	private function binDecode_UTF_STRING_ARRAY(buffer:ByteArray):SFSDataWrapper
 	{
-		var size:Int=getTypedArraySize(buffer)
-		var array:Array<Dynamic>=[]
+		var size:Int = getTypedArraySize(buffer);
+		var array:Array<Dynamic> = [];
 		
 		for(j in 0...size)
 		{
-			array.push(buffer.readUTF())
+			array.push(buffer.readUTF());
 		}
 		
-		return new SFSDataWrapper(SFSDataType.UTF_STRING_ARRAY, array)
+		return new SFSDataWrapper(SFSDataType.UTF_STRING_ARRAY, array);
 	}	
 
 	private function getTypedArraySize(buffer:ByteArray):Int
 	{
-		var size:Int=buffer.readShort()
+		var size:Int = buffer.readShort();
 		
 		if(size<0)
-			throw new SFSCodecError("Array negative size:" + size)
+			throw new SFSCodecError("Array negative size:" + size);
 			
-		return size
+		return size;
 	}
 	
 	
@@ -640,197 +616,197 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 
 	private function binEncode_NULL(buffer:ByteArray):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(0x00)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(0x00);
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_BOOL(buffer:ByteArray, value:Bool):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.BOOL)
-		data.writeBoolean(value)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.BOOL);
+		data.writeBoolean(value);
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_BYTE(buffer:ByteArray, value:Int):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.BYTE)
-		data.writeByte(value)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.BYTE);
+		data.writeByte(value);
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_SHORT(buffer:ByteArray, value:Int):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.SHORT)
-		data.writeShort(value)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.SHORT);
+		data.writeShort(value);
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_INT(buffer:ByteArray, value:Int):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.INT)
-		data.writeInt(value)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.INT);
+		data.writeInt(value);
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_LONG(buffer:ByteArray, value:Float):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.LONG)
-		encodeLongValue(value, data)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.LONG);
+		encodeLongValue(value, data);
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_FLOAT(buffer:ByteArray, value:Float):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.FLOAT)
-		data.writeFloat(value)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.FLOAT);
+		data.writeFloat(value);
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_DOUBLE(buffer:ByteArray, value:Float):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.DOUBLE)
-		data.writeDouble(value)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.DOUBLE);
+		data.writeDouble(value);
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_UTF_STRING(buffer:ByteArray, value:String):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.UTF_STRING)
-		data.writeUTF(value)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.UTF_STRING);
+		data.writeUTF(value);
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_BOOL_ARRAY(buffer:ByteArray, value:Array):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.BOOL_ARRAY)
-		data.writeShort(value.length)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.BOOL_ARRAY);
+		data.writeShort(value.length);
 		
 		for(i in 0...value.length)
 		{
-			data.writeBoolean(value[i])
+			data.writeBoolean(value[i]);
 		}
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_BYTE_ARRAY(buffer:ByteArray, value:ByteArray):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.BYTE_ARRAY)
-		data.writeInt(value.length)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.BYTE_ARRAY);
+		data.writeInt(value.length);
 		
-		data.writeBytes(value, 0, value.length)
+		data.writeBytes(value, 0, value.length);
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_SHORT_ARRAY(buffer:ByteArray, value:Array):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.SHORT_ARRAY)
-		data.writeShort(value.length)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.SHORT_ARRAY);
+		data.writeShort(value.length);
 		
 		for(i in 0...value.length)
 		{
-			data.writeShort(value[i])
+			data.writeShort(value[i]);
 		}
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_INT_ARRAY(buffer:ByteArray, value:Array):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.INT_ARRAY)
-		data.writeShort(value.length)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.INT_ARRAY);
+		data.writeShort(value.length);
 		
 		for(i in 0...value.length)
 		{
-			data.writeInt(value[i])
+			data.writeInt(value[i]);
 		}
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_LONG_ARRAY(buffer:ByteArray, value:Array):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.LONG_ARRAY)
-		data.writeShort(value.length)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.LONG_ARRAY);
+		data.writeShort(value.length);
 		
 		for(i in 0...value.length)
 		{
-			encodeLongValue(value[i], data)
+			encodeLongValue(value[i], data);
 		}
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_FLOAT_ARRAY(buffer:ByteArray, value:Array):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.FLOAT_ARRAY)
-		data.writeShort(value.length)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.FLOAT_ARRAY);
+		data.writeShort(value.length);
 		
 		for(i in 0...value.length)
 		{
-			data.writeFloat(value[i])
+			data.writeFloat(value[i]);
 		}
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_DOUBLE_ARRAY(buffer:ByteArray, value:Array):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.DOUBLE_ARRAY)
-		data.writeShort(value.length)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.DOUBLE_ARRAY);
+		data.writeShort(value.length);
 		
 		for(i in 0...value.length)
 		{
-			data.writeDouble(value[i])
+			data.writeDouble(value[i]);
 		}
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function binEncode_UTF_STRING_ARRAY(buffer:ByteArray, value:Array):ByteArray
 	{
-		var data:ByteArray<Dynamic>=new ByteArray()
-		data.writeByte(SFSDataType.UTF_STRING_ARRAY)
-		data.writeShort(value.length)
+		var data:ByteArray<Dynamic> = new ByteArray();
+		data.writeByte(SFSDataType.UTF_STRING_ARRAY);
+		data.writeShort(value.length);
 		
 		for(i in 0...value.length)
 		{
-			data.writeUTF(value[i])
+			data.writeUTF(value[i]);
 		}
 		
-		return addData(buffer, data)
+		return addData(buffer, data);
 	}
 	
 	private function encodeSFSObjectKey(buffer:ByteArray, value:String):ByteArray
 	{
-		buffer.writeUTF(value)	
-		return buffer
+		buffer.writeUTF(value);
+		return buffer;
 	}
 	
 	/*
@@ -839,8 +815,8 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	*/
 	private function addData(buffer:ByteArray, newData:ByteArray):ByteArray
 	{
-		buffer.writeBytes(newData, 0, newData.length)
-		return buffer
+		buffer.writeBytes(newData, 0, newData.length);
+		return buffer;
 	}
 	
 	/*
@@ -853,10 +829,10 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	public function as2sfs(asObj:Dynamic):ISFSObject
 	{
-		var sfsObj:ISFSObject=SFSObject.newInstance()
-		convertAsObj(asObj, sfsObj)
+		var sfsObj:ISFSObject = SFSObject.newInstance();
+		convertAsObj(asObj, sfsObj);
 		
-		return sfsObj
+		return sfsObj;
 	}
 	
 	/*
@@ -865,53 +841,53 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	*/
 	private function encodeClassName(name:String):String
 	{
-		return name.replace("::", ".")
+		return name.replace("::", ".");
 	}
 	 
 	private function convertAsObj(asObj:Dynamic, sfsObj:ISFSObject):Void
 	{
-		var type:Type=Type.forInstance(asObj)
-		var classFullName:String=encodeClassName(ClassUtils.getFullyQualifiedName(type.clazz))
+		var type:Type = Type.forInstance(asObj);
+		var classFullName:String = encodeClassName(ClassUtils.getFullyQualifiedName(type.clazz));
 		
 		if(classFullName==null)
-			throw new SFSCodecError("Cannot detect class name:" + sfsObj)
+			throw new SFSCodecError("Cannot detect class name:" + sfsObj);
 		
 		if(!(Std.is(asObj, SerializableSFSType)))
-			throw new SFSCodecError("Cannot serialize object:" + asObj + ", type:" + classFullName + " -- It doesn't implement the SerializableSFSType Interface")
+			throw new SFSCodecError("Cannot serialize object:" + asObj + ", type:" + classFullName + " -- It doesn't implement the SerializableSFSType Interface");
 			
-		var fieldList:ISFSArray<Dynamic>=SFSArray.newInstance()
+		var fieldList:ISFSArray<Dynamic> = SFSArray.newInstance();
 		
-		sfsObj.putUtfString(CLASS_MARKER_KEY, classFullName)
-		sfsObj.putSFSArray(CLASS_FIELDS_KEY, fieldList)
+		sfsObj.putUtfString(CLASS_MARKER_KEY, classFullName);
+		sfsObj.putSFSArray(CLASS_FIELDS_KEY, fieldList);
 		
-		for(var field:Field in type.fields)
+		for(field in type.fields)
 		{
 			// Skip static fields(including 'prototype')
 			if(field.isStatic)
-				continue
+				continue;
 			
-			var fieldName:String=field.name
-			var fieldValue:Dynamic=asObj[fieldName]
+			var fieldName:String = field.name;
+			var fieldValue:Dynamic = asObj[fieldName];
 				
 			/*
 			* Transient fields in Actionscript 3 are by convention marked with a starting $ 
 			* Public fields such as:$posx, $name, $gameId won't be serialized.
 			*/
 			if(fieldName.charAt(0)=="$")
-				continue
+				continue;
 				
 			//trace("working on field:", fieldName, ":", fieldValue + ", " + Type.forInstance(fieldValue).name)
 			
-			var fieldDescriptor:ISFSObject=SFSObject.newInstance()
+			var fieldDescriptor:ISFSObject = SFSObject.newInstance();
 			
 			// store field name
-			fieldDescriptor.putUtfString(FIELD_NAME_KEY, fieldName)
+			fieldDescriptor.putUtfString(FIELD_NAME_KEY, fieldName);
 			
 			// store field value
-			fieldDescriptor.put(FIELD_VALUE_KEY, wrapASField(fieldValue))
+			fieldDescriptor.put(FIELD_VALUE_KEY, wrapASField(fieldValue));
 			
 			// add to the list of fields
-			fieldList.addSFSObject(fieldDescriptor)
+			fieldList.addSFSObject(fieldDescriptor);
 		}
 		
 		// Handle any errors here?
@@ -922,59 +898,59 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	{
 		// Handle special case in which value==NULL
 		if(value==null)
-			return new SFSDataWrapper(SFSDataType.NULL, null)
+			return new SFSDataWrapper(SFSDataType.NULL, null);
 			
-		var wrapper:SFSDataWrapper
-		var type:String=Type.forInstance(value).name
+		var wrapper:SFSDataWrapper;
+		var type:String = Type.forInstance(value).name;
 		
 		if(Std.is(value, Bool))
-			wrapper=new SFSDataWrapper(SFSDataType.BOOL, value)
+			wrapper = new SFSDataWrapper(SFSDataType.BOOL, value);
 			
-		else if(Std.is(value, Int) || value is Int)
-			wrapper=new SFSDataWrapper(SFSDataType.INT, value)
+		else if(Std.is(value, Int) || Std.is(value,Int))
+			wrapper = new SFSDataWrapper(SFSDataType.INT, value);
 		
 		else if(Std.is(value, Float))
 		{
 			// Differntiate between decimal(Double)and non-decimal(Long)
 			if(value==Math.floor(value))
-				wrapper=new SFSDataWrapper(SFSDataType.LONG, value)
+				wrapper = new SFSDataWrapper(SFSDataType.LONG, value);
 			else
-				wrapper=new SFSDataWrapper(SFSDataType.DOUBLE, value)
+				wrapper = new SFSDataWrapper(SFSDataType.DOUBLE, value);
 		}
 		
 		else if(Std.is(value, String))
-			wrapper=new SFSDataWrapper(SFSDataType.UTF_STRING, value)
+			wrapper = new SFSDataWrapper(SFSDataType.UTF_STRING, value);
 		
 		else if(Std.is(value, Array))
-			wrapper=new SFSDataWrapper(SFSDataType.SFS_ARRAY, unrollArray(value))
+			wrapper = new SFSDataWrapper(SFSDataType.SFS_ARRAY, unrollArray(value));
 		
 		else if(Std.is(value, SerializableSFSType))
-			wrapper=new SFSDataWrapper(SFSDataType.SFS_OBJECT, as2sfs(value))
+			wrapper = new SFSDataWrapper(SFSDataType.SFS_OBJECT, as2sfs(value));
 		
 		else if(Std.is(value, Dynamic))
-			wrapper=new SFSDataWrapper(SFSDataType.SFS_OBJECT, unrollDictionary(value))
+			wrapper = new SFSDataWrapper(SFSDataType.SFS_OBJECT, unrollDictionary(value));
 		
-		return wrapper	
+		return wrapper;
 	}
 	
 	private function unrollArray(arr:Array):ISFSArray
 	{
-		var sfsArray:ISFSArray<Dynamic>=SFSArray.newInstance()
+		var sfsArray:ISFSArray<Dynamic> = SFSArray.newInstance();
 		
 		for(j in 0...arr.length)
-			sfsArray.add(wrapASField(arr[j]))
+			sfsArray.add(wrapASField(arr[j]));
 			
-		return sfsArray
+		return sfsArray;
 	}
 	
 	private function unrollDictionary(dict:Dynamic):ISFSObject
 	{
-		var sfsObj:ISFSObject=SFSObject.newInstance()
+		var sfsObj:ISFSObject = SFSObject.newInstance();
 		
 		for(key in dict)
-			sfsObj.put(key, wrapASField(dict[key]))
+			sfsObj.put(key, wrapASField(dict[key]));
 			
-		return sfsObj
+		return sfsObj;
 	}
 	
 	/*
@@ -987,55 +963,55 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 
 	 public function sfs2as(sfsObj:ISFSObject):Dynamic
 	 {
-	 	var asObj:Dynamic
+	 	var asObj:Dynamic;
 	 	
 	 	if(!sfsObj.containsKey(CLASS_MARKER_KEY)&& !sfsObj.containsKey(CLASS_FIELDS_KEY))
 			throw new SFSCodecError("The SFSObject passed does not represent any serialized class.");
 			
-		var className:String=sfsObj.getUtfString(CLASS_MARKER_KEY)	
-		var theClass:Class=ClassUtils.forName(className)
-		asObj=new theClass()
+		var className:String = sfsObj.getUtfString(CLASS_MARKER_KEY)	;
+		var theClass:Class = ClassUtils.forName(className);
+		asObj = Type.createInstance(theClass,[]);
 		
 		if(!(Std.is(asObj, SerializableSFSType)))
 			throw new SFSCodecError("Cannot deserialize object:" + asObj + ", type:" + className + " -- It doesn't implement the SerializableSFSType Interface");
 		
 		//trace("CLASS:" + className)
-		convertSFSObject(sfsObj.getSFSArray(CLASS_FIELDS_KEY), asObj)
+		convertSFSObject(sfsObj.getSFSArray(CLASS_FIELDS_KEY), asObj);
 			
-		return asObj
+		return asObj;
 	 }
 	
 	private function convertSFSObject(fieldList:ISFSArray, asObj:Dynamic):Void
 	{
-		var fieldDescriptor:ISFSObject
+		var fieldDescriptor:ISFSObject;
 		
-		var fieldName:String
-		var fieldValue:Dynamic
+		var fieldName:String;
+		var fieldValue:Dynamic;
 					
-		for(var j:Int=0;j<fieldList.size();j++)
+		for(j in 0...fieldList.size())
 		{
-			fieldDescriptor=fieldList.getSFSObject(j)
-			fieldName=fieldDescriptor.getUtfString(FIELD_NAME_KEY)
+			fieldDescriptor = fieldList.getSFSObject(j);
+			fieldName = fieldDescriptor.getUtfString(FIELD_NAME_KEY);
 			
-			fieldValue=unwrapAsField(fieldDescriptor.getData(FIELD_VALUE_KEY))
+			fieldValue = unwrapAsField(fieldDescriptor.getData(FIELD_VALUE_KEY));
 			//trace("Working on field:" + fieldName + " ->" + fieldValue)
 			// Call the setter and apply value
-			asObj[fieldName]=fieldValue
+			asObj[fieldName] = fieldValue;
 		}	
 		
 	}
 	
 	private function unwrapAsField(wrapper:SFSDataWrapper):Dynamic
 	{
-		var obj:Dynamic
-		var type:Int=wrapper.type
+		var obj:Dynamic;
+		var type:Int = wrapper.type;
 		
 		// From NULL ... to UTF_STRING they are all primitives, so we can group them together and upcast to *
 		if(type<=SFSDataType.UTF_STRING)
-			obj=wrapper.data
+			obj = wrapper.data;
 		
 		else if(type==SFSDataType.SFS_ARRAY)
-			obj=rebuildArray(wrapper.data as ISFSArray)
+			obj = rebuildArray(cast(wrapper.data,ISFSArray));
 			
 		else if(type==SFSDataType.SFS_OBJECT)
 		{
@@ -1045,36 +1021,36 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 				obj=sfs2as(sfsObj)
 			else
 			*/
-			obj=rebuildDict(wrapper.data as ISFSObject)
+			obj = rebuildDict(cast(wrapper.data,ISFSObject));
 		}	
 		else if(type==SFSDataType.CLASS)
-			obj=wrapper.data
+			obj = wrapper.data;
 		
-		return obj
+		return obj;
 	}
 	
 	private function rebuildArray(sfsArr:ISFSArray):Array
 	{
-		var arr:Array<Dynamic>=[]
+		var arr:Array<Dynamic> = [];
 		
-		for(var j:Int=0;j<sfsArr.size();j++)
+		for(j in 0...sfsArr.size())
 		{
-			arr.push(unwrapAsField(sfsArr.getWrappedElementAt(j)))
+			arr.push(unwrapAsField(sfsArr.getWrappedElementAt(j)));
 		}
 		
-		return arr
+		return arr;
 	}
 	
 	private function rebuildDict(sfsObj:ISFSObject):Dynamic
 	{
-		var dict:Dynamic={}
+		var dict:Dynamic = { };
 		
-		for(var key:String in sfsObj.getKeys())
+		for(key in sfsObj.getKeys())
 		{
-			dict[key]=unwrapAsField(sfsObj.getData(key))	
+			dict[key] = unwrapAsField(sfsObj.getData(key));	
 		}
 		
-		return dict
+		return dict;
 	}		
 	
 	/*
@@ -1086,20 +1062,20 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	*/
 	public function genericObjectToSFSObject(obj:Dynamic, forceToNumber:Bool=false):SFSObject
 	{
-		var sfso:SFSObject=new SFSObject()
-		_scanGenericObject(obj, sfso, forceToNumber)
+		var sfso:SFSObject = new SFSObject();
+		_scanGenericObject(obj, sfso, forceToNumber);
 		
-		return sfso
+		return sfso;
 	}
 	
 	private function _scanGenericObject(obj:Dynamic, sfso:ISFSObject, forceToNumber:Bool=false):Void
 	{
 		for(key in obj)
 		{
-			var item:Dynamic=obj[key]
+			var item:Dynamic = obj[key];
 				
 			if(item==null)
-				sfso.putNull(key)
+				sfso.putNull(key);
 			
 			/*
 			 * Hack to identify a generic object without using reflection
@@ -1108,67 +1084,67 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			 */
 			else if(item.toString()=="[object Dynamic]" && !(Std.is(item, Array)))
 			{
-				var subSfso:ISFSObject=new SFSObject()
-				sfso.putSFSObject(key, subSfso)
+				var subSfso:ISFSObject = new SFSObject();
+				sfso.putSFSObject(key, subSfso);
 					
 				// Call recursively
-				_scanGenericObject(item, subSfso, forceToNumber)
+				_scanGenericObject(item, subSfso, forceToNumber);
 			}	
 			else if(Std.is(item, Array))
-				sfso.putSFSArray(key, genericArrayToSFSArray(item, forceToNumber))
+				sfso.putSFSArray(key, genericArrayToSFSArray(item, forceToNumber));
 					
 			else if(Std.is(item, Bool))
-				sfso.putBool(key, item)
+				sfso.putBool(key, item);
 
 			else if(Std.is(item, Int) && !forceToNumber)
-				sfso.putInt(key, item)		
+				sfso.putInt(key, item);		
 
 			else if(Std.is(item, Float))
-				sfso.putDouble(key, item)
+				sfso.putDouble(key, item);
 			
 			else if(Std.is(item, String))
-				sfso.putUtfString(key, item)
+				sfso.putUtfString(key, item);
 			
 		}
 	}
 	
 	public function sfsObjectToGenericObject(sfso:ISFSObject):Dynamic
 	{
-		var obj:Dynamic={}
-		_scanSFSObject(sfso, obj)
+		var obj:Dynamic = { };
+		_scanSFSObject(sfso, obj);
 		
-		return obj
+		return obj;
 	}
 	
 	private function _scanSFSObject(sfso:ISFSObject, obj:Dynamic):Void
 	{
 		var keys:Array<Dynamic>=sfso.getKeys();
 		
-		for(var key:String in keys)
+		for(key in keys)
 		{
-			var item:SFSDataWrapper=sfso.getData(key)
+			var item:SFSDataWrapper = sfso.getData(key);
 			
 			if(item.type==SFSDataType.NULL)
-				obj[key]=null
+				obj[key] = null;
 				
 			else if(item.type==SFSDataType.SFS_OBJECT)
 			{
-				var subObj:Dynamic={}
-				obj[key]=subObj
+				var subObj:Dynamic = { };
+				obj[key] = subObj;
 				
 				// Call recursively
-				_scanSFSObject(item.data as ISFSObject, subObj)
+				_scanSFSObject(cast(item.data,ISFSObject), subObj);
 			}	
 			
 			else if(item.type==SFSDataType.SFS_ARRAY)
-				obj[key]=(item.data as SFSArray).toArray()
+				obj[key] = cast(item.data, SFSArray).toArray();
 			
 			// Skip CLASS types
 			else if(item.type==SFSDataType.CLASS)
 				continue;
 					
 			else 
-				obj[key] =item.data	
+				obj[key] = item.data	;
 		}
 	}
 	
@@ -1181,76 +1157,76 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	*/
 	public function genericArrayToSFSArray(arr:Array, forceToNumber:Bool=false):SFSArray
 	{
-		var sfsa:SFSArray<Dynamic>=new SFSArray()
-		_scanGenericArray(arr, sfsa, forceToNumber)
+		var sfsa:SFSArray<Dynamic> = new SFSArray();
+		_scanGenericArray(arr, sfsa, forceToNumber);
 		
-		return sfsa
+		return sfsa;
 	}
 	
 	private function _scanGenericArray(arr:Array, sfsa:ISFSArray, forceToNumber:Bool=false):Void
 	{
 		for(ii in 0...arr.length)
 		{
-			var item:Dynamic=arr[ii]
+			var item:Dynamic = arr[ii];
 			
 			if(item==null)
-				sfsa.addNull()
+				sfsa.addNull();
 				
 			// See notes for SFSObject
 			else if(item.toString()=="[object Dynamic]"  && !(Std.is(item, Array)))
-				sfsa.addSFSObject(genericObjectToSFSObject(item, forceToNumber))
+				sfsa.addSFSObject(genericObjectToSFSObject(item, forceToNumber));
 			
 			else if(Std.is(item, Array))
 			{
-				var subSfsa:ISFSArray<Dynamic>=new SFSArray()
-				sfsa.addSFSArray(subSfsa)
+				var subSfsa:ISFSArray<Dynamic> = new SFSArray();
+				sfsa.addSFSArray(subSfsa);
 				
 				// Call recursively
-				_scanGenericArray(item, subSfsa, forceToNumber)
+				_scanGenericArray(item, subSfsa, forceToNumber);
 			}
 				
 			else if(Std.is(item, Bool))
-				sfsa.addBool(item)
+				sfsa.addBool(item);
 				
 			else if(Std.is(item, Int) && !forceToNumber)
-				sfsa.addInt(item)		
+				sfsa.addInt(item);
 				
 			else if(Std.is(item, Float))
-				sfsa.addDouble(item)
+				sfsa.addDouble(item);
 				
 			else if(Std.is(item, String))
-				sfsa.addUtfString(item)
+				sfsa.addUtfString(item);
 			
 		}
 	}
 	
 	public function sfsArrayToGenericArray(sfsa:ISFSArray):Array
 	{
-		var arr:Array<Dynamic>=[]
-		_scanSFSArray(sfsa, arr)
+		var arr:Array<Dynamic> = [];
+		_scanSFSArray(sfsa, arr);
 		
-		return arr
+		return arr;
 	}
 			
 	private function _scanSFSArray(sfsa:ISFSArray, arr:Array):Void
 	{
-		for(var ii:Int=0;ii<sfsa.size();ii++)
+		for(ii in 0...sfsa.size())
 		{
-			var item:SFSDataWrapper=sfsa.getWrappedElementAt(ii)
+			var item:SFSDataWrapper = sfsa.getWrappedElementAt(ii);
 			
 			if(item.type==SFSDataType.NULL)
-				arr[ii]=null
+				arr[ii] = null;
 				
 			else if(item.type==SFSDataType.SFS_OBJECT)
-				arr[ii]=(item.data as SFSObject).toObject()
+				arr[ii] = cast(item.data,SFSObject).toObject();
 				
 			else if(item.type==SFSDataType.SFS_ARRAY)
 			{
-				var subArr:Array<Dynamic>=[]
-				arr[ii]=subArr
+				var subArr:Array<Dynamic> = [];
+				arr[ii] = subArr;
 				
 				// Call recursively
-				_scanSFSArray(item.data as ISFSArray, subArr)
+				_scanSFSArray(cast(item.data,ISFSArray), subArr);
 			}
 			
 			// Skip CLASS types
@@ -1258,7 +1234,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 				continue;
 				
 			else 
-				arr[ii] =item.data	
+				arr[ii]= item.data;	
 		}
 	}
 	

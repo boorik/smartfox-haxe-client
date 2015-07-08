@@ -48,7 +48,7 @@ class VariableType
 	// --------------------------------------------
 	
 	
-	private static inline var TYPES_AS_STRING:Array<Dynamic>=["Null", "Bool", "Int", "Double", "String", "Object", "Array"]
+	private static inline var TYPES_AS_STRING:Array<String>=["Null", "Bool", "Int", "Double", "String", "Object", "Array"]
 	
 	/** @private */
 	public static function getTypeName(id:Int):String

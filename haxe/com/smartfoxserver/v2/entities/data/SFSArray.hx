@@ -91,14 +91,14 @@ class SFSArray implements ISFSArray
 	public function contains(obj:Dynamic):Bool
 	{
 		if(Std.is(obj, ISFSArray) || Std.is(obj,ISFSObject))
-			throw new SFSError("ISFSArray and ISFSObject are not supported by this method.")
+			throw new SFSError("ISFSArray and ISFSObject are not supported by this method.");
 			
 		var found:Bool = false;
 		
 		
 		for(j in 0...size())
 		{
-			var element:Dynamic=getElementAt(j)
+			var element:Dynamic = getElementAt(j);
 			
 			if(element !=null && element==obj)
 			{
@@ -197,10 +197,10 @@ class SFSArray implements ISFSArray
 			type = wrapper.type;
 				
 			if(type==SFSDataType.SFS_OBJECT)
-				objDump = (wrapper.data as SFSObject).getDump(false);
+				objDump = cast(wrapper.data, SFSObject).getDump(false);
 			
 			else if(type==SFSDataType.SFS_ARRAY)
-				objDump = (wrapper.data as SFSArray).getDump(false);
+				objDump = cast(wrapper.data, SFSArray).getDump(false);
 			
 			else if(type>SFSDataType.UTF_STRING && type<SFSDataType.CLASS)
 				objDump = "[" + wrapper.data + "]";
@@ -441,14 +441,14 @@ class SFSArray implements ISFSArray
 	/** @inheritDoc */
 	public function getUtfString(index:Int):String
 	{
-		var wrapper:SFSDataWrapper=dataHolder[index]
-		return(wrapper !=null ?(cast(wrapper.data,String)):null)
+		var wrapper:SFSDataWrapper = dataHolder[index];
+		return(wrapper != null ?(cast(wrapper.data, String)):null);
 	}
 	
 	private function getArray(index:Int):Array
 	{
-		var wrapper:SFSDataWrapper=dataHolder[index]
-		return(wrapper !=null ?(cast(wrapper.data,Array)):null)
+		var wrapper:SFSDataWrapper = dataHolder[index];
+		return(wrapper != null ?(cast(wrapper.data, Array)):null);
 	}
 	
 	/** @inheritDoc */
@@ -523,7 +523,7 @@ class SFSArray implements ISFSArray
 	public function getSFSArray(index:Int):ISFSArray
 	{
 		var wrapper:SFSDataWrapper = dataHolder[index];
-		return(wrapper !=null ?(cast(wrapper.data, ISFSArray)):null)
+		return (wrapper != null ?(cast(wrapper.data, ISFSArray)):null);
 	}
 	
 	/** @inheritDoc */

@@ -1,7 +1,5 @@
 package com.smartfoxserver.v2.entities.variables;
 
-import as3reflect.Type;
-
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
@@ -226,27 +224,27 @@ class SFSBuddyVariable implements BuddyVariable
 			{
 				// check if is Int or double
 				if(int(value)==value)
-					_type=VariableType.getTypeName(VariableType.INT)
+					_type = VariableType.getTypeName(VariableType.INT);
 				else
-					_type=VariableType.getTypeName(VariableType.DOUBLE)
+					_type = VariableType.getTypeName(VariableType.DOUBLE);
 			}
 			
 			else if(typeName=="string")
-				_type=VariableType.getTypeName(VariableType.STRING)
+				_type = VariableType.getTypeName(VariableType.STRING);
 			
 			// Check which type of object is this	
 			else if(typeName=="object")
 			{
-				var className:String=Type.forInstance(value).name
+				var className:String = Type.forInstance(value).name;
 				
 				if(className=="SFSObject")
-					_type=VariableType.getTypeName(VariableType.OBJECT)
+					_type = VariableType.getTypeName(VariableType.OBJECT);
 					
 				else if(className=="SFSArray")
-					_type=VariableType.getTypeName(VariableType.ARRAY)
+					_type = VariableType.getTypeName(VariableType.ARRAY);
 					
 				else 
-					throw new SFSError("Unsupport SFS Variable type:" + className)		
+					throw new SFSError("Unsupport SFS Variable type:" + className);
 			}
 		}	
 	}
