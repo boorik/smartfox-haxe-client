@@ -46,7 +46,7 @@ class ClientDisconnectionReason
 	] ;
 	
 	/** @private */
-	public static function getReason(reasonId:Int):String;
+	public static function getReason(reasonId:Int):String
 	{
 		return reasons[reasonId];
 	}

@@ -12,35 +12,35 @@ import flash.system.System;
 class HandshakeRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_SESSION_TOKEN:String="tk"
+	public static inline var KEY_SESSION_TOKEN:String = "tk";
 	
 	/** @private */
-	public static inline var KEY_API:String="api"
+	public static inline var KEY_API:String = "api";
 	
 	/** @private */
-	public static inline var KEY_COMPRESSION_THRESHOLD:String="ct"
+	public static inline var KEY_COMPRESSION_THRESHOLD:String = "ct";
 	
 	/** @private */
-	public static inline var KEY_RECONNECTION_TOKEN:String="rt"
+	public static inline var KEY_RECONNECTION_TOKEN:String = "rt";
 	
 	/** @private */
-	public static inline var KEY_CLIENT_TYPE:String="cl"
+	public static inline var KEY_CLIENT_TYPE:String = "cl";
 		
 	/** @private */
-	public static inline var KEY_MAX_MESSAGE_SIZE:String="ms"
+	public static inline var KEY_MAX_MESSAGE_SIZE:String = "ms";
 	
 	public function new(apiVersion:String, clientDetails:String, reconnectionToken:String=null)
 	{
-		super(BaseRequest.Handshake)
+		super(BaseRequest.Handshake);
 		
 		// api version
-		_sfso.putUtfString(KEY_API, apiVersion)
+		_sfso.putUtfString(KEY_API, apiVersion);
 		
 		// client Type string
-		_sfso.putUtfString(KEY_CLIENT_TYPE, clientDetails)
+		_sfso.putUtfString(KEY_CLIENT_TYPE, clientDetails);
 
 		// send reconnection token, if any
 		if(reconnectionToken !=null)
-			_sfso.putUtfString(KEY_RECONNECTION_TOKEN, reconnectionToken)	
+			_sfso.putUtfString(KEY_RECONNECTION_TOKEN, reconnectionToken);
 	}
 }

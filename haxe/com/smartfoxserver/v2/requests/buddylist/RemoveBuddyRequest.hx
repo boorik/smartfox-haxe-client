@@ -43,9 +43,9 @@ import com.smartfoxserver.v2.requests.BaseRequest;
 class RemoveBuddyRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_BUDDY_NAME:String="bn"
+	public static inline var KEY_BUDDY_NAME:String = "bn";
 	
-	private var _name:String
+	private var _name:String;
 	
 	/**
 	 * Creates a new<em>RemoveBuddyRequest</em>instance.
@@ -57,31 +57,31 @@ class RemoveBuddyRequest extends BaseRequest
 	 */
 	public function new(buddyName:String)
 	{
-		super(BaseRequest.RemoveBuddy)
-		_name=buddyName
+		super(BaseRequest.RemoveBuddy);
+		_name = buddyName;
 	}
 
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		if(!sfs.buddyManager.isInited)
-			errors.push("BuddyList is not inited. Please send an InitBuddyRequest first.")
+			errors.push("BuddyList is not inited. Please send an InitBuddyRequest first.");
 		
 		if(sfs.buddyManager.myOnlineState==false)
-			errors.push("Can't remove buddy while off-line")
+			errors.push("Can't remove buddy while off-line");
 			
 		if(!sfs.buddyManager.containsBuddy(_name))
-			errors.push("Can't remove buddy, it's not in your list:" + _name)
+			errors.push("Can't remove buddy, it's not in your list:" + _name);
 		
 		if(errors.length>0)
-			throw new SFSValidationError("BuddyList request error", errors)
+			throw new SFSValidationError("BuddyList request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		_sfso.putUtfString(KEY_BUDDY_NAME, _name)
+		_sfso.putUtfString(KEY_BUDDY_NAME, _name);
 	}
 }

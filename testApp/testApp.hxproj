@@ -21,6 +21,7 @@
     <class path="D:\Dev\HaxeToolkit\haxe\lib\actuate\1,8,6" />
     <class path="src" />
     <class path="..\haxe" />
+    <class path="..\flash" />
     <class path="bin\flash\haxe" />
   </classpaths>
   <!-- Build options -->
@@ -30,7 +31,7 @@
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="True" />
-    <option additional="-swf-version 11.2" />
+    <option additional="-swf-version 11.2&#xA;-debug " />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

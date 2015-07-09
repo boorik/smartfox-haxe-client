@@ -1,8 +1,8 @@
 package com.smartfoxserver.v2.requests.buddylist;
 
 import com.smartfoxserver.v2.SmartFox;
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
-import com.smartfoxserver.v2.entities.data.SFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.variables.BuddyVariable;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.BaseRequest;
@@ -80,12 +80,12 @@ import com.smartfoxserver.v2.requests.BaseRequest;
 class SetBuddyVariablesRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_BUDDY_NAME:String="bn"
+	public static inline var KEY_BUDDY_NAME:String = "bn";
 	
 	/** @private */
-	public static inline var KEY_BUDDY_VARS:String="bv"
+	public static inline var KEY_BUDDY_VARS:String = "bv";
 	
-	private var _buddyVariables:Array
+	private var _buddyVariables:Array;
 	
 	/**
 	 * Creates a new<em>SetBuddyVariablesRequest</em>instance.
@@ -98,38 +98,38 @@ class SetBuddyVariablesRequest extends BaseRequest
 	 */
 	public function new(buddyVariables:Array)
 	{
-		super(BaseRequest.SetBuddyVariables)
-		_buddyVariables=buddyVariables
+		super(BaseRequest.SetBuddyVariables);
+		_buddyVariables = buddyVariables;
 	}
 
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		if(!sfs.buddyManager.isInited)
-			errors.push("BuddyList is not inited. Please send an InitBuddyRequest first.")
+			errors.push("BuddyList is not inited. Please send an InitBuddyRequest first.");
 		
 		if(sfs.buddyManager.myOnlineState==false)
-			errors.push("Can't set buddy variables while off-line")
+			errors.push("Can't set buddy variables while off-line");
 			
 		if(_buddyVariables==null || _buddyVariables.length==0)
-			errors.push("No variables were specified")
+			errors.push("No variables were specified");
 						
 		if(errors.length>0)
-			throw new SFSValidationError("SetBuddyVariables request error", errors)
+			throw new SFSValidationError("SetBuddyVariables request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		var varList:ISFSArray<Dynamic>=new SFSArray()
+		var varList:ISFSArray<Dynamic> = new SFSArray();
 		 
-		for(var bVar:BuddyVariable in _buddyVariables)
+		for(bVar in _buddyVariables)
 		{
-			varList.addSFSArray(bVar.toSFSArray())	
+			varList.addSFSArray(bVar.toSFSArray());
 		}
 		
-		_sfso.putSFSArray(KEY_BUDDY_VARS, varList)
+		_sfso.putSFSArray(KEY_BUDDY_VARS, varList);
 	}
 }

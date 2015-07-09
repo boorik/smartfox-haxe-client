@@ -3,7 +3,6 @@ package com.smartfoxserver.v2.entities.managers;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
-import com.smartfoxserver.v2.kernel;
 import com.smartfoxserver.v2.util.ArrayUtil;
 import haxe.ds.IntMap;
 import haxe.ds.StringMap;
@@ -159,7 +158,7 @@ class SFSRoomManager implements IRoomManager
 		*
 		* The unmanaged Room(s)will be removed as soon as we leave it 
 		*/
-		for(var room:Room in roomsInGroup)
+		for(room in roomsInGroup)
 		{
 			if(!room.isJoined)
 				removeRoom(room);
@@ -178,7 +177,7 @@ class SFSRoomManager implements IRoomManager
 	/** @inheritDoc */
 	public function containsRoom(idOrName:Dynamic):Bool
 	{
-		if(typeof idOrName=="number")
+		if(Std.is(idOrName,Int))
 			return _roomsById.exists(idOrName);
 		else
 			return _roomsByName.exists(idOrName);
@@ -284,7 +283,7 @@ class SFSRoomManager implements IRoomManager
 		var rooms:Array<Room> = [];
 		while(_roomsById.iterator().hasNext())
 		{
-			var room:Room = _roomsById.iterator()..next();
+			var room:Room = _roomsById.iterator().next();
 			
 			if(room.isJoined)
 				rooms.push(room);
@@ -296,7 +295,7 @@ class SFSRoomManager implements IRoomManager
 	/** @inheritDoc */
 	public function getUserRooms(user:User):Array<Room>
 	{
-		var rooms:Array<Dynamic>=[]
+		var rooms:Array<Dynamic> = [];
 		
 		// Cycle through all Rooms
 		while(_roomsById.iterator().hasNext())
@@ -307,7 +306,7 @@ class SFSRoomManager implements IRoomManager
 				rooms.push(room);
 		}
 		
-		return rooms
+		return rooms;
 	}
 	
 	/** @private */

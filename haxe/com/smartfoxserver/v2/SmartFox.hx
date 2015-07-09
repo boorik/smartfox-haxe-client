@@ -45,7 +45,6 @@ import com.smartfoxserver.v2.util.SFSErrorCodes;
 import flash.errors.IllegalOperationError;
 import flash.events.EventDispatcher;
 import flash.system.Capabilities;
-import flash.utils.setTimeout;
 
 //--------------------------------------
 //  Connection events

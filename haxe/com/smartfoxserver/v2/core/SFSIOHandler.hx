@@ -14,7 +14,7 @@ import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
 import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
 
 import flash.errors.IOError;
-import flash.utils.ByteArray<Dynamic>;
+import flash.utils.ByteArray;
 
 /** @private */
 class SFSIOHandler implements IoHandler
@@ -29,7 +29,7 @@ class SFSIOHandler implements IoHandler
 	private var protocolCodec:IProtocolCodec;
 	private var fullPacketDump:Bool=false;
 	
-	private static inline var EMPTY_BUFFER:ByteArray<Dynamic> = new ByteArray();
+	private static inline var EMPTY_BUFFER:ByteArray= new ByteArray();
 	
 	public function new(bitSwarm:BitSwarmClient)
 	{

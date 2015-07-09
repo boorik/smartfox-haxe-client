@@ -2,8 +2,8 @@ package com.smartfoxserver.v2.requests;
 
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
-import com.smartfoxserver.v2.entities.data.SFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.variables.RoomVariable;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 
@@ -51,13 +51,13 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
 class SetRoomVariablesRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_VAR_ROOM:String="r"
+	public static inline var KEY_VAR_ROOM:String = "r";
 	
 	/** @private */
-	public static inline var KEY_VAR_LIST:String="vl"
+	public static inline var KEY_VAR_LIST:String = "vl";
 	
-	private var _roomVariables:Array
-	private var _room:Room
+	private var _roomVariables:Array<RoomVariable>;
+	private var _room:Room;
 	
 	/**
 	 * Creates a new<em>SetRoomVariablesRequest</em>instance.
@@ -70,53 +70,53 @@ class SetRoomVariablesRequest extends BaseRequest
 	 * @see		com.smartfoxserver.v2.entities.variables.RoomVariable RoomVariable
 	 * @see		com.smartfoxserver.v2.entities.Room Room
 	 */
-	public function new(roomVariables:Array, room:Room=null)
+	public function new(roomVariables:Array<RoomVariable>, room:Room=null)
 	{
-		super(BaseRequest.SetRoomVariables)
+		super(BaseRequest.SetRoomVariables);
 		
-		_roomVariables=roomVariables
-		_room=room	
+		_roomVariables = roomVariables;
+		_room = room	;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		// Make sure that the user is joined in the room where variables are going to be set
 		if(_room !=null)
 		{
 			if(!_room.containsUser(sfs.mySelf))
-				errors.push("You are not joined in the target room")
+				errors.push("You are not joined in the target room");
 		}
 		else
 		{
 			if(sfs.lastJoinedRoom==null)
-				errors.push("You are not joined in any rooms")
+				errors.push("You are not joined in any rooms");
 		}
 		
 		if(_roomVariables==null || _roomVariables.length==0)
-			errors.push("No variables were specified")
+			errors.push("No variables were specified");
 		
 		if(errors.length>0)
-			throw new SFSValidationError("SetRoomVariables request error", errors)
+			throw new SFSValidationError("SetRoomVariables request error", errors);
 		
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		var varList:ISFSArray<Dynamic>=SFSArray.newInstance()
+		var varList:ISFSArray<Dynamic> = SFSArray.newInstance();
 		 
-		for(var rv:RoomVariable in _roomVariables)
+		for(rv in _roomVariables)
 		{
-			varList.addSFSArray(rv.toSFSArray())		
+			varList.addSFSArray(rv.toSFSArray());		
 		}
 		
 		if(_room==null)
-			_room=sfs.lastJoinedRoom 
+			_room = sfs.lastJoinedRoom ;
 		
-		_sfso.putSFSArray(KEY_VAR_LIST, varList)
-		_sfso.putInt(KEY_VAR_ROOM, _room.id)
+		_sfso.putSFSArray(KEY_VAR_LIST, varList);
+		_sfso.putInt(KEY_VAR_ROOM, _room.id);
 	}
 }

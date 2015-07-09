@@ -1,14 +1,11 @@
 package com.smartfoxserver.v2.requests;
 
 
-import com.hurlant.crypto.hash.IHash;
-import com.hurlant.crypto.hash.MD5;
-import com.hurlant.util.Hex;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 
-import flash.utils.ByteArray<Dynamic>;
+import flash.utils.ByteArray;
 
 /**
  * Logs the current user in one of the server Zones.
@@ -49,33 +46,33 @@ import flash.utils.ByteArray<Dynamic>;
 class LoginRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_ZONE_NAME:String="zn"
+	public static inline var KEY_ZONE_NAME:String = "zn";
 	
 	/** @private */
-	public static inline var KEY_USER_NAME:String="un"
+	public static inline var KEY_USER_NAME:String = "un";
 	
 	/** @private */
-	public static inline var KEY_PASSWORD:String="pw"
+	public static inline var KEY_PASSWORD:String = "pw";
 	
 	/** @private */
-	public static inline var KEY_PARAMS:String="p"
+	public static inline var KEY_PARAMS:String = "p";
 	
 	/** @private */
-	public static inline var KEY_PRIVILEGE_ID:String="pi"
+	public static inline var KEY_PRIVILEGE_ID:String = "pi";
 	
 	/** @private */
-	public static inline var KEY_ID:String="id"
+	public static inline var KEY_ID:String = "id";
 	
 	/** @private */
-	public static inline var KEY_ROOMLIST:String="rl"
+	public static inline var KEY_ROOMLIST:String = "rl";
 	
 	/** @private */
-	public static inline var KEY_RECONNECTION_SECONDS:String="rs"
+	public static inline var KEY_RECONNECTION_SECONDS:String = "rs";
 	
-	private var _zoneName:String
-	private var _userName:String
-	private var _password:String
-	private var _params:ISFSObject
+	private var _zoneName:String;
+	private var _userName:String;
+	private var _password:String;
+	private var _params:ISFSObject;
 	
 	/**
 	 * Creates a new<em>LoginRequest</em>instance.
@@ -93,49 +90,49 @@ class LoginRequest extends BaseRequest
 	 */
 	public function new(userName:String="", password:String="", zoneName:String="", params:ISFSObject=null)
 	{
-		super(BaseRequest.Login)
+		super(BaseRequest.Login);
 		
-		_zoneName=zoneName
-		_userName=userName
-		_password=(password==null)? "":password
-		_params=params	
+		_zoneName = zoneName;
+		_userName = userName;
+		_password = (password == null)? "":password;
+		_params = params	;
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
 		// zone name
-		_sfso.putUtfString(KEY_ZONE_NAME, _zoneName)
+		_sfso.putUtfString(KEY_ZONE_NAME, _zoneName);
 		
 		// user name
-		_sfso.putUtfString(KEY_USER_NAME, _userName)
+		_sfso.putUtfString(KEY_USER_NAME, _userName);
 		
 		/*
 		* password:use secure login system based on CHAP technique
 		* http://www.networkworld.com/newsletters/web/2004/0419web1.html
 		*/
 		if(_password.length>0)
-			_password=getMD5Hash(sfs.sessionToken + _password)
+			_password = getMD5Hash(sfs.sessionToken + _password);
 		
-		_sfso.putUtfString(KEY_PASSWORD, _password)
+		_sfso.putUtfString(KEY_PASSWORD, _password);
 		
 		//(optional)params
 		if(_params !=null)
-			_sfso.putSFSObject(KEY_PARAMS, _params)
+			_sfso.putSFSObject(KEY_PARAMS, _params);
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
 		if(sfs.mySelf !=null)
-			throw new SFSValidationError("LoginRequest Dynamic", ["You are already logged in. Logout first"])
+			throw new SFSValidationError("LoginRequest Dynamic", ["You are already logged in. Logout first"]);
 		
 		// Attempt to use config data, if any
-		if((_zoneName==null || _zoneName.length==0)&& sfs.config !=null)
-			_zoneName=sfs.config.zone
+		if ((_zoneName == null || _zoneName.length == 0) && sfs.config != null)
+			_zoneName = sfs.config.zone;
 		
 		if(_zoneName==null || _zoneName.length==0)
-			throw new SFSValidationError("LoginRequest Dynamic", ["Missing Zone name"])
+			throw new SFSValidationError("LoginRequest Dynamic", ["Missing Zone name"]);
 	}
 	
 	/**
@@ -147,10 +144,10 @@ class LoginRequest extends BaseRequest
 	 */
 	private function getMD5Hash(text:String):String
 	{
-		var hash:IHash=new MD5()
-		var data:ByteArray<Dynamic>=Hex.toArray(Hex.fromString(text))
+		var hash:IHash = new MD5();
+		var data:ByteArray = Hex.toArray(Hex.fromString(text));
 		
 		// Hash and convert to Hex string
-		return Hex.fromArray(hash.hash(data))
+		return Hex.fromArray(hash.hash(data));
 	}
 }

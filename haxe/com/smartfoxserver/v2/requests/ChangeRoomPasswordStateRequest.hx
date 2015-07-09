@@ -44,13 +44,13 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
 class ChangeRoomPasswordStateRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_ROOM:String="r"
+	public static inline var KEY_ROOM:String = "r";
 	
 	/** @private */
-	public static inline var KEY_PASS:String="p"
+	public static inline var KEY_PASS:String = "p";
 	
-	private var _room:Room
-	private var _newPass:String
+	private var _room:Room;
+	private var _newPass:String;
 	
 	/**
 	 * Creates a new<em>ChangeRoomPasswordStateRequest</em>instance.
@@ -63,32 +63,32 @@ class ChangeRoomPasswordStateRequest extends BaseRequest
 	 */
 	public function new(room:Room, newPass:String)
 	{
-		super(BaseRequest.ChangeRoomPassword)
+		super(BaseRequest.ChangeRoomPassword);
 		
-		_room=room
-		_newPass=newPass	
+		_room = room;
+		_newPass = newPass	;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		// Missing room id
 		if(_room==null)
-			errors.push("Provided room is null")
+			errors.push("Provided room is null");
 		
 		if(_newPass==null)
-			errors.push("Invalid new room password. It must be a non-null string.")
+			errors.push("Invalid new room password. It must be a non-null string.");
 			
 		if(errors.length>0)
-			throw new SFSValidationError("ChangePassState request error", errors)
+			throw new SFSValidationError("ChangePassState request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		_sfso.putInt(KEY_ROOM, _room.id)
-		_sfso.putUtfString(KEY_PASS, _newPass)
+		_sfso.putInt(KEY_ROOM, _room.id);
+		_sfso.putUtfString(KEY_PASS, _newPass);
 	}
 }

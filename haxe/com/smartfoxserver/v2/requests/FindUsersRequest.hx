@@ -4,7 +4,7 @@ import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.logging.Logger;
-import com.smartfoxserver.v2.entities.match.*
+import com.smartfoxserver.v2.entities.match.*;
 
 /**
  * Retrieves a list of users from the server which match the specified criteria.
@@ -38,23 +38,23 @@ import com.smartfoxserver.v2.entities.match.*
 class FindUsersRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_EXPRESSION:String="e"
+	public static inline var KEY_EXPRESSION:String = "e";
 	
 	/** @private */
-	public static inline var KEY_GROUP:String="g"
+	public static inline var KEY_GROUP:String = "g";
 	
 	/** @private */
-	public static inline var KEY_ROOM:String="r"
+	public static inline var KEY_ROOM:String = "r";
 	
 	/** @private */
-	public static inline var KEY_LIMIT:String="l"
+	public static inline var KEY_LIMIT:String = "l";
 	
 	/** @private */
-	public static inline var KEY_FILTERED_USERS:String="fu"
+	public static inline var KEY_FILTERED_USERS:String = "fu";
 	
-	private var _matchExpr:MatchExpression
-	private var _target:Dynamic
-	private var _limit:Int
+	private var _matchExpr:MatchExpression;
+	private var _target:Dynamic;
+	private var _limit:Int;
 		
 	/**
 	 * Creates a new<em>FindUsersRequest</em>instance.
@@ -70,42 +70,42 @@ class FindUsersRequest extends BaseRequest
 	 */
 	public function new(expr:MatchExpression, target:Dynamic=null, limit:Int=0)
 	{
-		super(BaseRequest.FindUsers)
+		super(BaseRequest.FindUsers);
 		
-		_matchExpr=expr
-		_target=target
-		_limit=limit
+		_matchExpr = expr;
+		_target = target;
+		_limit = limit;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		if(_matchExpr==null)
-			errors.push("Missing Match Expression")
+			errors.push("Missing Match Expression");
 		
 		if(errors.length>0)
-			throw new SFSValidationError("FindUsers request error", errors)
+			throw new SFSValidationError("FindUsers request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		_sfso.putSFSArray(KEY_EXPRESSION, _matchExpr.toSFSArray())
+		_sfso.putSFSArray(KEY_EXPRESSION, _matchExpr.toSFSArray());
 		
 		if(_target !=null)
 		{
 			if(Std.is(_target, Room))
-				_sfso.putInt(KEY_ROOM,(_target as Room).id)
+				_sfso.putInt(KEY_ROOM, cast(_target, Room).id);
 			else if(Std.is(_target, String))
-				_sfso.putUtfString(KEY_GROUP, _target)
+				_sfso.putUtfString(KEY_GROUP, _target);
 			else
-				sfs.logger.warn("Unsupport target type for FindUsersRequest:" + _target)
+				sfs.logger.warn("Unsupport target type for FindUsersRequest:" + _target);
 		}
 			
 		// 2^15 is already too many Users:)
 		if(_limit>0)
-			_sfso.putShort(KEY_LIMIT, _limit)
+			_sfso.putShort(KEY_LIMIT, _limit);
 	}
 }

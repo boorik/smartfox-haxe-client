@@ -6,12 +6,12 @@ import com.smartfoxserver.v2.entities.User;
 /** @private */
 class SFSGlobalUserManager extends SFSUserManager
 {
-	private var _roomRefCount:Array;
+	private var _roomRefCount:Map<User,Int>;
 	
 	public function new(sfs:SmartFox)
 	{
 		super(sfs);
-		_roomRefCount = [];
+		_roomRefCount = new Map<User,Int>();
 	}
 	
 	/*
@@ -20,18 +20,18 @@ class SFSGlobalUserManager extends SFSUserManager
 	override public function addUser(user:User):Void
 	{
 		// Doesn't exist create and set refCount
-		if(_roomRefCount[user]==null)
+		if(!_roomRefCount.exists(user))
 		{
 			//trace("User duplicate NOT FOUND. Adding as new")
 			super._addUser(user);
-			_roomRefCount[user] = 1;
+			_roomRefCount.set(user,1);
 		}
 		
 		else
 		{
 			//trace("User duplicate FOUND. Incrementing value")
 			super._addUser(user);
-			_roomRefCount[user]++;	
+			_roomRefCount.get(user)++;	
 		}			
 	}
 	
@@ -45,18 +45,18 @@ class SFSGlobalUserManager extends SFSUserManager
 		if(_roomRefCount !=null)
 		{
 			/* Debug Only */
-			if(_roomRefCount[user]<1)
+			if(_roomRefCount.get(user)<1)
 			{
 				_smartFox.logger.warn("GlobalUserManager RefCount is already at zero. User:" + user);
 				return;
 			}
 			
-			_roomRefCount[user]--;
+			_roomRefCount.get(user)--;
 			
-			if(_roomRefCount[user]==0 || disconnected)
+			if(_roomRefCount.get(user)==0 || disconnected)
 			{
 				super.removeUser(user);
-				delete _roomRefCount[user];
+				_roomRefCount.remove(user);
 			}
 		}
 		else

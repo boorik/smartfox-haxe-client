@@ -46,13 +46,13 @@ import com.smartfoxserver.v2.requests.BaseRequest;
 class BlockBuddyRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_BUDDY_NAME:String="bn"
+	public static inline var KEY_BUDDY_NAME:String = "bn";
 	
 	/** @private */
-	public static inline var KEY_BUDDY_BLOCK_STATE:String="bs"
+	public static inline var KEY_BUDDY_BLOCK_STATE:String = "bs";
 	
-	private var _buddyName:String
-	private var _blocked:Bool
+	private var _buddyName:String;
+	private var _blocked:Bool;
 	
 	/**
 	 * Creates a new<em>BlockBuddyRequest</em>instance.
@@ -65,42 +65,42 @@ class BlockBuddyRequest extends BaseRequest
 	 */
 	public function new(buddyName:String, blocked:Bool)
 	{
-		super(BaseRequest.BlockBuddy)
+		super(BaseRequest.BlockBuddy);
 		
-		_buddyName=buddyName
-		_blocked=blocked
+		_buddyName = buddyName;
+		_blocked = blocked;
 	}
 
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		if(!sfs.buddyManager.isInited)
-			errors.push("BuddyList is not inited. Please send an InitBuddyRequest first.")
+			errors.push("BuddyList is not inited. Please send an InitBuddyRequest first.");
 		
 		if(_buddyName==null || _buddyName.length<1)
-			errors.push("Invalid buddy name:" + _buddyName)
+			errors.push("Invalid buddy name:" + _buddyName);
 			
 		if(sfs.buddyManager.myOnlineState==false)
-			errors.push("Can't block buddy while off-line")
+			errors.push("Can't block buddy while off-line");
 		
-		var buddy:Buddy=sfs.buddyManager.getBuddyByName(_buddyName)
+		var buddy:Buddy = sfs.buddyManager.getBuddyByName(_buddyName);
 		
 		if(buddy==null)
-			errors.push("Can't block buddy, it's not in your list:" + _buddyName)
+			errors.push("Can't block buddy, it's not in your list:" + _buddyName);
 		
 		else if(buddy.isBlocked==_blocked)
-			errors.push("BuddyBlock flag is already in the requested state:" + _blocked + ", for buddy:" + buddy)
+			errors.push("BuddyBlock flag is already in the requested state:" + _blocked + ", for buddy:" + buddy);
 			
 		if(errors.length>0)
-			throw new SFSValidationError("BuddyList request error", errors)	
+			throw new SFSValidationError("BuddyList request error", errors)	;
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		_sfso.putUtfString(BlockBuddyRequest.KEY_BUDDY_NAME, _buddyName)
-		_sfso.putBool(BlockBuddyRequest.KEY_BUDDY_BLOCK_STATE, _blocked)
+		_sfso.putUtfString(BlockBuddyRequest.KEY_BUDDY_NAME, _buddyName);
+		_sfso.putBool(BlockBuddyRequest.KEY_BUDDY_BLOCK_STATE, _blocked);
 	}
 }

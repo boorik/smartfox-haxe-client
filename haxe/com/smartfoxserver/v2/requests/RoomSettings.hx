@@ -10,17 +10,17 @@ import com.smartfoxserver.v2.entities.SFSConstants;
  */
 class RoomSettings
 {
-	private var _name:String
-	private var _password:String
-	private var _groupId:String
-	private var _isGame:Bool
-	private var _maxUsers:Int
-	private var _maxSpectators:Int
-	private var _maxVariables:Int
-	private var _variables:Array
-	private var _permissions:RoomPermissions
-	private var _events:RoomEvents 
-	private var _extension:RoomExtension
+	private var _name:String;
+	private var _password:String;
+	private var _groupId:String;
+	private var _isGame:Bool;
+	private var _maxUsers:Int;
+	private var _maxSpectators:Int;
+	private var _maxVariables:Int;
+	private var _variables:Array;
+	private var _permissions:RoomPermissions;
+	private var _events:RoomEvents ;
+	private var _extension:RoomExtension;
 	
 	/**
 	 * Creates a new<em>RoomSettings</em>instance.
@@ -33,13 +33,13 @@ class RoomSettings
 	public function new(name:String)
 	{
 		// Default settings
-		_name=name
-		_password=""
-		_isGame=false
-		_maxUsers=10
-		_maxSpectators=0
-		_maxVariables=5
-		_groupId=SFSConstants.DEFAULT_GROUP_ID
+		_name = name;
+		_password = "";
+		_isGame = false;
+		_maxUsers = 10;
+		_maxSpectators = 0;
+		_maxVariables = 5;
+		_groupId = SFSConstants.DEFAULT_GROUP_ID;
 	}
 	
 	/**
@@ -48,13 +48,13 @@ class RoomSettings
 	public var name(get_name, set_name):String;
  	private function get_name():String 
 	{ 
-		return _name
+		return _name;
 	}
 	
 	/** @private */
 	private function set_name(value:String):Void 
 	{ 
-		_name=value
+		_name = value;
 	}
 	
 	/**
@@ -66,13 +66,13 @@ class RoomSettings
 	public var password(get_password, set_password):String;
  	private function get_password():String 
 	{ 
-		return _password
+		return _password;
 	}
 	
 	/** @private */
 	private function set_password(value:String):Void 
 	{ 
-		_password=value
+		_password = value;
 	}
 	
 	/**
@@ -83,13 +83,13 @@ class RoomSettings
 	public var isGame(get_isGame, set_isGame):Bool;
  	private function get_isGame():Bool 
 	{ 
-		return _isGame
+		return _isGame;
 	}
 	
 	/** @private */
 	private function set_isGame(value:Bool):Void 
 	{ 
-		_isGame=value
+		_isGame = value;
 	}
 	
 	/**
@@ -103,13 +103,13 @@ class RoomSettings
 	public var maxUsers(get_maxUsers, set_maxUsers):Int;
  	private function get_maxUsers():Int 
 	{ 
-		return _maxUsers
+		return _maxUsers;
 	}
 	
 	/** @private */
 	private function set_maxUsers(value:Int):Void 
 	{ 
-		_maxUsers=value
+		_maxUsers = value;
 	}
 	
 	/**
@@ -120,13 +120,13 @@ class RoomSettings
 	public var maxVariables(get_maxVariables, set_maxVariables):Int;
  	private function get_maxVariables():Int 
 	{ 
-		return _maxVariables
+		return _maxVariables;
 	}
 	
 	/** @private */
 	private function set_maxVariables(value:Int):Void 
 	{ 
-		_maxVariables=value
+		_maxVariables = value;
 	}
 	
 	/**
@@ -139,13 +139,13 @@ class RoomSettings
 	public var maxSpectators(get_maxSpectators, set_maxSpectators):Int;
  	private function get_maxSpectators():Int 
 	{ 
-		return _maxSpectators
+		return _maxSpectators;
 	}
 	
 	/** @private */
 	private function set_maxSpectators(value:Int):Void 
 	{ 
-		_maxSpectators=value
+		_maxSpectators = value;
 	}
 	
 	/**
@@ -158,13 +158,13 @@ class RoomSettings
 	public var variables(get_variables, set_variables):Array;
  	private function get_variables():Array 
 	{ 
-		return _variables
+		return _variables;
 	}
 	
 	/** @private */
 	private function set_variables(value:Array):Void 
 	{ 
-		_variables=value
+		_variables = value;
 	}
 	
 	/** 
@@ -178,13 +178,13 @@ class RoomSettings
 	public var permissions(get_permissions, set_permissions):RoomPermissions;
  	private function get_permissions():RoomPermissions 
 	{ 
-		return _permissions
+		return _permissions;
 	}
 	
 	/** @private */
 	private function set_permissions(value:RoomPermissions):Void 
 	{ 
-		_permissions=value
+		_permissions = value;
 	}
 	
 	/** 
@@ -198,13 +198,13 @@ class RoomSettings
 	public var events(get_events, set_events):RoomEvents;
  	private function get_events():RoomEvents 
 	{ 
-		return _events
+		return _events;
 	}
 	
 	/** @private */
 	private function set_events(value:RoomEvents):Void 
 	{ 
-		_events=value
+		_events = value;
 	}
 	
 	/**
@@ -213,13 +213,13 @@ class RoomSettings
 	public var extension(get_extension, set_extension):RoomExtension;
  	private function get_extension():RoomExtension
 	{
-		return _extension
+		return _extension;
 	}
 	
 	/** @private */
 	private function set_extension(value:RoomExtension):Void
 	{
-		_extension=value
+		_extension = value;
 	}
 	
 	/** 
@@ -233,12 +233,12 @@ class RoomSettings
 	public var groupId(get_groupId, set_groupId):String;
  	private function get_groupId():String
 	{
-		return _groupId
+		return _groupId;
 	}
 	
 	/** @private */
 	private function set_groupId(value:String):Void
 	{
-		_groupId=value
+		_groupId = value;
 	}
 }

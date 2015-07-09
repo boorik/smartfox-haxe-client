@@ -12,7 +12,7 @@ class PingPongRequest extends BaseRequest
 {
 	public function new()
 	{
-		super(BaseRequest.PingPong)
+		super(BaseRequest.PingPong);
 	}
 	
 	/** @private */

@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.entities.match;
 
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
-import com.smartfoxserver.v2.entities.data.SFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 
 /**
  * The<em>MatchExpression</em>class represents a matching expression used to compare custom variables or predefined properties when searching for users or Rooms.
@@ -62,30 +62,30 @@ import com.smartfoxserver.v2.entities.data.SFSArray<Dynamic>;
  */
 class MatchExpression
 {
-	private var _varName:String
-	private var _condition:IMatcher
-	private var _value:Dynamic
+	private var _varName:String;
+	private var _condition:IMatcher;
+	private var _value:Dynamic;
 	
 	/** @private */
-	private var _logicOp:LogicOperator
+	private var _logicOp:LogicOperator;
 	
 	/** @private */
-	private var _parent:MatchExpression
+	private var _parent:MatchExpression;
 	
 	/** @private */
-	private var _next:MatchExpression
+	private var _next:MatchExpression;
 	
 	/*
 	* Poor's man version of an overloaded constructor
 	*/
 	/** @private */
-	internal static function chainedMatchExpression(varName:String, condition:IMatcher, value:Dynamic, logicOp:LogicOperator, parent:MatchExpression):MatchExpression
+	static function chainedMatchExpression(varName:String, condition:IMatcher, value:Dynamic, logicOp:LogicOperator, parent:MatchExpression):MatchExpression
 	{
-		var matchingExpression:MatchExpression=new MatchExpression(varName, condition, value)
-		matchingExpression._logicOp=logicOp
-		matchingExpression._parent=parent
+		var matchingExpression:MatchExpression = new MatchExpression(varName, condition, value);
+		matchingExpression._logicOp = logicOp;
+		matchingExpression._parent = parent;
 		
-		return matchingExpression
+		return matchingExpression;
 	}
 	
 	/**
@@ -101,9 +101,9 @@ class MatchExpression
 	 */
 	public function new(varName:String, condition:IMatcher, value:Dynamic)
 	{
-		_varName=varName
-		_condition=condition
-		_value=value
+		_varName = varName;
+		_condition = condition;
+		_value = value;
 	}
 	
 	/**
@@ -122,8 +122,8 @@ class MatchExpression
 	 */
 	public function and(varName:String, condition:IMatcher, value:Dynamic):MatchExpression
 	{
-		_next=chainedMatchExpression(varName, condition, value, LogicOperator.AND, this)
-		return _next
+		_next = chainedMatchExpression(varName, condition, value, LogicOperator.AND, this);
+		return _next;
 	}
 	
 	/**
@@ -142,8 +142,8 @@ class MatchExpression
 	 */
 	public function or(varName:String, condition:IMatcher, value:Dynamic):MatchExpression
 	{
-		_next=chainedMatchExpression(varName, condition, value, LogicOperator.OR, this)
-		return _next
+		_next = chainedMatchExpression(varName, condition, value, LogicOperator.OR, this);
+		return _next;
 	}
 	
 	/**
@@ -163,7 +163,7 @@ class MatchExpression
 	public var varName(get_varName, null):String;
  	private function get_varName():String
 	{
-		return _varName
+		return _varName;
 	}
 	
 	/**
@@ -178,7 +178,7 @@ class MatchExpression
 	public var condition(get_condition, null):IMatcher;
  	private function get_condition():IMatcher
 	{
-		return _condition
+		return _condition;
 	}
 	
 	/**
@@ -187,7 +187,7 @@ class MatchExpression
 	public var value(get_value, null):Dynamic;
  	private function get_value():Dynamic
 	{
-		return _value
+		return _value;
 	}
 	
 	/**
@@ -198,7 +198,7 @@ class MatchExpression
 	public var logicOp(get_logicOp, null):LogicOperator;
  	private function get_logicOp():LogicOperator
 	{
-		return _logicOp
+		return _logicOp;
 	}
 	
 	/**
@@ -210,7 +210,7 @@ class MatchExpression
 	 */
 	public function hasNext():Bool
 	{
-		return _next !=null
+		return _next != null;
 	}
 	
 	/**
@@ -219,7 +219,7 @@ class MatchExpression
 	public var next(get_next, null):MatchExpression;
  	private function get_next():MatchExpression
 	{
-		return _next
+		return _next;
 	}
 	
 	/**
@@ -230,32 +230,32 @@ class MatchExpression
 	 */
 	public function rewind():MatchExpression
 	{
-		var currNode:MatchExpression=this
+		var currNode:MatchExpression = this;
 	
 		while(true)
 		{
 			if(currNode._parent !=null)
-				currNode=currNode._parent
+				currNode = currNode._parent;
 			else
-				break
+				break;
 		}
 		
-		return currNode
+		return currNode;
 	}
 	
 	/** @private */
 	public function asString():String
 	{
-		var sb:String=""
+		var sb:String = "";
 		
 		if(_logicOp !=null)
-			sb +=" " + logicOp.id + " "
+			sb += " " + logicOp.id + " ";
 			
-		sb +="("
-		sb +=_varName + " " + _condition.symbol + " " +(Std.is(value, String) ?("'" + value + "'"):value)
-		sb +=")"
+		sb += "(";
+		sb += _varName + " " + _condition.symbol + " " +(Std.is(value, String) ?("'" + value + "'"):value);
+		sb += ")";
 		
-		return sb
+		return sb;
 	}
 	
 	/**
@@ -265,66 +265,66 @@ class MatchExpression
 	 */
 	public function toString():String
 	{
-		var expr:MatchExpression=rewind()
-		var sb:String=expr.asString()
+		var expr:MatchExpression = rewind();
+		var sb:String = expr.asString();
 		
 		while(expr.hasNext())
 		{
-			expr=expr.next
-			sb +=expr.asString()
+			expr = expr.next;
+			sb += expr.asString();
 		}
 		
-		return sb
+		return sb;
 	}
 	
 	/** @private */
 	public function toSFSArray():ISFSArray
 	{
-		var expr:MatchExpression=rewind()
+		var expr:MatchExpression = rewind();
 		
 		// Start with the main expression
-		var sfsa:ISFSArray<Dynamic>=new SFSArray()
-		sfsa.addSFSArray(expr.expressionAsSFSArray())
+		var sfsa:ISFSArray<Dynamic> = new SFSArray();
+		sfsa.addSFSArray(expr.expressionAsSFSArray());
 		
 		// continue with other linked expressions, if any
 		while(expr.hasNext())
 		{
-			expr=expr.next
-			sfsa.addSFSArray(expr.expressionAsSFSArray())
+			expr = expr.next;
+			sfsa.addSFSArray(expr.expressionAsSFSArray());
 		}
 		
-		return sfsa
+		return sfsa;
 	}
 	
 	private function expressionAsSFSArray():ISFSArray
 	{
-		var expr:ISFSArray<Dynamic>=new SFSArray()
+		var expr:ISFSArray<Dynamic> = new SFSArray();
 	
 		// 0 ->Logic operator
 		if(_logicOp !=null)
-			expr.addUtfString(_logicOp.id)
+			expr.addUtfString(_logicOp.id);
 		else
-			expr.addNull()
+			expr.addNull();
 		
 		// 1 ->Var name
-		expr.addUtfString(_varName)
+		expr.addUtfString(_varName);
 		
 		// 2 ->Matcher type
-		expr.addByte(_condition.type)
+		expr.addByte(_condition.type);
 		
 		// 3 ->Condition symbol
-		expr.addUtfString(_condition.symbol)
+		expr.addUtfString(_condition.symbol);
 		
 		// 4 ->Value to match against
 		if(_condition.type==0)
-			expr.addBool(_value)
+			expr.addBool(_value);
 			
 		else if(_condition.type==1)
-			expr.addDouble(_value)
+			expr.addDouble(_value);
 			
 		else
-			expr.addUtfString(_value)
+			expr.addUtfString(_value);
 			
-		return expr
+		return expr;
 	}	
 }

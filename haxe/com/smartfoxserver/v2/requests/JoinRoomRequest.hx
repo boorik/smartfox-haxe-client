@@ -46,31 +46,31 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
 class JoinRoomRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_ROOM:String="r"
+	public static inline var KEY_ROOM:String = "r";
 	
 	/** @private */
-	public static inline var KEY_USER_LIST:String="ul"
+	public static inline var KEY_USER_LIST:String = "ul";
 	
 	/** @private */
-	public static inline var KEY_ROOM_NAME:String="n"
+	public static inline var KEY_ROOM_NAME:String = "n";
 	
 	/** @private */
-	public static inline var KEY_ROOM_ID:String="i"
+	public static inline var KEY_ROOM_ID:String = "i";
 	
 	/** @private */
-	public static inline var KEY_PASS:String="p"
+	public static inline var KEY_PASS:String = "p";
 	
 	/** @private */
-	public static inline var KEY_ROOM_TO_LEAVE:String="rl"
+	public static inline var KEY_ROOM_TO_LEAVE:String = "rl";
 	
 	/** @private */
-	public static inline var KEY_AS_SPECTATOR:String="sp"
+	public static inline var KEY_AS_SPECTATOR:String = "sp";
 	
-	private var _id:Int=-1
-	private var _name:String
-	private var _pass:String
-	private var _roomIdToLeave:Float
-	private var _asSpectator:Bool
+	//private var _id:Int = -1;
+	private var _name:String;
+	private var _pass:String;
+	private var _roomIdToLeave:Float;
+	private var _asSpectator:Bool;
 	
 	/**
 	 * Creates a new<em>JoinRoomRequest</em>instance.
@@ -86,44 +86,44 @@ class JoinRoomRequest extends BaseRequest
 	 */
 	public function new(id:Dynamic, pass:String=null, roomIdToLeave:Float=NaN, asSpect:Bool=false)
 	{
-		super(BaseRequest.JoinRoom)
+		super(BaseRequest.JoinRoom);
 		
 		if(Std.is(id, String))
-			_name=id
+			_name = id;
 		else if(Std.is(id, Float))
-			_id=id
+			_id = id;
 		else if(Std.is(id, Room))
-			_id=(id as Room).id
+			_id = cast(id, Room).id;
 		
-		_pass=pass
-		_roomIdToLeave=roomIdToLeave
-		_asSpectator=asSpect
+		_pass = pass;
+		_roomIdToLeave = roomIdToLeave;
+		_asSpectator = asSpect;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		// Missing room id
 		if(_id<0 && _name==null)
-			errors.push("Missing Room id or name, you should provide at least one")
+			errors.push("Missing Room id or name, you should provide at least one");
 			
 		if(errors.length>0)
-			throw new SFSValidationError("JoinRoom request error", errors)
+			throw new SFSValidationError("JoinRoom request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
 		if(_id>-1)
-			_sfso.putInt(KEY_ROOM_ID, _id)
+			_sfso.putInt(KEY_ROOM_ID, _id);
 			
 		else if(_name !=null)
-			_sfso.putUtfString(KEY_ROOM_NAME, _name)
+			_sfso.putUtfString(KEY_ROOM_NAME, _name);
 			
 		if(_pass !=null)
-			_sfso.putUtfString(KEY_PASS, _pass)
+			_sfso.putUtfString(KEY_PASS, _pass);
 		
 		/*
 		 * If==NaN 	--->>Leave Last Joined Room
@@ -131,9 +131,9 @@ class JoinRoomRequest extends BaseRequest
 		 * If<0		--->>Do not leave any Room  
 		 */	
 		if(!isNaN(_roomIdToLeave))
-			_sfso.putInt(KEY_ROOM_TO_LEAVE, _roomIdToLeave)
+			_sfso.putInt(KEY_ROOM_TO_LEAVE, _roomIdToLeave);
 		
 		if(_asSpectator)
-			_sfso.putBool(KEY_AS_SPECTATOR, _asSpectator)
+			_sfso.putBool(KEY_AS_SPECTATOR, _asSpectator);
 	}
 }

@@ -43,13 +43,13 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
 class ChangeRoomNameRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_ROOM:String="r"
+	public static inline var KEY_ROOM:String = "r";
 	
 	/** @private */
-	public static inline var KEY_NAME:String="n"
+	public static inline var KEY_NAME:String = "n";
 	
-	private var _room:Room
-	private var _newName:String
+	private var _room:Room;
+	private var _newName:String;
 	
 	/**
 	 * Creates a new<em>ChangeRoomNameRequest</em>instance.
@@ -62,32 +62,32 @@ class ChangeRoomNameRequest extends BaseRequest
 	 */
 	public function new(room:Room, newName:String)
 	{
-		super(BaseRequest.ChangeRoomName)
+		super(BaseRequest.ChangeRoomName);
 		
-		_room=room
-		_newName=newName	
+		_room = room;
+		_newName = newName;	
 	}
 
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		// Missing room id
 		if(_room==null)
-			errors.push("Provided room is null")
+			errors.push("Provided room is null");
 		
 		if(_newName==null || _newName.length==0)
-			errors.push("Invalid new room name. It must be a non-null and non-empty string.")
+			errors.push("Invalid new room name. It must be a non-null and non-empty string.");
 			
 		if(errors.length>0)
-			throw new SFSValidationError("ChangeRoomName request error", errors)
+			throw new SFSValidationError("ChangeRoomName request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		_sfso.putInt(KEY_ROOM, _room.id)
-		_sfso.putUtfString(KEY_NAME, _newName)
+		_sfso.putInt(KEY_ROOM, _room.id);
+		_sfso.putUtfString(KEY_NAME, _newName);
 	}
 }

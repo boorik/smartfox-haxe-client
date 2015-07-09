@@ -92,7 +92,7 @@ interface IBuddyManager
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.Buddy#isOnline Buddy.isOnline
 	 */
-	var offlineBuddies(get_offlineBuddies, null):Array;
+	var offlineBuddies(get_offlineBuddies, null):Array<Buddy>;
 	//function get offlineBuddies():Array
 	
 	/**
@@ -100,7 +100,7 @@ interface IBuddyManager
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.Buddy#isOnline Buddy.isOnline
 	 */
-	var  onlineBuddies(get_onlineBuddies, null):Array;
+	var  onlineBuddies(get_onlineBuddies, null):Array<Buddy>;
 	
 	/**
 	 * Returns a list of<em>Buddy</em>objects representing all the buddies in the user's buddies list.
@@ -108,7 +108,7 @@ interface IBuddyManager
 	 * 
 	 * @see #isInited
 	 */
-	var buddyList(get_buddyList, null):Array;
+	var buddyList(get_buddyList, null):Array<Buddy>;
 	//function get buddyList():Array
 	
 	/**
@@ -118,7 +118,7 @@ interface IBuddyManager
 	 * @see		com.smartfoxserver.v2.entities.Buddy#state Buddy.state
 	 */
 	//function get buddyStates():Array
-	var buddyStates(get_buddyStates, null):Array;
+	var buddyStates(get_buddyStates, null):Array<String>;
 	
 	/**
 	 * Retrieves a Buddy Variable from its name.
@@ -138,7 +138,7 @@ interface IBuddyManager
 	 * @see		com.smartfoxserver.v2.entities.variables.BuddyVariable BuddyVariable
 	 * @see		#getMyVariable()
 	 */ 
-	var myVariables(get_myVariables, null):Array;
+	var myVariables(get_myVariables, null):Array<BuddyVariable>;
 	//function get myVariables():Array
 	
 	/**
@@ -184,7 +184,7 @@ interface IBuddyManager
 	function setMyVariable(bVar:BuddyVariable):Void;
 	
 	/** @private */
-	function setMyVariables(variables:Array):Void;
+	function setMyVariables(variables:Array<BuddyVariable>):Void;
 	
 	/** @private */
 	function setMyOnlineState(isOnline:Bool):Void;
@@ -196,7 +196,7 @@ interface IBuddyManager
 	function setMyState(state:String):Void;
 	
 	/** @private */
-	function setBuddyStates(states:Array):Void;
+	function setBuddyStates(states:Array<String>):Void;
 	
 	/** @private */
 	function clearAll():Void;

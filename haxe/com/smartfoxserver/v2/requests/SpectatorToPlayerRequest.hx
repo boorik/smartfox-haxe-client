@@ -41,15 +41,15 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
 class SpectatorToPlayerRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_ROOM_ID:String="r"
+	public static inline var KEY_ROOM_ID:String = "r";
 	
 	/** @private */
-	public static inline var KEY_USER_ID:String="u"
+	public static inline var KEY_USER_ID:String = "u";
 	
 	/** @private */
-	public static inline var KEY_PLAYER_ID:String="p"
+	public static inline var KEY_PLAYER_ID:String = "p";
 	
-	private var _room:Room
+	private var _room:Room;
 	
 	/**
 	 * Creates a new<em>SpectatorToPlayerRequest</em>instance.
@@ -62,28 +62,28 @@ class SpectatorToPlayerRequest extends BaseRequest
 	 */
 	public function new(targetRoom:Room=null)
 	{
-		super(BaseRequest.SpectatorToPlayer)
-		_room=targetRoom
+		super(BaseRequest.SpectatorToPlayer);
+		_room = targetRoom;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		if(sfs.joinedRooms.length<1)
-			errors.push("You are not joined in any rooms")
+			errors.push("You are not joined in any rooms");
 			
 		if(errors.length>0)
-			throw new SFSValidationError("SpectatorToPlayer request error", errors)
+			throw new SFSValidationError("SpectatorToPlayer request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
 		if(_room==null)
-			_room=sfs.lastJoinedRoom
+			_room = sfs.lastJoinedRoom;
 			
-		_sfso.putInt(KEY_ROOM_ID, _room.id)
+		_sfso.putInt(KEY_ROOM_ID, _room.id);
 	}
 }

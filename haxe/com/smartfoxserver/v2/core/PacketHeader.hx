@@ -32,7 +32,7 @@ class PacketHeader
 									(headerByte & 0x20)>0,
 									(headerByte & 0x10)>0,
 									(headerByte & 0x8)>0
-							)
+							);
 	}
 	
 	public var expectedLen(get_expectedLen, set_expectedLen):Int;

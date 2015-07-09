@@ -18,8 +18,6 @@ import flash.events.ProgressEvent;
 import flash.events.SecurityErrorEvent;
 import flash.net.Socket;
 import flash.utils.ByteArray;
-import flash.utils.getTimer;
-import flash.utils.setTimeout;
 
 /** @private */
 class BitSwarmClient extends EventDispatcher 

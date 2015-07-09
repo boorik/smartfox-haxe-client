@@ -32,7 +32,6 @@ import com.smartfoxserver.v2.entities.variables.SFSBuddyVariable;
 import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
 import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
-import com.smartfoxserver.v2.kernel;
 import com.smartfoxserver.v2.requests.BaseRequest;
 import com.smartfoxserver.v2.requests.ChangeRoomCapacityRequest;
 import com.smartfoxserver.v2.requests.ChangeRoomNameRequest;

@@ -48,15 +48,15 @@ import com.smartfoxserver.v2.requests.BaseRequest;
 class GoOnlineRequest extends BaseRequest 
 {
 	/** @private */
-	public static inline var KEY_ONLINE:String="o"
+	public static inline var KEY_ONLINE:String = "o";
 	
 	/** @private */
-	public static inline var KEY_BUDDY_NAME:String="bn"
+	public static inline var KEY_BUDDY_NAME:String = "bn";
 	
 	/** @private */
-	public static inline var KEY_BUDDY_ID:String="bi"
+	public static inline var KEY_BUDDY_ID:String = "bi";
 	
-	private var _online:Bool
+	private var _online:Bool;
 	
 	/**
 	 * Creates a new<em>GoOnlineRequest</em>instance.
@@ -68,20 +68,20 @@ class GoOnlineRequest extends BaseRequest
 	 */
 	public function new(online:Bool)
 	{
-		super(BaseRequest.GoOnline)
-		_online=online
+		super(BaseRequest.GoOnline);
+		_online = online;
 	}
 
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		if(!sfs.buddyManager.isInited)
-			errors.push("BuddyList is not inited. Please send an InitBuddyRequest first.")
+			errors.push("BuddyList is not inited. Please send an InitBuddyRequest first.");
 			
 		if(errors.length>0)
-			throw new SFSValidationError("GoOnline request error", errors)
+			throw new SFSValidationError("GoOnline request error", errors);
 	}
 	
 	/** @private */
@@ -92,8 +92,8 @@ class GoOnlineRequest extends BaseRequest
 		* There's no need to fire an asynchronous event for this request. 
 		* As soon as the command is sent the local flag is set
 		*/
-		sfs.buddyManager.setMyOnlineState(_online)
+		sfs.buddyManager.setMyOnlineState(_online);
 		
-		_sfso.putBool(KEY_ONLINE, _online)
+		_sfso.putBool(KEY_ONLINE, _online);
 	}
 }

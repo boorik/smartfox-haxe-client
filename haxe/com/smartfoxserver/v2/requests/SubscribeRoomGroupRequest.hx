@@ -39,12 +39,12 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
 class SubscribeRoomGroupRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_GROUP_ID:String="g"
+	public static inline var KEY_GROUP_ID:String = "g";
 	
 	/** @private */
-	public static inline var KEY_ROOM_LIST:String="rl"
+	public static inline var KEY_ROOM_LIST:String = "rl";
 	
-	private var _groupId:String
+	private var _groupId:String;
 	
 	/**
 	 * Creates a new<em>SubscribeRoomGroupRequest</em>instance.
@@ -57,26 +57,26 @@ class SubscribeRoomGroupRequest extends BaseRequest
 	 */
 	public function new(groupId:String)
 	{
-		super(BaseRequest.SubscribeRoomGroup)
-		_groupId=groupId
+		super(BaseRequest.SubscribeRoomGroup);
+		_groupId = groupId;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		// no validation needed
 		if(_groupId==null || _groupId.length==0)
-			errors.push("Invalid groupId. Must be a string with at least 1 character.")
+			errors.push("Invalid groupId. Must be a string with at least 1 character.");
 			
 		if(errors.length>0)
-			throw new SFSValidationError("SubscribeGroup request error", errors)
+			throw new SFSValidationError("SubscribeGroup request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		_sfso.putUtfString(KEY_GROUP_ID, _groupId)
+		_sfso.putUtfString(KEY_GROUP_ID, _groupId);
 	}
 }

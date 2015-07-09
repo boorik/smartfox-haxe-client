@@ -3,9 +3,9 @@ package com.smartfoxserver.v2.requests.game;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.entities.User;
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
-import com.smartfoxserver.v2.entities.data.SFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.BaseRequest;
 
@@ -86,17 +86,17 @@ class InviteUsersRequest extends BaseRequest
 	public static inline var KEY_REPLY_ID:String="ri";
 	
 	/** @private */
-	public static inline var MAX_INVITATIONS_FROM_CLIENT_SIDE:Int=8
+	public static inline var MAX_INVITATIONS_FROM_CLIENT_SIDE:Int = 8;
 	
 	/** @private */
-	public static inline var MIN_EXPIRY_TIME:Int=5
+	public static inline var MIN_EXPIRY_TIME:Int = 5;
 	
 	/** @private */
-	public static inline var MAX_EXPIRY_TIME:Int=300
+	public static inline var MAX_EXPIRY_TIME:Int = 300;
 	
-	private var _invitedUsers:Array
-	private var _secondsForAnswer:Int
-	private var _params:ISFSObject
+	private var _invitedUsers:Array;
+	private var _secondsForAnswer:Int;
+	private var _params:ISFSObject;
 	
 	/**
 	 * Creates a new<em>InviteUsersRequest</em>instance.
@@ -112,57 +112,57 @@ class InviteUsersRequest extends BaseRequest
 	 */
 	public function new(invitedUsers:Array, secondsForAnswer:Int, params:ISFSObject)
 	{
-		super(BaseRequest.InviteUser)
+		super(BaseRequest.InviteUser);
 		
-		_invitedUsers=invitedUsers
-		_secondsForAnswer=secondsForAnswer
-		_params=params
+		_invitedUsers = invitedUsers;
+		_secondsForAnswer = secondsForAnswer;
+		_params = params;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		if(_invitedUsers==null || _invitedUsers.length<1)
-			errors.push("No invitation(s)to send")
+			errors.push("No invitation(s)to send");
 					
 		if(_invitedUsers.length>MAX_INVITATIONS_FROM_CLIENT_SIDE)
-			errors.push("Too many invitations. Max allowed from client side is:" + MAX_INVITATIONS_FROM_CLIENT_SIDE)
+			errors.push("Too many invitations. Max allowed from client side is:" + MAX_INVITATIONS_FROM_CLIENT_SIDE);
 			
 		if(_secondsForAnswer<MIN_EXPIRY_TIME || _secondsForAnswer>MAX_EXPIRY_TIME)
-			errors.push("SecondsForAnswer value is out of range(" + MIN_EXPIRY_TIME + "-" + MAX_EXPIRY_TIME + ")")
+			errors.push("SecondsForAnswer value is out of range(" + MIN_EXPIRY_TIME + "-" + MAX_EXPIRY_TIME + ")");
 
 		if(errors.length>0)
-			throw new SFSValidationError("InvitationReply request error", errors)
+			throw new SFSValidationError("InvitationReply request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		var invitedUserIds:Array<Dynamic>=[]
+		var invitedUserIds:Array<Dynamic> = [];
 		
 		// Check items validity, accept any User or Buddy object(s)
-		for(var item:Dynamic in _invitedUsers)
+		for(item in _invitedUsers)
 		{
-			if(Std.is(item, User) || item is Buddy)
+			if(Std.is(item, User) || Std.is(item,Buddy))
 			{
 				// Can't invite myself!
 				if(item==sfs.mySelf)
-					continue
+					continue;
 					
-				invitedUserIds.push(item.id)
+				invitedUserIds.push(item.id);
 			}
 		}
 		
 		// List of invited people
-		_sfso.putIntArray(KEY_INVITED_USERS, invitedUserIds)
+		_sfso.putIntArray(KEY_INVITED_USERS, invitedUserIds);
 		
 		// Time to answer
-		_sfso.putShort(KEY_TIME, _secondsForAnswer)
+		_sfso.putShort(KEY_TIME, _secondsForAnswer);
 		
 		// Custom params
 		if(_params !=null)
-			_sfso.putSFSObject(KEY_PARAMS, _params)
+			_sfso.putSFSObject(KEY_PARAMS, _params);
 	}
 }

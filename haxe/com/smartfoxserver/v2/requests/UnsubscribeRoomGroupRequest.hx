@@ -39,9 +39,9 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
 class UnsubscribeRoomGroupRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_GROUP_ID:String="g"
+	public static inline var KEY_GROUP_ID:String = "g";
 	
-	private var _groupId:String
+	private var _groupId:String;
 	
 	/**
 	 * Creates a new<em>UnsubscribeRoomGroupRequest</em>instance.
@@ -54,26 +54,26 @@ class UnsubscribeRoomGroupRequest extends BaseRequest
 	 */
 	public function new(groupId:String)
 	{
-		super(BaseRequest.UnsubscribeRoomGroup)
-		_groupId=groupId
+		super(BaseRequest.UnsubscribeRoomGroup);
+		_groupId = groupId;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		// no validation needed
 		if(_groupId==null || _groupId.length==0)
-			errors.push("Invalid groupId. Must be a string with at least 1 character.")
+			errors.push("Invalid groupId. Must be a string with at least 1 character.");
 			
 		if(errors.length>0)
-			throw new SFSValidationError("UnsubscribeGroup request error", errors)
+			throw new SFSValidationError("UnsubscribeGroup request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		_sfso.putUtfString(KEY_GROUP_ID, _groupId)
+		_sfso.putUtfString(KEY_GROUP_ID, _groupId);
 	}
 }

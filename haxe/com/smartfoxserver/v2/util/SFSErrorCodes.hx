@@ -55,7 +55,7 @@ class SFSErrorCodes
 		"Game {0} access denied, user does not match access criteria",												// 40
 		"QuickJoinGame action failed:no matching Rooms were found",
 		"Your previous invitation reply was invalid or arrived too late"
-	]
+	];
 	
 	/** @private */
 	public function new()

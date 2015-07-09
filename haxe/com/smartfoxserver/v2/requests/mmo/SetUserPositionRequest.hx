@@ -74,23 +74,23 @@ class SetUserPositionRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		// Missing room id
 		if(_pos==null)
-			errors.push("Position must be a Vec3D instance")
+			errors.push("Position must be a Vec3D instance");
 		
 		if(_room==null)
 			_room=sfs.lastJoinedRoom;
 				
 		if(_room==null)
-			errors.push("You are not joined in any room")
+			errors.push("You are not joined in any room");
 				
 		if(!(Std.is(_room, MMORoom)))
 			errors.push("Selected Room is not an MMORoom");
 		
 		if(errors.length>0)
-			throw new SFSValidationError("SetUserPosition request error", errors)
+			throw new SFSValidationError("SetUserPosition request error", errors);
 	}
 	
 	/** @private */

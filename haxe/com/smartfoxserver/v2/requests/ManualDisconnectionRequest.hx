@@ -11,7 +11,7 @@ class ManualDisconnectionRequest extends BaseRequest
 {
 	public function new()
 	{
-		super(BaseRequest.ManualDisconnection)
+		super(BaseRequest.ManualDisconnection);
 	}
 	
 	/** @private */

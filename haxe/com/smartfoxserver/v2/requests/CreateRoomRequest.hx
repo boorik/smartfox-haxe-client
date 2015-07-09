@@ -2,8 +2,8 @@ package com.smartfoxserver.v2.requests;
 
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
-import com.smartfoxserver.v2.entities.data.SFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.variables.RoomVariable;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.mmo.MMORoomSettings;
@@ -47,52 +47,52 @@ import com.smartfoxserver.v2.requests.mmo.MMORoomSettings;
 class CreateRoomRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_ROOM:String="r"
+	public static inline var KEY_ROOM:String = "r";
 	
 	/** @private */
-	public static inline var KEY_NAME:String="n"
+	public static inline var KEY_NAME:String = "n";
 	
 	/** @private */
-	public static inline var KEY_PASSWORD:String="p"
+	public static inline var KEY_PASSWORD:String = "p";
 	
 	/** @private */
-	public static inline var KEY_GROUP_ID:String="g"
+	public static inline var KEY_GROUP_ID:String = "g";
 	
 	/** @private */
-	public static inline var KEY_ISGAME:String="ig"
+	public static inline var KEY_ISGAME:String = "ig";
 	
 	/** @private */
-	public static inline var KEY_MAXUSERS:String="mu"
+	public static inline var KEY_MAXUSERS:String = "mu";
 	
 	/** @private */
-	public static inline var KEY_MAXSPECTATORS:String="ms"
+	public static inline var KEY_MAXSPECTATORS:String = "ms";
 	
 	/** @private */
-	public static inline var KEY_MAXVARS:String="mv"
+	public static inline var KEY_MAXVARS:String = "mv";
 	
 	/** @private */
-	public static inline var KEY_ROOMVARS:String="rv"
+	public static inline var KEY_ROOMVARS:String = "rv";
 	
 	/** @private */
-	public static inline var KEY_PERMISSIONS:String="pm"
+	public static inline var KEY_PERMISSIONS:String = "pm";
 	
 	/** @private */
-	public static inline var KEY_EVENTS:String="ev"
+	public static inline var KEY_EVENTS:String = "ev";
 	
 	/** @private */
-	public static inline var KEY_EXTID:String="xn"
+	public static inline var KEY_EXTID:String = "xn";
 	
 	/** @private */
-	public static inline var KEY_EXTCLASS:String="xc"
+	public static inline var KEY_EXTCLASS:String = "xc";
 	
 	/** @private */
-	public static inline var KEY_EXTPROP:String="xp"
+	public static inline var KEY_EXTPROP:String = "xp";
 	
 	/** @private */
-	public static inline var KEY_AUTOJOIN:String="aj"
+	public static inline var KEY_AUTOJOIN:String = "aj";
 	
 	/** @private */
-	public static inline var KEY_ROOM_TO_LEAVE:String="rl"
+	public static inline var KEY_ROOM_TO_LEAVE:String = "rl";
 		
 	//--- MMORoom Params --------------------------------------------------------
 		
@@ -115,13 +115,13 @@ class CreateRoomRequest extends BaseRequest
 	public static inline var KEY_MMO_SEND_ENTRY_POINT:String="msep";
 	
 	/** @private */
-	private var _settings:RoomSettings
+	private var _settings:RoomSettings;
 	
 	/** @private */
-	private var _autoJoin:Bool
+	private var _autoJoin:Bool;
 	
 	/** @private */
-	private var _roomToLeave:Room
+	private var _roomToLeave:Room;
 	
 	/**
 	 * Creates a new<em>CreateRoomRequest</em>instance.
@@ -139,75 +139,75 @@ class CreateRoomRequest extends BaseRequest
 	 */
 	public function new(settings:RoomSettings, autoJoin:Bool=false, roomToLeave:Room=null)
 	{
-		super(BaseRequest.CreateRoom)
+		super(BaseRequest.CreateRoom);
 		
-		_settings=settings
-		_autoJoin=autoJoin
-		_roomToLeave=roomToLeave	
+		_settings = settings;
+		_autoJoin = autoJoin;
+		_roomToLeave = roomToLeave	;
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		_sfso.putUtfString(KEY_NAME, _settings.name)
-		_sfso.putUtfString(KEY_GROUP_ID, _settings.groupId)
-		_sfso.putUtfString(KEY_PASSWORD, _settings.password)
-		_sfso.putBool(KEY_ISGAME, _settings.isGame)
-		_sfso.putShort(KEY_MAXUSERS, _settings.maxUsers)
-		_sfso.putShort(KEY_MAXSPECTATORS, _settings.maxSpectators)
-		_sfso.putShort(KEY_MAXVARS, _settings.maxVariables)
+		_sfso.putUtfString(KEY_NAME, _settings.name);
+		_sfso.putUtfString(KEY_GROUP_ID, _settings.groupId);
+		_sfso.putUtfString(KEY_PASSWORD, _settings.password);
+		_sfso.putBool(KEY_ISGAME, _settings.isGame);
+		_sfso.putShort(KEY_MAXUSERS, _settings.maxUsers);
+		_sfso.putShort(KEY_MAXSPECTATORS, _settings.maxSpectators);
+		_sfso.putShort(KEY_MAXVARS, _settings.maxVariables);
 		
 		// Handle Room Variables
 		if(_settings.variables !=null && _settings.variables.length>0)
 		{
-			var roomVars:ISFSArray<Dynamic>=SFSArray.newInstance()
+			var roomVars:ISFSArray<Dynamic> = SFSArray.newInstance();
 			
-			for(var item:Dynamic in _settings.variables)
+			for(item in _settings.variables)
 			{
 				// Skip unknow elements
 				if(Std.is(item, RoomVariable))
 				{
-					var rVar:RoomVariable=cast(item, RoomVariable)
-					roomVars.addSFSArray(rVar.toSFSArray())
+					var rVar:RoomVariable = cast(item, RoomVariable);
+					roomVars.addSFSArray(rVar.toSFSArray());
 				}
 			}
 			
-			_sfso.putSFSArray(KEY_ROOMVARS, roomVars)	
+			_sfso.putSFSArray(KEY_ROOMVARS, roomVars);	
 		}
 		
 		// Handle Permissions	
 		if(_settings.permissions !=null)
 		{
-			var sfsPermissions:Array<Dynamic>=[]
-			sfsPermissions.push(_settings.permissions.allowNameChange)
-			sfsPermissions.push(_settings.permissions.allowPasswordStateChange)
-			sfsPermissions.push(_settings.permissions.allowPublicMessages)
-			sfsPermissions.push(_settings.permissions.allowResizing)
+			var sfsPermissions:Array<Dynamic> = [];
+			sfsPermissions.push(_settings.permissions.allowNameChange);
+			sfsPermissions.push(_settings.permissions.allowPasswordStateChange);
+			sfsPermissions.push(_settings.permissions.allowPublicMessages);
+			sfsPermissions.push(_settings.permissions.allowResizing);
 			
-			_sfso.putBoolArray(KEY_PERMISSIONS, sfsPermissions)
+			_sfso.putBoolArray(KEY_PERMISSIONS, sfsPermissions);
 		}
 			
 		// Handle Events
 		if(_settings.events !=null)
 		{
-			var sfsEvents:Array<Dynamic>=[]
-			sfsEvents.push(_settings.events.allowUserEnter)
-			sfsEvents.push(_settings.events.allowUserExit)
-			sfsEvents.push(_settings.events.allowUserCountChange)
-			sfsEvents.push(_settings.events.allowUserVariablesUpdate)
+			var sfsEvents:Array<Dynamic> = [];
+			sfsEvents.push(_settings.events.allowUserEnter);
+			sfsEvents.push(_settings.events.allowUserExit);
+			sfsEvents.push(_settings.events.allowUserCountChange);
+			sfsEvents.push(_settings.events.allowUserVariablesUpdate);
 			
-			_sfso.putBoolArray(KEY_EVENTS, sfsEvents)
+			_sfso.putBoolArray(KEY_EVENTS, sfsEvents);
 		}
 		
 		// Handle Extension data
 		if(_settings.extension !=null)
 		{
-			_sfso.putUtfString(KEY_EXTID, _settings.extension.id)
-			_sfso.putUtfString(KEY_EXTCLASS, _settings.extension.className)
+			_sfso.putUtfString(KEY_EXTID, _settings.extension.id);
+			_sfso.putUtfString(KEY_EXTCLASS, _settings.extension.className);
 			
 			// Send the properties file only if was specified
 			if(_settings.extension.propertiesFile !=null && _settings.extension.propertiesFile.length>0)
-				_sfso.putUtfString(KEY_EXTPROP, _settings.extension.propertiesFile)
+				_sfso.putUtfString(KEY_EXTPROP, _settings.extension.propertiesFile);
 		}
 		
 		//--- MMORooms ------------------------------------------------------------------------
@@ -243,31 +243,31 @@ class CreateRoomRequest extends BaseRequest
 		}
 		
 		// AutoJoin
-		_sfso.putBool(KEY_AUTOJOIN, _autoJoin)
+		_sfso.putBool(KEY_AUTOJOIN, _autoJoin);
 		
 		// Room to leave
 		if(_roomToLeave !=null)
-			_sfso.putInt(KEY_ROOM_TO_LEAVE, _roomToLeave.id)
+			_sfso.putInt(KEY_ROOM_TO_LEAVE, _roomToLeave.id);
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		if(_settings.name==null || _settings.name.length==0)
-			errors.push("Missing room name")
+			errors.push("Missing room name");
 			
 		if(_settings.maxUsers<=0)
-			errors.push("maxUsers must be>0")
+			errors.push("maxUsers must be>0");
 		
 		if(_settings.extension !=null)
 		{
 			if(_settings.extension.className==null || _settings.extension.className.length==0)
-				errors.push("Missing Extension class name")
+				errors.push("Missing Extension class name");
 				
 			if(_settings.extension.id==null || _settings.extension.id.length==0)
-				errors.push("Missing Extension id")
+				errors.push("Missing Extension id");
 		}
 		
 		if(Std.is(_settings, MMORoomSettings))
@@ -282,6 +282,6 @@ class CreateRoomRequest extends BaseRequest
 		}
 		
 		if(errors.length>0)
-			throw new SFSValidationError("CreateRoom request error", errors)	
+			throw new SFSValidationError("CreateRoom request error", errors);	
 	}
 }

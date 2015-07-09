@@ -36,20 +36,20 @@ import com.smartfoxserver.v2.entities.match.*;
 class FindRoomsRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_EXPRESSION:String="e"
+	public static inline var KEY_EXPRESSION:String = "e";
 	
 	/** @private */
-	public static inline var KEY_GROUP:String="g"
+	public static inline var KEY_GROUP:String = "g";
 	
 	/** @private */
-	public static inline var KEY_LIMIT:String="l"
+	public static inline var KEY_LIMIT:String = "l";
 	
 	/** @private */
-	public static inline var KEY_FILTERED_ROOMS:String="fr"
+	public static inline var KEY_FILTERED_ROOMS:String = "fr";
 	
-	private var _matchExpr:MatchExpression
-	private var _groupId:String
-	private var _limit:Int
+	private var _matchExpr:MatchExpression;
+	private var _groupId:String;
+	private var _limit:Int;
 	
 	/**
 	 * Creates a new<em>FindRoomsRequest</em>instance.
@@ -64,35 +64,35 @@ class FindRoomsRequest extends BaseRequest
 	 */
 	public function new(expr:MatchExpression, groupId:String=null, limit:Int=0):Void
 	{
-		super(BaseRequest.FindRooms)
+		super(BaseRequest.FindRooms);
 		
-		_matchExpr=expr
-		_groupId=groupId
-		_limit=limit
+		_matchExpr = expr;
+		_groupId = groupId;
+		_limit = limit;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		if(_matchExpr==null)
-			errors.push("Missing Match Expression")
+			errors.push("Missing Match Expression");
 		
 		if(errors.length>0)
-			throw new SFSValidationError("FindRooms request error", errors)
+			throw new SFSValidationError("FindRooms request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		_sfso.putSFSArray(KEY_EXPRESSION, _matchExpr.toSFSArray())
+		_sfso.putSFSArray(KEY_EXPRESSION, _matchExpr.toSFSArray());
 		
 		if(_groupId !=null)
-			_sfso.putUtfString(KEY_GROUP, _groupId)
+			_sfso.putUtfString(KEY_GROUP, _groupId);
 			
 		// 2^15 is already too many Rooms:)
 		if(_limit>0)
-			_sfso.putShort(KEY_LIMIT, _limit)
+			_sfso.putShort(KEY_LIMIT, _limit);
 	}
 }

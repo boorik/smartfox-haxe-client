@@ -47,17 +47,17 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
 class ChangeRoomCapacityRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_ROOM:String="r"
+	public static inline var KEY_ROOM:String = "r";
 	
 	/** @private */
-	public static inline var KEY_USER_SIZE:String="u"
+	public static inline var KEY_USER_SIZE:String = "u";
 	
 	/** @private */
-	public static inline var KEY_SPEC_SIZE:String="s"
+	public static inline var KEY_SPEC_SIZE:String = "s";
 	
-	private var _room:Room
-	private var _newMaxUsers:Int
-	private var _newMaxSpect:Int
+	private var _room:Room;
+	private var _newMaxUsers:Int;
+	private var _newMaxSpect:Int;
 	
 	/**
 	 * Creates a new<em>ChangeRoomCapacityRequest</em>instance.
@@ -72,31 +72,31 @@ class ChangeRoomCapacityRequest extends BaseRequest
 	 */
 	public function new(room:Room, newMaxUsers:Int, newMaxSpect:Int)
 	{
-		super(BaseRequest.ChangeRoomCapacity)
+		super(BaseRequest.ChangeRoomCapacity);
 		
-		_room=room
-		_newMaxUsers=newMaxUsers
-		_newMaxSpect=newMaxSpect
+		_room = room;
+		_newMaxUsers = newMaxUsers;
+		_newMaxSpect = newMaxSpect;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		// Missing room id
 		if(_room==null)
-			errors.push("Provided room is null")
+			errors.push("Provided room is null");
 			
 		if(errors.length>0)
-			throw new SFSValidationError("ChangeRoomCapacity request error", errors)
+			throw new SFSValidationError("ChangeRoomCapacity request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		_sfso.putInt(KEY_ROOM, _room.id)
-		_sfso.putInt(KEY_USER_SIZE, _newMaxUsers)
-		_sfso.putInt(KEY_SPEC_SIZE, _newMaxSpect)
+		_sfso.putInt(KEY_ROOM, _room.id);
+		_sfso.putInt(KEY_USER_SIZE, _newMaxUsers);
+		_sfso.putInt(KEY_SPEC_SIZE, _newMaxSpect);
 	}
 }

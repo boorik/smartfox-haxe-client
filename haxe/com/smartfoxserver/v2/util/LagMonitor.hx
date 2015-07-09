@@ -8,9 +8,6 @@ import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.TimerEvent;
 import flash.utils.Timer;
-import flash.utils.getTimer;
-
-import org.osmf.events.TimeEvent;
 
 /**
  * @private
@@ -97,7 +94,7 @@ class LagMonitor extends EventDispatcher
 			return 0;
 		
 		var lagAverage:Int=0;
-		for(var lagValue:Int in _valueQueue)
+		for(lagValue in _valueQueue)
 			lagAverage += lagValue;
 				
 		return lagAverage / _valueQueue.length;

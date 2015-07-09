@@ -2,7 +2,7 @@ package com.smartfoxserver.v2.bitswarm;
 
 import com.smartfoxserver.v2.core.PacketHeader;
 
-import flash.utils.ByteArray<Dynamic>;
+import flash.utils.ByteArray;
 
 /** @private */
 class PendingPacket

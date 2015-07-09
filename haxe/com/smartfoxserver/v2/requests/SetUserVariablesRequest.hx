@@ -1,8 +1,8 @@
 package com.smartfoxserver.v2.requests;
 
 import com.smartfoxserver.v2.SmartFox;
-import com.smartfoxserver.v2.entities.data.ISFSArray<Dynamic>;
-import com.smartfoxserver.v2.entities.data.SFSArray<Dynamic>;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 
@@ -50,12 +50,12 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
 class SetUserVariablesRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_USER:String="u"
+	public static inline var KEY_USER:String = "u";
 	
 	/** @private */
-	public static inline var KEY_VAR_LIST:String="vl"
+	public static inline var KEY_VAR_LIST:String = "vl";
 	
-	private var _userVariables:Array
+	private var _userVariables:Array<UserVariable>;
 	
 	/**
 	 * Creates a new<em>SetUserVariablesRequest</em>instance.
@@ -66,35 +66,35 @@ class SetUserVariablesRequest extends BaseRequest
 	 * @see		com.smartfoxserver.v2.SmartFox#send()SmartFox.send()
 	 * @see		com.smartfoxserver.v2.entities.variables.UserVariable UserVariable
 	 */
-	public function new(userVariables:Array)
+	public function new(userVariables:Array<UserVariable>)
 	{
-		super(BaseRequest.SetUserVariables)
-		_userVariables=userVariables	
+		super(BaseRequest.SetUserVariables);
+		_userVariables = userVariables	;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		if(_userVariables==null || _userVariables.length==0)
-			errors.push("No variables were specified")
+			errors.push("No variables were specified");
 		
 		if(errors.length>0)
-			throw new SFSValidationError("SetUserVariables request error", errors)
+			throw new SFSValidationError("SetUserVariables request error", errors);
 		
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		var varList:ISFSArray<Dynamic>=SFSArray.newInstance()
+		var varList:ISFSArray<Dynamic> = SFSArray.newInstance();
 		 
-		for(var uVar:UserVariable in _userVariables)
+		for(uVar in _userVariables)
 		{
-			varList.addSFSArray(uVar.toSFSArray())	
+			varList.addSFSArray(uVar.toSFSArray());	
 		}
 		
-		_sfso.putSFSArray(KEY_VAR_LIST, varList)
+		_sfso.putSFSArray(KEY_VAR_LIST, varList);
 	}
 }

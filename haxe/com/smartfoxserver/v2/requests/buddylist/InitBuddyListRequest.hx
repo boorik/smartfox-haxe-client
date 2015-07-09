@@ -47,13 +47,13 @@ import com.smartfoxserver.v2.requests.BaseRequest;
 class InitBuddyListRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_BLIST:String="bl"
+	public static inline var KEY_BLIST:String = "bl";
 	
 	/** @private */
-	public static inline var KEY_BUDDY_STATES:String="bs"
+	public static inline var KEY_BUDDY_STATES:String = "bs";
 	
 	/** @private */
-	public static inline var KEY_MY_VARS:String="mv"
+	public static inline var KEY_MY_VARS:String = "mv";
 	
 	/**
 	 * Creates a new<em>InitBuddyListRequest</em>instance.
@@ -63,19 +63,19 @@ class InitBuddyListRequest extends BaseRequest
 	 */
 	public function new()
 	{
-		super(BaseRequest.InitBuddyList)
+		super(BaseRequest.InitBuddyList);
 	}
 
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic> = [];
 		
 		if(sfs.buddyManager.isInited)
-			errors.push("Buddy List is already initialized.")
+			errors.push("Buddy List is already initialized.");
 			
 		if(errors.length>0)
-			throw new SFSValidationError("InitBuddyRequest error", errors)
+			throw new SFSValidationError("InitBuddyRequest error", errors);
 	}
 	
 	/** @private */

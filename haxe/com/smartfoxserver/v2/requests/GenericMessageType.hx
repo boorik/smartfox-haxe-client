@@ -4,20 +4,20 @@ package com.smartfoxserver.v2.requests;
 class GenericMessageType
 {
 	/** @private */
-	public static inline var PUBLIC_MSG:Int=0
+	public static inline var PUBLIC_MSG:Int = 0;
 	
 	/** @private */
-	public static inline var PRIVATE_MSG:Int=1
+	public static inline var PRIVATE_MSG:Int = 1;
 	
 	/** @private */
-	public static inline var MODERATOR_MSG:Int=2
+	public static inline var MODERATOR_MSG:Int = 2;
 	
 	/** @private */
-	public static inline var ADMING_MSG:Int=3
+	public static inline var ADMING_MSG:Int = 3;
 	
 	/** @private */
-	public static inline var OBJECT_MSG:Int=4
+	public static inline var OBJECT_MSG:Int = 4;
 	
 	/** @private */
-	public static inline var BUDDY_MSG:Int=5
+	public static inline var BUDDY_MSG:Int = 5;
 }

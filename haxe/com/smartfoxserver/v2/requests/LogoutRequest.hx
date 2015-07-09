@@ -31,7 +31,7 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
 class LogoutRequest  extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_ZONE_NAME:String="zn"
+	public static inline var KEY_ZONE_NAME:String = "zn";
 	
 	/**
 	 * Creates a new<em>LogoutRequest</em>instance.
@@ -41,13 +41,13 @@ class LogoutRequest  extends BaseRequest
 	 */
 	public function new()
 	{
-		super(BaseRequest.Logout)
+		super(BaseRequest.Logout);
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
 		if(sfs.mySelf==null)
-			throw new SFSValidationError("LogoutRequest Dynamic", ["You are not logged in a the moment!"])
+			throw new SFSValidationError("LogoutRequest Dynamic", ["You are not logged in a the moment!"]);
 	}
 }

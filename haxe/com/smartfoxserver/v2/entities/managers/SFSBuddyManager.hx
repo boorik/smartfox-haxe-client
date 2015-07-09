@@ -6,6 +6,7 @@ import com.smartfoxserver.v2.entities.variables.BuddyVariable;
 import com.smartfoxserver.v2.entities.variables.ReservedBuddyVariables;
 import com.smartfoxserver.v2.entities.variables.SFSBuddyVariable;
 import com.smartfoxserver.v2.util.ArrayUtil;
+import haxe.ds.StringMap;
 
 /**
  * The<em>SFSBuddyManager</em>class is the entity in charge of managing the current user's<b>Buddy List</b>system.
@@ -17,7 +18,7 @@ import com.smartfoxserver.v2.util.ArrayUtil;
 class SFSBuddyManager implements IBuddyManager
 {
 	/** @private */
-	private var _buddiesByName:Dynamic;
+	private var _buddiesByName:StringMap<Buddy>;
 	
 	/** @private */
 	private var _myVariables:Dynamic;
@@ -33,7 +34,7 @@ class SFSBuddyManager implements IBuddyManager
 	/** @private */
 	private var _inited:Bool;
 	
-	private var _buddyStates:Array;
+	private var _buddyStates:Array<Dynamic>;
 	private var _sfs:SmartFox;
 	
 	/**
@@ -49,7 +50,7 @@ class SFSBuddyManager implements IBuddyManager
 	public function new(sfs:SmartFox)
 	{
 		_sfs = sfs;
-		_buddiesByName = { };
+		_buddiesByName = new StringMap<Buddy>();
 		_myVariables = { };
 		_inited = false	;
 	}
@@ -70,13 +71,13 @@ class SFSBuddyManager implements IBuddyManager
 	/** @private */
 	public function addBuddy(buddy:Buddy):Void
 	{
-		_buddiesByName[buddy.name] = buddy	;
+		_buddiesByName.set(buddy.name, buddy);
 	}
 	
 	/** @private */
 	public function clearAll():Void
 	{
-		_buddiesByName = { };
+		_buddiesByName = new StringMap<Buddy>();
 	}
 	
 	/** @private */
@@ -85,7 +86,7 @@ class SFSBuddyManager implements IBuddyManager
 		var buddy:Buddy = getBuddyById(id);
 		
 		if(buddy !=null)
-			delete _buddiesByName[buddy.name];
+			_buddiesByName.remove(buddy.name);
 		
 		return buddy;
 	}
@@ -96,7 +97,7 @@ class SFSBuddyManager implements IBuddyManager
 		var buddy:Buddy = getBuddyByName(name);
 		
 		if(buddy !=null)
-			_buddiesByName[name]=null;
+			_buddiesByName.set(name, null);
 			
 		return buddy;
 	}
@@ -131,7 +132,7 @@ class SFSBuddyManager implements IBuddyManager
 	/** @inheritDoc */
 	public function getBuddyByNickName(nickName:String):Buddy
 	{
-		for(var buddy:Buddy in _buddiesByName)
+		for(buddy in _buddiesByName)
 		{
 			if(buddy.nickName==nickName)
 				return buddy;
@@ -141,12 +142,12 @@ class SFSBuddyManager implements IBuddyManager
 	}
 	
 	/** @inheritDoc */
-	public var offlineBuddies(get_offlineBuddies, null):Array;
- 	private function get_offlineBuddies():Array
+	public var offlineBuddies(get_offlineBuddies, null):Array<Buddy>;
+ 	private function get_offlineBuddies():Array<Buddy>
 	{
-		var buddies:Array<Dynamic> = [];
+		var buddies:Array<Buddy> = [];
 		
-		for(var buddy:Buddy in _buddiesByName)
+		for(buddy in _buddiesByName)
 		{
 			if(!buddy.isOnline)
 				buddies.push(buddy);
@@ -156,12 +157,12 @@ class SFSBuddyManager implements IBuddyManager
 	}
 	
 	/** @inheritDoc */
-	public var onlineBuddies(get_onlineBuddies, null):Array;
- 	private function get_onlineBuddies():Array
+	public var onlineBuddies(get_onlineBuddies, null):Array<Buddy>;
+ 	private function get_onlineBuddies():Array<Buddy>
 	{
-		var buddies:Array<Dynamic> = [];
+		var buddies:Array<Buddy> = [];
 		
-		for(var buddy:Buddy in _buddiesByName)
+		for(buddy in _buddiesByName)
 		{
 			if(buddy.isOnline)
 				buddies.push(buddy);
@@ -171,8 +172,8 @@ class SFSBuddyManager implements IBuddyManager
 	}
 	
 	/** @inheritDoc */
-	public var buddyList(get_buddyList, null):Array;
- 	private function get_buddyList():Array
+	public var buddyList(get_buddyList, null):Array<Buddy>;
+ 	private function get_buddyList():Array<Buddy>
 	{
 		return ArrayUtil.objToArray(_buddiesByName);
 	}
@@ -184,8 +185,8 @@ class SFSBuddyManager implements IBuddyManager
 	}
 	
 	/** @inheritDoc */
-	public var myVariables(get_myVariables, null):Array;
- 	private function get_myVariables():Array
+	public var myVariables(get_myVariables, null):Array<BuddyVariable>;
+ 	private function get_myVariables():Array<BuddyVariable>
 	{
 		return ArrayUtil.objToArray(_myVariables);	
 	}
@@ -225,8 +226,8 @@ class SFSBuddyManager implements IBuddyManager
 	}
 	
 	/** @inheritDoc */
-	public var buddyStates(get_buddyStates, null):Array;
- 	private function get_buddyStates():Array
+	public var buddyStates(get_buddyStates, null):Array<Dynamic>;
+ 	private function get_buddyStates():Array<Dynamic>
 	{
 		return _buddyStates;
 	}
@@ -239,9 +240,9 @@ class SFSBuddyManager implements IBuddyManager
 	
 	// Replaces all
 	/** @private */
-	public function setMyVariables(variables:Array):Void
+	public function setMyVariables(variables:Array<Dynamic>):Void
 	{
-		for(var bVar:BuddyVariable in variables)
+		for(bVar in variables)
 		{
 			setMyVariable(bVar);
 		}
@@ -266,7 +267,7 @@ class SFSBuddyManager implements IBuddyManager
 	}
 	
 	/** @private */
-	public function setBuddyStates(states:Array):Void
+	public function setBuddyStates(states:Array<Dynamic>):Void
 	{
 		_buddyStates = states;
 	}
