@@ -133,7 +133,7 @@ class GenericMessageRequest extends BaseRequest
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Specialized validators
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	private function validatePublicMessage(sfs:SmartFox, errors:Array):Void
+	private function validatePublicMessage(sfs:SmartFox, errors:Array<Dynamic>):Void
 	{
 		if(_message==null || _message.length==0)
 			errors.push("Public message is empty!");
@@ -142,7 +142,7 @@ class GenericMessageRequest extends BaseRequest
 			errors.push("You are not joined in the target Room:" + _room);
 	}
 	
-	private function validatePrivateMessage(sfs:SmartFox, errors:Array):Void
+	private function validatePrivateMessage(sfs:SmartFox, errors:Array<Dynamic>):Void
 	{
 		if(_message==null || _message.length==0)
 			errors.push("Private message is empty!");
@@ -151,13 +151,13 @@ class GenericMessageRequest extends BaseRequest
 			errors.push("Invalid recipient id:" + _recipient);
 	}
 	
-	private function validateObjectMessage(sfs:SmartFox, errors:Array):Void
+	private function validateObjectMessage(sfs:SmartFox, errors:Array<Dynamic>):Void
 	{
 		if(_params==null)
 			errors.push("Object message is null!");
 	}
 	
-	private function validateBuddyMessage(sfs:SmartFox, errors:Array):Void
+	private function validateBuddyMessage(sfs:SmartFox, errors:Array<Dynamic>):Void
 	{
 		if(!sfs.buddyManager.isInited)
 			errors.push("BuddyList is not inited. Please send an InitBuddyRequest first.");
@@ -173,7 +173,7 @@ class GenericMessageRequest extends BaseRequest
 			errors.push("Recipient is not online or not in your buddy list");
 	}
 	
-	private function validateSuperUserMessage(sfs:SmartFox, errors:Array):Void
+	private function validateSuperUserMessage(sfs:SmartFox, errors:Array<Dynamic>):Void
 	{
 		if(_message==null || _message.length==0)
 			errors.push("Moderator message is empty!");

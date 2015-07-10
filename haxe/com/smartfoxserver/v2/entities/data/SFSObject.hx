@@ -123,9 +123,9 @@ class SFSObject implements ISFSObject
 	}
 	
 	/** @inheritDoc */
-	public function getKeys():Array
+	public function getKeys():Array<String>
 	{
-		var keyList:Array<Dynamic> = [];
+		var keyList:Array<String> = [];
 		
 		for(j in dataHolder)
 			keyList.push(j);
@@ -323,7 +323,7 @@ class SFSObject implements ISFSObject
 	
 	// Arrays
 	
-	private function getArray(key:String):Array
+	private function getArray(key:String):Array<Dynamic>
 	{
 		var wrapper:SFSDataWrapper = cast dataHolder[key];
 		
@@ -334,7 +334,7 @@ class SFSObject implements ISFSObject
 	}
 	
 	/** @inheritDoc */
-	public function getBoolArray(key:String):Array
+	public function getBoolArray(key:String):Array<Bool>
 	{
 		return getArray(key);
 	}
@@ -351,7 +351,7 @@ class SFSObject implements ISFSObject
 	}
 	
 	/** @inheritDoc */
-	public function getUnsignedByteArray(key:String):Array
+	public function getUnsignedByteArray(key:String):Array<Int>
 	{
 		var ba:ByteArray<Dynamic> = getByteArray(key);
 		
@@ -359,7 +359,7 @@ class SFSObject implements ISFSObject
 			return null;
 		
 		ba.position = 0;
-		var unsignedBytes:Array<Dynamic> = [];
+		var unsignedBytes:Array<Int> = [];
 		
 		for(i in 0...ba.length)
 		{
@@ -370,37 +370,37 @@ class SFSObject implements ISFSObject
 	}
 	
 	/** @inheritDoc */
-	public function getShortArray(key:String):Array
+	public function getShortArray(key:String):Array<Int>
 	{
 		return getArray(key);
 	}
 	
 	/** @inheritDoc */
-	public function getIntArray(key:String):Array
+	public function getIntArray(key:String):Array<Int>
 	{
 		return getArray(key);	
 	}
 	
 	/** @inheritDoc */
-	public function getLongArray(key:String):Array
+	public function getLongArray(key:String):Array<Float>
 	{
 		return getArray(key);	
 	}
 	
 	/** @inheritDoc */
-	public function getFloatArray(key:String):Array
+	public function getFloatArray(key:String):Array<Float>
 	{
 		return getArray(key);
 	}
 	
 	/** @inheritDoc */
-	public function getDoubleArray(key:String):Array
+	public function getDoubleArray(key:String):Array<Float>
 	{
 		return getArray(key);
 	}
 	
 	/** @inheritDoc */
-	public function getUtfStringArray(key:String):Array
+	public function getUtfStringArray(key:String):Array<String>
 	{
 		return getArray(key);
 	}
@@ -509,7 +509,7 @@ class SFSObject implements ISFSObject
 	// Arrays
 	
 	/** @inheritDoc */
-	public function putBoolArray(key:String, value:Array):Void
+	public function putBoolArray(key:String, value:Array<Bool>):Void
 	{
 		dataHolder[key] = new SFSDataWrapper(SFSDataType.BOOL_ARRAY, value);	
 	}
@@ -521,37 +521,37 @@ class SFSObject implements ISFSObject
 	}
 	
 	/** @inheritDoc */
-	public function putShortArray(key:String, value:Array):Void
+	public function putShortArray(key:String, value:Array<Int>):Void
 	{
 		dataHolder[key] = new SFSDataWrapper(SFSDataType.SHORT_ARRAY, value);	
 	}
 	
 	/** @inheritDoc */
-	public function putIntArray(key:String, value:Array):Void
+	public function putIntArray(key:String, value:Array<Int>):Void
 	{
 		dataHolder[key] = new SFSDataWrapper(SFSDataType.INT_ARRAY, value);	
 	}
 	
 	/** @inheritDoc */
-	public function putLongArray(key:String, value:Array):Void
+	public function putLongArray(key:String, value:Array<Float>):Void
 	{
 		dataHolder[key] = new SFSDataWrapper(SFSDataType.LONG_ARRAY, value);	
 	}
 	
 	/** @inheritDoc */
-	public function putFloatArray(key:String, value:Array):Void
+	public function putFloatArray(key:String, value:Array<Float>):Void
 	{
 		dataHolder[key] = new SFSDataWrapper(SFSDataType.FLOAT_ARRAY, value);	
 	}
 	
 	/** @inheritDoc */
-	public function putDoubleArray(key:String, value:Array):Void
+	public function putDoubleArray(key:String, value:Array<Float>):Void
 	{
 		dataHolder[key] = new SFSDataWrapper(SFSDataType.DOUBLE_ARRAY, value);
 	}
 	
 	/** @inheritDoc */
-	public function putUtfStringArray(key:String, value:Array):Void
+	public function putUtfStringArray(key:String, value:Array<String>):Void
 	{
 		dataHolder[key] = new SFSDataWrapper(SFSDataType.UTF_STRING_ARRAY, value);
 	}

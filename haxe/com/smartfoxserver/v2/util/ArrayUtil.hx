@@ -8,7 +8,7 @@ class ArrayUtil
 		throw new Dynamic("This class contains static methods only! Do not instaniate it");
 	}
 	
-	public static function removeElement(arr:Array, item:Dynamic):Void
+	public static function removeElement(arr:Array<Dynamic>, item:Dynamic):Void
 	{
 		var p:Int = arr.indexOf(item);
 	
@@ -16,7 +16,7 @@ class ArrayUtil
 			arr.splice(p, 1);
 	}
 	
-	public static function copy(arr:Array):Array<Dynamic>
+	public static function copy(arr:Array<Dynamic>):Array<Dynamic>
 	{
 		var arrCopy:Array<Dynamic> = new Array();
 		for(j in 0...arr.length)

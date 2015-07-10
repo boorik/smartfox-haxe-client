@@ -222,7 +222,7 @@ interface User
 	 * @see		com.smartfoxserver.v2.entities.variables.UserVariable UserVariable
 	 * @see		#getVariable()
 	 */ 
-	function getVariables():Array;
+	function getVariables():Array<UserVariable>;
 	
 	/**
 	 * Retrieves a User Variable from its name.
@@ -240,7 +240,7 @@ interface User
 	function setVariable(userVariable:UserVariable):Void;
 	
 	/** @private */
-	function setVariables(userVariables:Array):Void;
+	function setVariables(userVariables:Array<UserVariable>):Void;
 	
 	/**
 	 * Indicates whether this user has the specified User Variable set or not.

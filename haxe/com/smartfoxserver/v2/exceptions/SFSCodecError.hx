@@ -1,7 +1,8 @@
 package com.smartfoxserver.v2.exceptions;
+import openfl.errors.Error;
 
 /** @private */
-class SFSCodecError extends Dynamic
+class SFSCodecError extends Error
 {
 	public function new(message:String="", id:Int=0)
 	{

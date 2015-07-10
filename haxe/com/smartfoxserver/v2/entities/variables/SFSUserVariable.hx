@@ -192,7 +192,7 @@ class SFSUserVariable implements UserVariable
 			
 		else
 		{
-			var typeName:String = Type.value;
+			var typeName:String = Type.typeof(value);
 			
 			if(typeName=="boolean")
 				_type = VariableType.getTypeName(VariableType.BOOL);

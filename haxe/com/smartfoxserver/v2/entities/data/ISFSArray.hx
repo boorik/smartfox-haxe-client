@@ -160,7 +160,7 @@ interface ISFSArray
 	 * 
 	 * @param	value	The array of<em>Boolean</em>values to be appended to this array.
 	 */
-	function addBoolArray(value:Array):Void;
+	function addBoolArray(value:Array<Bool>):Void;
 	
 	/**
 	 * Appends an array of bytes to the end of this array.
@@ -178,14 +178,14 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#SHORT
 	 */
-	function addShortArray(value:Array):Void;
+	function addShortArray(value:Array<Int>):Void;
 	
 	/**
 	 * Appends an array of Integer values to the end of this array.
 	 * 
 	 * @param	value	The array of<em>int</em>values to be appended to this array.
 	 */
-	function addIntArray(value:Array):Void;
+	function addIntArray(value:Array<Int>):Void;
 	
 	/**
 	 * Appends an array of long Integer values to the end of this array.
@@ -194,7 +194,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#LONG
 	 */
-	function addLongArray(value:Array):Void;
+	function addLongArray(value:Array<Float>):Void;
 	
 	/**
 	 * Appends an array of floating point number values to the end of this array.
@@ -203,7 +203,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#FLOAT
 	 */
-	function addFloatArray(value:Array):Void;
+	function addFloatArray(value:Array<Float>):Void;
 	
 	/**
 	 * Appends an array of double precision number values to the end of this array.
@@ -212,14 +212,14 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#DOUBLE
 	 */
-	function addDoubleArray(value:Array):Void;
+	function addDoubleArray(value:Array<Float>):Void;
 	
 	/**
 	 * Appends an array of UTF-8 string values to the end of this array.
 	 * 
 	 * @param	value	The array of<em>String</em>values to be appended to this array.
 	 */
-	function addUtfStringArray(value:Array):Void;
+	function addUtfStringArray(value:Array<String>):Void;
 	
 	/**
 	 * Appends a<em>ISFSArray</em>object to the end of this array.
@@ -363,7 +363,7 @@ interface ISFSArray
 	 * 
 	 * @return	The element of this array as an array of<em>Boolean</em>values.
 	 */
-	function getBoolArray(index:Int):Array;
+	function getBoolArray(index:Int):Array<Bool>;
 	
 	/**
 	 * Returns the element at the specified position as an array of bytes.
@@ -383,7 +383,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#BYTE
 	 */
-	function getUnsignedByteArray(index:Int):Array;
+	function getUnsignedByteArray(index:Int):Array<Int>;
 	
 	/**
 	 * Returns the element at the specified position as an array of short Integers.
@@ -394,7 +394,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#SHORT
 	 */
-	function getShortArray(index:Int):Array;
+	function getShortArray(index:Int):Array<Int>;
 	
 	/**
 	 * Returns the element at the specified position as an array of Integers.
@@ -403,7 +403,7 @@ interface ISFSArray
 	 * 
 	 * @return	The element of this array as an array of<em>int</em>values.
 	 */
-	function getIntArray(index:Int):Array;
+	function getIntArray(index:Int):Array<Int>;
 	
 	/**
 	 * Returns the element at the specified position as an array of long Integers.
@@ -414,7 +414,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#LONG
 	 */
-	function getLongArray(index:Int):Array;
+	function getLongArray(index:Int):Array<Float>;
 	
 	/**
 	 * Returns the element at the specified position as an array of floating point numbers.
@@ -425,7 +425,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#FLOAT
 	 */
-	function getFloatArray(index:Int):Array;
+	function getFloatArray(index:Int):Array<Float>;
 	
 	/**
 	 * Returns the element at the specified position as an array of double precision numbers.
@@ -436,7 +436,7 @@ interface ISFSArray
 	 * 
 	 * @see		SFSDataType#DOUBLE
 	 */
-	function getDoubleArray(index:Int):Array;
+	function getDoubleArray(index:Int):Array<Float>;
 	
 	/**
 	 * Returns the element at the specified position as an array of UTF-8 strings.
@@ -445,7 +445,7 @@ interface ISFSArray
 	 * 
 	 * @return	The element of this array as an array of<em>String</em>values.
 	 */
-	function getUtfStringArray(index:Int):Array;
+	function getUtfStringArray(index:Int):Array<String>;
 	
 	/**
 	 * Returns the element at the specified position as an<em>ISFSArray</em>object.

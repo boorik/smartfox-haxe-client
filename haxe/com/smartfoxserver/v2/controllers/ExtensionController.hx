@@ -27,7 +27,7 @@ class ExtensionController extends BaseController
 	public override function handleMessage(message:IMessage):Void
 	{
 		if(sfs.debug)
-			log.info(message);
+			log.info(Std.string(message));
 		
 		var obj:ISFSObject = message.content;
 		var evtParams:Dynamic = { };

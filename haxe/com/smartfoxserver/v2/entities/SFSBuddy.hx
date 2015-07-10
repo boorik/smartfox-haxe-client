@@ -149,7 +149,7 @@ class SFSBuddy implements Buddy
 	}
 	
 	/** @inheritDoc */
-	public var variables(get_variables, null):Array;
+	public var variables(get_variables, null):Array<BuddyVariable>;
  	private function get_variables():Array<BuddyVariable>
 	{
 		return Lambda.array(_variables);
@@ -162,9 +162,9 @@ class SFSBuddy implements Buddy
 	}
 	
 	/** @inheritDoc */
-	public function getOfflineVariables():Array<Dynamic>
+	public function getOfflineVariables():Array<BuddyVariable>
 	{
-		var offlineVars:Array<Dynamic> = [];
+		var offlineVars:Array<BuddyVariable> = [];
 		
 		for(item in _variables.iterator())
 		{
@@ -177,9 +177,9 @@ class SFSBuddy implements Buddy
 	}
 	
 	/** @inheritDoc */
-	public function getOnlineVariables():Array
+	public function getOnlineVariables():Array<BuddyVariable>
 	{
-		var onlineVars:Array<Dynamic> = [];
+		var onlineVars:Array<BuddyVariable> = [];
 		
 		for(item in _variables.iterator())
 		{

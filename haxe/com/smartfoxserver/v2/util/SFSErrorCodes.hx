@@ -91,7 +91,7 @@ class SFSErrorCodes
 		return stringFormat(errorsByCode[code], params);
 	}
 	
-	private static function stringFormat(ss:String, params:Array):String
+	private static function stringFormat(ss:String, params:Array<Dynamic>):String
 	{
 		if(ss==null)
 			return "";

@@ -62,10 +62,10 @@ class MMOItem implements IMMOItem
 	}
 	
 	/** @inheritDoc */
-	public function getVariables():Array
+	public function getVariables():Array<IMMOItemVariable>
 	{
 		// Return a copy of the Internal data structure as array
-		var variables:Array<Dynamic>=[];
+		var variables:Array<IMMOItemVariable>=[];
 			
 		for(uv in Reflect.fields(_variables))
 			variables.push(getVariable(uv));
@@ -93,7 +93,7 @@ class MMOItem implements IMMOItem
 	}
 	
 	/** @inheritDoc */
-	public function setVariables(itemVariables:Array):Void
+	public function setVariables(itemVariables:Array<IMMOItemVariable>):Void
 	{
 		for(itemVar in itemVariables)
 		{

@@ -1,6 +1,7 @@
 package com.smartfoxserver.v2.requests;
 
 import com.smartfoxserver.v2.entities.SFSConstants;
+import com.smartfoxserver.v2.entities.variables.RoomVariable;
 
 /**
  * The<em>RoomSettings</em>class is a container for the settings required to create a Room using the<em>CreateRoomRequest</em>request.
@@ -17,7 +18,7 @@ class RoomSettings
 	private var _maxUsers:Int;
 	private var _maxSpectators:Int;
 	private var _maxVariables:Int;
-	private var _variables:Array;
+	private var _variables:Array<RoomVariable>;
 	private var _permissions:RoomPermissions;
 	private var _events:RoomEvents ;
 	private var _extension:RoomExtension;
@@ -155,14 +156,14 @@ class RoomSettings
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.variables.RoomVariable RoomVariable
 	 */
-	public var variables(get_variables, set_variables):Array;
- 	private function get_variables():Array 
+	public var variables(get_variables, set_variables):Array<RoomVariable>;
+ 	private function get_variables():Array<RoomVariable>
 	{ 
 		return _variables;
 	}
 	
 	/** @private */
-	private function set_variables(value:Array):Void 
+	private function set_variables(value:Array<RoomVariable>):Void 
 	{ 
 		_variables = value;
 	}

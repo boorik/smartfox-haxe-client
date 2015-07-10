@@ -94,7 +94,7 @@ class InviteUsersRequest extends BaseRequest
 	/** @private */
 	public static inline var MAX_EXPIRY_TIME:Int = 300;
 	
-	private var _invitedUsers:Array;
+	private var _invitedUsers:Array<User>;
 	private var _secondsForAnswer:Int;
 	private var _params:ISFSObject;
 	
@@ -110,7 +110,7 @@ class InviteUsersRequest extends BaseRequest
 	 * @see		com.smartfoxserver.v2.entities.User User
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 */
-	public function new(invitedUsers:Array, secondsForAnswer:Int, params:ISFSObject)
+	public function new(invitedUsers:Array<User>, secondsForAnswer:Int, params:ISFSObject)
 	{
 		super(BaseRequest.InviteUser);
 		

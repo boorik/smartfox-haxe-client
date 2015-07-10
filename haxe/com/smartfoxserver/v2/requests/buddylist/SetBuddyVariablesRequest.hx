@@ -85,7 +85,7 @@ class SetBuddyVariablesRequest extends BaseRequest
 	/** @private */
 	public static inline var KEY_BUDDY_VARS:String = "bv";
 	
-	private var _buddyVariables:Array;
+	private var _buddyVariables:Array<BuddyVariable>;
 	
 	/**
 	 * Creates a new<em>SetBuddyVariablesRequest</em>instance.
@@ -96,7 +96,7 @@ class SetBuddyVariablesRequest extends BaseRequest
 	 * @see		com.smartfoxserver.v2.SmartFox#send()SmartFox.send()
 	 * @see		com.smartfoxserver.v2.entities.variables.BuddyVariable BuddyVariable
 	 */
-	public function new(buddyVariables:Array)
+	public function new(buddyVariables:Array<BuddyVariable>)
 	{
 		super(BaseRequest.SetBuddyVariables);
 		_buddyVariables = buddyVariables;

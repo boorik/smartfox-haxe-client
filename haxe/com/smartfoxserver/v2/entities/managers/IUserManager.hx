@@ -86,7 +86,7 @@ interface IUserManager
 	 * 
 	 * @return	The list of<em>User</em>objects representing the users in the local users list.
 	 */
-	function getUserList():Array;
+	function getUserList():Array<User>;
 	
 	/** @private */
 	var smartFox(get_smartFox, null):SmartFox;

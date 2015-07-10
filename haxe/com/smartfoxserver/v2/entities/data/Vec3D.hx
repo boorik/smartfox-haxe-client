@@ -14,7 +14,7 @@ class Vec3D
 	private var _pz:Float;
 	
 	/** @private */
-	public static function fromArray(arr:Array):Vec3D
+	public static function fromArray(arr:Array<Float>):Vec3D
 	{
 		return new Vec3D(arr[0], arr[1], arr[2]);
 	}
@@ -91,7 +91,7 @@ class Vec3D
 	}
 	
 	/** @private */
-	public function toArray():Array
+	public function toArray():Array<Float>
 	{
 		return [_px, _py, _pz];
 	}

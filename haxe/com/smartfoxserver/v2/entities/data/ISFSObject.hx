@@ -45,7 +45,7 @@ interface ISFSObject
 	 * 
 	 * @return	The list of all the keys in this object.
 	 */
-	function getKeys():Array;
+	function getKeys():Array<String>;
 	
 	/**
 	 * Indicates the number of elements in this object.
@@ -195,7 +195,7 @@ interface ISFSObject
 	 * 
 	 * @return  The element of this object as an array of<em>Boolean</em>values.
 	 */
-	function getBoolArray(key:String):Array;
+	function getBoolArray(key:String):Array<Bool>;
 	
 	/**
 	 * Returns the element corresponding to the specified key as an array of bytes.
@@ -215,7 +215,7 @@ interface ISFSObject
 	 * 
 	 * @see		SFSDataType#BYTE
 	 */
-	function getUnsignedByteArray(key:String):Array;
+	function getUnsignedByteArray(key:String):Array<Int>;
 	
 	/**
 	 * Returns the element corresponding to the specified key as an array of short Integers.
@@ -226,7 +226,7 @@ interface ISFSObject
 	 * 
 	 * @see		SFSDataType#SHORT
 	 */
-	function getShortArray(key:String):Array;
+	function getShortArray(key:String):Array<Int>;
 	
 	/**
 	 * Returns the element corresponding to the specified key as an array of Integers.
@@ -235,7 +235,7 @@ interface ISFSObject
 	 * 
 	 * @return  The element of this object as an array of<em>int</em>values.
 	 */
-	function getIntArray(key:String):Array;
+	function getIntArray(key:String):Array<Int>;
 	
 	/**
 	 * Returns the element corresponding to the specified key as an array of long Integers.
@@ -246,7 +246,7 @@ interface ISFSObject
 	 * 
 	 * @see		SFSDataType#LONG
 	 */
-	function getLongArray(key:String):Array;
+	function getLongArray(key:String):Array<Float>;
 	
 	/**
 	 * Returns the element corresponding to the specified key as an array of floating point numbers.
@@ -257,7 +257,7 @@ interface ISFSObject
 	 * 
 	 * @see		SFSDataType#FLOAT
 	 */
-	function getFloatArray(key:String):Array;
+	function getFloatArray(key:String):Array<Float>;
 	
 	/**
 	 * Returns the element corresponding to the specified key as an array of double precision numbers.
@@ -268,7 +268,7 @@ interface ISFSObject
 	 * 
 	 * @see		SFSDataType#DOUBLE
 	 */
-	function getDoubleArray(key:String):Array;
+	function getDoubleArray(key:String):Array<Float>;
 	
 	/**
 	 * Returns the element corresponding to the specified key as an array of UTF-8 strings.
@@ -277,7 +277,7 @@ interface ISFSObject
 	 * 
 	 * @return  The element of this object as an array of<em>String</em>values.
 	 */
-	function getUtfStringArray(key:String):Array;
+	function getUtfStringArray(key:String):Array<String>;
 	
 	/**
 	 * Returns the element corresponding to the specified key as an<em>ISFSArray</em>object.
@@ -457,7 +457,7 @@ interface ISFSObject
 	 * @param	key		The key with which the specified array is to be associated.
 	 * @param	value	The array of<em>Boolean</em>values to be associated with the specified key.
 	 */
-	function putBoolArray(key:String, value:Array):Void;
+	function putBoolArray(key:String, value:Array<Bool>):Void;
 	
 	/**
 	 * Associates the passed array of bytes with the specified key in this object.
@@ -475,7 +475,7 @@ interface ISFSObject
 	 * 
 	 * @see		SFSDataType#SHORT
 	 */
-	function putShortArray(key:String, value:Array):Void;
+	function putShortArray(key:String, value:Array<Int>):Void;
 	
 	/**
 	 * Associates the passed array of Integer values with the specified key in this object.
@@ -483,7 +483,7 @@ interface ISFSObject
 	 * @param	key		The key with which the specified array is to be associated.
 	 * @param	value	The array of<em>int</em>values to be associated with the specified key.
 	 */
-	function putIntArray(key:String, value:Array):Void;
+	function putIntArray(key:String, value:Array<Int>):Void;
 	
 	/**
 	 * Associates the passed array of long Integer values with the specified key in this object.
@@ -493,7 +493,7 @@ interface ISFSObject
 	 * 
 	 * @see		SFSDataType#LONG
 	 */
-	function putLongArray(key:String, value:Array):Void;
+	function putLongArray(key:String, value:Array<Float>):Void;
 	
 	/**
 	 * Associates the passed array of floating point number values with the specified key in this object.
@@ -503,7 +503,7 @@ interface ISFSObject
 	 * 
 	 * @see		SFSDataType#FLOAT
 	 */
-	function putFloatArray(key:String, value:Array):Void;
+	function putFloatArray(key:String, value:Array<Float>):Void;
 	
 	/**
 	 * Associates the passed array of double precision number values with the specified key in this object.
@@ -513,7 +513,7 @@ interface ISFSObject
 	 * 
 	 * @see		SFSDataType#DOUBLE
 	 */
-	function putDoubleArray(key:String, value:Array):Void;
+	function putDoubleArray(key:String, value:Array<Float>):Void;
 	
 	/**
 	 * Associates the passed array of UTF-8 string values with the specified key in this object.
@@ -521,7 +521,7 @@ interface ISFSObject
 	 * @param	key		The key with which the specified array is to be associated.
 	 * @param	value	The array of<em>String</em>values to be associated with the specified key.
 	 */
-	function putUtfStringArray(key:String, value:Array):Void;
+	function putUtfStringArray(key:String, value:Array<String>):Void;
 	
 	/**
 	 * Associates the passed<em>ISFSArray</em>object with the specified key in this object.

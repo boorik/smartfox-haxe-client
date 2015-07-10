@@ -39,7 +39,7 @@ class LoggerEvent extends BaseEvent
 	 * 
 	 * @eventType	debug
 	 */
-	public static inline var DEBUG:String="debug"
+	public static inline var DEBUG:String = "debug";
 	
 	/**
 	 * The<em>LoggerEvent.INFO</em>constant defines the value of the<em>type</em>property of the event object for a<em>info</em>event.
@@ -52,7 +52,7 @@ class LoggerEvent extends BaseEvent
 	 * 
 	 * @eventType	info
 	 */
-	public static inline var INFO:String="info"
+	public static inline var INFO:String = "info";
 	
 	/**
 	 * The<em>LoggerEvent.WARNING</em>constant defines the value of the<em>type</em>property of the event object for a<em>warn</em>event.
@@ -65,7 +65,7 @@ class LoggerEvent extends BaseEvent
 	 * 
 	 * @eventType	warn
 	 */
-	public static inline var WARNING:String="warn"
+	public static inline var WARNING:String = "warn";
 	
 	/**
 	 * The<em>LoggerEvent.ERROR</em>constant defines the value of the<em>type</em>property of the event object for a<em>error</em>event.
@@ -78,7 +78,7 @@ class LoggerEvent extends BaseEvent
 	 * 
 	 * @eventType	error
 	 */
-	public static inline var ERROR:String="error"
+	public static inline var ERROR:String = "error";
 	
 	
 	//========================================================
@@ -92,7 +92,7 @@ class LoggerEvent extends BaseEvent
 	 */
 	public function new(type:String, params:Dynamic=null)
 	{
-		super(type, params)
+		super(type, params);
 	}
 	
 	/**
@@ -102,7 +102,7 @@ class LoggerEvent extends BaseEvent
 	 */
 	public override function clone():Event
 	{
-		return new LoggerEvent(this.type, this.params)
+		return new LoggerEvent(this.type, this.params);
 	}
 	
 	/**
@@ -112,6 +112,6 @@ class LoggerEvent extends BaseEvent
 	 */
 	public override function toString():String
 	{
-		return formatToString("LoggerEvent", "type", "bubbles", "cancelable", "eventPhase", "params")
+		return formatToString("LoggerEvent", "type", "bubbles", "cancelable", "eventPhase", "params");
 	}
 }

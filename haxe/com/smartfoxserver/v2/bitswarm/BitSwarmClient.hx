@@ -248,9 +248,9 @@ class BitSwarmClient extends EventDispatcher
 		_controllers[id] = controller;
 	}
 	
-	public function addCustomController(id:Int, controllerClass:Class):Void
+	public function addCustomController(id:Int, controllerClass:Class<IController>):Void
 	{
-		var controller:IController = controllerClass(this);
+		var controller:IController = Type.createInstance(controllerClass,[this]);
 		addController(id, controller);
 	}
 	

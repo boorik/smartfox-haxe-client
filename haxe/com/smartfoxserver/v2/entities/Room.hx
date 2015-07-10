@@ -190,17 +190,17 @@ interface Room
 	/**
 	 * Returns a list of<em>User</em>objects representing all the users currently inside this Room.
 	 */
-	function get_userList():Array;
+	function get_userList():Array<User>;
 	
 	/**
 	 * Returns a list of<em>User</em>objects representing the players currently inside this Room(Game Rooms only).
 	 */
-	function get_playerList():Array;
+	function get_playerList():Array<User>;
 	
 	/**
 	 * Returns a list of<em>User</em>objects representing the spectators currently inside this Room(Game Rooms only).
 	 */
-	function get_spectatorList():Array;
+	function get_spectatorList():Array<User>;
 	
 	/**
 	 * Retrieves a Room Variable from its name.
@@ -222,13 +222,13 @@ interface Room
 	 * @see		com.smartfoxserver.v2.entities.variables.RoomVariable RoomVariable
 	 * @see		#getVariable()
 	 */ 
-	function getVariables():Array;
+	function getVariables():Array<RoomVariable>;
 	
 	/** @private */
 	function setVariable(roomVariable:RoomVariable):Void;
 	
 	/** @private */
-	function setVariables(roomVariables:Array):Void;
+	function setVariables(roomVariables:Array<RoomVariable>):Void;
 	
 	/**
 	 * Indicates whether this Room has the specified Room Variable set or not.

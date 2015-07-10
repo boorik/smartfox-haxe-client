@@ -123,7 +123,7 @@ interface IRoomManager
 	 * @see 	com.smartfoxserver.v2.requests.SubscribeRoomGroupRequest SubscribeRoomGroupRequest
 	 * @see 	com.smartfoxserver.v2.requests.UnsubscribeRoomGroupRequest UnsubscribeRoomGroupRequest
 	 */
-	function getRoomList():Array;
+	function getRoomList():Array<Room>;
 	
 	/**
 	 * Returns the current number of Rooms in the Rooms list.
@@ -143,7 +143,7 @@ interface IRoomManager
 	 * @see 	com.smartfoxserver.v2.requests.SubscribeRoomGroupRequest SubscribeRoomGroupRequest
 	 * @see 	com.smartfoxserver.v2.requests.UnsubscribeRoomGroupRequest UnsubscribeRoomGroupRequest
 	 */
-	function getRoomGroups():Array;
+	function getRoomGroups():Array<String>;
 	
 	/**
 	 * Retrieves the list of Rooms which are part of the specified Room Group.
@@ -154,7 +154,7 @@ interface IRoomManager
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.Room Room
 	 */
-	function getRoomListFromGroup(groupId:String):Array;
+	function getRoomListFromGroup(groupId:String):Array<Room>;
 	
 	/**
 	 * Returns a list of Rooms currently joined by the client.
@@ -164,7 +164,7 @@ interface IRoomManager
 	 * @see		com.smartfoxserver.v2.entities.Room Room
 	 * @see		com.smartfoxserver.v2.requests.JoinRoomRequest JoinRoomRequest
 	 */
-	function getJoinedRooms():Array;
+	function getJoinedRooms():Array<Room>;
 	
 	/**
 	 * Retrieves a list of Rooms joined by the specified user.
@@ -174,7 +174,7 @@ interface IRoomManager
 	 * 
 	 * @return	The list of Rooms joined by the passed user.
 	 */
-	function getUserRooms(user:User):Array;
+	function getUserRooms(user:User):Array<Room>;
 	
 	/** @private */
 	function removeRoom(room:Room):Void;

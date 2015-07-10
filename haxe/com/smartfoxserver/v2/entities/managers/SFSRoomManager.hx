@@ -17,7 +17,7 @@ import haxe.ds.StringMap;
 class SFSRoomManager implements IRoomManager
 {
 	private var _ownerZone:String;
-	private var _groups:Array;
+	private var _groups:Array<String>;
 	private var _roomsById:IntMap<Room>;
 	private var _roomsByName:StringMap<Room>;
 	
@@ -132,7 +132,7 @@ class SFSRoomManager implements IRoomManager
 	}
 	
 	/** @inheritDoc */
-	public function getRoomGroups():Array
+	public function getRoomGroups():Array<String>
 	{
 		return _groups;
 	}
@@ -278,7 +278,7 @@ class SFSRoomManager implements IRoomManager
 	
 	// Return rooms joined by local user
 	/** @inheritDoc */
-	public function getJoinedRooms():Array
+	public function getJoinedRooms():Array<Room>
 	{
 		var rooms:Array<Room> = [];
 		while(_roomsById.iterator().hasNext())

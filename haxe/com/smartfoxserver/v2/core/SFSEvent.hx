@@ -1625,7 +1625,7 @@ class SFSEvent extends BaseEvent
 	 * @param	type	The type of event.
 	 * @param	params	An object containing the parameters of the event.
 	 */
-	public function SFSEvent(type:String, params:Dynamic)
+	public function new(type:String, params:Dynamic)
 	{
 		super(type);
 		this.params = params;

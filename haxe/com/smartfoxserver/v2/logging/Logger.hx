@@ -81,6 +81,7 @@ class Logger extends EventDispatcher
 	/** @private */
 	function new(prefix:String="SFS2X")
 	{
+		super();
 		_loggingPrefix = prefix;
 	}
 	
@@ -94,9 +95,9 @@ class Logger extends EventDispatcher
 	}
 	
 	/** @private */
-	private function set_enableConsoleTrace(value:Bool):Void
+	private function set_enableConsoleTrace(value:Bool):Bool
 	{
-		_enableConsoleTrace = value;
+		return _enableConsoleTrace = value;
 	}
 	
 	/**
@@ -114,9 +115,9 @@ class Logger extends EventDispatcher
 	}
 	
 	/** @private */
-	private function set_enableEventDispatching(value:Bool):Void
+	private function set_enableEventDispatching(value:Bool):Bool
 	{
-		_enableEventDispatching = value	;
+		return _enableEventDispatching = value;
 	}
 	
 	/**
@@ -133,9 +134,9 @@ class Logger extends EventDispatcher
 	}
 	
 	/** @private */
-	private function set_loggingLevel(level:Int):Void
+	private function set_loggingLevel(level:Int):Int
 	{
-		_loggingLevel = level;
+		return _loggingLevel = level;
 	}
 	
 	/** @private */

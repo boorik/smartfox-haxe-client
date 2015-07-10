@@ -126,7 +126,7 @@ class MMORoom extends SFSRoom
 	 * 
 	 * @see	com.smartfoxserver.v2.entities.MMOItem MMOItem
 	 */
-	public function getMMOItems():Array
+	public function getMMOItems():Array<IMMOItem>
 	{
 		return Lambda.array(_itemsById);	
 	}

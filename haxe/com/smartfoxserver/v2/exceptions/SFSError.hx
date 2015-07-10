@@ -1,7 +1,8 @@
 package com.smartfoxserver.v2.exceptions;
+import openfl.errors.Error;
 
 /** @private */
-class SFSError extends Dynamic
+class SFSError extends Error
 {
 	private var _details:String;
 	

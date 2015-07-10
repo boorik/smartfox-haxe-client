@@ -232,7 +232,7 @@ class SFSUser implements User
 	}
 	
 	/** @inheritDoc */
-	public function getVariables():Array
+	public function getVariables():Array<UserVariable>
 	{
 		// Return a copy of the Internal data structure as array
 		var variables:Array<Dynamic> = [];
@@ -262,7 +262,7 @@ class SFSUser implements User
 	}
 	
 	/** @private */
-	public function setVariables(userVariables:Array):Void
+	public function setVariables(userVariables:Array<UserVariable>):Void
 	{
 		for(userVar in userVariables)
 		{

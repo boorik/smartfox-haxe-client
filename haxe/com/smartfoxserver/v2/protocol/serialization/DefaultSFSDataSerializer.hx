@@ -694,9 +694,9 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return addData(buffer, data);
 	}
 	
-	private function binEncode_BOOL_ARRAY(buffer:ByteArray, value:Array):ByteArray
+	private function binEncode_BOOL_ARRAY(buffer:ByteArray, value:Array<Bool>):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.BOOL_ARRAY);
 		data.writeShort(value.length);
 		
@@ -719,7 +719,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return addData(buffer, data);
 	}
 	
-	private function binEncode_SHORT_ARRAY(buffer:ByteArray, value:Array):ByteArray
+	private function binEncode_SHORT_ARRAY(buffer:ByteArray, value:Array<Int>):ByteArray
 	{
 		var data:ByteArray<Dynamic> = new ByteArray();
 		data.writeByte(SFSDataType.SHORT_ARRAY);
@@ -733,7 +733,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return addData(buffer, data);
 	}
 	
-	private function binEncode_INT_ARRAY(buffer:ByteArray, value:Array):ByteArray
+	private function binEncode_INT_ARRAY(buffer:ByteArray, value:Array<Int>):ByteArray
 	{
 		var data:ByteArray<Dynamic> = new ByteArray();
 		data.writeByte(SFSDataType.INT_ARRAY);
@@ -747,7 +747,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return addData(buffer, data);
 	}
 	
-	private function binEncode_LONG_ARRAY(buffer:ByteArray, value:Array):ByteArray
+	private function binEncode_LONG_ARRAY(buffer:ByteArray, value:Array<Float>):ByteArray
 	{
 		var data:ByteArray<Dynamic> = new ByteArray();
 		data.writeByte(SFSDataType.LONG_ARRAY);
@@ -761,7 +761,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return addData(buffer, data);
 	}
 	
-	private function binEncode_FLOAT_ARRAY(buffer:ByteArray, value:Array):ByteArray
+	private function binEncode_FLOAT_ARRAY(buffer:ByteArray, value:Array<Float>):ByteArray
 	{
 		var data:ByteArray<Dynamic> = new ByteArray();
 		data.writeByte(SFSDataType.FLOAT_ARRAY);
@@ -775,7 +775,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return addData(buffer, data);
 	}
 	
-	private function binEncode_DOUBLE_ARRAY(buffer:ByteArray, value:Array):ByteArray
+	private function binEncode_DOUBLE_ARRAY(buffer:ByteArray, value:Array<Float>):ByteArray
 	{
 		var data:ByteArray<Dynamic> = new ByteArray();
 		data.writeByte(SFSDataType.DOUBLE_ARRAY);
@@ -789,7 +789,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return addData(buffer, data);
 	}
 	
-	private function binEncode_UTF_STRING_ARRAY(buffer:ByteArray, value:Array):ByteArray
+	private function binEncode_UTF_STRING_ARRAY(buffer:ByteArray, value:Array<String>):ByteArray
 	{
 		var data:ByteArray<Dynamic> = new ByteArray();
 		data.writeByte(SFSDataType.UTF_STRING_ARRAY);
@@ -933,7 +933,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return wrapper;
 	}
 	
-	private function unrollArray(arr:Array):ISFSArray
+	private function unrollArray(arr:Array<Dynamic>):ISFSArray
 	{
 		var sfsArray:ISFSArray<Dynamic> = SFSArray.newInstance();
 		
@@ -1029,7 +1029,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return obj;
 	}
 	
-	private function rebuildArray(sfsArr:ISFSArray):Array
+	private function rebuildArray(sfsArr:ISFSArray):Array<Dynamic>
 	{
 		var arr:Array<Dynamic> = [];
 		
@@ -1155,7 +1155,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	* 
 	*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	*/
-	public function genericArrayToSFSArray(arr:Array, forceToNumber:Bool=false):SFSArray
+	public function genericArrayToSFSArray(arr:Array<Dynamic>, forceToNumber:Bool=false):SFSArray
 	{
 		var sfsa:SFSArray<Dynamic> = new SFSArray();
 		_scanGenericArray(arr, sfsa, forceToNumber);
@@ -1163,7 +1163,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return sfsa;
 	}
 	
-	private function _scanGenericArray(arr:Array, sfsa:ISFSArray, forceToNumber:Bool=false):Void
+	private function _scanGenericArray(arr:Array<Dynamic>, sfsa:ISFSArray, forceToNumber:Bool=false):Void
 	{
 		for(ii in 0...arr.length)
 		{
@@ -1200,7 +1200,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		}
 	}
 	
-	public function sfsArrayToGenericArray(sfsa:ISFSArray):Array
+	public function sfsArrayToGenericArray(sfsa:ISFSArray):Array<Dynamic>
 	{
 		var arr:Array<Dynamic> = [];
 		_scanSFSArray(sfsa, arr);
@@ -1208,7 +1208,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return arr;
 	}
 			
-	private function _scanSFSArray(sfsa:ISFSArray, arr:Array):Void
+	private function _scanSFSArray(sfsa:ISFSArray, arr:Array<Dynamic>):Void
 	{
 		for(ii in 0...sfsa.size())
 		{

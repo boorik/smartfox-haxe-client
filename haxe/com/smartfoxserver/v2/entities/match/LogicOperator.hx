@@ -10,19 +10,19 @@ class LogicOperator
 	/**
 	 * An instance of<em>LogicOperator</em>representing the<b>AND</b>logical operator.
 	 */
-	public static inline var AND:LogicOperator=new LogicOperator("AND")
+	public static inline var AND:LogicOperator = new LogicOperator("AND");
 	
 	/**
 	 * An instance of<em>LogicOperator</em>representing the<b>OR</b>logical operator.
 	 */
-	public static inline var OR:LogicOperator=new LogicOperator("OR")
+	public static inline var OR:LogicOperator = new LogicOperator("OR");
 	
-	private var _id:String
+	private var _id:String;
 	
 	/** @private */
 	function new(id:String)
 	{
-		_id=id
+		_id = id;
 	}
 	
 	/**
@@ -32,6 +32,6 @@ class LogicOperator
 	public var id(get_id, null):String;
  	private function get_id():String
 	{
-		return _id
+		return _id;
 	}
 }

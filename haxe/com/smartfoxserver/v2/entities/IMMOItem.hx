@@ -42,7 +42,7 @@ interface IMMOItem
 	function setVariable(itemVariable:IMMOItemVariable):Void;
 	
 	/** @private */
-	function setVariables(itemVariables:Array):Void;
+	function setVariables(itemVariables:Array<IMMOItemVariable>):Void;
 	
 	/**
 	 * Indicates whether this item has the specified MMOItem Variable set or not.

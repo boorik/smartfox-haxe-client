@@ -9,10 +9,10 @@ package com.smartfoxserver.v2.requests;
  */
 class RoomEvents
 {
-	private var _allowUserEnter:Bool
-	private var _allowUserExit:Bool
-	private var _allowUserCountChange:Bool
-	private var _allowUserVariablesUpdate:Bool
+	private var _allowUserEnter:Bool;
+	private var _allowUserExit:Bool;
+	private var _allowUserCountChange: Bool;
+	private var _allowUserVariablesUpdate:Bool;
 
 	/**
 	 * Creates a new<em>RoomEvents</em>instance.
@@ -22,10 +22,10 @@ class RoomEvents
 	 */
 	public function new()
 	{
-		_allowUserCountChange=false
-		_allowUserEnter=false
-		_allowUserExit=false
-		_allowUserVariablesUpdate=false
+		_allowUserCountChange = false;
+		_allowUserEnter = false;
+		_allowUserExit = false;
+		_allowUserVariablesUpdate = false;
 	}
 	
 	/**
@@ -38,13 +38,13 @@ class RoomEvents
 	public var allowUserEnter(get_allowUserEnter, set_allowUserEnter):Bool;
  	private function get_allowUserEnter():Bool 
 	{ 
-		return _allowUserEnter
+		return _allowUserEnter;
 	}
 	
 	/** @private */
 	private function set_allowUserEnter(value:Bool):Void 
 	{ 
-		_allowUserEnter=value
+		_allowUserEnter = value;
 	}
 	
 	/**
@@ -57,13 +57,13 @@ class RoomEvents
 	public var allowUserExit(get_allowUserExit, set_allowUserExit):Bool;
  	private function get_allowUserExit():Bool 
 	{ 
-		return _allowUserExit
+		return _allowUserExit;
 	}
 	
 	/** @private */
 	private function set_allowUserExit(value:Bool):Void 
 	{ 
-		_allowUserExit=value
+		_allowUserExit = value;
 	}
 	
 	/**
@@ -76,13 +76,13 @@ class RoomEvents
 	public var allowUserCountChange(get_allowUserCountChange, set_allowUserCountChange):Bool;
  	private function get_allowUserCountChange():Bool 
 	{ 
-		return _allowUserCountChange
+		return _allowUserCountChange;
 	}
 	
 	/** @private */
 	private function set_allowUserCountChange(value:Bool):Void 
 	{ 
-		_allowUserCountChange=value
+		_allowUserCountChange = value;
 	}
 	
 	/**
@@ -95,12 +95,12 @@ class RoomEvents
 	public var allowUserVariablesUpdate(get_allowUserVariablesUpdate, set_allowUserVariablesUpdate):Bool;
  	private function get_allowUserVariablesUpdate():Bool 
 	{ 
-		return _allowUserVariablesUpdate
+		return _allowUserVariablesUpdate;
 	}
 	
 	/** @private */
 	private function set_allowUserVariablesUpdate(value:Bool):Void 
 	{ 
-		_allowUserVariablesUpdate=value
+		_allowUserVariablesUpdate = value;
 	}
 }

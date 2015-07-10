@@ -66,7 +66,7 @@ interface Buddy
 	 * @see		com.smartfoxserver.v2.entities.variables.BuddyVariable BuddyVariable
 	 * @see		#getVariable()
 	 */ 
-	function get_variables():Array;
+	function get_variables():Array<BuddyVariable>;
 	
 	/**
 	 * Retrieves a Buddy Variable from its name.
@@ -99,7 +99,7 @@ interface Buddy
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.variables.BuddyVariable#isOffline BuddyVariable.isOffline
 	 */
-	function getOfflineVariables():Array;
+	function getOfflineVariables():Array<BuddyVariable>;
 	
 	/**
 	 * Retrieves the list of non-persistent Buddy Variables of this buddy.
@@ -108,13 +108,13 @@ interface Buddy
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.variables.BuddyVariable#isOffline BuddyVariable.isOffline
 	 */
-	function getOnlineVariables():Array;
+	function getOnlineVariables():Array<BuddyVariable>;
 	
 	/** @private */
 	function setVariable(bVar:BuddyVariable):Void;
 	
 	/** @private */
-	function setVariables(variables:Array):Void;
+	function setVariables(variables:Array<BuddyVariable>):Void;
 	
 	/** @private */
 	function setId(id:Int):Void;

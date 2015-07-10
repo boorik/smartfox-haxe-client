@@ -14,6 +14,7 @@ import flash.net.URLRequestMethod;
 import flash.net.URLVariables;
 import flash.utils.ByteArray;
 import haxe.crypto.Base64;
+import haxe.Timer;
 
 /** @private */
 class BBClient extends EventDispatcher
@@ -43,10 +44,14 @@ class BBClient extends EventDispatcher
 	private var _sessId:String;
 	private var _loader:URLLoader;
 	private var _urlRequest:URLRequest;
-	private var _pollSpeed:Int=DEFAULT_POLL_SPEED;
+	private var _pollSpeed:Int;
 	
 	public function new(host:String="localhost", port:Int=8080, debug:Bool=false)
 	{
+		super();
+		
+		_pollSpeed = DEFAULT_POLL_SPEED;
+		
 		_host=host;
 		_port=port;
 		_debug=debug;
@@ -56,7 +61,7 @@ class BBClient extends EventDispatcher
 	// Getters / Setters
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	
-	public var isConnected(get_isConnected, set_isConnected):Bool;
+	public var isConnected(get_isConnected, null):Bool;
  	private function get_isConnected():Bool
 	{
 		return _sessId !=null;		
@@ -73,33 +78,43 @@ class BBClient extends EventDispatcher
 	{
 		return _host;		
 	}
-	
+	private function set_host(value:String):String
+	{
+		return _host = value;		
+	}
 	public var port(get_port, set_port):Int;
  	private function get_port():Int
 	{
 		return _port;		
 	}
-	
+	 private function set_port(value:Int):Int
+	{
+		return _port = value;		
+	}
 	public var sessionId(get_sessionId, set_sessionId):String;
  	private function get_sessionId():String
 	{
 		return _sessId;		
 	}
+	private function set_sessionId(value:String):String
+	{
+		return _sessId = value;		
+	}
+	public var pollSpeed(get, set):Int;
 	
-	public var pollSpeed(get_pollSpeed, set_pollSpeed):Int;
  	private function get_pollSpeed():Int
 	{
 		return _pollSpeed;
 	}
 	
-	private function set_pollSpeed(value:Int):Void
+	private function set_pollSpeed(value:Int):Int
 	{
-		_pollSpeed=(value>=MIN_POLL_SPEED && value<=MAX_POLL_SPEED)? value:DEFAULT_POLL_SPEED;
+		return _pollSpeed=((value>=MIN_POLL_SPEED && value<=MAX_POLL_SPEED)? value:DEFAULT_POLL_SPEED);
 	}
 	
-	private function set_isDebug(value:Bool):Void
+	private function set_isDebug(value:Bool):Bool
 	{
-		_debug = value;
+		return _debug = value;
 	}
 	
 	
@@ -176,7 +191,7 @@ class BBClient extends EventDispatcher
 		
 		else if(cmd==CMD_POLL)
 		{
-			var binData:ByteArray<Dynamic> = null;
+			var binData:ByteArray = null;
 			
 			// Decode Base64-Encoded string to real ByteArray
 			if(data !=BB_NULL)
@@ -184,7 +199,7 @@ class BBClient extends EventDispatcher
 				
 			// Pre-launch next polling request
 			if(_isConnected)
-				setTimeout(poll, _pollSpeed);
+				Timer.delay(poll, _pollSpeed);
 				
 			// Dispatch the event
 			dispatchEvent(new BBEvent(BBEvent.DATA, { data:binData } ));
@@ -225,12 +240,12 @@ class BBClient extends EventDispatcher
 		_urlRequest.method=URLRequestMethod.POST;
 		
 		// Encode request variables
-		var vars:URLVariables=new URLVariables();
-		vars[SFS_HTTP]=encodeRequest(cmd, data);
+		var vars:URLVariables=new URLVariables(encodeRequest(cmd, data));
+		//vars[SFS_HTTP]=encodeRequest(cmd, data);
 		_urlRequest.data=vars;
 		
 		if(_debug)
-			trace("[ BB-Send ]:" + vars[SFS_HTTP]);
+			trace("[ BB-Send ]:" + vars);
 		
 		// Create HTTP loader and send
 		var urlLoader:URLLoader=getLoader();
@@ -279,7 +294,7 @@ class BBClient extends EventDispatcher
 		
 		// Encode from ByteArray to Base64-String
 		else if(Std.is(data, ByteArray))
-			data = Base64.encodeByteArray(data);
+			data = Base64.encode(data);
 		
 		encoded +=(_sessId==null ? BB_NULL:_sessId)+ SEP + cmd + SEP + data;
 		
@@ -292,7 +307,7 @@ class BBClient extends EventDispatcher
 		if(rawData.substr(0, SFS_HTTP.length)!=SFS_HTTP)
 			throw new ArgumentError("Unexpected Response format. Missing BlueBox header:" +(rawData.length<1024 ? rawData:"[too big data]"));
 		*/
-		return Base64.decodeToByteArray(rawData);			
+		return cast(Base64.decode(rawData),ByteArray);			
 	}
 	
 	

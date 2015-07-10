@@ -12,9 +12,9 @@ package com.smartfoxserver.v2.requests;
  */
 class RoomExtension
 {
-	private var _id:String					//<-- mandatory
-	private var _className:String			//<-- mandatory
-	private var _propertiesFile:String		//<-- optional
+	private var _id:String;					//<-- mandatory
+	private var _className:String;			//<-- mandatory
+	private var _propertiesFile:String;		//<-- optional
 	
 	/**
 	 * Creates a new<em>RoomExtension</em>instance.
@@ -27,9 +27,9 @@ class RoomExtension
 	 */
 	public function new(id:String, className:String)
 	{
-		_id=id
-		_className=className
-		_propertiesFile=""
+		_id = id;
+		_className = className;
+		_propertiesFile = "";
 	}
 	
 	/**
@@ -39,7 +39,7 @@ class RoomExtension
 	public var id(get_id, set_id):String;
  	private function get_id():String
 	{
-		return _id
+		return _id;
 	}
 	
 	/**
@@ -48,7 +48,7 @@ class RoomExtension
 	public var className(get_className, set_className):String;
  	private function get_className():String
 	{
-		return _className
+		return _className;
 	}
 	
 	/**
@@ -60,12 +60,12 @@ class RoomExtension
 	public var propertiesFile(get_propertiesFile, set_propertiesFile):String;
  	private function get_propertiesFile():String
 	{
-		return _propertiesFile
+		return _propertiesFile;
 	}
 	
 	/** @private */
 	private function set_propertiesFile(fileName:String):Void
 	{
-		_propertiesFile=fileName
+		_propertiesFile = fileName;
 	}
 }

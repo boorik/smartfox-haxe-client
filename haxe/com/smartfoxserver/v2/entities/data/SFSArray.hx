@@ -23,7 +23,7 @@ import flash.utils.ByteArray;
 class SFSArray implements ISFSArray
 {
 	private var serializer:ISFSDataSerializer;
-	private var dataHolder:Array;
+	private var dataHolder:Array<SFSDataWrapper>;
 	
 	/**
 	 * Returns a new<em>SFSArray</em>instance.
@@ -40,7 +40,7 @@ class SFSArray implements ISFSArray
 	 * @see		#SFSArray()
 	 * @see		#newInstance()
 	 */
-	public static function newFromArray(arr:Array, forceToNumber:Bool=false):SFSArray
+	public static function newFromArray(arr:Array<Dynamic>, forceToNumber:Bool=false):SFSArray
 	{
 		return DefaultSFSDataSerializer.getInstance().genericArrayToSFSArray(arr, forceToNumber);
 	}
@@ -157,7 +157,7 @@ class SFSArray implements ISFSArray
 	 * @return	The converted Array
 	 * @see SFSDataType
 	 */ 
-	public function toArray():Array
+	public function toArray():Array<Dynamic>
 	{
 		return DefaultSFSDataSerializer.getInstance().sfsArrayToGenericArray(this);
 	}
@@ -293,7 +293,7 @@ class SFSArray implements ISFSArray
 	}
 	
 	/** @inheritDoc */
-	public function addBoolArray(value:Array):Void
+	public function addBoolArray(value:Array<Bool>):Void
 	{
 		addObject(value, SFSDataType.BOOL_ARRAY);	
 	}
@@ -305,37 +305,37 @@ class SFSArray implements ISFSArray
 	}
 	
 	/** @inheritDoc */
-	public function addShortArray(value:Array):Void
+	public function addShortArray(value:Array<Int>):Void
 	{
 		addObject(value, SFSDataType.SHORT_ARRAY);
 	}
 	
 	/** @inheritDoc */
-	public function addIntArray(value:Array):Void
+	public function addIntArray(value:Array<Int>):Void
 	{
 		addObject(value, SFSDataType.INT_ARRAY);	
 	}
 	
 	/** @inheritDoc */
-	public function addLongArray(value:Array):Void
+	public function addLongArray(value:Array<Float>):Void
 	{
 		addObject(value, SFSDataType.LONG_ARRAY);	
 	}
 	
 	/** @inheritDoc */
-	public function addFloatArray(value:Array):Void
+	public function addFloatArray(value:Array<Float>):Void
 	{
 		addObject(value, SFSDataType.FLOAT_ARRAY);	
 	}
 	
 	/** @inheritDoc */
-	public function addDoubleArray(value:Array):Void
+	public function addDoubleArray(value:Array<Float>):Void
 	{
 		addObject(value, SFSDataType.DOUBLE_ARRAY);	
 	}
 	
 	/** @inheritDoc */
-	public function addUtfStringArray(value:Array):Void
+	public function addUtfStringArray(value:Array<String>):Void
 	{
 		addObject(value, SFSDataType.UTF_STRING_ARRAY);
 	}
@@ -445,14 +445,14 @@ class SFSArray implements ISFSArray
 		return(wrapper != null ?(cast(wrapper.data, String)):null);
 	}
 	
-	private function getArray(index:Int):Array
+	private function getArray(index:Int):Array<Dynamic>
 	{
 		var wrapper:SFSDataWrapper = dataHolder[index];
-		return(wrapper != null ?(cast(wrapper.data, Array)):null);
+		return(wrapper != null ?(cast(wrapper.data, Array<Dynamic>)):null);
 	}
 	
 	/** @inheritDoc */
-	public function getBoolArray(index:Int):Array
+	public function getBoolArray(index:Int):Array<Bool>
 	{
 		return getArray(index);
 	}
@@ -465,7 +465,7 @@ class SFSArray implements ISFSArray
 	}
 	
 	/** @inheritDoc */
-	public function getUnsignedByteArray(index:Int):Array
+	public function getUnsignedByteArray(index:Int):Array<Int>
 	{
 		var ba:ByteArray<Dynamic> = getByteArray(index);
 		
@@ -484,37 +484,37 @@ class SFSArray implements ISFSArray
 	}
 	
 	/** @inheritDoc */
-	public function getShortArray(index:Int):Array
+	public function getShortArray(index:Int):Array<Int>
 	{
 		return getArray(index);
 	}
 	
 	/** @inheritDoc */
-	public function getIntArray(index:Int):Array
+	public function getIntArray(index:Int):Array<Int>
 	{
 		return getArray(index);
 	}
 	
 	/** @inheritDoc */
-	public function getLongArray(index:Int):Array
+	public function getLongArray(index:Int):Array<Float>
 	{
 		return getArray(index);
 	}
 	
 	/** @inheritDoc */
-	public function getFloatArray(index:Int):Array
+	public function getFloatArray(index:Int):Array<Float>
 	{
 		return getArray(index);
 	}
 	
 	/** @inheritDoc */
-	public function getDoubleArray(index:Int):Array
+	public function getDoubleArray(index:Int):Array<Float>
 	{
 		return getArray(index);
 	}
 	
 	/** @inheritDoc */
-	public function getUtfStringArray(index:Int):Array
+	public function getUtfStringArray(index:Int):Array<String>
 	{
 		return getArray(index);
 	}

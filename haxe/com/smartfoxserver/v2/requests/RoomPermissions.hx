@@ -9,10 +9,10 @@ package com.smartfoxserver.v2.requests;
  */
 class RoomPermissions
 {
-	private var _allowNameChange:Bool
-	private var _allowPasswordStateChange:Bool
-	private var _allowPublicMessages:Bool
-	private var _allowResizing:Bool
+	private var _allowNameChange:Bool;
+	private var _allowPasswordStateChange:Bool;
+	private var _allowPublicMessages:Bool;
+	private var _allowResizing:Bool;
 	//private var _maxRoomVariables:Int
 	
 	/**
@@ -38,13 +38,13 @@ class RoomPermissions
 	public var allowNameChange(get_allowNameChange, set_allowNameChange):Bool;
  	private function get_allowNameChange():Bool 
 	{ 
-		return _allowNameChange
+		return _allowNameChange;
 	}
 	
 	/** @private */
 	private function set_allowNameChange(value:Bool):Void 
 	{ 
-		_allowNameChange=value
+		_allowNameChange = value;
 	}
 	
 	/**
@@ -59,13 +59,13 @@ class RoomPermissions
 	public var allowPasswordStateChange(get_allowPasswordStateChange, set_allowPasswordStateChange):Bool;
  	private function get_allowPasswordStateChange():Bool 
 	{ 
-		return _allowPasswordStateChange
+		return _allowPasswordStateChange;
 	}
 	
 	/** @private */
 	private function set_allowPasswordStateChange(value:Bool):Void 
 	{ 
-		_allowPasswordStateChange=value
+		_allowPasswordStateChange = value;
 	}
 	
 	/**
@@ -80,13 +80,13 @@ class RoomPermissions
 	public var allowPublicMessages(get_allowPublicMessages, set_allowPublicMessages):Bool;
  	private function get_allowPublicMessages():Bool 
 	{ 
-		return _allowPublicMessages
+		return _allowPublicMessages;
 	}
 	
 	/** @private */
 	private function set_allowPublicMessages(value:Bool):Void 
 	{ 
-		_allowPublicMessages=value
+		_allowPublicMessages = value;
 	}
 	
 	/**
@@ -102,12 +102,12 @@ class RoomPermissions
 	public var allowResizing(get_allowResizing, set_allowResizing):Bool;
  	private function get_allowResizing():Bool 
 	{ 
-		return _allowResizing
+		return _allowResizing;
 	}
 	
 	/** @private */
 	private function set_allowResizing(value:Bool):Void 
 	{ 
-		_allowResizing=value
+		_allowResizing = value;
 	}
 }

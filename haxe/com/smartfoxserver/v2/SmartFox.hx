@@ -806,6 +806,7 @@ class SmartFox extends EventDispatcher
 	private var _minVersion:Int = 2;
 	private var _subVersion:Int = 6;
 
+	
 	// The socket engine
 	private var _bitSwarm:BitSwarmClient;
 	
@@ -1226,7 +1227,7 @@ class SmartFox extends EventDispatcher
 	 * @see		#roomManager
 	 * @see		com.smartfoxserver.v2.entities.Room Room
 	 */
-	public function getRoomListFromGroup(groupId:String):Array
+	public function getRoomListFromGroup(groupId:String):Array<Room>
 	{
 		return roomManager.getRoomListFromGroup(groupId);
 	}
@@ -1496,8 +1497,8 @@ class SmartFox extends EventDispatcher
 	 * @see		com.smartfoxserver.v2.entities.Room Room
 	 * @see		com.smartfoxserver.v2.requests.JoinRoomRequest JoinRoomRequest
 	 */
-	public var joinedRooms(get_joinedRooms, set_joinedRooms):Array;
- 	private function get_joinedRooms():Array
+	public var joinedRooms(get_joinedRooms, set_joinedRooms):Array<Room>;
+ 	private function get_joinedRooms():Array<Room>
 	{
 		return roomManager.getJoinedRooms();
 	}
@@ -1516,8 +1517,8 @@ class SmartFox extends EventDispatcher
 	 * @see 	com.smartfoxserver.v2.requests.SubscribeRoomGroupRequest SubscribeRoomGroupRequest
 	 * @see 	com.smartfoxserver.v2.requests.UnsubscribeRoomGroupRequest UnsubscribeRoomGroupRequest
 	 */
-	public var roomList(get_roomList, set_roomList):Array;
- 	private function get_roomList():Array
+	public var roomList(get_roomList, set_roomList):Array<Room>;
+ 	private function get_roomList():Array<Room>
 	{
 		return _roomManager.getRoomList();
 	}

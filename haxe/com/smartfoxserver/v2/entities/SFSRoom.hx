@@ -58,7 +58,7 @@ class SFSRoom implements Room
 	private var _isManaged:Bool;
 	
 	/** @private */
-	private var _variables:StringMap<Dynamic>;
+	private var _variables:StringMap<RoomVariable>;
 	
 	/** @private */
 	private var _properties:Dynamic;
@@ -255,15 +255,16 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public function getVariables():Array
+	public function getVariables():Array<RoomVariable>
 	{
-		return ArrayUtil.objToArray(_variables)	;
+		//return ArrayUtil.objToArray(_variables)	;
+		return Lambda.array(_variables);
 	}
 	
 	/** @inheritDoc */
 	public function getVariable(name:String):RoomVariable
 	{
-		return _variables[name];
+		return _variables.get(name);
 	}
 	
 	/*
@@ -367,15 +368,15 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public var userList(get_userList, set_userList):Array;
- 	private function get_userList():Array
+	public var userList(get_userList, set_userList):Array<User>;
+ 	private function get_userList():Array<User>
 	{
 		return _userManager.getUserList();
 	}
 	
 	/** @inheritDoc */
-	public var playerList(get_playerList, set_playerList):Array;
- 	private function get_playerList():Array
+	public var playerList(get_playerList, set_playerList):Array<User>;
+ 	private function get_playerList():Array<User>
 	{
 		var playerList:Array<Dynamic> = [];
 		
@@ -389,10 +390,10 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public var spectatorList(get_spectatorList, set_spectatorList):Array;
- 	private function get_spectatorList():Array
+	public var spectatorList(get_spectatorList, set_spectatorList):Array<User>;
+ 	private function get_spectatorList():Array<User>
 	{
-		var spectatorList:Array<Dynamic> = [];
+		var spectatorList:Array<User> = [];
 		
 		for(user in _userManager.getUserList())
 		{
@@ -421,7 +422,7 @@ class SFSRoom implements Room
 	}
 	
 	/** @private */
-	public function setVariables(roomVariables:Array):Void
+	public function setVariables(roomVariables:Array<RoomVariable>):Void
 	{
 		for(roomVar in roomVariables)
 		{
