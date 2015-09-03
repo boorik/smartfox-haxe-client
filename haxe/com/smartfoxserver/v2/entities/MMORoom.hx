@@ -80,30 +80,30 @@ class MMORoom extends SFSRoom
 	}
 	
 	/** @private */
-	private function set_defaultAOI(value:Vec3D):Void
+	private function set_defaultAOI(value:Vec3D):Vec3D
 	{
 		if(_defaultAOI !=null)
-			throw new ArgumentError("This value is read-only");
+			throw "This value is read-only";
 			
-		_defaultAOI=value;
+		return _defaultAOI=value;
 	}
 	
 	/** @private */
-	private function set_lowerMapLimit(value:Vec3D):Void
+	private function set_lowerMapLimit(value:Vec3D):Vec3D
 	{
 		if(_lowerMapLimit !=null)
-			throw new ArgumentError("This value is read-only");
+			throw "This value is read-only";
 
-		_lowerMapLimit=value;
+		return _lowerMapLimit=value;
 	}
 	
 	/** @private */
-	private function set_higherMapLimit(value:Vec3D):Void
+	private function set_higherMapLimit(value:Vec3D):Vec3D
 	{
 		if(_higherMapLimit !=null)
-			throw new ArgumentError("This value is read-only");
+			throw "This value is read-only";
 		
-		_higherMapLimit=value;
+		return _higherMapLimit=value;
 	}
 	
 	/**

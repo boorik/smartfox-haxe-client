@@ -88,6 +88,6 @@ package com.smartfoxserver.v2.entities.managers
 		function getUserList():Array
 		
 		/** @private */
-		function get smartFox():SmartFox
+		var smartFox(get,null):SmartFox
 	}
 }

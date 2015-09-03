@@ -36,7 +36,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	public function new()
 	{
 		if(_lock)
-			throw new Dynamic("Can't use constructor, please use getInstance()method");		
+			throw "Can't use constructor, please use getInstance()method";		
 	}
 	
 	/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -45,7 +45,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 */
 	public function object2binary(obj:ISFSObject):ByteArray
 	{
-		var buffer:ByteArray<Dynamic> = new ByteArray();
+		var buffer:ByteArray = new ByteArray();
 		buffer.writeByte(SFSDataType.SFS_OBJECT);
 		buffer.writeShort(obj.size());
 		
@@ -77,7 +77,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 */
 	public function array2binary(array:ISFSArray):ByteArray
 	{
-		var buffer:ByteArray<Dynamic> = new ByteArray();
+		var buffer:ByteArray = new ByteArray();
 		buffer.writeByte(SFSDataType.SFS_ARRAY);
 		buffer.writeShort(array.size());
 		
@@ -173,7 +173,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function decodeSFSArray(buffer:ByteArray):ISFSArray
 	{
-		var sfsArray:ISFSArray<Dynamic> = SFSArray.newInstance();
+		var sfsArray:ISFSArray = SFSArray.newInstance();
 		
 		// Get tpyeId
 		var headerByte:Int = buffer.readByte();
@@ -305,7 +305,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		
 		// What is this typeID??
 		else
-			throw new Dynamic("Unknow SFSDataType ID:" + headerByte);
+			throw "Unknow SFSDataType ID:" + headerByte;
 		
 		return decodedObject;
 	}
@@ -337,7 +337,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 				buffer = binEncode_FLOAT(buffer, data);
 				
 			case SFSDataType.DOUBLE:
-				buffer = binEncode_DOUBLE(buffer, datat);
+				buffer = binEncode_DOUBLE(buffer, data);
 				
 			case SFSDataType.UTF_STRING:
 				buffer = binEncode_UTF_STRING(buffer, data);
@@ -442,8 +442,8 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		// Encode positive long
 		if(long>-1)
 		{
-			hi32 = long / Math.pow(2, 32);
-			lo32 = long % Math.pow(2, 32);
+			hi32 = Std.int(long / Math.pow(2, 32));
+			lo32 = Std.int(long % Math.pow(2, 32));
 		}	
 		
 		/*
@@ -459,8 +459,8 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			var absVal:Float = Math.abs(long);
 			var negLong:Float = absVal - 1;
 			
-			hi32 = negLong / Math.pow(2, 32);
-			lo32 = negLong % Math.pow(2, 32);
+			hi32 = Std.int(negLong / Math.pow(2, 32));
+			lo32 = Std.int(negLong % Math.pow(2, 32));
 			
 			// Swap bits
 			hi32 = ~hi32;
@@ -508,7 +508,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		if(size<0)
 			throw new SFSCodecError("Array negative size:" + size);
 		
-		var array:ByteArray<Dynamic> = new ByteArray();
+		var array:ByteArray = new ByteArray();
 		
 		// copy bytes
 		buffer.readBytes(array, 0, size);
@@ -616,7 +616,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 
 	private function binEncode_NULL(buffer:ByteArray):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(0x00);
 		
 		return addData(buffer, data);
@@ -624,7 +624,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_BOOL(buffer:ByteArray, value:Bool):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.BOOL);
 		data.writeBoolean(value);
 		
@@ -633,7 +633,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_BYTE(buffer:ByteArray, value:Int):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.BYTE);
 		data.writeByte(value);
 		
@@ -642,7 +642,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_SHORT(buffer:ByteArray, value:Int):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.SHORT);
 		data.writeShort(value);
 		
@@ -651,7 +651,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_INT(buffer:ByteArray, value:Int):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.INT);
 		data.writeInt(value);
 		
@@ -660,7 +660,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_LONG(buffer:ByteArray, value:Float):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.LONG);
 		encodeLongValue(value, data);
 		
@@ -669,7 +669,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_FLOAT(buffer:ByteArray, value:Float):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.FLOAT);
 		data.writeFloat(value);
 		
@@ -678,7 +678,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_DOUBLE(buffer:ByteArray, value:Float):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.DOUBLE);
 		data.writeDouble(value);
 		
@@ -687,7 +687,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_UTF_STRING(buffer:ByteArray, value:String):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.UTF_STRING);
 		data.writeUTF(value);
 		
@@ -710,7 +710,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_BYTE_ARRAY(buffer:ByteArray, value:ByteArray):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.BYTE_ARRAY);
 		data.writeInt(value.length);
 		
@@ -721,7 +721,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_SHORT_ARRAY(buffer:ByteArray, value:Array<Int>):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.SHORT_ARRAY);
 		data.writeShort(value.length);
 		
@@ -735,7 +735,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_INT_ARRAY(buffer:ByteArray, value:Array<Int>):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.INT_ARRAY);
 		data.writeShort(value.length);
 		
@@ -749,7 +749,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_LONG_ARRAY(buffer:ByteArray, value:Array<Float>):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.LONG_ARRAY);
 		data.writeShort(value.length);
 		
@@ -763,7 +763,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_FLOAT_ARRAY(buffer:ByteArray, value:Array<Float>):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.FLOAT_ARRAY);
 		data.writeShort(value.length);
 		
@@ -777,7 +777,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_DOUBLE_ARRAY(buffer:ByteArray, value:Array<Float>):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.DOUBLE_ARRAY);
 		data.writeShort(value.length);
 		
@@ -791,7 +791,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function binEncode_UTF_STRING_ARRAY(buffer:ByteArray, value:Array<String>):ByteArray
 	{
-		var data:ByteArray<Dynamic> = new ByteArray();
+		var data:ByteArray = new ByteArray();
 		data.writeByte(SFSDataType.UTF_STRING_ARRAY);
 		data.writeShort(value.length);
 		
@@ -841,7 +841,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	*/
 	private function encodeClassName(name:String):String
 	{
-		return name.replace("::", ".");
+		return StringTools.replace(name, "::", ".");
 	}
 	 
 	private function convertAsObj(asObj:Dynamic, sfsObj:ISFSObject):Void

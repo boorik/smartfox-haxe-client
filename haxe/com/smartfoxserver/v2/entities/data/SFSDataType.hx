@@ -131,11 +131,14 @@ class SFSDataType
 	 */
 	public static inline var CLASS:Int = 19;
 	
-	private static inline var TYPE_NAMES:Array<Dynamic> = ["NULL" , "BOOL" , "BYTE" , "SHORT" , "INT" , "LONG" , "FLOAT" , "DOUBLE" , "UTF_STRING" , "BOOL_ARRAY" , "BYTE_ARRAY" , "SHORT_ARRAY" , "INT_ARRAY" , "LONG_ARRAY" , "FLOAT_ARRAY" , "DOUBLE_ARRAY" , "UTF_STRING_ARRAY" , "SFS_ARRAY" , "SFS_OBJECT", "CLASS"];
+	private static inline function TYPE_NAMES():Array<Dynamic>
+	{
+		return ["NULL" , "BOOL" , "BYTE" , "SHORT" , "INT" , "LONG" , "FLOAT" , "DOUBLE" , "UTF_STRING" , "BOOL_ARRAY" , "BYTE_ARRAY" , "SHORT_ARRAY" , "INT_ARRAY" , "LONG_ARRAY" , "FLOAT_ARRAY" , "DOUBLE_ARRAY" , "UTF_STRING_ARRAY" , "SFS_ARRAY" , "SFS_OBJECT", "CLASS"];
+	}
 	
 	/** @private */
 	public static function fromId(id:Int):String
 	{
-		return TYPE_NAMES[id];
+		return TYPE_NAMES()[id];
 	}
 }

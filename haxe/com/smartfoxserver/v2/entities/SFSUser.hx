@@ -64,7 +64,7 @@ class SFSUser implements User
 			newUser.setPlayerId(sfsa.getShort(3), room);
 		
 		// Populate variables
-		var uVars:ISFSArray<Dynamic> = sfsa.getSFSArray(4);
+		var uVars:ISFSArray = sfsa.getSFSArray(4);
 		for(i in 0...uVars.size())
 		{
 			newUser.setVariable(SFSUserVariable.fromSFSArray(uVars.getSFSArray(i)));
@@ -94,21 +94,21 @@ class SFSUser implements User
 	}
 	
 	/** @inheritDoc */
-	public var id(get_id, set_id):Int;
+	public var id(get_id, null):Int;
  	private function get_id():Int
 	{
 		return _id;
 	}
 	
 	/** @inheritDoc */
-	public var name(get_name, set_name):String;
+	public var name(get_name, null):String;
  	private function get_name():String
 	{
 		return _name;
 	}
 	
 	/** @inheritDoc */
-	public var playerId(get_playerId, set_playerId):Int;
+	public var playerId(get_playerId, null):Int;
  	private function get_playerId():Int
 	{
 		// Return from default room
@@ -130,9 +130,9 @@ class SFSUser implements User
 	}
 	
 	/** @private */
-	private function set_privilegeId(value:Int):Void
+	private function set_privilegeId(value:Int):Int
 	{
-		_privilegeId = value;
+		return _privilegeId = value;
 	}
 	
 	/** @inheritDoc */
@@ -160,14 +160,14 @@ class SFSUser implements User
 	}
 	
 	/** @inheritDoc */
-	public var isPlayer(get_isPlayer, set_isPlayer):Bool;
+	public var isPlayer(get_isPlayer, null):Bool;
  	private function get_isPlayer():Bool
 	{
 		return playerId > 0;
 	}
 	
 	/** @inheritDoc */
-	public var isSpectator(get_isSpectator, set_isSpectator):Bool;
+	public var isSpectator(get_isSpectator, null):Bool;
  	private function get_isSpectator():Bool
 	{
 		return !this.isPlayer;
@@ -178,8 +178,8 @@ class SFSUser implements User
 	{			
 		var pId:Int = 0;
 		
-		if(_playerIdByRoomId[room.id] !=null)
-			pId = _playerIdByRoomId[room.id];
+		if(_playerIdByRoomId.exists(room.id) !=null)
+			pId = _playerIdByRoomId.get(room.id);
 	
 		return pId;
 	}
@@ -187,29 +187,29 @@ class SFSUser implements User
 	/** @private */
 	public function setPlayerId(id:Int, room:Room):Void
 	{
-		_playerIdByRoomId[room.id] = id;
+		_playerIdByRoomId.set(room.id,id);
 	}
 	
 	/** @private */
 	public function removePlayerId(room:Room):Void
 	{
-		_playerIdByRoomId[room.id];
+		_playerIdByRoomId.remove(room.id);
 	}
 	
 	/** @inheritDoc */
 	public function isPlayerInRoom(room:Room):Bool
 	{
-		return _playerIdByRoomId[room.id] > 0;
+		return _playerIdByRoomId.get(room.id) > 0;
 	}
 	
 	/** @inheritDoc */
 	public function isSpectatorInRoom(room:Room):Bool
 	{
-		return _playerIdByRoomId[room.id] < 0;
+		return _playerIdByRoomId.get(room.id) < 0;
 	}
 	
 	/** @inheritDoc */
-	public var isItMe(get_isItMe, set_isItMe):Bool;
+	public var isItMe(get_isItMe, null):Bool;
  	private function get_isItMe():Bool
 	{
 		return _isItMe;
@@ -223,19 +223,19 @@ class SFSUser implements User
 	}
 	
 	/** @private */
-	private function set_userManager(manager:IUserManager):Void
+	private function set_userManager(manager:IUserManager):IUserManager
 	{
 		if(_userManager !=null)
 			throw new SFSError("Cannot re-assign the User Manager. Already set. User:" + this);
 			
-		_userManager = manager;
+		return _userManager = manager;
 	}
 	
 	/** @inheritDoc */
 	public function getVariables():Array<UserVariable>
 	{
 		// Return a copy of the Internal data structure as array
-		var variables:Array<Dynamic> = [];
+		var variables:Array<UserVariable> = [];
 		for(uv in _variables)
 			variables.push(uv);
 			
@@ -290,9 +290,9 @@ class SFSUser implements User
 	}
 	
 	/** @private */
-	private function set_properties(value:Dynamic):Void
+	private function set_properties(value:Dynamic):Dynamic
 	{
-		_properties = value;	
+		return _properties = value;	
 	}
 	
 	/** @inheritDoc */
@@ -303,9 +303,9 @@ class SFSUser implements User
 	}
 	
 	/** @private */
-	private function set_aoiEntryPoint(loc:Vec3D):Void
+	private function set_aoiEntryPoint(loc:Vec3D):Vec3D
 	{
-		_aoiEntryPoint = loc;
+		return _aoiEntryPoint = loc;
 	}
 	
 	/**

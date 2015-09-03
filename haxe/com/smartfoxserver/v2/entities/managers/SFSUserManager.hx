@@ -105,7 +105,7 @@ class SFSUserManager implements IUserManager
 	public var userCount(get_userCount, null):Int;
  	private function get_userCount():Int
 	{
-		return _usersById.size();
+		return Lambda.count(_usersById);
 	}
 	
 	/** @private */

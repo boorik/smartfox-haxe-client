@@ -4,6 +4,7 @@ import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.exceptions.SFSError;
+import Type;
 
 /**
  * The<em>SFSBuddyVariable</em>object represents a SmartFoxServer Buddy Variable entity on the client.
@@ -152,7 +153,7 @@ class SFSBuddyVariable implements BuddyVariable
 	/** @private */
 	public function toSFSArray():ISFSArray
 	{
-		var sfsa:ISFSArray<Dynamic> = SFSArray.newInstance();
+		var sfsa:ISFSArray = SFSArray.newInstance();
 		
 		// var name(0)
 		sfsa.addUtfString(_name);
@@ -214,38 +215,28 @@ class SFSBuddyVariable implements BuddyVariable
 			
 		else
 		{
-			var typeName:Class = Type.getClass(value);
+			var typeValue = Type.typeof(value);
 			
-			if(typeName=="")
-				_type = VariableType.getTypeName(VariableType.BOOL);
-			
-			// Check if number is Int or Double
-			else if(typeName=="number")
-			{
-				// check if is Int or double
-				if(int(value)==value)
-					_type = VariableType.getTypeName(VariableType.INT);
-				else
+			switch(typeValue) {
+				case ValueType.TBool:
+					_type = VariableType.getTypeName(VariableType.BOOL);
+				case ValueType.TFloat:
 					_type = VariableType.getTypeName(VariableType.DOUBLE);
-			}
-			
-			else if(typeName=="string")
-				_type = VariableType.getTypeName(VariableType.STRING);
-			
-			// Check which type of object is this	
-			else if(typeName=="object")
-			{
-				var className:String = Type.forInstance(value).name;
-				
-				if(className=="SFSObject")
-					_type = VariableType.getTypeName(VariableType.OBJECT);
+				case ValueType.TClass(c):
+					switch(Type.getClassName(c)) {
+						case "String":
+							_type = VariableType.getTypeName(VariableType.STRING);
+						case "SFSObject":
+							_type = VariableType.getTypeName(VariableType.OBJECT);
+						case "SFSArray":
+							_type = VariableType.getTypeName(VariableType.ARRAY);
+						default:
+							throw new SFSError("Unsupport SFS Variable type:" + typeValue);
+					}
+				default:
+					throw new SFSError("Unsupport SFS Variable type:" + typeValue);
 					
-				else if(className=="SFSArray")
-					_type = VariableType.getTypeName(VariableType.ARRAY);
-					
-				else 
-					throw new SFSError("Unsupport SFS Variable type:" + className);
 			}
-		}	
+		}
 	}
 }

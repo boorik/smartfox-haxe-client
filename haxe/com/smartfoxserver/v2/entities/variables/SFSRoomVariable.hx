@@ -74,15 +74,15 @@ class SFSRoomVariable extends SFSUserVariable implements RoomVariable
 	}
 	
 	/** @inheritDoc */
-	private function set_isPrivate(value:Bool):Void
+	private function set_isPrivate(value:Bool):Bool
 	{
-		_isPrivate = value;	
+		return _isPrivate = value;	
 	}
 	
 	/** @private */
-	private function set_isPersistent(value:Bool):Void
+	private function set_isPersistent(value:Bool):Bool
 	{
-		_isPersistent = value;	
+		return _isPersistent = value;	
 	}
 	
 	/**
@@ -98,7 +98,7 @@ class SFSRoomVariable extends SFSUserVariable implements RoomVariable
 	/** @private */
 	override public function toSFSArray():ISFSArray
 	{
-		var arr:ISFSArray<Dynamic> = super.toSFSArray();
+		var arr:ISFSArray = super.toSFSArray();
 		
 		// isPrivate(3)
 		arr.addBool(_isPrivate);

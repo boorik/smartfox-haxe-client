@@ -23,9 +23,9 @@ class Message implements IMessage
 	{
 		return _id;
 	}
-	private function set_id(value:Int):Void
+	private function set_id(value:Int):Int
 	{
-		this._id = value;
+		return this._id = value;
 	}
 	
 	public var content(get_content, set_content):ISFSObject;
@@ -34,9 +34,9 @@ class Message implements IMessage
 		return _content;
 	}
 	
-	private function set_content(obj:ISFSObject):Void
+	private function set_content(obj:ISFSObject):ISFSObject
 	{
-		this._content = obj	;
+		return this._content = obj	;
 	}
 	
 	public var targetController(get_targetController, set_targetController):Int;
@@ -44,9 +44,9 @@ class Message implements IMessage
 	{
 		return _targetController;
 	}
-	private function set_targetController(value:Int):Void
+	private function set_targetController(value:Int):Int
 	{
-		this._targetController = value;	
+		return this._targetController = value;	
 	}
 	
 	public var isEncrypted(get_isEncrypted, set_isEncrypted):Bool;
@@ -54,9 +54,9 @@ class Message implements IMessage
 	{
 		return _isEncrypted;
 	}
-	private function set_isEncrypted(value:Bool):Void
+	private function set_isEncrypted(value:Bool):Bool
 	{
-		_isEncrypted = value;
+		return _isEncrypted = value;
 	}
 	
 	public var isUDP(get_isUDP, set_isUDP):Bool;
@@ -65,9 +65,9 @@ class Message implements IMessage
 		return _isUDP;
 	}
 	
-	private function set_isUDP(value:Bool):Void
+	private function set_isUDP(value:Bool):Bool
 	{
-		_isUDP=value;
+		return _isUDP=value;
 	}
 	
 	public var packetId(get_packetId, set_packetId):Float;
@@ -76,9 +76,9 @@ class Message implements IMessage
 		return _packetId;
 	}
 	
-	private function set_packetId(value:Float):Void
+	private function set_packetId(value:Float):Float
 	{
-		_packetId = value;
+		return _packetId = value;
 	}
 
 	public function toString():String

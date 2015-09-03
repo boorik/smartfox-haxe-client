@@ -1,7 +1,5 @@
 package com.smartfoxserver.v2.entities.variables
-{
-	import as3reflect.Type;
-	
+{	
 	import com.smartfoxserver.v2.entities.data.ISFSArray;
 	import com.smartfoxserver.v2.entities.data.ISFSObject;
 	import com.smartfoxserver.v2.entities.data.SFSArray;
@@ -68,19 +66,19 @@ package com.smartfoxserver.v2.entities.variables
 		}
 		
 		/** @inheritDoc */
-		public function get name():String
+		public function get_name():String
 		{
 			return _name
 		}
 		
 		/** @inheritDoc */
-		public function get type():String
+		public function get_type():String
 		{
 			return _type
 		}
 		
 		/** @inheritDoc */
-		public function getValue():*
+		public function getValue():Dynamic
 		{
 			return _value
 		}

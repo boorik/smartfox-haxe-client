@@ -110,8 +110,8 @@ class LoggerEvent extends BaseEvent
 	 * 
 	 * @return		A string containing all the properties of the<em>LoggerEvent</em>object.
 	 */
-	public override function toString():String
-	{
-		return formatToString("LoggerEvent", "type", "bubbles", "cancelable", "eventPhase", "params");
-	}
+	//public override function toString():String
+	//{
+		//return formatToString("LoggerEvent", "type", "bubbles", "cancelable", "eventPhase", "params");
+	//}
 }

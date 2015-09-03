@@ -14,13 +14,15 @@ interface UserVariable
 	/**
 	 * Indicates the name of this variable.
 	 */
-	function get_name():String;
+	var name(get, null):String;
+	//function get_name():String;
 	
 	/**
 	 * Indicates the type of this variable.
 	 * Possible types are:<code>Null</code>,<code>Bool</code>,<code>Int</code>,<code>Double</code>,<code>String</code>,<code>Object</code>,<code>Array</code>.
 	 */
-	function get_type():String;
+	var type(get, null):String;
+	//function get_type():String;
 	
 	/**
 	 * Retrieves the untyped value of this variable.

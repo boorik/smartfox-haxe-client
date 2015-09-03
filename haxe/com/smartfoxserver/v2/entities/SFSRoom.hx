@@ -100,10 +100,10 @@ class SFSRoom implements Room
 		newRoom.maxUsers = sfsa.getShort(7);
 		
 		// Room vars
-		var varsList:ISFSArray<Dynamic> = sfsa.getSFSArray(8);
+		var varsList:ISFSArray = sfsa.getSFSArray(8);
 		if(varsList.size()>0)
 		{
-			var vars:Array<Dynamic> = new Array();
+			var vars:Array<RoomVariable> = [];
 		
 			for(j in 0...varsList.size())
 			{
@@ -157,13 +157,13 @@ class SFSRoom implements Room
 		// counters
 		_userCount = _specCount = 0;
 		
-		_variables = new StringMap<Dynamic>();
-		_properties = new Dynamic();
+		_variables = new StringMap<RoomVariable>();
+		_properties = {};
 		_userManager = new SFSUserManager(null);	
 	}
 	
 	/** @inheritDoc */
-	public var id(get_id, set_id):Int;
+	public var id(get_id, null):Int;
  	private function get_id():Int
 	{
 		return _id;
@@ -177,13 +177,13 @@ class SFSRoom implements Room
 	}
 	
 	/** @private */
-	private function set_name(value:String):Void
+	private function set_name(value:String):String
 	{
-		_name = value;
+		return _name = value;
 	}
 	
 	/** @inheritDoc */
-	public var groupId(get_groupId, set_groupId):String;
+	public var groupId(get_groupId, null):String;
  	private function get_groupId():String
 	{
 		return _groupId;
@@ -218,27 +218,27 @@ class SFSRoom implements Room
 	}
 	
 	/** @private */
-	private function set_isPasswordProtected(value:Bool):Void
+	private function set_isPasswordProtected(value:Bool):Bool
 	{
-		_isPasswordProtected = value;	
+		return _isPasswordProtected = value;	
 	}
 	
 	/** @private */
-	private function set_isJoined(value:Bool):Void
+	private function set_isJoined(value:Bool):Bool
 	{
-		_isJoined = value;
+		return _isJoined = value;
 	}
 	
 	/** @private */
-	private function set_isGame(value:Bool):Void
+	private function set_isGame(value:Bool):Bool
 	{
-		_isGame = value;	
+		return _isGame = value;	
 	}
 	
 	/** @private */
-	private function set_isHidden(value:Bool):Void
+	private function set_isHidden(value:Bool):Bool
 	{
-		_isHidden = value;
+		return _isHidden = value;
 	}
 	
 	/** @private */
@@ -249,9 +249,9 @@ class SFSRoom implements Room
 	}
 	
 	/** @private */
-	private function set_isManaged(value:Bool):Void
+	private function set_isManaged(value:Bool):Bool
 	{
-		_isManaged = value;
+		return _isManaged = value;
 	}
 	
 	/** @inheritDoc */
@@ -301,7 +301,7 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public var capacity(get_capacity, set_capacity):Int;
+	public var capacity(get_capacity, null):Int;
  	private function get_capacity():Int
 	{
 		return _maxUsers + _maxSpectators;
@@ -332,27 +332,27 @@ class SFSRoom implements Room
 	}
 	
 	/** @private */
-	private function set_userCount(value:Int):Void
+	private function set_userCount(value:Int):Int
 	{
-		_userCount = value ;
+		return _userCount = value ;
 	}
 	
 	/** @private */
-	private function set_maxUsers(value:Int):Void
+	private function set_maxUsers(value:Int):Int
 	{
-		_maxUsers = value;
+		return _maxUsers = value;
 	}
 	
 	/** @private */
-	private function set_spectatorCount(value:Int):Void
+	private function set_spectatorCount(value:Int):Int
 	{
-		_specCount = value;
+		return _specCount = value;
 	}
 	
 	/** @private */
-	private function set_maxSpectators(value:Int):Void
+	private function set_maxSpectators(value:Int):Int
 	{
-		_maxSpectators = value;
+		return _maxSpectators = value;
 	}
 	
 	/** @inheritDoc */
@@ -368,17 +368,17 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public var userList(get_userList, set_userList):Array<User>;
+	public var userList(get_userList, null):Array<User>;
  	private function get_userList():Array<User>
 	{
 		return _userManager.getUserList();
 	}
 	
 	/** @inheritDoc */
-	public var playerList(get_playerList, set_playerList):Array<User>;
+	public var playerList(get_playerList, null):Array<User>;
  	private function get_playerList():Array<User>
 	{
-		var playerList:Array<Dynamic> = [];
+		var playerList:Array<User> = [];
 		
 		for(user in _userManager.getUserList())
 		{
@@ -390,7 +390,7 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public var spectatorList(get_spectatorList, set_spectatorList):Array<User>;
+	public var spectatorList(get_spectatorList, null):Array<User>;
  	private function get_spectatorList():Array<User>
 	{
 		var spectatorList:Array<User> = [];
@@ -444,9 +444,9 @@ class SFSRoom implements Room
 	}
 	
 	/** @private */
-	private function set_properties(value:Dynamic):Void
+	private function set_properties(value:Dynamic):Dynamic
 	{
-		_properties = value;
+		return _properties = value;
 	}
 	
 	/** @private */
@@ -469,18 +469,18 @@ class SFSRoom implements Room
 	}
 	
 	/** @private */
-	private function set_roomManager(value:IRoomManager):Void
+	private function set_roomManager(value:IRoomManager):IRoomManager
 	{
 		if(_roomManager !=null)
 			throw new SFSError("Room manager already assigned. Room:" + this);
 			
-		_roomManager = value	;  
+		return _roomManager = value	;  
 	}
 	
 	/** @private */
-	public function setPasswordProtected(isProtected:Bool):Void
+	public function setPasswordProtected(isProtected:Bool):Bool
 	{
-		_isPasswordProtected = isProtected;
+		return _isPasswordProtected = isProtected;
 	}
 	
 	/**
@@ -500,14 +500,14 @@ class SFSRoom implements Room
 	public function merge(anotherRoom:Room):Void
 	{
 		// Clear all vars
-		_variables=[];
+		_variables= new StringMap<RoomVariable>();
 		
 		// Copy Variables
 		for(rv in anotherRoom.getVariables())
 			_variables.set(rv.name,rv);
 		
 		// Rebuild User List
-		_userManager.clearAll();
+		cast(_userManager,SFSUserManager).clearAll();
 		
 		for(user in anotherRoom.userList)
 			_userManager.addUser(user);

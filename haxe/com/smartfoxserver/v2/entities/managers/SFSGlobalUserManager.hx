@@ -31,7 +31,8 @@ class SFSGlobalUserManager extends SFSUserManager
 		{
 			//trace("User duplicate FOUND. Incrementing value")
 			super._addUser(user);
-			_roomRefCount.get(user)++;	
+			var n = _roomRefCount.get(user);
+			_roomRefCount.set(user,n++);	
 		}			
 	}
 	
@@ -51,7 +52,8 @@ class SFSGlobalUserManager extends SFSUserManager
 				return;
 			}
 			
-			_roomRefCount.get(user)--;
+			var n = _roomRefCount.get(user);
+			_roomRefCount.set(user,n--);
 			
 			if(_roomRefCount.get(user)==0 || disconnected)
 			{

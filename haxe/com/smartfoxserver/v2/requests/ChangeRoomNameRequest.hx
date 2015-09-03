@@ -3,6 +3,7 @@ package com.smartfoxserver.v2.requests;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
+import openfl.errors.Error;
 
 /**
  * Changes the name of a Room.
@@ -71,7 +72,7 @@ class ChangeRoomNameRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<Error> = [];
 		
 		// Missing room id
 		if(_room==null)

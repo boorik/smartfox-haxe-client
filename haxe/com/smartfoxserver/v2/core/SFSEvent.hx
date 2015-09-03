@@ -1646,8 +1646,8 @@ class SFSEvent extends BaseEvent
 	 * 
 	 * @return		A string containing all the properties of the<em>SFSEvent</em>object.
 	 */
-	public override function toString():String
-	{
-		return formatToString("SFSEvent", "type", "bubbles", "cancelable", "eventPhase", "params");
-	}
+	//public override function toString():String
+	//{
+		//return formatToString("SFSEvent", "type", "bubbles", "cancelable", "eventPhase", "params");
+	//}
 }

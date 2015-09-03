@@ -4,6 +4,7 @@ import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
 import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
 import com.smartfoxserver.v2.protocol.serialization.ISFSDataSerializer;
+import haxe.ds.StringMap;
 
 import flash.utils.ByteArray;
 
@@ -22,7 +23,7 @@ import flash.utils.ByteArray;
  */
 class SFSObject implements ISFSObject
 {
-	private var dataHolder:Dynamic;
+	private var dataHolder:Map<String,Dynamic>;
 	private var serializer:ISFSDataSerializer;
 	
 	/**
@@ -84,7 +85,7 @@ class SFSObject implements ISFSObject
 	 */
 	public function new()
 	{
-		dataHolder = { };
+		dataHolder = new Map<String,Dynamic>();
 		serializer = DefaultSFSDataSerializer.getInstance();
 	}
 
@@ -219,7 +220,7 @@ class SFSObject implements ISFSObject
 		
 		// We do this only if the object is not empty
 		if(size()>0)
-			strDump = strDump.slice(0, strDump.length - 1);
+			strDump = strDump.substring(0, strDump.length - 1);
 		
 		strDump += DefaultObjectDumpFormatter.TOKEN_INDENT_CLOSE;
 		
@@ -336,7 +337,7 @@ class SFSObject implements ISFSObject
 	/** @inheritDoc */
 	public function getBoolArray(key:String):Array<Bool>
 	{
-		return getArray(key);
+		return cast getArray(key);
 	}
 	
 	/** @inheritDoc */
@@ -353,7 +354,7 @@ class SFSObject implements ISFSObject
 	/** @inheritDoc */
 	public function getUnsignedByteArray(key:String):Array<Int>
 	{
-		var ba:ByteArray<Dynamic> = getByteArray(key);
+		var ba:ByteArray = getByteArray(key);
 		
 		if(ba==null)
 			return null;
@@ -372,37 +373,37 @@ class SFSObject implements ISFSObject
 	/** @inheritDoc */
 	public function getShortArray(key:String):Array<Int>
 	{
-		return getArray(key);
+		return cast getArray(key);
 	}
 	
 	/** @inheritDoc */
 	public function getIntArray(key:String):Array<Int>
 	{
-		return getArray(key);	
+		return cast getArray(key);	
 	}
 	
 	/** @inheritDoc */
 	public function getLongArray(key:String):Array<Float>
 	{
-		return getArray(key);	
+		return cast getArray(key);	
 	}
 	
 	/** @inheritDoc */
 	public function getFloatArray(key:String):Array<Float>
 	{
-		return getArray(key);
+		return cast getArray(key);
 	}
 	
 	/** @inheritDoc */
 	public function getDoubleArray(key:String):Array<Float>
 	{
-		return getArray(key);
+		return cast getArray(key);
 	}
 	
 	/** @inheritDoc */
 	public function getUtfStringArray(key:String):Array<String>
 	{
-		return getArray(key);
+		return cast getArray(key);
 	}
 	
 	// Nested objects

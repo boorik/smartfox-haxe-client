@@ -55,7 +55,7 @@ class SFSBuddy implements Buddy
 			arr.size()>3 ? arr.getBool(4):false			// isTemp is optional, we have to check
 		);
 		
-		var bVarsData:ISFSArray<Dynamic> = arr.getSFSArray(3);// variables data array
+		var bVarsData:ISFSArray = arr.getSFSArray(3);// variables data array
 		
 		for(j in 0...bVarsData.size())
 		{

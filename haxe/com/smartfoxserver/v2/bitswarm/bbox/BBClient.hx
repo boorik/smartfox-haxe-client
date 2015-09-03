@@ -260,7 +260,7 @@ class BBClient extends EventDispatcher
 		urlLoader.dataFormat=URLLoaderDataFormat.TEXT;
 		urlLoader.addEventListener(Event.COMPLETE, onHttpResponse);
 		urlLoader.addEventListener(IOErrorEvent.IO_ERROR, onHttpIOError);
-		urlLoader.addEventListener(IOErrorEvent.NETWORK_ERROR, onHttpIOError);
+		//urlLoader.addEventListener(IOErrorEvent.NETWORK_ERROR, onHttpIOError);
 		urlLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
 		
 		return urlLoader;

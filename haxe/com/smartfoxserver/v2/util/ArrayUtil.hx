@@ -5,7 +5,7 @@ class ArrayUtil
 {
 	public function new()
 	{
-		throw new Dynamic("This class contains static methods only! Do not instaniate it");
+		throw "This class contains static methods only! Do not instaniate it";
 	}
 	
 	public static function removeElement(arr:Array<Dynamic>, item:Dynamic):Void
@@ -30,7 +30,7 @@ class ArrayUtil
 		var array:Array<Dynamic> = [];
 		
 		for(o in Reflect.fields(obj))
-			array.push(Reflect.field(o));
+			array.push(Reflect.field(obj,o));
 			
 		return array;
 	}

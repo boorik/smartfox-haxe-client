@@ -1,4 +1,5 @@
 package com.smartfoxserver.v2.entities.variables;
+import haxe.io.Error;
 
 /**
  * The<em>VariableType</em>class contains the constants defining the valid types of User, Room and Buddy Variables to be passed to their constructors.
@@ -48,24 +49,27 @@ class VariableType
 	// --------------------------------------------
 	
 	
-	private static inline var TYPES_AS_STRING:Array<String> = ["Null", "Bool", "Int", "Double", "String", "Object", "Array"];
+	private static inline function TYPES_AS_STRING():Array<String>
+	{
+		return ["Null", "Bool", "Int", "Double", "String", "Object", "Array"];
+	}
 	
 	/** @private */
 	public static function getTypeName(id:Int):String
 	{
-		return TYPES_AS_STRING[id];
+		return TYPES_AS_STRING()[id];
 	}
 	
 	/** @private */
 	public static function getTypeFromName(name:String):Int
 	{
-		return TYPES_AS_STRING.indexOf(name);
+		return TYPES_AS_STRING().indexOf(name);
 	}
 			
 	// No instantiation please!
 	/** @private */
 	public function new()
 	{
-		throw new Dynamic("This class is not instantiable");
+		throw "This class is not instantiable";
 	}
 }

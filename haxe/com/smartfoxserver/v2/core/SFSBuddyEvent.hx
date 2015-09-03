@@ -375,9 +375,9 @@ class SFSBuddyEvent extends BaseEvent
 	 * 
 	 * @return		A string containing all the properties of the<em>SFSBuddyEvent</em>object.
 	 */
-	public override function toString():String
-	{
-		return formatToString("SFSBuddyEvent", "type", "bubbles", "cancelable", "eventPhase", "params");
-	}
+	//public override function toString():String
+	//{
+		//return formatToString("SFSBuddyEvent", "type", "bubbles", "cancelable", "eventPhase", "params");
+	//}
 
 }

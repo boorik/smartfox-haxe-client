@@ -130,7 +130,7 @@ class SFSArray implements ISFSArray
 	/** @inheritDoc */
 	public function removeElementAt(index:Int):Dynamic
 	{
-		dataHolder.splice(index, 1);
+		return dataHolder.splice(index, 1);
 	}
 	
 	/** @inheritDoc */
@@ -219,7 +219,7 @@ class SFSArray implements ISFSArray
 		
 		// We do this only if the object is not empty
 		if(size()>0)
-			strDump = strDump.slice(0, strDump.length - 1);
+			strDump = strDump.substring(0, strDump.length - 1);
 			
 		strDump += DefaultObjectDumpFormatter.TOKEN_INDENT_CLOSE;
 		
@@ -388,10 +388,10 @@ class SFSArray implements ISFSArray
 	}
 	
 	/** @inheritDoc */
-	public function getBool(index:Int):Bool
+	public function getBool(index:Int):Null<Bool>
 	{
 		var wrapper:SFSDataWrapper = dataHolder[index];
-		return(wrapper != null ?cast(wrapper.data,Bool):Null);
+		return(wrapper != null ?cast(wrapper.data,Bool):null);
 	}
 	
 	/** @inheritDoc */
@@ -454,7 +454,7 @@ class SFSArray implements ISFSArray
 	/** @inheritDoc */
 	public function getBoolArray(index:Int):Array<Bool>
 	{
-		return getArray(index);
+		return cast getArray(index);
 	}
 	
 	/** @inheritDoc */
@@ -467,12 +467,12 @@ class SFSArray implements ISFSArray
 	/** @inheritDoc */
 	public function getUnsignedByteArray(index:Int):Array<Int>
 	{
-		var ba:ByteArray<Dynamic> = getByteArray(index);
+		var ba:ByteArray = getByteArray(index);
 		
 		if(ba==null)
 			return null;
 			
-		var unsignedBytes:Array<Dynamic> = [];
+		var unsignedBytes:Array<Int> = [];
 		
 		ba.position = 0;
 		for(i in 0...ba.length)
@@ -486,37 +486,37 @@ class SFSArray implements ISFSArray
 	/** @inheritDoc */
 	public function getShortArray(index:Int):Array<Int>
 	{
-		return getArray(index);
+		return cast getArray(index);
 	}
 	
 	/** @inheritDoc */
 	public function getIntArray(index:Int):Array<Int>
 	{
-		return getArray(index);
+		return cast getArray(index);
 	}
 	
 	/** @inheritDoc */
 	public function getLongArray(index:Int):Array<Float>
 	{
-		return getArray(index);
+		return cast getArray(index);
 	}
 	
 	/** @inheritDoc */
 	public function getFloatArray(index:Int):Array<Float>
 	{
-		return getArray(index);
+		return cast getArray(index);
 	}
 	
 	/** @inheritDoc */
 	public function getDoubleArray(index:Int):Array<Float>
 	{
-		return getArray(index);
+		return cast getArray(index);
 	}
 	
 	/** @inheritDoc */
 	public function getUtfStringArray(index:Int):Array<String>
 	{
-		return getArray(index);
+		return cast getArray(index);
 	}
 	
 	/** @inheritDoc */

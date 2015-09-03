@@ -64,9 +64,9 @@ class SFSInvitation implements Invitation
 	}
 	
 	/** @private */
-	private function set_id(value:Int):Void
+	private function set_id(value:Int):Int
 	{
-		_id = value;
+		return _id = value;
 	}
 	
 	/** @inheritDoc */

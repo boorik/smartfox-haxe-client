@@ -18,7 +18,7 @@ class Main extends Sprite
 		
 		var sfs = new SmartFox(true);
 		sfs.connect("sfs.chapatiz.com", 9933);
-		
+		//trace("Type:" + Type.typeof("toto"));
 		// Assets:
 		// openfl.Assets.getBitmapData("img/assetname.jpg");
 	}

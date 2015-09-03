@@ -31,7 +31,7 @@ class MMOItem implements IMMOItem
 		var item:IMMOItem=new MMOItem(encodedItem.getElementAt(0));
 		
 		// Decode ItemVariables(Index=1 of the SFSArray)
-		var encodedVars:ISFSArray<Dynamic>=encodedItem.getSFSArray(1);
+		var encodedVars:ISFSArray = encodedItem.getSFSArray(1);
 		
 		for(i in 0...encodedVars.size())
 		{
@@ -59,6 +59,10 @@ class MMOItem implements IMMOItem
  	private function get_id():Int
 	{
 		return _id;
+	}
+	private function set_id(value:Int):Int
+	{
+		return _id = value;
 	}
 	
 	/** @inheritDoc */
@@ -115,9 +119,9 @@ class MMOItem implements IMMOItem
 	}
 	
 	/** @private */
-	private function set_aoiEntryPoint(loc:Vec3D):Void
+	private function set_aoiEntryPoint(loc:Vec3D):Vec3D
 	{
-		_aoiEntryPoint=loc;
+		return _aoiEntryPoint=loc;
 	}
 	
 	/**
