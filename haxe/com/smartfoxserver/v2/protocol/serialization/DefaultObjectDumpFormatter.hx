@@ -114,7 +114,7 @@ class DefaultObjectDumpFormatter
 		{
 			currByte = ba.readByte() & 0xff;
 
-			var hexByte:String = currByte.toString(16).toUpperCase();
+			var hexByte:String =Std.string(currByte).toUpperCase();
 			if(hexByte.length==1)
 				hexByte = "0" + hexByte;
 			

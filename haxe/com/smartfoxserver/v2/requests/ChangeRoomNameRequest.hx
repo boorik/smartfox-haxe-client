@@ -72,7 +72,7 @@ class ChangeRoomNameRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Error> = [];
+		var errors:Array<String> = [];
 		
 		// Missing room id
 		if(_room==null)

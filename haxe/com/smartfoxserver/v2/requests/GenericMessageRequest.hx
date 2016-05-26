@@ -8,6 +8,7 @@ import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.logging.Logger;
+import openfl.errors.ArgumentError;
 
 /** @private */
 class GenericMessageRequest extends BaseRequest
@@ -81,7 +82,7 @@ class GenericMessageRequest extends BaseRequest
 		if(_type<0)
 			throw new SFSValidationError("PublicMessage request error", ["Unsupported message type:" + _type]);
 			
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		switch(_type)
 		{
@@ -271,11 +272,11 @@ class GenericMessageRequest extends BaseRequest
 			_room = sfs.lastJoinedRoom;
 			
 		// Populate a recipient list, no duplicates allowed
-		var recipients:ListSet = new ListSet();
+		var recipients:Map<Int,Bool> = new Map<Int,Bool>();
 		
 		if(Std.is(_recipient, Array))
 		{
-			var potentialRecipients:Array<Dynamic> = cast(_recipient, Array);
+			var potentialRecipients:Array<Dynamic> = cast(_recipient, Array<Dynamic>);
 			
 			// Check that recipient list is not bigger than the Room capacity 
 			if(potentialRecipients.length>_room.capacity)
@@ -285,7 +286,7 @@ class GenericMessageRequest extends BaseRequest
 			for(item in potentialRecipients)
 			{
 				if(Std.is(item, User))
-					recipients.set(item.id);
+					recipients.set(item.id,true);
 				else
 					sfs.logger.warn("Bad recipient in DynamicMessage recipient list:" +Type.typeof(item) + ", expected type:User");
 			}
@@ -295,8 +296,14 @@ class GenericMessageRequest extends BaseRequest
 		_sfso.putInt(KEY_ROOM_ID, _room.id);
 		_sfso.putSFSObject(KEY_XTRA_PARAMS, _params);
 		
+		var r = [];
+		for (k in recipients.keys())
+		{
+			r.push(k);
+		}
+		
 		// Optional user list
-		if(recipients.size()>0)
-			_sfso.putIntArray(KEY_RECIPIENT, recipients.toDA().getArray());
+		if(r.length>0)
+			_sfso.putIntArray(KEY_RECIPIENT, r);
 	}
 }

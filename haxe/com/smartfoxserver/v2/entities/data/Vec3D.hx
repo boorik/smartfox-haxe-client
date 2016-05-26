@@ -91,6 +91,10 @@ class Vec3D
 	}
 	
 	/** @private */
+	public function toIntArray():Array<Int>
+	{
+		return [Std.int(_px), Std.int(_py), Std.int(_pz)];
+	}
 	public function toArray():Array<Float>
 	{
 		return [_px, _py, _pz];

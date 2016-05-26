@@ -18,6 +18,6 @@ class BuddyOnlineState
 	
 	public function new()
 	{
-		throw new Dynamic("This class should not be instantiated");
+		throw "This class should not be instantiated";
 	}
 }

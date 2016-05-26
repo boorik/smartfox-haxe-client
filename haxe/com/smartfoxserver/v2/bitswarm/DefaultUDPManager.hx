@@ -29,18 +29,18 @@ class DefaultUDPManager implements IUDPManager
 	{
 		logUsageError();
 	}
-	
-	public var inited(get_inited, set_inited):Bool;
+	@:isVar
+	public var inited(get, set):Bool;
  	private function get_inited():Bool
 	{
 		return false;
 	}
-	
-	public var sfs(null, set_sfs):SmartFox;
- 	private function set_sfs(sfs:SmartFox):Void
+	private function set_inited(value:Bool):Bool
 	{
-		// Not used here, we do it in the constructor
+		return inited = value;
 	}
+	
+	public var sfs(default, null):SmartFox;
 	
 	public function reset():Void
 	{

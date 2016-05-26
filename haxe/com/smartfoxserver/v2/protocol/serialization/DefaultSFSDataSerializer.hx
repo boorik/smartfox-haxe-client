@@ -846,8 +846,9 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 
 	private function convertAsObj(asObj:Dynamic, sfsObj:ISFSObject):Void
 	{
-		var type:Type = Type.forInstance(asObj);
-		var classFullName:String = encodeClassName(ClassUtils.getFullyQualifiedName(type.clazz));
+		//var type:Type = Type.forInstance(asObj);
+		var type:Class<Dynamic> = Type.getClass(asObj);
+		var classFullName:String = Type.getClassName(type);//encodeClassName(ClassUtils.getFullyQualifiedName(type.clazz));
 		
 		if(classFullName==null)
 			throw new SFSCodecError("Cannot detect class name:" + sfsObj);
@@ -855,19 +856,19 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		if(!(Std.is(asObj, SerializableSFSType)))
 			throw new SFSCodecError("Cannot serialize object:" + asObj + ", type:" + classFullName + " -- It doesn't implement the SerializableSFSType Interface");
 			
-		var fieldList:ISFSArray<Dynamic> = SFSArray.newInstance();
+		var fieldList:ISFSArray = SFSArray.newInstance();
 		
 		sfsObj.putUtfString(CLASS_MARKER_KEY, classFullName);
 		sfsObj.putSFSArray(CLASS_FIELDS_KEY, fieldList);
 		
-		for(field in type.fields)
+		for(fieldName in Type.getInstanceFields(type))//Reflect??
 		{
 			// Skip static fields(including 'prototype')
-			if(field.isStatic)
-				continue;
+			//if(field.isStatic)
+				//continue;
 			
-			var fieldName:String = field.name;
-			var fieldValue:Dynamic = asObj[fieldName];
+			//var fieldName:String = field.name;
+			var fieldValue:Dynamic = Reflect.field(asObj,fieldName);
 				
 			/*
 			* Transient fields in Actionscript 3 are by convention marked with a starting $ 
@@ -901,7 +902,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			return new SFSDataWrapper(SFSDataType.NULL, null);
 			
 		var wrapper:SFSDataWrapper;
-		var type:String = Type.forInstance(value).name;
+		var type:String = Type.getClassName(Type.getClass(value));
 		
 		if(Std.is(value, Bool))
 			wrapper = new SFSDataWrapper(SFSDataType.BOOL, value);
@@ -935,7 +936,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function unrollArray(arr:Array<Dynamic>):ISFSArray
 	{
-		var sfsArray:ISFSArray<Dynamic> = SFSArray.newInstance();
+		var sfsArray:ISFSArray = SFSArray.newInstance();
 		
 		for(j in 0...arr.length)
 			sfsArray.add(wrapASField(arr[j]));
@@ -947,8 +948,8 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	{
 		var sfsObj:ISFSObject = SFSObject.newInstance();
 		
-		for(key in dict)
-			sfsObj.put(key, wrapASField(dict[key]));
+		for(key in Reflect.fields(dict))
+			sfsObj.put(key, wrapASField(Reflect.field(dict,key)));
 			
 		return sfsObj;
 	}
@@ -969,7 +970,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			throw new SFSCodecError("The SFSObject passed does not represent any serialized class.");
 			
 		var className:String = sfsObj.getUtfString(CLASS_MARKER_KEY)	;
-		var theClass:Class = ClassUtils.forName(className);
+		var theClass:Class<Dynamic> = Type.resolveClass(className);
 		asObj = Type.createInstance(theClass,[]);
 		
 		if(!(Std.is(asObj, SerializableSFSType)))
@@ -996,7 +997,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			fieldValue = unwrapAsField(fieldDescriptor.getData(FIELD_VALUE_KEY));
 			//trace("Working on field:" + fieldName + " ->" + fieldValue)
 			// Call the setter and apply value
-			asObj[fieldName] = fieldValue;
+			Reflect.setField(asObj,fieldName,fieldValue);
 		}	
 		
 	}
@@ -1047,7 +1048,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		
 		for(key in sfsObj.getKeys())
 		{
-			dict[key] = unwrapAsField(sfsObj.getData(key));	
+			Reflect.setField(dict,key,unwrapAsField(sfsObj.getData(key)));	
 		}
 		
 		return dict;
@@ -1070,9 +1071,9 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function _scanGenericObject(obj:Dynamic, sfso:ISFSObject, forceToNumber:Bool=false):Void
 	{
-		for(key in obj)
+		for(key in Reflect.fields(obj))
 		{
-			var item:Dynamic = obj[key];
+			var item:Dynamic = Reflect.field(obj,key);
 				
 			if(item==null)
 				sfso.putNull(key);
@@ -1157,7 +1158,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	*/
 	public function genericArrayToSFSArray(arr:Array<Dynamic>, forceToNumber:Bool=false):SFSArray
 	{
-		var sfsa:SFSArray<Dynamic> = new SFSArray();
+		var sfsa:SFSArray = new SFSArray();
 		_scanGenericArray(arr, sfsa, forceToNumber);
 		
 		return sfsa;
@@ -1178,7 +1179,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			
 			else if(Std.is(item, Array))
 			{
-				var subSfsa:ISFSArray<Dynamic> = new SFSArray();
+				var subSfsa:ISFSArray = new SFSArray();
 				sfsa.addSFSArray(subSfsa);
 				
 				// Call recursively

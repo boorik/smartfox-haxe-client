@@ -60,7 +60,7 @@ class SFSErrorCodes
 	/** @private */
 	public function new()
 	{
-		throw new Dynamic("This class cannot be instantiated. Please check the documentation for more details on its usage");
+		throw "This class cannot be instantiated. Please check the documentation for more details on its usage";
 	}
 	
 	/**
@@ -101,7 +101,7 @@ class SFSErrorCodes
 			for(j in 0...params.length)
 			{
 				var src:String = "{" + j + "}";
-				ss = ss.replace(src, params[j]);
+				ss = StringTools.replace(ss,src, params[j]);
 			}
 		}
 		

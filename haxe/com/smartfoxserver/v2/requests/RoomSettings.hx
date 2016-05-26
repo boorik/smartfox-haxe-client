@@ -53,9 +53,9 @@ class RoomSettings
 	}
 	
 	/** @private */
-	private function set_name(value:String):Void 
+	private function set_name(value:String):String 
 	{ 
-		_name = value;
+		return _name = value;
 	}
 	
 	/**
@@ -71,9 +71,9 @@ class RoomSettings
 	}
 	
 	/** @private */
-	private function set_password(value:String):Void 
+	private function set_password(value:String):String 
 	{ 
-		_password = value;
+		return _password = value;
 	}
 	
 	/**
@@ -88,9 +88,9 @@ class RoomSettings
 	}
 	
 	/** @private */
-	private function set_isGame(value:Bool):Void 
+	private function set_isGame(value:Bool):Bool 
 	{ 
-		_isGame = value;
+		return _isGame = value;
 	}
 	
 	/**
@@ -108,9 +108,9 @@ class RoomSettings
 	}
 	
 	/** @private */
-	private function set_maxUsers(value:Int):Void 
+	private function set_maxUsers(value:Int):Int 
 	{ 
-		_maxUsers = value;
+		return _maxUsers = value;
 	}
 	
 	/**
@@ -125,9 +125,9 @@ class RoomSettings
 	}
 	
 	/** @private */
-	private function set_maxVariables(value:Int):Void 
+	private function set_maxVariables(value:Int):Int 
 	{ 
-		_maxVariables = value;
+		return _maxVariables = value;
 	}
 	
 	/**
@@ -144,9 +144,9 @@ class RoomSettings
 	}
 	
 	/** @private */
-	private function set_maxSpectators(value:Int):Void 
+	private function set_maxSpectators(value:Int):Int 
 	{ 
-		_maxSpectators = value;
+		return _maxSpectators = value;
 	}
 	
 	/**
@@ -163,9 +163,9 @@ class RoomSettings
 	}
 	
 	/** @private */
-	private function set_variables(value:Array<RoomVariable>):Void 
+	private function set_variables(value:Array<RoomVariable>):Array<RoomVariable> 
 	{ 
-		_variables = value;
+		return _variables = value;
 	}
 	
 	/** 
@@ -183,9 +183,9 @@ class RoomSettings
 	}
 	
 	/** @private */
-	private function set_permissions(value:RoomPermissions):Void 
+	private function set_permissions(value:RoomPermissions):RoomPermissions 
 	{ 
-		_permissions = value;
+		return _permissions = value;
 	}
 	
 	/** 
@@ -203,9 +203,9 @@ class RoomSettings
 	}
 	
 	/** @private */
-	private function set_events(value:RoomEvents):Void 
+	private function set_events(value:RoomEvents):RoomEvents 
 	{ 
-		_events = value;
+		return _events = value;
 	}
 	
 	/**
@@ -218,9 +218,9 @@ class RoomSettings
 	}
 	
 	/** @private */
-	private function set_extension(value:RoomExtension):Void
+	private function set_extension(value:RoomExtension):RoomExtension
 	{
-		_extension = value;
+		return _extension = value;
 	}
 	
 	/** 
@@ -238,8 +238,8 @@ class RoomSettings
 	}
 	
 	/** @private */
-	private function set_groupId(value:String):Void
+	private function set_groupId(value:String):String
 	{
-		_groupId = value;
+		return _groupId = value;
 	}
 }

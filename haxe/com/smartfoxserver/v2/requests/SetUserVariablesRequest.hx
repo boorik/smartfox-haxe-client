@@ -75,7 +75,7 @@ class SetUserVariablesRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		if(_userVariables==null || _userVariables.length==0)
 			errors.push("No variables were specified");
@@ -88,7 +88,7 @@ class SetUserVariablesRequest extends BaseRequest
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		var varList:ISFSArray<Dynamic> = SFSArray.newInstance();
+		var varList:ISFSArray = SFSArray.newInstance();
 		 
 		for(uVar in _userVariables)
 		{

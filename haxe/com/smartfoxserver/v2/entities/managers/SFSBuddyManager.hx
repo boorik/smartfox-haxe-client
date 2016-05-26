@@ -21,7 +21,7 @@ class SFSBuddyManager implements IBuddyManager
 	private var _buddiesByName:StringMap<Buddy>;
 	
 	/** @private */
-	private var _myVariables:Dynamic;
+	private var _myVariables:Map<String,BuddyVariable>;
 	
 	/** @private */
 	private var _myOnlineState:Bool;
@@ -51,7 +51,7 @@ class SFSBuddyManager implements IBuddyManager
 	{
 		_sfs = sfs;
 		_buddiesByName = new StringMap<Buddy>();
-		_myVariables = { };
+		_myVariables = new Map<String,BuddyVariable>();
 		_inited = false	;
 	}
 	
@@ -126,7 +126,7 @@ class SFSBuddyManager implements IBuddyManager
 	/** @inheritDoc */
 	public function getBuddyByName(name:String):Buddy
 	{
-		return _buddiesByName[name];
+		return _buddiesByName.get(name);
 	}
 	
 	/** @inheritDoc */
@@ -158,6 +158,7 @@ class SFSBuddyManager implements IBuddyManager
 	
 	/** @inheritDoc */
 	public var onlineBuddies(get_onlineBuddies, null):Array<Buddy>;
+	
  	private function get_onlineBuddies():Array<Buddy>
 	{
 		var buddies:Array<Buddy> = [];
@@ -175,20 +176,20 @@ class SFSBuddyManager implements IBuddyManager
 	public var buddyList(get_buddyList, null):Array<Buddy>;
  	private function get_buddyList():Array<Buddy>
 	{
-		return ArrayUtil.objToArray(_buddiesByName);
+		return cast ArrayUtil.objToArray(_buddiesByName);
 	}
 	
 	/** @inheritDoc */
 	public function getMyVariable(varName:String):BuddyVariable
 	{
-		return cast _myVariables[varName];
+		return _myVariables.get(varName);
 	}
 	
 	/** @inheritDoc */
 	public var myVariables(get_myVariables, null):Array<BuddyVariable>;
  	private function get_myVariables():Array<BuddyVariable>
 	{
-		return ArrayUtil.objToArray(_myVariables);	
+		return cast ArrayUtil.objToArray(_myVariables);	
 	}
 	
 	/** @inheritDoc */

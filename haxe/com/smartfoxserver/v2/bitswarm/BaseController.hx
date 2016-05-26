@@ -20,10 +20,10 @@ class BaseController implements IController
 		return _id;
 	}
 	
-	private function set_id(value:Int):Void
+	private function set_id(value:Int):Int
 	{
 		if(_id==-1)
-			_id = value;
+			return _id = value;
 		else
 			throw new SFSError("Controller ID is already set:" + _id + ". Can't be changed at runtime!");
 	}

@@ -42,6 +42,11 @@ class RoomExtension
 		return _id;
 	}
 	
+	private function set_id(value:String):String
+	{
+		return _id = value;
+	}
+	
 	/**
 	 * Returns the fully qualified name of the main class of the Extension.
 	 */
@@ -49,6 +54,10 @@ class RoomExtension
  	private function get_className():String
 	{
 		return _className;
+	}
+	private function set_className(value:String):String
+	{
+		return _className = value;
 	}
 	
 	/**
@@ -64,8 +73,8 @@ class RoomExtension
 	}
 	
 	/** @private */
-	private function set_propertiesFile(fileName:String):Void
+	private function set_propertiesFile(fileName:String):String
 	{
-		_propertiesFile = fileName;
+		return _propertiesFile = fileName;
 	}
 }

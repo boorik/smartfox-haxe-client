@@ -61,7 +61,7 @@ class UnsubscribeRoomGroupRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		// no validation needed
 		if(_groupId==null || _groupId.length==0)

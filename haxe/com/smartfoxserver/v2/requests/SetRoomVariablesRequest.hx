@@ -81,7 +81,7 @@ class SetRoomVariablesRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		// Make sure that the user is joined in the room where variables are going to be set
 		if(_room !=null)
@@ -106,7 +106,7 @@ class SetRoomVariablesRequest extends BaseRequest
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		var varList:ISFSArray<Dynamic> = SFSArray.newInstance();
+		var varList:ISFSArray = SFSArray.newInstance();
 		 
 		for(rv in _roomVariables)
 		{

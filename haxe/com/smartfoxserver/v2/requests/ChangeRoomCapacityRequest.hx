@@ -82,7 +82,7 @@ class ChangeRoomCapacityRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		// Missing room id
 		if(_room==null)

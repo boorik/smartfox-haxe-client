@@ -160,7 +160,7 @@ class CreateRoomRequest extends BaseRequest
 		// Handle Room Variables
 		if(_settings.variables !=null && _settings.variables.length>0)
 		{
-			var roomVars:ISFSArray<Dynamic> = SFSArray.newInstance();
+			var roomVars:ISFSArray = SFSArray.newInstance();
 			
 			for(item in _settings.variables)
 			{
@@ -178,7 +178,7 @@ class CreateRoomRequest extends BaseRequest
 		// Handle Permissions	
 		if(_settings.permissions !=null)
 		{
-			var sfsPermissions:Array<Dynamic> = [];
+			var sfsPermissions:Array<Bool> = [];
 			sfsPermissions.push(_settings.permissions.allowNameChange);
 			sfsPermissions.push(_settings.permissions.allowPasswordStateChange);
 			sfsPermissions.push(_settings.permissions.allowPublicMessages);
@@ -190,7 +190,7 @@ class CreateRoomRequest extends BaseRequest
 		// Handle Events
 		if(_settings.events !=null)
 		{
-			var sfsEvents:Array<Dynamic> = [];
+			var sfsEvents:Array<Bool> = [];
 			sfsEvents.push(_settings.events.allowUserEnter);
 			sfsEvents.push(_settings.events.allowUserExit);
 			sfsEvents.push(_settings.events.allowUserCountChange);
@@ -228,12 +228,12 @@ class CreateRoomRequest extends BaseRequest
 			}
 			else
 			{
-				_sfso.putIntArray(KEY_MMO_DEFAULT_AOI, mmoSettings.defaultAOI.toArray());
+				_sfso.putIntArray(KEY_MMO_DEFAULT_AOI, mmoSettings.defaultAOI.toIntArray());
 				
 				if(mmoSettings.mapLimits !=null)
 				{
-					_sfso.putIntArray(KEY_MMO_MAP_LOW_LIMIT, mmoSettings.mapLimits.lowerLimit.toArray());
-					_sfso.putIntArray(KEY_MMO_MAP_HIGH_LIMIT, mmoSettings.mapLimits.higherLimit.toArray());
+					_sfso.putIntArray(KEY_MMO_MAP_LOW_LIMIT, mmoSettings.mapLimits.lowerLimit.toIntArray());
+					_sfso.putIntArray(KEY_MMO_MAP_HIGH_LIMIT, mmoSettings.mapLimits.higherLimit.toIntArray());
 				}
 			}
 			
@@ -253,7 +253,7 @@ class CreateRoomRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		if(_settings.name==null || _settings.name.length==0)
 			errors.push("Missing room name");

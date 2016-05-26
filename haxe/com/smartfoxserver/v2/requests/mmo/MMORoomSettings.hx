@@ -115,32 +115,32 @@ class MMORoomSettings extends RoomSettings
 	}
 	
 	/** @private */
-	private function set_defaultAOI(value:Vec3D):Void
+	private function set_defaultAOI(value:Vec3D):Vec3D
 	{
-		_defaultAOI=value;
+		return _defaultAOI=value;
 	}
 	
 	/** @private */
-	private function set_mapLimits(value:MapLimits):Void
+	private function set_mapLimits(value:MapLimits):MapLimits
 	{
-		_mapLimits=value;
+		return _mapLimits=value;
 	}
 	
 	/** @private */
-	private function set_userMaxLimboSeconds(value:Int):Void
+	private function set_userMaxLimboSeconds(value:Int):Int
 	{
-		_userMaxLimboSeconds=value;
+		return _userMaxLimboSeconds=value;
 	}
 	
 	/** @private */
-	private function set_proximityListUpdateMillis(value:Int):Void
+	private function set_proximityListUpdateMillis(value:Int):Int
 	{
-		_proximityListUpdateMillis=value;
+		return _proximityListUpdateMillis=value;
 	}
 	
 	/** @private */
-	private function set_sendAOIEntryPoint(value:Bool):Void
+	private function set_sendAOIEntryPoint(value:Bool):Bool
 	{
-		_sendAOIEntryPoint=value;
+		return _sendAOIEntryPoint=value;
 	}
 }

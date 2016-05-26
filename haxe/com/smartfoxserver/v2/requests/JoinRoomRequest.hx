@@ -69,7 +69,7 @@ class JoinRoomRequest extends BaseRequest
 	//private var _id:Int = -1;
 	private var _name:String;
 	private var _pass:String;
-	private var _roomIdToLeave:Float;
+	private var _roomIdToLeave:Int;
 	private var _asSpectator:Bool;
 	
 	/**
@@ -84,7 +84,7 @@ class JoinRoomRequest extends BaseRequest
 	 * 
 	 * @see		com.smartfoxserver.v2.SmartFox#send()SmartFox.send()
 	 */
-	public function new(id:Dynamic, pass:String=null, roomIdToLeave:Float=NaN, asSpect:Bool=false)
+	public function new(id:Dynamic, pass:String=null, roomIdToLeave:Int=-1, asSpect:Bool=false)
 	{
 		super(BaseRequest.JoinRoom);
 		
@@ -103,7 +103,7 @@ class JoinRoomRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		// Missing room id
 		if(_id<0 && _name==null)
@@ -130,8 +130,8 @@ class JoinRoomRequest extends BaseRequest
 		 * If>0 		--->>Leave the Room with that ID
 		 * If<0		--->>Do not leave any Room  
 		 */	
-		if(!isNaN(_roomIdToLeave))
-			_sfso.putInt(KEY_ROOM_TO_LEAVE, _roomIdToLeave);
+		//if(!isNaN(_roomIdToLeave))
+		_sfso.putInt(KEY_ROOM_TO_LEAVE, _roomIdToLeave);
 		
 		if(_asSpectator)
 			_sfso.putBool(KEY_AS_SPECTATOR, _asSpectator);

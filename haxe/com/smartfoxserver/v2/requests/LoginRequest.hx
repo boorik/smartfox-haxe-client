@@ -144,10 +144,6 @@ class LoginRequest extends BaseRequest
 	 */
 	private function getMD5Hash(text:String):String
 	{
-		var hash:IHash = new MD5();
-		var data:ByteArray = Hex.toArray(Hex.fromString(text));
-		
-		// Hash and convert to Hex string
-		return Hex.fromArray(hash.hash(data));
+		return haxe.crypto.Md5.encode(text);
 	}
 }

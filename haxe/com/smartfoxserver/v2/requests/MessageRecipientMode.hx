@@ -1,4 +1,5 @@
 package com.smartfoxserver.v2.requests;
+import openfl.errors.ArgumentError;
 
 /**
  * The<em>MessageRecipientMode</em>class is used to specify the recipient/s of moderator and administrator messages.
@@ -15,7 +16,7 @@ class MessageRecipientMode
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.User User
 	 */
-	public static inline var TO_USER:Int=0
+	public static inline var TO_USER:Int = 0;
 	
 	/**
 	 * The moderator/administrator message will be sent to all the users in a specific Room.
@@ -23,7 +24,7 @@ class MessageRecipientMode
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.Room Room
 	 */
-	public static inline var TO_ROOM:Int=1
+	public static inline var TO_ROOM:Int = 1;
 	
 	/**
 	 * The moderator/administrator message will be sent to all the clients who subscribed a specific Room Group.
@@ -31,16 +32,16 @@ class MessageRecipientMode
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.Room#groupId Room.groupId
 	 */
-	public static inline var TO_GROUP:Int=2
+	public static inline var TO_GROUP:Int = 2;
 	
 	/**
 	 * The moderator/administrator message will be sent to all the users in the Zone.
 	 *<code>null</code>can be passed as<em>target</em>parameter, in fact it will be ignored.
 	 */
-	public static inline var TO_ZONE:Int=3
+	public static inline var TO_ZONE:Int = 3;
 	
-	private var _target:Dynamic
-	private var _mode:Int
+	private var _target:Dynamic;
+	private var _mode:Int;
 	
 	/**
 	 * Creates a new<em>MessageRecipientMode</em>instance.
@@ -55,10 +56,10 @@ class MessageRecipientMode
 	public function new(mode:Int, target:Dynamic)
 	{
 		if(mode<TO_USER || mode>TO_ZONE)
-			throw new ArgumentError("Illegal recipient mode:" + mode)
+			throw new ArgumentError("Illegal recipient mode:" + mode);
 			
-		_mode=mode
-		_target=target
+		_mode = mode;
+		_target = target;
 	}
 	
 	/**
@@ -67,7 +68,7 @@ class MessageRecipientMode
 	public var mode(get_mode, null):Int;
  	private function get_mode():Int
 	{
-		return _mode
+		return _mode;
 	}
 
 	/**
@@ -76,6 +77,6 @@ class MessageRecipientMode
 	public var target(get_target, null):Dynamic;
  	private function get_target():Dynamic
 	{
-		return _target
+		return _target;
 	}
 }

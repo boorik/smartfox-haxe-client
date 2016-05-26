@@ -122,7 +122,7 @@ class InviteUsersRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		if(_invitedUsers==null || _invitedUsers.length<1)
 			errors.push("No invitation(s)to send");
@@ -140,7 +140,7 @@ class InviteUsersRequest extends BaseRequest
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		var invitedUserIds:Array<Dynamic> = [];
+		var invitedUserIds:Array<Int> = [];
 		
 		// Check items validity, accept any User or Buddy object(s)
 		for(item in _invitedUsers)

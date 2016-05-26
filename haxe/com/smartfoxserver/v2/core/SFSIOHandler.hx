@@ -29,10 +29,12 @@ class SFSIOHandler implements IoHandler
 	private var protocolCodec:IProtocolCodec;
 	private var fullPacketDump:Bool=false;
 	
-	private static inline var EMPTY_BUFFER:ByteArray= new ByteArray();
+	private static var EMPTY_BUFFER:ByteArray;
 	
 	public function new(bitSwarm:BitSwarmClient)
 	{
+		EMPTY_BUFFER = new ByteArray();
+		
 		this.bitSwarm = bitSwarm;
 		this.log = bitSwarm.sfs.logger;
 		this.readState = PacketReadState.WAIT_NEW_PACKET;
@@ -53,9 +55,9 @@ class SFSIOHandler implements IoHandler
 	/*
 	* FOR TESTING PURPOSES ONLY
 	*/
-	private function set_codec(codec:IProtocolCodec):Void
+	private function set_codec(codec:IProtocolCodec):IProtocolCodec
 	{
-		this.protocolCodec = codec;
+		return this.protocolCodec = codec;
 	}
 	
 	/*
@@ -121,7 +123,7 @@ class SFSIOHandler implements IoHandler
 		// Decode the header byte
 		var headerByte:Int = data.readByte();
 		
-		if(!(headerByte & 128)>0)
+		if((headerByte & 128)==0)
 		{
 			// NOTE:Added extra debug info, for unexpected packets
 			throw new SFSError("Unexpected header byte:" + headerByte, 0, DefaultObjectDumpFormatter.hexDump(data));
@@ -204,7 +206,7 @@ class SFSIOHandler implements IoHandler
 			pendingPacket.buffer.position = 0;
 			var dataSize:Int = pendingPacket.header.bigSized ? pendingPacket.buffer.readInt():pendingPacket.buffer.readShort();
 			
-			log.debug("DataSize is ready:", dataSize, "bytes");
+			log.debug('DataSize is ready:$dataSize bytes');
 			pendingPacket.header.expectedLen = dataSize;
 			pendingPacket.buffer = new ByteArray();
 			
@@ -272,7 +274,7 @@ class SFSIOHandler implements IoHandler
 	
 	private function resizeByteArray(array:ByteArray, pos:Int, len:Int):ByteArray
 	{
-		var newArray:ByteArray<Dynamic> = new ByteArray();
+		var newArray:ByteArray = new ByteArray();
 		newArray.writeBytes(array, pos, len);
 		newArray.position = 0;
 		
@@ -282,8 +284,8 @@ class SFSIOHandler implements IoHandler
 	
 	public function onDataWrite(message:IMessage):Void
 	{
-		var writeBuffer:ByteArray<Dynamic> = new ByteArray();
-		var binData:ByteArray<Dynamic> = message.content.toBinary();
+		var writeBuffer:ByteArray = new ByteArray();
+		var binData:ByteArray = message.content.toBinary();
 		var isCompressed:Bool = false;
 		
 		// 1. Handle Compression
@@ -357,7 +359,7 @@ class SFSIOHandler implements IoHandler
 		}
 		catch(error:IOError)
 		{
-			log.warn("WriteTCP operation failed due to I/O Dynamic:" + error.toString());
+			log.warn("WriteTCP operation failed due to I/O Dynamic:" + error.message);
 		}
 	}
 	

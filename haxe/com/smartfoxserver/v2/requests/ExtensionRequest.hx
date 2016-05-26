@@ -51,18 +51,18 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
 class ExtensionRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_CMD:String="c"
+	public static inline var KEY_CMD:String = "c";
 	
 	/** @private */
-	public static inline var KEY_PARAMS:String="p"
+	public static inline var KEY_PARAMS:String = "p";
 	
 	/** @private */
-	public static inline var KEY_ROOM:String="r"
+	public static inline var KEY_ROOM:String = "r";
 	
-	private var _extCmd:String
-	private var _params:ISFSObject
-	private var _room:Room
-	private var _useUDP:Bool
+	private var _extCmd:String;
+	private var _params:ISFSObject;
+	private var _room:Room;
+	private var _useUDP:Bool;
 	
 	/**
 	 * Creates a new<em>ExtensionRequest</em>instance.
@@ -79,44 +79,45 @@ class ExtensionRequest extends BaseRequest
 	 */
 	public function new(extCmd:String, params:ISFSObject=null, room:Room=null, useUDP:Bool=false)
 	{
-		super(BaseRequest.CallExtension)
-		_targetController=1
+		super(BaseRequest.CallExtension);
 		
-		_extCmd=extCmd
-		_params=params
-		_room=room
-		_useUDP=useUDP
+		_targetController = 1;
+		
+		_extCmd = extCmd;
+		_params = params;
+		_room = room;
+		_useUDP = useUDP;
 			
 		// since 0.9.6
 		if(_params==null)
-			_params=new SFSObject()
+			_params = new SFSObject();
 	}
 	
 	/** @private */
 	public var useUDP(get_useUDP, null):Bool;
  	private function get_useUDP():Bool
 	{
-		return _useUDP
+		return _useUDP;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<String> = [];
 			
 		if(_extCmd==null || _extCmd.length==0)
-			errors.push("Missing extension command")
+			errors.push("Missing extension command");
 
 		if(errors.length>0)
-			throw new SFSValidationError("ExtensionCall request error", errors)
+			throw new SFSValidationError("ExtensionCall request error", errors);
 		
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		_sfso.putUtfString(KEY_CMD, _extCmd)
-		_sfso.putInt(KEY_ROOM, _room==null ? -1:_room.id)
-		_sfso.putSFSObject(KEY_PARAMS, _params)
+		_sfso.putUtfString(KEY_CMD, _extCmd);
+		_sfso.putInt(KEY_ROOM, _room == null ? -1:_room.id);
+		_sfso.putSFSObject(KEY_PARAMS, _params);
 	}
 }

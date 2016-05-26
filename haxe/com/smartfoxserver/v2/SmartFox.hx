@@ -41,6 +41,7 @@ import com.smartfoxserver.v2.util.ConfigLoader;
 import com.smartfoxserver.v2.util.ConnectionMode;
 import com.smartfoxserver.v2.util.LagMonitor;
 import com.smartfoxserver.v2.util.SFSErrorCodes;
+import openfl.errors.ArgumentError;
 
 import flash.errors.IllegalOperationError;
 import flash.events.EventDispatcher;
@@ -880,6 +881,8 @@ class SmartFox extends EventDispatcher
 	 */
 	public function new(debug:Bool=false)
 	{
+		super();
+		
 		_log = new Logger();
 		_log.enableEventDispatching = true;
 		_debug = debug;
@@ -959,9 +962,9 @@ class SmartFox extends EventDispatcher
 			return;
 		}
 		
-		_clientDetails = (platformId != null ? platformId.replace(CLIENT_TYPE_SEPARATOR, " "):"");
+		_clientDetails = (platformId != null ? StringTools.replace(platformId, CLIENT_TYPE_SEPARATOR, " "):"");
 		_clientDetails +=CLIENT_TYPE_SEPARATOR;
-		_clientDetails += (version != null ? version.replace(CLIENT_TYPE_SEPARATOR, " "):"");
+		_clientDetails += (version != null ? StringTools.replace(version, CLIENT_TYPE_SEPARATOR, " "):"");
 	}
 	
 	/**
@@ -1024,6 +1027,7 @@ class SmartFox extends EventDispatcher
 	 * 
 	 * Available under the Kernel namespace
 	 */
+	@:allow(com.smartfoxserver.v2.controllers)
 	var lagMonitor(get_lagMonitor, set_lagMonitor):LagMonitor;
  	private function get_lagMonitor():LagMonitor
 	{
@@ -1345,7 +1349,7 @@ class SmartFox extends EventDispatcher
 				send(new ManualDisconnectionRequest());
 			
 			// Disconnect the socket
-			setTimeout
+			haxe.Timer.delay
 			(
 				function():Void
 				{
@@ -1481,9 +1485,9 @@ class SmartFox extends EventDispatcher
 	}
 	
 	/** @private */
-	private function set_lastJoinedRoom(value:Room):Void
+	private function set_lastJoinedRoom(value:Room):Room
 	{
-		_lastJoinedRoom = value;	
+		return _lastJoinedRoom = value;	
 	}
 	
 	/**
@@ -1545,6 +1549,11 @@ class SmartFox extends EventDispatcher
 		return _userManager;
 	}
 	
+	private function set_userManager(value:IUserManager):IUserManager
+	{
+		return _userManager = value;
+	}
+	
 	/**
 	 * Returns a reference to the Buddy Manager.
 	 * This manager is used Internally by the SmartFoxServer 2X API;the reference returned by this property
@@ -1554,6 +1563,10 @@ class SmartFox extends EventDispatcher
  	private function get_buddyManager():IBuddyManager
 	{
 		return _buddyManager;
+	}
+	private function set_buddyManager(value:IBuddyManager):IBuddyManager
+	{
+		return _buddyManager = value;
 	}
 	
 	/**
@@ -1701,9 +1714,9 @@ class SmartFox extends EventDispatcher
 	}
 	
 	/** @private */
-	private function set_isJoining(value:Bool):Void
+	private function set_isJoining(value:Bool):Bool
 	{
-		_isJoining = value;
+		return _isJoining = value;
 	}
 	
 	/**

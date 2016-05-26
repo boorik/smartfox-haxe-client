@@ -104,7 +104,7 @@ interface Room
 	 *<p><b>NOTE</b>:setting the<em>spectatorCount</em>property manually has no effect on the server and can disrupt the API functioning.
 	 * This flag depends on the Room state.</p>
 	 */
-	var spectatorCount(get,null):Int;
+	var spectatorCount(get,set):Int;
 	
 	/**
 	 * Returns the maximum number of spectators allowed in this Room(Game Rooms only).
@@ -220,7 +220,8 @@ interface Room
 	 * 
 	 *<p><b>NOTE</b>:setting the<em>roomManager</em>property manually has no effect on the server and can disrupt the API functioning.</p>
 	 */
-	var roomManager(get,set):IRoomManager;
-
+	var roomManager(get, set):IRoomManager;
 	
+	function setPasswordProtected(isProtected:Bool):Void;
+
 }

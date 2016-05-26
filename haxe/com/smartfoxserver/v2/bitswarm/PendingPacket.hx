@@ -16,11 +16,8 @@ class PendingPacket
 		_buffer = new ByteArray();
 	}
 	
-	public var header(get_header, set_header):PacketHeader;
- 	private function get_header():PacketHeader
-	{
-		return _header;	
-	}
+	public var header(get, set):PacketHeader;
+	
 	
 	public var buffer(get_buffer, set_buffer):ByteArray;
  	private function get_buffer():ByteArray
@@ -28,8 +25,18 @@ class PendingPacket
 		return _buffer;
 	}
 	
-	private function set_buffer(buffer:ByteArray):Void
+	private function set_buffer(buffer:ByteArray):ByteArray
 	{
-		_buffer = buffer;
+		return _buffer = buffer;
+	}
+	
+	function get_header():PacketHeader 
+	{
+		return _header;
+	}
+	
+	function set_header(value:PacketHeader):PacketHeader 
+	{
+		return _header = value;
 	}
 }

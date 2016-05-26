@@ -122,7 +122,7 @@ class MatchExpression
 	 */
 	public function and(varName:String, condition:IMatcher, value:Dynamic):MatchExpression
 	{
-		_next = chainedMatchExpression(varName, condition, value, LogicOperator.AND, this);
+		_next = chainedMatchExpression(varName, condition, value, LogicOperator.AND(), this);
 		return _next;
 	}
 	
@@ -142,7 +142,7 @@ class MatchExpression
 	 */
 	public function or(varName:String, condition:IMatcher, value:Dynamic):MatchExpression
 	{
-		_next = chainedMatchExpression(varName, condition, value, LogicOperator.OR, this);
+		_next = chainedMatchExpression(varName, condition, value, LogicOperator.OR(), this);
 		return _next;
 	}
 	
@@ -283,7 +283,7 @@ class MatchExpression
 		var expr:MatchExpression = rewind();
 		
 		// Start with the main expression
-		var sfsa:ISFSArray<Dynamic> = new SFSArray();
+		var sfsa:ISFSArray = new SFSArray();
 		sfsa.addSFSArray(expr.expressionAsSFSArray());
 		
 		// continue with other linked expressions, if any
@@ -298,7 +298,7 @@ class MatchExpression
 	
 	private function expressionAsSFSArray():ISFSArray
 	{
-		var expr:ISFSArray<Dynamic> = new SFSArray();
+		var expr:ISFSArray = new SFSArray();
 	
 		// 0 ->Logic operator
 		if(_logicOp !=null)

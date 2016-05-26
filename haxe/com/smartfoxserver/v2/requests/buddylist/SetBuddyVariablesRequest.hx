@@ -105,7 +105,7 @@ class SetBuddyVariablesRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		if(!sfs.buddyManager.isInited)
 			errors.push("BuddyList is not inited. Please send an InitBuddyRequest first.");
@@ -123,7 +123,7 @@ class SetBuddyVariablesRequest extends BaseRequest
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		var varList:ISFSArray<Dynamic> = new SFSArray();
+		var varList:ISFSArray = new SFSArray();
 		 
 		for(bVar in _buddyVariables)
 		{

@@ -3,26 +3,29 @@ package com.smartfoxserver.v2.util;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.core.SFSEvent;
 import com.smartfoxserver.v2.requests.PingPongRequest;
+import openfl.utils.Timer;
 
 import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.TimerEvent;
-import flash.utils.Timer;
+//import flash.utils.Timer;
 
 /**
  * @private
  */
 class LagMonitor extends EventDispatcher
 {
-	private var _lastReqTime:Int;
-	private var _valueQueue:Array<Dynamic>;
-	private var _interval:Int;
+	private var _lastReqTime:Float;
+	private var _valueQueue:Array<Float>;
+	private var _interval:Float;
 	private var _queueSize:Int;
 	private var _thread:Timer;
 	private var _sfs:SmartFox;
 	
-	public function new(sfs:SmartFox, Interval:Int=4, queueSize:Int=10)
+	public function new(sfs:SmartFox, interval:Int=4, queueSize:Int=10)
 	{
+		super();
+		
 		if(interval<1)
 			interval=1;
 		
@@ -63,10 +66,10 @@ class LagMonitor extends EventDispatcher
 		return _thread.running;
 	}
 	
-	public function onPingPong():Int
+	public function onPingPong():Float
 	{
 		// Calculate lag
-		var lagValue:Int=getTimer()- _lastReqTime;
+		var lagValue:Float= haxe.Timer.stamp() - _lastReqTime;
 		
 		// Remove older value
 		if(_valueQueue.length>=_queueSize)
@@ -78,8 +81,8 @@ class LagMonitor extends EventDispatcher
 		return averagePingTime;
 	}
 	
-	public var lastPingTime(get_lastPingTime, null):Int;
- 	private function get_lastPingTime():Int
+	public var lastPingTime(get_lastPingTime, null):Float;
+ 	private function get_lastPingTime():Float
 	{
 		if(_valueQueue.length>0)
 			return _valueQueue[_valueQueue.length -1];
@@ -87,13 +90,13 @@ class LagMonitor extends EventDispatcher
 			return 0;
 	}
 	
-	public var averagePingTime(get_averagePingTime, null):Int;
- 	private function get_averagePingTime():Int
+	public var averagePingTime(get_averagePingTime, null):Float;
+ 	private function get_averagePingTime():Float
 	{
 		if(_valueQueue.length==0)
 			return 0;
 		
-		var lagAverage:Int=0;
+		var lagAverage:Float=0;
 		for(lagValue in _valueQueue)
 			lagAverage += lagValue;
 				
@@ -105,7 +108,7 @@ class LagMonitor extends EventDispatcher
 	
 	private function threadRunner(evt:Event):Void
 	{
-		_lastReqTime=getTimer();
+		_lastReqTime=haxe.Timer.stamp();
 		_sfs.send(new PingPongRequest());
 	}
 }

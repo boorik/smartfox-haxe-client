@@ -49,9 +49,9 @@ class SFSRoomManager implements IRoomManager
 	}
 	
 	/** @private */
-	private function set_ownerZone(value:String):Void
+	private function set_ownerZone(value:String):String
 	{
-		_ownerZone = value;
+		return _ownerZone = value;
 	}
 	
 	/** @private */
@@ -95,7 +95,7 @@ class SFSRoomManager implements IRoomManager
 		*/
 		if(oldRoom !=null)
 		{
-			oldRoom.merge(room);
+			cast(oldRoom,SFSRoom).merge(room);
 			return oldRoom;
 		}
 				
@@ -115,7 +115,7 @@ class SFSRoomManager implements IRoomManager
 		
 		// Update keys in the byName collection
 		_roomsByName.set(newName, room);
-		_roomsByName.clr(oldName);
+		_roomsByName.remove(oldName);
 	}
 	
 	/** @private */
@@ -295,7 +295,7 @@ class SFSRoomManager implements IRoomManager
 	/** @inheritDoc */
 	public function getUserRooms(user:User):Array<Room>
 	{
-		var rooms:Array<Dynamic> = [];
+		var rooms:Array<Room> = [];
 		
 		// Cycle through all Rooms
 		while(_roomsById.iterator().hasNext())

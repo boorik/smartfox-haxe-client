@@ -10,12 +10,16 @@ class LogicOperator
 	/**
 	 * An instance of<em>LogicOperator</em>representing the<b>AND</b>logical operator.
 	 */
-	public static inline var AND:LogicOperator = new LogicOperator("AND");
+	public static inline function AND():LogicOperator{
+		return new LogicOperator("AND");
+	}
 	
 	/**
 	 * An instance of<em>LogicOperator</em>representing the<b>OR</b>logical operator.
 	 */
-	public static inline var OR:LogicOperator = new LogicOperator("OR");
+	public static inline function OR():LogicOperator{
+		return new LogicOperator("OR");
+	}
 	
 	private var _id:String;
 	

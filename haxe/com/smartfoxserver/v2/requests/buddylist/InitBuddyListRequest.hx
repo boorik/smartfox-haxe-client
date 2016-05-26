@@ -69,7 +69,7 @@ class InitBuddyListRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		if(sfs.buddyManager.isInited)
 			errors.push("Buddy List is already initialized.");

@@ -42,9 +42,9 @@ class RoomPermissions
 	}
 	
 	/** @private */
-	private function set_allowNameChange(value:Bool):Void 
+	private function set_allowNameChange(value:Bool):Bool 
 	{ 
-		_allowNameChange = value;
+		return _allowNameChange = value;
 	}
 	
 	/**
@@ -63,9 +63,9 @@ class RoomPermissions
 	}
 	
 	/** @private */
-	private function set_allowPasswordStateChange(value:Bool):Void 
+	private function set_allowPasswordStateChange(value:Bool):Bool 
 	{ 
-		_allowPasswordStateChange = value;
+		return _allowPasswordStateChange = value;
 	}
 	
 	/**
@@ -84,9 +84,9 @@ class RoomPermissions
 	}
 	
 	/** @private */
-	private function set_allowPublicMessages(value:Bool):Void 
+	private function set_allowPublicMessages(value:Bool):Bool 
 	{ 
-		_allowPublicMessages = value;
+		return _allowPublicMessages = value;
 	}
 	
 	/**
@@ -106,8 +106,8 @@ class RoomPermissions
 	}
 	
 	/** @private */
-	private function set_allowResizing(value:Bool):Void 
+	private function set_allowResizing(value:Bool):Bool 
 	{ 
-		_allowResizing = value;
+		return _allowResizing = value;
 	}
 }

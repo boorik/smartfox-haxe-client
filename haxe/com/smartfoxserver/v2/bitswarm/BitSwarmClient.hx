@@ -9,6 +9,7 @@ import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.logging.Logger;
 import com.smartfoxserver.v2.util.ClientDisconnectionReason;
 import com.smartfoxserver.v2.util.ConnectionMode;
+import openfl.errors.ArgumentError;
 
 import flash.errors.IllegalOperationError;
 import flash.events.Event;
@@ -47,29 +48,20 @@ class BitSwarmClient extends EventDispatcher
 		
 	public function new(sfs:SmartFox=null)
 	{
+		super();
+		
 		_controllers = { };
 		_sfs = sfs;
 		_connected = false;
 		_udpManager = new DefaultUDPManager(sfs);
 	}
 	
-	public var sfs(get_sfs, set_sfs):SmartFox;
- 	private function get_sfs():SmartFox
-	{
-		return _sfs;
-	}
+	public var sfs:SmartFox;
+
+	public var connected(default,null):Bool;
 	
-	public var connected(get_connected, set_connected):Bool;
- 	private function get_connected():Bool
-	{
-		return _connected;
-	}
-	
-	public var connectionMode(get_connectionMode, set_connectionMode):String;
- 	private function get_connectionMode():String
-	{
-		return _connectionMode;
-	}
+	public var connectionMode:String;
+
 	
 	public var ioHandler(get_ioHandler, set_ioHandler):IoHandler;
  	private function get_ioHandler():IoHandler
@@ -77,12 +69,12 @@ class BitSwarmClient extends EventDispatcher
 		return _ioHandler;
 	}
 	
-	private function set_ioHandler(value:IoHandler):Void
+	private function set_ioHandler(value:IoHandler):IoHandler
 	{
 		//if(_ioHandler !=null)
 			//throw new SFSError("IOHandler is already set!")
 			
-		_ioHandler = value;
+		return _ioHandler = value;
 	}
 	
 	public var maxMessageSize(get_maxMessageSize, set_maxMessageSize):Int;
@@ -91,9 +83,9 @@ class BitSwarmClient extends EventDispatcher
 		return _maxMessageSize;
 	}
 	
-	private function set_maxMessageSize(value:Int):Void
+	private function set_maxMessageSize(value:Int):Int
 	{
-		_maxMessageSize = value;
+		return _maxMessageSize = value;
 	}
 	
 	public var compressionThreshold(get_compressionThreshold, set_compressionThreshold):Int;
@@ -106,10 +98,10 @@ class BitSwarmClient extends EventDispatcher
 	* Avoid compressing data whose size is<100 bytes
 	* Ideal default value should be 300 bytes or more...
 	*/
-	private function set_compressionThreshold(value:Int):Void
+	private function set_compressionThreshold(value:Int):Int
 	{
 		if(value>100)
-			_compressionThreshold = value;
+			return _compressionThreshold = value;
 		else
 			throw new ArgumentError("Compression threshold cannot be<100 bytes.");
 	}
@@ -120,7 +112,7 @@ class BitSwarmClient extends EventDispatcher
 		return _reconnectionDelayMillis;
 	}
 	
-	public var useBlueBox(get_useBlueBox, set_useBlueBox):Bool;
+	public var useBlueBox(get_useBlueBox, null):Bool;
  	private function get_useBlueBox():Bool
 	{
 		return _useBlueBox;	
@@ -134,9 +126,9 @@ class BitSwarmClient extends EventDispatcher
 			throw new IllegalOperationError("You can't change the BlueBox mode while the connection is running");
 	}
 	
-	private function set_reconnectionDelayMillis(millis:Int):Void
+	private function set_reconnectionDelayMillis(millis:Int):Int
 	{
-		_reconnectionDelayMillis = millis;
+		return _reconnectionDelayMillis = millis;
 	}
 	
 	public function enableBBoxDebug(value:Bool):Void
@@ -155,8 +147,8 @@ class BitSwarmClient extends EventDispatcher
 
 		_socket = new Socket();
 		
-		if(_socket.hasOwnProperty("timeout"))// condition required to avoide FP<10.0 to throw an error at runtime
-			_socket.timeout = 5000;
+		//if(_socket.hasOwnProperty("timeout"))// condition required to avoide FP<10.0 to throw an error at runtime
+			//_socket.timeout = 5000;
 		
 		_socket.addEventListener(Event.CONNECT, onSocketConnect);
 		_socket.addEventListener(Event.CLOSE, onSocketClose);
@@ -191,13 +183,13 @@ class BitSwarmClient extends EventDispatcher
 		return cast _controllers[id];
 	}
 	
-	public var systemController(get_systemController, set_systemController):SystemController;
+	public var systemController(get_systemController, null):SystemController;
  	private function get_systemController():SystemController
 	{
 		return _sysController;
 	}
 	
-	public var extensionController(get_extensionController, set_extensionController):ExtensionController;
+	public var extensionController(get_extensionController, null):ExtensionController;
  	private function get_extensionController():ExtensionController
 	{
 		return _extController;
@@ -209,9 +201,9 @@ class BitSwarmClient extends EventDispatcher
 		return _attemptingReconnection;
 	}
 	
-	private function set_isReconnecting(value:Bool):Void
+	private function set_isReconnecting(value:Bool):Bool
 	{
-		_attemptingReconnection = value;	
+		return _attemptingReconnection = value;	
 	}
 	
 	public function getControllerById(id:Int):IController
@@ -219,7 +211,7 @@ class BitSwarmClient extends EventDispatcher
 		return _controllers[id];
 	}
 	
-	public var connectionIp(get_connectionIp, set_connectionIp):String;
+	public var connectionIp(get_connectionIp, null):String;
  	private function get_connectionIp():String
 	{
 		if(!connected)
@@ -227,15 +219,9 @@ class BitSwarmClient extends EventDispatcher
 		else
 			return _lastIpAddress;
 	}
-	
-	public var connectionPort(get_connectionPort, set_connectionPort):Int;
- 	private function get_connectionPort():Int
-	{
-		if(!connected)
-			return -1;
-		else
-			return _lastTcpPort;
-	}
+	@:isVar
+	public var connectionPort(get, set):Int;
+
 	
 	private function addController(id:Int, controller:IController):Void
 	{
@@ -274,20 +260,19 @@ class BitSwarmClient extends EventDispatcher
 	
 	public function send(message:IMessage):Void
 	{	
-		_ioHandler.codec.onPacketWrite(message);
+		_ioHandler.get_codec().onPacketWrite(message);
 	}
 	
-	public var socket(get_socket, set_socket):Socket;
- 	private function get_socket():Socket
-	{
-		return _socket;
-	}
+	public var socket:Socket;
 	
-	public var httpSocket(get_httpSocket, set_httpSocket):BBClient;
- 	private function get_httpSocket():BBClient
-	{
-		return _bbClient;
-	}
+ 	//private function get_socket():Socket
+	//{
+		//return _socket;
+	//}
+	
+	public var httpSocket:BBClient;
+	
+	
 	
 	public function disconnect(reason:String=null):Void
 	{
@@ -334,9 +319,9 @@ class BitSwarmClient extends EventDispatcher
 		return _udpManager;
 	}
 	
-	private function set_udpManager(manager:IUDPManager):Void
+	private function set_udpManager(manager:IUDPManager):IUDPManager
 	{
-		_udpManager = manager;
+		return _udpManager = manager;
 	}
 	
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -357,12 +342,12 @@ class BitSwarmClient extends EventDispatcher
 		return _reconnectionSeconds;
 	}
 	
-	private function set_reconnectionSeconds(seconds:Int):Void
+	private function set_reconnectionSeconds(seconds:Int):Int
 	{
 		if(seconds<0)
-			_reconnectionSeconds = 0;
+			return _reconnectionSeconds = 0;
 		else
-			_reconnectionSeconds = seconds;	
+			return _reconnectionSeconds = seconds;	
 	}
 	
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -411,7 +396,7 @@ class BitSwarmClient extends EventDispatcher
 			* reconnection to the server.
 			*/
 			_attemptingReconnection = true;
-			_firstReconnAttempt=getTimer();
+			_firstReconnAttempt=haxe.Timer.stamp();
 			_reconnCounter=1;
 				
 			// Fire event and retry
@@ -427,15 +412,15 @@ class BitSwarmClient extends EventDispatcher
 			return;
 		
 		var reconnectionSeconds:Int=sfs.getReconnectionSeconds()* 1000;
-		var now:Int=getTimer();
-		var timeLeft:Int=(_firstReconnAttempt + reconnectionSeconds)- now;
+		var now:Float=haxe.Timer.stamp();
+		var timeLeft:Float=(_firstReconnAttempt + reconnectionSeconds)- now;
 		
 		if(timeLeft>0)
 		{
-			sfs.logger.info("Reconnection attempt:", _reconnCounter, " - time left:", Std.int(timeLeft/1000), "sec.");
+			sfs.logger.info('Reconnection attempt:$_reconnCounter - time left: ${Std.int(timeLeft/1000)}sec.');
 
 			// Retry connection:pause 1 second and retry
-			setTimeout(function():Void { connect(_lastIpAddress, _lastTcpPort); }, _reconnectionDelayMillis);
+			haxe.Timer.delay(function():Void { connect(_lastIpAddress, _lastTcpPort); }, _reconnectionDelayMillis);
 			_reconnCounter++;
 		}
 		
@@ -466,7 +451,7 @@ class BitSwarmClient extends EventDispatcher
 	{
 		try
 		{
-			var buffer:ByteArray<Dynamic> = new ByteArray();
+			var buffer:ByteArray = new ByteArray();
 			_socket.readBytes(buffer);
 		
 			_ioHandler.onDataRead(buffer);
@@ -524,7 +509,7 @@ class BitSwarmClient extends EventDispatcher
 	
 	private function onBBData(evt:BBEvent):Void
 	{
-		var buffer:ByteArray<Dynamic> = evt.params.data;
+		var buffer:ByteArray = evt.params.data;
 		
 		if(buffer !=null)			
 			_ioHandler.onDataRead(buffer);
@@ -547,5 +532,18 @@ class BitSwarmClient extends EventDispatcher
 		
 		dispatchEvent(event);
 	}		
+	
+	function get_connectionPort():Int 
+	{
+		if(!connected)
+			return -1;
+		else
+			return _lastTcpPort;
+	}
+	
+	function set_connectionPort(value:Int):Int 
+	{
+		return connectionPort = value;
+	}
 	
 }

@@ -64,7 +64,7 @@ class RemoveBuddyRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		if(!sfs.buddyManager.isInited)
 			errors.push("BuddyList is not inited. Please send an InitBuddyRequest first.");

@@ -3,6 +3,7 @@ package com.smartfoxserver.v2.requests;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
+import openfl.errors.Error;
 
 /**
  * Changes the password of a Room.
@@ -72,7 +73,7 @@ class ChangeRoomPasswordStateRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		// Missing room id
 		if(_room==null)

@@ -1,6 +1,7 @@
 package com.smartfoxserver.v2.requests.mmo;
 
 import com.smartfoxserver.v2.entities.data.Vec3D;
+import openfl.errors.ArgumentError;
 
 /**
  * The<em>MapLimits</em>class is used to set the limits of the virtual environment represented by an MMORoom when creating it.

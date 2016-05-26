@@ -10,6 +10,8 @@ package com.smartfoxserver.v2.entities.match;
  */
 interface IMatcher
 {
+	var symbol(get, null):String;
+	var type(get, null):Int;
 	/**
 	 * Returns the condition symbol of this matcher.
 	 */

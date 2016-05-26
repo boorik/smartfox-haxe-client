@@ -74,7 +74,7 @@ class SetUserPositionRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		// Missing room id
 		if(_pos==null)
@@ -102,6 +102,6 @@ class SetUserPositionRequest extends BaseRequest
 			_sfso.putFloatArray(KEY_VEC3D, _pos.toArray());
 		
 		else 
-			_sfso.putIntArray(KEY_VEC3D, _pos.toArray());
+			_sfso.putIntArray(KEY_VEC3D, _pos.toIntArray());
 	}
 }

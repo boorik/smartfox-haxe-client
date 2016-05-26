@@ -23,7 +23,7 @@ import flash.utils.ByteArray;
 class SFSArray implements ISFSArray
 {
 	private var serializer:ISFSDataSerializer;
-	private var dataHolder:Array<SFSDataWrapper>;
+	private var dataHolder:Map<Int,SFSDataWrapper>;
 	
 	/**
 	 * Returns a new<em>SFSArray</em>instance.
@@ -83,7 +83,7 @@ class SFSArray implements ISFSArray
 	 */
 	public function new()
 	{
-		dataHolder = [];
+		dataHolder = new Map<Int,SFSDataWrapper>();
 		serializer = DefaultSFSDataSerializer.getInstance();
 	}
 	
@@ -113,7 +113,7 @@ class SFSArray implements ISFSArray
 	/** @private */
 	public function getWrappedElementAt(index:Int):SFSDataWrapper
 	{
-		return dataHolder[index];
+		return dataHolder.get(index);
 	}
 	
 	/** @inheritDoc */
@@ -121,8 +121,8 @@ class SFSArray implements ISFSArray
 	{
 		var obj:Dynamic = null;
 		
-		if(dataHolder[index] !=null)
-			obj = dataHolder[index].data;
+		if(dataHolder.get(index) !=null)
+			obj = dataHolder.get(index).data;
 		
 		return obj;
 	}
@@ -130,18 +130,13 @@ class SFSArray implements ISFSArray
 	/** @inheritDoc */
 	public function removeElementAt(index:Int):Dynamic
 	{
-		return dataHolder.splice(index, 1);
+		return dataHolder.remove(index);
 	}
 	
 	/** @inheritDoc */
 	public function size():Int
 	{
-		var count:Int = 0;
-		
-		for(j in dataHolder)
-			count++;
-			
-		return count;
+		return Lambda.count(dataHolder);
 	}
 	
 	/** @inheritDoc */
@@ -191,9 +186,9 @@ class SFSArray implements ISFSArray
 		var objDump:String; 
 		var type:Int;
 		
-		for(key in dataHolder)
+		for(key in dataHolder.keys())
 		{
-			wrapper = dataHolder[key]; 
+			wrapper = dataHolder.get(key); 
 			type = wrapper.type;
 				
 			if(type==SFSDataType.SFS_OBJECT)
@@ -361,7 +356,7 @@ class SFSArray implements ISFSArray
 	/** @private */
 	public function add(wrappedObject:SFSDataWrapper):Void
 	{
-		dataHolder.push(wrappedObject);
+		dataHolder.set(wrappedObject.type,wrappedObject);
 	}
 	
 	private function addObject(value:Dynamic, type:Int):Void

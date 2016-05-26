@@ -16,22 +16,23 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="D:\Dev\HaxeToolkit\haxe\lib\openfl\3,3,2" />
-    <class path="D:\Dev\HaxeToolkit\haxe\lib\lime\2,6,1" />
-    <class path="D:\Dev\HaxeToolkit\haxe\lib\actuate\1,8,6" />
+    <class path="G:\dev\HaxeToolkit\haxe\lib\openfl\3,6,1" />
+    <class path="G:\dev\HaxeToolkit\haxe\lib\lime\2,9,1" />
+    <class path="G:\dev\HaxeToolkit\haxe\lib\actuate\1,8,6" />
     <class path="src" />
     <class path="..\haxe" />
     <class path="..\flash" />
-    <class path="bin\windows\cpp\haxe" />
+    <class path="G:\dev\HaxeToolkit\haxe\lib\openfl\3,6,1\extern" />
+    <class path="bin\flash\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="openfl=3.3.2&#xA;lime=2.6.1&#xA;actuate=1.8.6&#xA;openfl-next&#xA;tools=2.6.1&#xA;no-compilation&#xA;native&#xA;lime-native&#xA;openfl-native&#xA;windows&#xA;desktop" />
+    <option directives="openfl=3.6.1&#xA;lime=2.9.1&#xA;actuate=1.8.6&#xA;openfl-next&#xA;tools=2.9.1&#xA;no-compilation&#xA;openfl-flash&#xA;web&#xA;display" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="True" />
-    <option additional="--remap flash:openfl&#xA;#--macro keep(&quot;Main&quot;)&#xA;-debug " />
+    <option additional="-swf-version 11.2" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

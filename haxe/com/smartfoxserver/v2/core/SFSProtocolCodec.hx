@@ -12,7 +12,7 @@ import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.logging.Logger;
 import com.smartfoxserver.v2.protocol.IProtocolCodec;
 
-import flash.utils.ByteArray<Dynamic>;
+import flash.utils.ByteArray;
 
 /** @private */
 class SFSProtocolCodec implements IProtocolCodec
@@ -114,12 +114,12 @@ class SFSProtocolCodec implements IProtocolCodec
 		return _ioHandler;
 	}
 	
-	private function set_ioHandler(handler:IoHandler):Void
+	private function set_ioHandler(handler:IoHandler):IoHandler
 	{
 		if(_ioHandler !=null)
 			throw new SFSError("IOHandler is already defined for thir ProtocolHandler instance:" + this);
 			
-		this._ioHandler = ioHandler;
+		return this._ioHandler = ioHandler;
 	}
 	
 	private function dispatchRequest(requestObject:ISFSObject):Void

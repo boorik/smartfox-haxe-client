@@ -80,7 +80,7 @@ class FindUsersRequest extends BaseRequest
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic> = [];
+		var errors:Array<String> = [];
 		
 		if(_matchExpr==null)
 			errors.push("Missing Match Expression");

@@ -68,7 +68,7 @@ class SystemController extends BaseController
 {
 	private var sfs:SmartFox;
 	private var bitSwarm:BitSwarmClient;
-	private var requestHandlers:Dynamic;
+	private var requestHandlers:Map<Int,Dynamic>;
 					
 	public function new(bitSwarm:BitSwarmClient)
 	{
@@ -76,51 +76,51 @@ class SystemController extends BaseController
 		this.bitSwarm = bitSwarm;
 		this.sfs = bitSwarm.sfs;
 		
-		requestHandlers = new Dynamic();
+		requestHandlers = new Map<Int,Dynamic>();
 		initRequestHandlers();
 	}
 	
 	private function initRequestHandlers():Void
 	{
 		// Request codes
-		requestHandlers[BaseRequest.Handshake] = { name:"Handshake", handler:this["fnHandshake"] };
-		requestHandlers[BaseRequest.Login] = { name:"Login", handler:this["fnLogin"] };
-		requestHandlers[BaseRequest.Logout] = { name:"Logout", handler:this["fnLogout"] };
-		requestHandlers[BaseRequest.JoinRoom] = { name:"JoinRoom", handler:this["fnJoinRoom"] };
-		requestHandlers[BaseRequest.CreateRoom] = { name:"CreateRoom", handler:this["fnCreateRoom"] };
-		requestHandlers[BaseRequest.GenericMessage] = { name:"GenericMessage", handler:this["fnGenericMessage"] };
-		requestHandlers[BaseRequest.ChangeRoomName] = { name:"ChangeRoomName", handler:this["fnChangeRoomName"] };
-		requestHandlers[BaseRequest.ChangeRoomPassword] = { name:"ChangeRoomPassword", handler:this["fnChangeRoomPassword"] };
-		requestHandlers[BaseRequest.ChangeRoomCapacity] = { name:"ChangeRoomCapacity", handler:this["fnChangeRoomCapacity"] };
-		requestHandlers[BaseRequest.SetRoomVariables] = { name:"SetRoomVariables", handler:this["fnSetRoomVariables"] };
-		requestHandlers[BaseRequest.SetUserVariables] = { name:"SetUserVariables", handler:this["fnSetUserVariables"] };
-		requestHandlers[BaseRequest.SubscribeRoomGroup] = { name:"SubscribeRoomGroup", handler:this["fnSubscribeRoomGroup"] };
-		requestHandlers[BaseRequest.UnsubscribeRoomGroup] = { name:"UnsubscribeRoomGroup", handler:this["fnUnsubscribeRoomGroup"] };
-		requestHandlers[BaseRequest.SpectatorToPlayer] = { name:"SpectatorToPlayer", handler:this["fnSpectatorToPlayer"] };
-		requestHandlers[BaseRequest.PlayerToSpectator] = { name:"PlayerToSpectator", handler:this["fnPlayerToSpectator"] };
-		requestHandlers[BaseRequest.InitBuddyList] = { name:"InitBuddyList", handler:this["fnInitBuddyList"] };
-		requestHandlers[BaseRequest.AddBuddy] = { name:"AddBuddy", handler:this["fnAddBuddy"] };
-		requestHandlers[BaseRequest.RemoveBuddy] = { name:"RemoveBuddy", handler:this["fnRemoveBuddy"] };
-		requestHandlers[BaseRequest.BlockBuddy] = { name:"BlockBuddy", handler:this["fnBlockBuddy"] };
-		requestHandlers[BaseRequest.GoOnline] = { name:"GoOnline", handler:this["fnGoOnline"] };
-		requestHandlers[BaseRequest.SetBuddyVariables] = { name:"SetBuddyVariables", handler:this["fnSetBuddyVariables"] };
-		requestHandlers[BaseRequest.FindRooms] = { name:"FindRooms", handler:this["fnFindRooms"] };
-		requestHandlers[BaseRequest.FindUsers] = { name:"FindUsers", handler:this["fnFindUsers"] };
-		requestHandlers[BaseRequest.InviteUser] = { name:"InviteUser", handler:this["fnInviteUsers"] };
-		requestHandlers[BaseRequest.InvitationReply] = { name:"InvitationReply", handler:this["fnInvitationReply"] };
-		requestHandlers[BaseRequest.QuickJoinGame] = { name:"QuickJoinGame", handler:this["fnQuickJoinGame"] };
-		requestHandlers[BaseRequest.PingPong] = { name:"PingPong", handler:this["fnPingPong"] };
-		requestHandlers[BaseRequest.SetUserPosition] = { name:"SetUserPosition", handler:this["fnSetUserPosition"] };
+		requestHandlers.set(BaseRequest.Handshake, { name:"Handshake", handler:fnHandshake });
+		requestHandlers.set(BaseRequest.Login, { name:"Login", handler:fnLogin });
+		requestHandlers.set(BaseRequest.Logout, { name:"Logout", handler:fnLogout });
+		requestHandlers.set(BaseRequest.JoinRoom, { name:"JoinRoom", handler:fnJoinRoom });
+		requestHandlers.set(BaseRequest.CreateRoom, { name:"CreateRoom", handler:fnCreateRoom });
+		requestHandlers.set(BaseRequest.GenericMessage, { name:"GenericMessage", handler:fnGenericMessage });
+		requestHandlers.set(BaseRequest.ChangeRoomName, { name:"ChangeRoomName", handler:fnChangeRoomName });
+		requestHandlers.set(BaseRequest.ChangeRoomPassword,{ name:"ChangeRoomPassword", handler:fnChangeRoomPassword });
+		requestHandlers.set(BaseRequest.ChangeRoomCapacity, { name:"ChangeRoomCapacity", handler:fnChangeRoomCapacity});
+		requestHandlers.set(BaseRequest.SetRoomVariables, { name:"SetRoomVariables", handler:fnSetRoomVariables});
+		requestHandlers.set(BaseRequest.SetUserVariables, { name:"SetUserVariables", handler:fnSetUserVariables });
+		requestHandlers.set(BaseRequest.SubscribeRoomGroup, { name:"SubscribeRoomGroup", handler:fnSubscribeRoomGroup });
+		requestHandlers.set(BaseRequest.UnsubscribeRoomGroup, { name:"UnsubscribeRoomGroup", handler:fnUnsubscribeRoomGroup });
+		requestHandlers.set(BaseRequest.SpectatorToPlayer, { name:"SpectatorToPlayer", handler:fnSpectatorToPlayer });
+		requestHandlers.set(BaseRequest.PlayerToSpectator, { name:"PlayerToSpectator", handler:fnPlayerToSpectator });
+		requestHandlers.set(BaseRequest.InitBuddyList, { name:"InitBuddyList", handler:fnInitBuddyList });
+		requestHandlers.set(BaseRequest.AddBuddy, { name:"AddBuddy", handler:fnAddBuddy });
+		requestHandlers.set(BaseRequest.RemoveBuddy, { name:"RemoveBuddy", handler:fnRemoveBuddy });
+		requestHandlers.set(BaseRequest.BlockBuddy, { name:"BlockBuddy", handler:fnBlockBuddy });
+		requestHandlers.set(BaseRequest.GoOnline, { name:"GoOnline", handler:fnGoOnline });
+		requestHandlers.set(BaseRequest.SetBuddyVariables, { name:"SetBuddyVariables", handler:fnSetBuddyVariables});
+		requestHandlers.set(BaseRequest.FindRooms, { name:"FindRooms", handler:fnFindRooms });
+		requestHandlers.set(BaseRequest.FindUsers, { name:"FindUsers", handler:fnFindUsers });
+		requestHandlers.set(BaseRequest.InviteUser, { name:"InviteUser", handler:fnInviteUsers });
+		requestHandlers.set(BaseRequest.InvitationReply, { name:"InvitationReply", handler:fnInvitationReply });
+		requestHandlers.set(BaseRequest.QuickJoinGame, { name:"QuickJoinGame", handler:fnQuickJoinGame });
+		requestHandlers.set(BaseRequest.PingPong, { name:"PingPong", handler:fnPingPong });
+		requestHandlers.set(BaseRequest.SetUserPosition, { name:"SetUserPosition", handler:fnSetUserPosition });
 		
 		// Response only codes
-		requestHandlers[1000] = { name:"UserEnterRoom", handler:this["fnUserEnterRoom"] };
-		requestHandlers[1001] = { name:"UserCountChange", handler:this["fnUserCountChange"] };
-		requestHandlers[1002] = { name:"UserLost", handler:this["fnUserLost"] };
-		requestHandlers[1003] = { name:"RoomLost", handler:this["fnRoomLost"] };
-		requestHandlers[1004] = { name:"UserExitRoom", handler:this["fnUserExitRoom"] };
-		requestHandlers[1005] = { name:"ClientDisconnection", handler:this["fnClientDisconnection"] };
-		requestHandlers[1006] = { name:"ReconnectionFailure", handler:this["fnReconnectionFailure"] };
-		requestHandlers[1007] = { name:"SetMMOItemVariables", handler:this["fnSetMMOItemVariables"] };
+		requestHandlers.set(1000, { name:"UserEnterRoom", handler:fnUserEnterRoom });
+		requestHandlers.set(1001, { name:"UserCountChange", handler:fnUserCountChange });
+		requestHandlers.set(1002, { name:"UserLost", handler:fnUserLost });
+		requestHandlers.set(1003, { name:"RoomLost", handler:fnRoomLost });
+		requestHandlers.set(1004, { name:"UserExitRoom", handler:fnUserExitRoom });
+		requestHandlers.set(1005, { name:"ClientDisconnection", handler:fnClientDisconnection });
+		requestHandlers.set(1006, { name:"ReconnectionFailure", handler:fnReconnectionFailure });
+		requestHandlers.set(1007, { name:"SetMMOItemVariables", handler:fnSetMMOItemVariables });
 	}
 	
 	public override function handleMessage(message:IMessage):Void
@@ -244,8 +244,8 @@ class SystemController extends BaseController
 		// Success
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
-			var roomObj:ISFSArray<Dynamic> = sfso.getSFSArray(JoinRoomRequest.KEY_ROOM);
-			var userList:ISFSArray<Dynamic> = sfso.getSFSArray(JoinRoomRequest.KEY_USER_LIST);
+			var roomObj:ISFSArray = sfso.getSFSArray(JoinRoomRequest.KEY_ROOM);
+			var userList:ISFSArray = sfso.getSFSArray(JoinRoomRequest.KEY_USER_LIST);
 			
 			// Get the joined Room data
 			var room:Room = SFSRoom.fromSFSArray(roomObj);
@@ -265,7 +265,7 @@ class SystemController extends BaseController
 			// Populate room's user list
 			for(j in 0...userList.size())
 			{
-				var userObj:ISFSArray<Dynamic> = userList.getSFSArray(j);
+				var userObj:ISFSArray = userList.getSFSArray(j);
 				
 				// Get user if exist from main UserManager or create a new one
 				var user:User = getOrCreateUser(userObj, true, room);
@@ -306,7 +306,7 @@ class SystemController extends BaseController
 		
 		if(room !=null)
 		{
-			var userObj:ISFSArray<Dynamic> = sfso.getSFSArray("u");
+			var userObj:ISFSArray = sfso.getSFSArray("u");
 			var user:User = getOrCreateUser(userObj, true, room);
 			
 			room.addUser(user);
@@ -596,7 +596,7 @@ class SystemController extends BaseController
 		var evtParams:Dynamic = { };
 		
 		var rId:Int = sfso.getInt(SetRoomVariablesRequest.KEY_VAR_ROOM);
-		var varListData:ISFSArray<Dynamic> = sfso.getSFSArray(SetRoomVariablesRequest.KEY_VAR_LIST);
+		var varListData:ISFSArray = sfso.getSFSArray(SetRoomVariablesRequest.KEY_VAR_LIST);
 		
 		var targetRoom:Room = sfs.roomManager.getRoomById(rId);
 		var changedVarNames:Array<Dynamic> = [];
@@ -627,7 +627,7 @@ class SystemController extends BaseController
 		var evtParams:Dynamic = { };
 		
 		var uId:Int = sfso.getInt(SetUserVariablesRequest.KEY_USER);
-		var varListData:ISFSArray<Dynamic> = sfso.getSFSArray(SetUserVariablesRequest.KEY_VAR_LIST);
+		var varListData:ISFSArray = sfso.getSFSArray(SetUserVariablesRequest.KEY_VAR_LIST);
 		
 		var user:User = sfs.userManager.getUserById(uId);
 		var changedVarNames:Array<Dynamic> = [];
@@ -660,11 +660,11 @@ class SystemController extends BaseController
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
 			var groupId:String = sfso.getUtfString(SubscribeRoomGroupRequest.KEY_GROUP_ID);
-			var roomListData:ISFSArray<Dynamic> = sfso.getSFSArray(SubscribeRoomGroupRequest.KEY_ROOM_LIST);
+			var roomListData:ISFSArray = sfso.getSFSArray(SubscribeRoomGroupRequest.KEY_ROOM_LIST);
 			
 			// Integrity Check
 			if(sfs.roomManager.containsGroup(groupId))
-				log.warn("SubscribeGroup Dynamic. Group:", groupId, "already subscribed!");
+				log.warn('SubscribeGroup Dynamic. Group:$groupId already subscribed!');
 				
 			populateRoomList(roomListData);
 			
@@ -700,7 +700,7 @@ class SystemController extends BaseController
 			
 			// Integrity Check
 			if(!sfs.roomManager.containsGroup(groupId))
-				log.warn("UnsubscribeGroup Dynamic. Group:", groupId, "is not subscribed!");
+				log.warn('UnsubscribeGroup Dynamic. Group:$groupId is not subscribed!');
 				
 			sfs.roomManager.removeGroup(groupId);
 			
@@ -745,7 +745,7 @@ class SystemController extends BaseController
 			// Room not found locally, log error
 			else
 			{
-				log.warn("Room not found, ID:", roomId, ", Room name change failed.");	
+				log.warn('Room not found, ID: $roomId, Room name change failed.');	
 			}
 		}
 		
@@ -782,7 +782,7 @@ class SystemController extends BaseController
 			
 			else
 			{
-				log.warn("Room not found, ID:", roomId, ", Room password change failed.");
+				log.warn('Room not found, ID: $roomId, Room password change failed.');
 			}
 			
 		}
@@ -825,7 +825,7 @@ class SystemController extends BaseController
 			
 			else
 			{
-				log.warn("Room not found, ID:", roomId, ", Room capacity change failed.");
+				log.warn('Room not found, ID:$roomId, Room capacity change failed.');
 			}
 			
 		}
@@ -885,14 +885,14 @@ class SystemController extends BaseController
 						sfs.dispatchEvent(new SFSEvent(SFSEvent.SPECTATOR_TO_PLAYER, evtParams));
 					}
 					else
-						log.warn("User:" + user + " not joined in Room:", targetRoom, ", SpectatorToPlayer failed.");
+						log.warn('User:$user not joined in Room:$targetRoom, SpectatorToPlayer failed.');
 				}
 				else
-					log.warn("User not found, ID:", userId, ", SpectatorToPlayer failed.");
+					log.warn('User not found, ID:$userId, SpectatorToPlayer failed.');
 			}
 			
 			else
-				log.warn("Room not found, ID:", roomId, ", SpectatorToPlayer failed.");
+				log.warn('Room not found, ID:$roomId, SpectatorToPlayer failed.');
 		}
 		
 		//:::FAILURE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -936,13 +936,13 @@ class SystemController extends BaseController
 						sfs.dispatchEvent(new SFSEvent(SFSEvent.PLAYER_TO_SPECTATOR, evtParams));
 					}
 					else
-						log.warn("User:" + user + " not joined in Room:", targetRoom, ", PlayerToSpectator failed.");
+						log.warn('User:$user + " not joined in Room:$targetRoom, PlayerToSpectator failed.');
 				}
 				else
-					log.warn("User not found, ID:", userId, ", PlayerToSpectator failed.");
+					log.warn('User not found, ID:$userId, ", PlayerToSpectator failed.');
 			}
 			else
-				log.warn("Room not found, ID:", roomId, ", PlayerToSpectator failed.");
+				log.warn('Room not found, ID:$roomId, PlayerToSpectator failed.');
 		}
 		
 		//:::FAILURE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -970,9 +970,9 @@ class SystemController extends BaseController
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
 			//var buddyList:Array<Dynamic>=[]
-			var bListData:ISFSArray<Dynamic> = sfso.getSFSArray(InitBuddyListRequest.KEY_BLIST);
-			var myVarsData:ISFSArray<Dynamic> = sfso.getSFSArray(InitBuddyListRequest.KEY_MY_VARS);
-			var buddyStates:Array<Dynamic> = sfso.getUtfStringArray(InitBuddyListRequest.KEY_BUDDY_STATES);
+			var bListData:ISFSArray = sfso.getSFSArray(InitBuddyListRequest.KEY_BLIST);
+			var myVarsData:ISFSArray = sfso.getSFSArray(InitBuddyListRequest.KEY_MY_VARS);
+			var buddyStates:Array<String> = sfso.getUtfStringArray(InitBuddyListRequest.KEY_BUDDY_STATES);
 			
 			// Clear BuddyManager
 			sfs.buddyManager.clearAll();
@@ -989,7 +989,7 @@ class SystemController extends BaseController
 				sfs.buddyManager.setBuddyStates(buddyStates);
 			
 			// Populate MyBuddyVariables
-			var myBuddyVariables:Array<Dynamic> = [];
+			var myBuddyVariables:Array<BuddyVariable> = [];
 			
 			for(i in 0...myVarsData.size())
 			{
@@ -1200,14 +1200,14 @@ class SystemController extends BaseController
 		if(sfso.isNull(BaseRequest.KEY_ERROR_CODE))
 		{
 			var buddyName:String = sfso.getUtfString(SetBuddyVariablesRequest.KEY_BUDDY_NAME);
-			var buddyVarsData:ISFSArray<Dynamic> = sfso.getSFSArray(SetBuddyVariablesRequest.KEY_BUDDY_VARS);
+			var buddyVarsData:ISFSArray = sfso.getSFSArray(SetBuddyVariablesRequest.KEY_BUDDY_VARS);
 			
 			var buddy:Buddy = sfs.buddyManager.getBuddyByName(buddyName);
 			
 			var isItMe:Bool = buddyName == sfs.mySelf.name;
 			
 			var changedVarNames:Array<Dynamic> = [];
-			var variables:Array<Dynamic> = [];
+			var variables:Array<BuddyVariable> = [];
 			
 			var fireEvent:Bool = true;
 			
@@ -1268,7 +1268,7 @@ class SystemController extends BaseController
 		var sfso:ISFSObject = msg.content;
 		var evtParams:Dynamic = { };
 		
-		var roomListData:ISFSArray<Dynamic> = sfso.getSFSArray(FindRoomsRequest.KEY_FILTERED_ROOMS);
+		var roomListData:ISFSArray = sfso.getSFSArray(FindRoomsRequest.KEY_FILTERED_ROOMS);
 		var roomList:Array<Dynamic> = [];
 		
 		for(i in 0...roomListData.size())
@@ -1293,7 +1293,7 @@ class SystemController extends BaseController
 		var sfso:ISFSObject = msg.content;
 		var evtParams:Dynamic = { };
 		
-		var userListData:ISFSArray<Dynamic> = sfso.getSFSArray(FindUsersRequest.KEY_FILTERED_USERS);
+		var userListData:ISFSArray = sfso.getSFSArray(FindUsersRequest.KEY_FILTERED_USERS);
 		var userList:Array<Dynamic> = [];
 		var mySelf:User = sfs.mySelf;
 			
@@ -1394,7 +1394,7 @@ class SystemController extends BaseController
 	
 	private function fnPingPong(msg:IMessage):Void
 	{
-		var avg:Int=sfs.lagMonitor.onPingPong();
+		var avg:Float=sfs.lagMonitor.onPingPong();
 
 		// Redispatch at the user level
 		var newEvt:SFSEvent = new SFSEvent(SFSEvent.PING_PONG, { lagValue:avg } );
@@ -1411,10 +1411,10 @@ class SystemController extends BaseController
 		
 		var roomId:Int = sfso.getInt(SetUserPositionRequest.KEY_ROOM);	
 		var minusUserList:Array<Dynamic>=sfso.getIntArray(SetUserPositionRequest.KEY_MINUS_USER_LIST);
-		var plusUserList:ISFSArray<Dynamic>=sfso.getSFSArray(SetUserPositionRequest.KEY_PLUS_USER_LIST);
+		var plusUserList:ISFSArray=sfso.getSFSArray(SetUserPositionRequest.KEY_PLUS_USER_LIST);
 		
 		var minusItemList:Array<Dynamic>=sfso.getIntArray(SetUserPositionRequest.KEY_MINUS_ITEM_LIST);
-		var plusItemList:ISFSArray<Dynamic>=sfso.getSFSArray(SetUserPositionRequest.KEY_PLUS_ITEM_LIST);
+		var plusItemList:ISFSArray=sfso.getSFSArray(SetUserPositionRequest.KEY_PLUS_ITEM_LIST);
 		
 		var theRoom:Room=sfs.roomManager.getRoomById(roomId);
 		
@@ -1443,7 +1443,7 @@ class SystemController extends BaseController
 		{
 			for(i in 0...plusUserList.size())
 			{
-				var encodedUser:ISFSArray<Dynamic>=plusUserList.getSFSArray(i);
+				var encodedUser:ISFSArray=plusUserList.getSFSArray(i);
 				
 				var newUser:User=getOrCreateUser(encodedUser, true, theRoom);
 				addedUsers.push(newUser);
@@ -1486,7 +1486,7 @@ class SystemController extends BaseController
 		{
 			for(i in 0...plusItemList.size())
 			{
-				var encodedItem:ISFSArray<Dynamic>=plusItemList.getSFSArray(i);
+				var encodedItem:ISFSArray=plusItemList.getSFSArray(i);
 				
 				// Create the MMO Item with the server side ID(Index=0 of the SFSArray)
 				var newItem:IMMOItem=MMOItem.fromSFSArray(encodedItem);
@@ -1524,7 +1524,7 @@ class SystemController extends BaseController
 			
 		var roomId:Int=sfso.getInt(SetMMOItemVariables.KEY_ROOM_ID);
 		var mmoItemId:Int=sfso.getInt(SetMMOItemVariables.KEY_ITEM_ID);
-		var varList:ISFSArray<Dynamic>=sfso.getSFSArray(SetMMOItemVariables.KEY_VAR_LIST);
+		var varList:ISFSArray=sfso.getSFSArray(SetMMOItemVariables.KEY_VAR_LIST);
 		
 		var mmoRoom:MMORoom= cast sfs.getRoomById(roomId);
 		var changedVarNames:Array<Dynamic>=[];
@@ -1561,7 +1561,7 @@ class SystemController extends BaseController
 		// Cycle through each room object
 		for(j in 0...roomList.size())
 		{
-			var roomObj:ISFSArray<Dynamic> = roomList.getSFSArray(j);
+			var roomObj:ISFSArray = roomList.getSFSArray(j);
 			var newRoom:Room = SFSRoom.fromSFSArray(roomObj);
 			
 			roomManager.replaceRoom(newRoom);
@@ -1589,7 +1589,7 @@ class SystemController extends BaseController
 		{
 			user.setPlayerId(userObj.getShort(3), room);
 			
-			var uVars:ISFSArray<Dynamic> = userObj.getSFSArray(4);
+			var uVars:ISFSArray = userObj.getSFSArray(4);
 			for(i in 0...uVars.size())
 			{
 				user.setVariable(SFSUserVariable.fromSFSArray(uVars.getSFSArray(i)));
@@ -1611,7 +1611,7 @@ class SystemController extends BaseController
 		
 		for(var j:Int=0;j<varsList.size();j++)
 		{
-			var roomVarObj:ISFSArray<Dynamic>=varsList.getSFSArray(j)
+			var roomVarObj:ISFSArray=varsList.getSFSArray(j)
 			var roomVariable:RoomVariable=new SFSRoomVariable(
 																	roomVarObj.getUtfString(0), 	// name
 																	roomVarObj.getElementAt(2),		// typed value

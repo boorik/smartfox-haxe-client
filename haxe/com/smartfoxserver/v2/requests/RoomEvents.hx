@@ -42,9 +42,9 @@ class RoomEvents
 	}
 	
 	/** @private */
-	private function set_allowUserEnter(value:Bool):Void 
+	private function set_allowUserEnter(value:Bool):Bool 
 	{ 
-		_allowUserEnter = value;
+		return _allowUserEnter = value;
 	}
 	
 	/**
@@ -61,9 +61,9 @@ class RoomEvents
 	}
 	
 	/** @private */
-	private function set_allowUserExit(value:Bool):Void 
+	private function set_allowUserExit(value:Bool):Bool 
 	{ 
-		_allowUserExit = value;
+		return _allowUserExit = value;
 	}
 	
 	/**
@@ -80,9 +80,9 @@ class RoomEvents
 	}
 	
 	/** @private */
-	private function set_allowUserCountChange(value:Bool):Void 
+	private function set_allowUserCountChange(value:Bool):Bool 
 	{ 
-		_allowUserCountChange = value;
+		return _allowUserCountChange = value;
 	}
 	
 	/**
@@ -99,8 +99,8 @@ class RoomEvents
 	}
 	
 	/** @private */
-	private function set_allowUserVariablesUpdate(value:Bool):Void 
+	private function set_allowUserVariablesUpdate(value:Bool):Bool 
 	{ 
-		_allowUserVariablesUpdate = value;
+		return _allowUserVariablesUpdate = value;
 	}
 }

@@ -171,9 +171,9 @@ class BaseRequest implements IRequest
 		return _id;
 	}
 	
-	private function set_id(id:Int):Void
+	private function set_id(id:Int):Int
 	{
-		_id = id;
+		return _id = id;
 	}
 	
 	public function getMessage():IMessage
@@ -201,9 +201,9 @@ class BaseRequest implements IRequest
 		return _targetController;
 	}
 	
-	private function set_targetController(target:Int):Void
+	private function set_targetController(target:Int):Int
 	{
-		_targetController = target;	
+		return _targetController = target;	
 	}
 	
 	public var isEncrypted(get_isEncrypted, set_isEncrypted):Bool;
@@ -212,9 +212,9 @@ class BaseRequest implements IRequest
 		return _isEncrypted;
 	}
 	
-	private function set_isEncrypted(flag:Bool):Void
+	private function set_isEncrypted(flag:Bool):Bool
 	{
-		_isEncrypted = flag;
+		return _isEncrypted = flag;
 	}
 	
 	public function validate(sfs:SmartFox):Void

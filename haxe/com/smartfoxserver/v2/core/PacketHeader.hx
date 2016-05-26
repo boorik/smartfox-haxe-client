@@ -40,9 +40,9 @@ class PacketHeader
 	{
 		return _expectedLen;
 	}
-	private function set_expectedLen(value:Int):Void
+	private function set_expectedLen(value:Int):Int
 	{
-		_expectedLen = value;
+		return _expectedLen = value;
 	}
 	
 	public var binary(get_binary, set_binary):Bool;
@@ -50,9 +50,9 @@ class PacketHeader
 	{
 		return _binary;
 	}
-	private function set_binary(value:Bool):Void
+	private function set_binary(value:Bool):Bool
 	{
-		_binary = value;
+		return _binary = value;
 	}
 	
 	public var compressed(get_compressed, set_compressed):Bool;
@@ -60,9 +60,9 @@ class PacketHeader
 	{
 		return _compressed;
 	}
-	private function set_compressed(value:Bool):Void
+	private function set_compressed(value:Bool):Bool
 	{
-		_compressed = value;
+		return _compressed = value;
 	}
 	
 	public var encrypted(get_encrypted, set_encrypted):Bool;
@@ -70,9 +70,9 @@ class PacketHeader
 	{
 		return	_encrypted;
 	}
-	private function set_encrypted(value:Bool):Void
+	private function set_encrypted(value:Bool):Bool
 	{
-		_encrypted = value;
+		return _encrypted = value;
 	}
 	
 	public var blueBoxed(get_blueBoxed, set_blueBoxed):Bool;
@@ -81,9 +81,9 @@ class PacketHeader
 		return	_blueBoxed;	
 	}
 	
-	private function set_blueBoxed(value:Bool):Void
+	private function set_blueBoxed(value:Bool):Bool
 	{
-		_blueBoxed = value;	
+		return _blueBoxed = value;	
 	}
 	
 	public var bigSized(get_bigSized, set_bigSized):Bool;
@@ -91,9 +91,9 @@ class PacketHeader
 	{
 		return	_bigSized;
 	}
-	private function set_bigSized(value:Bool):Void
+	private function set_bigSized(value:Bool):Bool
 	{
-		_bigSized = value;
+		return _bigSized = value;
 	}
 	
 	public function encode():Int
