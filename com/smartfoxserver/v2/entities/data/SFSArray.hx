@@ -23,7 +23,8 @@ import flash.utils.ByteArray;
 class SFSArray implements ISFSArray
 {
 	private var serializer:ISFSDataSerializer;
-	private var dataHolder:Map<Int,SFSDataWrapper>;
+	
+	public var dataHolder:Array<SFSDataWrapper>;
 	
 	/**
 	 * Returns a new<em>SFSArray</em>instance.
@@ -83,7 +84,7 @@ class SFSArray implements ISFSArray
 	 */
 	public function new()
 	{
-		dataHolder = new Map<Int,SFSDataWrapper>();
+		dataHolder = new Array<SFSDataWrapper>();
 		serializer = DefaultSFSDataSerializer.getInstance();
 	}
 	
@@ -113,7 +114,9 @@ class SFSArray implements ISFSArray
 	/** @private */
 	public function getWrappedElementAt(index:Int):SFSDataWrapper
 	{
-		return dataHolder.get(index);
+		trace("dataHolder:" + dataHolder);
+		trace("index:" + index);
+		return dataHolder[index];
 	}
 	
 	/** @inheritDoc */
@@ -121,8 +124,8 @@ class SFSArray implements ISFSArray
 	{
 		var obj:Dynamic = null;
 		
-		if(dataHolder.get(index) !=null)
-			obj = dataHolder.get(index).data;
+		if(dataHolder.length > index)
+			obj = dataHolder[index].data;
 		
 		return obj;
 	}
@@ -130,13 +133,13 @@ class SFSArray implements ISFSArray
 	/** @inheritDoc */
 	public function removeElementAt(index:Int):Dynamic
 	{
-		return dataHolder.remove(index);
+		return dataHolder.splice(index,1);
 	}
 	
 	/** @inheritDoc */
 	public function size():Int
 	{
-		return Lambda.count(dataHolder);
+		return dataHolder.length;
 	}
 	
 	/** @inheritDoc */
@@ -186,13 +189,13 @@ class SFSArray implements ISFSArray
 		var wrapper:SFSDataWrapper;
 		var objDump:String; 
 		var type:Int;
-		
-		for(key in dataHolder.keys())
+
+		for(i in 0...dataHolder.length)
 		{
-			wrapper = dataHolder.get(key); 
+			wrapper = dataHolder[i]; 
 			type = wrapper.type;
 				
-			if(type==SFSDataType.SFS_OBJECT)
+			if (type == SFSDataType.SFS_OBJECT)
 				objDump = cast(wrapper.data, SFSObject).getDump(false);
 			
 			else if(type==SFSDataType.SFS_ARRAY)
@@ -357,7 +360,7 @@ class SFSArray implements ISFSArray
 	/** @private */
 	public function add(wrappedObject:SFSDataWrapper):Void
 	{
-		dataHolder.set(wrappedObject.type,wrappedObject);
+		dataHolder.push(wrappedObject);
 	}
 	
 	private function addObject(value:Dynamic, type:Int):Void

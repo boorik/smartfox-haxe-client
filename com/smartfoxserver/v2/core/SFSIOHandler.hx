@@ -138,7 +138,7 @@ class SFSIOHandler implements IoHandler
 		readState = PacketReadState.WAIT_DATA_SIZE;
 		
 		// Resize the array
-		return resizeByteArray(data, 1, 0);
+		return resizeByteArray(data, 1, data.length-1);
 	}
 	
 	private function handleDataSize(data:ByteArray):ByteArray

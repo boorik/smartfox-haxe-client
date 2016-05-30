@@ -15,6 +15,7 @@ import flash.utils.ByteArray;
  */
 interface ISFSArray
 {
+	public var dataHolder:Array<SFSDataWrapper>;
 	/**
 	 * Indicates whether this array contains the specified object or not.
 	 * 

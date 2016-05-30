@@ -192,8 +192,8 @@ class SFSObject implements ISFSObject
 		var strDump:String = DefaultObjectDumpFormatter.TOKEN_INDENT_OPEN;
 		var wrapper:SFSDataWrapper;
 		var type:Int;
-		
-		for(key in dataHolder)
+
+		for(key in dataHolder.keys())
 		{
 			wrapper = getData(key);
 			type = wrapper.type;
@@ -412,7 +412,7 @@ class SFSObject implements ISFSObject
 	/** @inheritDoc */
 	public function getSFSArray(key:String):ISFSArray
 	{
-		var wrapper:SFSDataWrapper = cast dataHolder[key];
+		var wrapper:SFSDataWrapper = cast dataHolder.get(key);
 		
 		if (wrapper != null)
 			return cast wrapper.data;

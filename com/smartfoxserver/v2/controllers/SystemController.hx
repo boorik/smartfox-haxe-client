@@ -978,7 +978,7 @@ class SystemController extends BaseController
 			sfs.buddyManager.clearAll();
 			
 			// Populate the BuddyList
-			for(i in 0...bListData.size())
+			for (i in 0...bListData.size() )
 			{
 				var b:Buddy = SFSBuddy.fromSFSArray(bListData.getSFSArray(i));
 				sfs.buddyManager.addBuddy(b);

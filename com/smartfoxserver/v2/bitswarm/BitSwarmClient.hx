@@ -11,14 +11,14 @@ import com.smartfoxserver.v2.util.ClientDisconnectionReason;
 import com.smartfoxserver.v2.util.ConnectionMode;
 import openfl.errors.ArgumentError;
 
-import flash.errors.IllegalOperationError;
-import flash.events.Event;
-import flash.events.EventDispatcher;
-import flash.events.IOErrorEvent;
-import flash.events.ProgressEvent;
-import flash.events.SecurityErrorEvent;
-import flash.net.Socket;
-import flash.utils.ByteArray;
+import openfl.errors.IllegalOperationError;
+import openfl.events.Event;
+import openfl.events.EventDispatcher;
+import openfl.events.IOErrorEvent;
+import openfl.events.ProgressEvent;
+import openfl.events.SecurityErrorEvent;
+import openfl.net.Socket;
+import openfl.utils.ByteArray;
 
 /** @private */
 class BitSwarmClient extends EventDispatcher 
@@ -451,22 +451,11 @@ class BitSwarmClient extends EventDispatcher
 	
 	private function onSocketData(evt:ProgressEvent):Void
 	{
-		trace(evt);
 		try
 		{
 			var buffer:ByteArray = new ByteArray();
 			
 			_socket.readBytes(buffer);
-			if (_ioHandler == null)
-			{
-				trace("_ioHandler is null");
-				return;
-			}
-			if (buffer == null)
-			{
-				trace("buffer is null");
-				return;
-			}
 			_ioHandler.onDataRead(buffer);
 		}
 		catch(error:SFSError)

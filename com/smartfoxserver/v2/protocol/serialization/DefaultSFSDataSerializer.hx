@@ -1214,17 +1214,16 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		for(ii in 0...sfsa.size())
 		{
 			var item:SFSDataWrapper = sfsa.getWrappedElementAt(ii);
-			
 			if(item.type==SFSDataType.NULL)
-				arr[ii] = null;
+				arr.push(null);
 				
 			else if(item.type==SFSDataType.SFS_OBJECT)
-				arr[ii] = cast(item.data,SFSObject).toObject();
+				arr.push(cast(item.data,SFSObject).toObject());
 				
 			else if(item.type==SFSDataType.SFS_ARRAY)
 			{
 				var subArr:Array<Dynamic> = [];
-				arr[ii] = subArr;
+				arr.push(subArr);
 				
 				// Call recursively
 				_scanSFSArray(cast(item.data,ISFSArray), subArr);
@@ -1235,7 +1234,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 				continue;
 				
 			else 
-				arr[ii]= item.data;	
+				arr.push(item.data);	
 		}
 	}
 	
