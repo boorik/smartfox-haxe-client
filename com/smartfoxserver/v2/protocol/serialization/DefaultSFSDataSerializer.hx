@@ -1126,26 +1126,26 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			var item:SFSDataWrapper = sfso.getData(key);
 			
 			if(item.type==SFSDataType.NULL)
-				obj[key] = null;
+				Reflect.setField(obj,key, null);
 				
 			else if(item.type==SFSDataType.SFS_OBJECT)
 			{
 				var subObj:Dynamic = { };
-				obj[key] = subObj;
+				Reflect.setField(obj,key, subObj);
 				
 				// Call recursively
 				_scanSFSObject(cast(item.data,ISFSObject), subObj);
 			}	
 			
 			else if(item.type==SFSDataType.SFS_ARRAY)
-				obj[key] = cast(item.data, SFSArray).toArray();
+				Reflect.setField(obj,key,cast(item.data, SFSArray).toArray());
 			
 			// Skip CLASS types
 			else if(item.type==SFSDataType.CLASS)
 				continue;
 					
 			else 
-				obj[key] = item.data	;
+				Reflect.setField(obj,key,item.data);
 		}
 	}
 	
@@ -1214,6 +1214,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		for(ii in 0...sfsa.size())
 		{
 			var item:SFSDataWrapper = sfsa.getWrappedElementAt(ii);
+			trace("item:" + item.type+ "data:"+item.data);
 			if(item.type==SFSDataType.NULL)
 				arr.push(null);
 				
