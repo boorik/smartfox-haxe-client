@@ -22,7 +22,7 @@ class Main extends Sprite
 		
 		sfs = new SmartFox(true);
 		sfs.addEventListener(SFSEvent.CONNECTION, onConnection);
-		sfs.connect("sfs.chapatiz.com", 9933);
+		sfs.connect("localhost", 9933);
 		//trace("Type:" + Type.typeof("toto"));
 		// Assets:
 		// openfl.Assets.getBitmapData("img/assetname.jpg");
