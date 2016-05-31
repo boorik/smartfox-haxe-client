@@ -12,8 +12,14 @@ Let me know how it works on other targets
 Instructions:
 =====
 Installation
-
+```
 haxelib git smartfox-haxe-client https://github.com/chapatiz/smartfox-haxe-client
+```
+
+add in your project.xml :
+```
+<haxelib name="smartfox-haxe-client"/>
+```
 
 Then you can use it like the as3 api, check the as3 exemples there :
 http://docs2x.smartfoxserver.com/ExamplesFlash/introduction
