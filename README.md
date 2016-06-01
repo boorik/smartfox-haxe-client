@@ -1,4 +1,4 @@
-Smartfox haxe client
+SmartFoxServer 2X Haxe client API
 =======================
 
 Haxe openfl translation of the as3 client for the Smartfox server http://www.smartfoxserver.com/
