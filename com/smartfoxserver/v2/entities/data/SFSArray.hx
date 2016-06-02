@@ -114,8 +114,6 @@ class SFSArray implements ISFSArray
 	/** @private */
 	public function getWrappedElementAt(index:Int):SFSDataWrapper
 	{
-		trace("dataHolder:" + dataHolder);
-		trace("index:" + index);
 		return dataHolder[index];
 	}
 	

@@ -1214,7 +1214,6 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		for(ii in 0...sfsa.size())
 		{
 			var item:SFSDataWrapper = sfsa.getWrappedElementAt(ii);
-			trace("item:" + item.type+ "data:"+item.data);
 			if(item.type==SFSDataType.NULL)
 				arr.push(null);
 				

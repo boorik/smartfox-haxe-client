@@ -103,18 +103,7 @@ class SFSObject implements ISFSObject
 	/** @inheritDoc */
 	public function containsKey(key:String):Bool
 	{
-		var found:Bool = false;
-		
-		for(j in dataHolder)
-		{
-			if(j==key)
-			{
-				found = true;
-				break;
-			}
-		}
-		
-		return found;
+		return dataHolder.exists(key);
 	}
 	
 	/** @inheritDoc */
