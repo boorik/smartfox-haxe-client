@@ -176,7 +176,7 @@ class SFSBuddyManager implements IBuddyManager
 	public var buddyList(get_buddyList, null):Array<Buddy>;
  	private function get_buddyList():Array<Buddy>
 	{
-		return cast ArrayUtil.objToArray(_buddiesByName);
+		return Lambda.array(_buddiesByName);
 	}
 	
 	/** @inheritDoc */
