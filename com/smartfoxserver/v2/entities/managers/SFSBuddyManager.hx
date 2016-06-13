@@ -97,7 +97,7 @@ class SFSBuddyManager implements IBuddyManager
 		var buddy:Buddy = getBuddyByName(name);
 		
 		if(buddy !=null)
-			_buddiesByName.set(name, null);
+			_buddiesByName.remove(name);
 			
 		return buddy;
 	}
