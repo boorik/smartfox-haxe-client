@@ -120,7 +120,7 @@ class SFSBuddyManager implements IBuddyManager
 	/** @inheritDoc */
 	public function containsBuddy(name:String):Bool
 	{
-		return getBuddyByName(name) != null;
+		return _buddiesByName.exists(name);
 	}
 	
 	/** @inheritDoc */
