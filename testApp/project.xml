@@ -14,9 +14,10 @@
 	
 	<!-- classpath, haxe libs -->
 	<source path="src" />
-	<source path=".." />
+	<!--<source path=".." />-->
 	<haxelib name="openfl" />
 	<haxelib name="actuate" />
+	<haxelib name="smartfox-haxe-client"/>
 	
 	<!-- assets -->
 	<icon path="assets/openfl.svg" />
