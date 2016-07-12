@@ -28,6 +28,7 @@ class SFSIOHandler implements IoHandler
 	private var pendingPacket:PendingPacket;
 	private var protocolCodec:IProtocolCodec;
 	private var fullPacketDump:Bool=false;
+	private var packetEncrypter:IPacketEncrypter;
 	
 	private static var EMPTY_BUFFER:ByteArray;
 	
@@ -37,6 +38,7 @@ class SFSIOHandler implements IoHandler
 		
 		this.bitSwarm = bitSwarm;
 		this.log = bitSwarm.sfs.logger;
+		this.packetEncrypter = new DefaultPacketEncrypter(bitSwarm);
 		this.readState = PacketReadState.WAIT_NEW_PACKET;
 		this.protocolCodec = new SFSProtocolCodec(this, bitSwarm);
 	}
@@ -243,9 +245,9 @@ class SFSIOHandler implements IoHandler
 			pendingPacket.buffer.writeBytes(data, 0, remaining);
 			log.debug("<<<Packet Complete>>>");
 			
-			/*
-			* Encryption handling code goes here
-			*/
+			// Handle encryption
+			if (pendingPacket.header.encrypted)
+				packetEncrypter.decrypt(pendingPacket.buffer);
 			
 			// Handle compression
 			if(pendingPacket.header.compressed)
@@ -287,6 +289,7 @@ class SFSIOHandler implements IoHandler
 		var writeBuffer:ByteArray = new ByteArray();
 		var binData:ByteArray = message.content.toBinary();
 		var isCompressed:Bool = false;
+		var isEncrypted:Bool = false;
 		
 		// 1. Handle Compression
 		if (cast(binData.length,Int) > bitSwarm.compressionThreshold)
@@ -309,7 +312,11 @@ class SFSIOHandler implements IoHandler
 		}
 		
 		// 2. Handle Encryption
-		// Not implemented yet
+		if (bitSwarm.cryptoKey != null)
+		{
+			packetEncrypter.encrypt(binData)
+			isEncrypted = true
+		}
 		
 		var sizeBytes:Int = SHORT_BYTE_SIZE;
 		
@@ -317,7 +324,7 @@ class SFSIOHandler implements IoHandler
 			sizeBytes = INT_BYTE_SIZE;
 		
 		// BlueBoxed flag is not implemented yet
-		var packetHeader:PacketHeader = new PacketHeader(message.isEncrypted, isCompressed, false, sizeBytes == INT_BYTE_SIZE);
+		var packetHeader:PacketHeader = new PacketHeader(isEncrypted, isCompressed, false, sizeBytes == INT_BYTE_SIZE);
 		
 		// 1. Write packet header byte
 		writeBuffer.writeByte(packetHeader.encode());

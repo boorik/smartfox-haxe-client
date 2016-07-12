@@ -1,6 +1,8 @@
 package com.smartfoxserver.v2.bitswarm;
 
 import com.smartfoxserver.v2.SmartFox;
+import com.smartfoxserver.v2.core.DefaultPacketEncrypter;
+import com.smartfoxserver.v2.core.IPacketEncrypter;
 import com.smartfoxserver.v2.core.SFSEvent;
 import com.smartfoxserver.v2.entities.SFSConstants;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
@@ -69,6 +71,9 @@ class AirUDPManager implements IUDPManager
 	private static inline var RESPONSE_TIMEOUT:Int=3000;		// Wait response for max 3 seconds
 	private var _initThread:Timer;
 	private var _currentAttempt:Int;
+	
+	// Supports encryption
+	private var packetEncrypter:IPacketEncrypter;
 	
 	/**
 	 * Creates a new<em>AirUDPManager</em>instance.
@@ -162,6 +167,9 @@ class AirUDPManager implements IUDPManager
 	{
 		this._sfs = sfs;
 		_log = sfs.logger;
+		
+		// Init packet encrypter only when we have a reference to SFS
+		packetEncrypter = new DefaultPacketEncrypter(sfs.kernel::socketEngine);
 	}
 	
 	/**
@@ -200,7 +208,8 @@ class AirUDPManager implements IUDPManager
 		var header:Int=bytes.readByte();
 		
 		// Get the compression flag
-		var compressed:Bool=(header & 0x20)>0;
+		var compressed:Bool = (header & 0x20) > 0;
+		var encrypted:Boolean = (header & 0x40) > 0;
 		
 		// Read the size of message(UDP can only use the short version)
 		var dataSize:Int=bytes.readShort();
@@ -212,8 +221,17 @@ class AirUDPManager implements IUDPManager
 		}
 		
 		// Grab the message body and deserialize it
-		var objBytes:ByteArray<Dynamic> = new ByteArray();;
+		var objBytes:ByteArray<Dynamic> = new ByteArray();
 		bytes.readBytes(objBytes, 0, bytes.bytesAvailable);
+		
+		// Handle encryption
+		if (encrypted)
+			packetEncrypter.decrypt(objBytes);
+		
+		// Handle compression
+		if (compressed)
+			objBytes.uncompress();
+		
 		var reqObj:ISFSObject = SFSObject.newFromBinaryData(objBytes);
 
 		// Check if this is an UDP Handshake response. If so, fire event and stop here.
@@ -250,7 +268,7 @@ class AirUDPManager implements IUDPManager
 		message.putInt("u", _sfs.mySelf.id);
 		
 		var binData:ByteArray<Dynamic>=message.toBinary();
-		var compress:Bool=false;
+		//var compress:Bool=false;
 		
 		// Assemble SFS2X packet
 		var writeBuffer:ByteArray<Dynamic>=new ByteArray();

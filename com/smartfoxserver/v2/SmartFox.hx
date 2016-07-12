@@ -39,6 +39,7 @@ import com.smartfoxserver.v2.util.ClientDisconnectionReason;
 import com.smartfoxserver.v2.util.ConfigData;
 import com.smartfoxserver.v2.util.ConfigLoader;
 import com.smartfoxserver.v2.util.ConnectionMode;
+import com.smartfoxserver.v2.util.CryptoInitializer;
 import com.smartfoxserver.v2.util.LagMonitor;
 import com.smartfoxserver.v2.util.SFSErrorCodes;
 import openfl.errors.ArgumentError;
@@ -148,6 +149,16 @@ import flash.system.Capabilities;
  * @see		#loadConfig()
  */ 
 //[Event(name="configLoadFailure", type="com.smartfoxserver.v2.core.SFSEvent")]
+
+/**
+ * Dispatched in return to the initialization of an encrypted connection.
+ * This event is fired in response to a call to the <em>initCrypto()</em> method.
+ * 
+ * @eventType com.smartfoxserver.v2.core.SFSEvent.CRYPTO_INIT
+ * 
+ * @see		#initCrypto()
+ */ 
+//[Event(name = "udpInit", type = "com.smartfoxserver.v2.core.SFSEvent")]
 
 //--------------------------------------
 //  Login events
@@ -804,8 +815,8 @@ class SmartFox extends EventDispatcher
 		
 	// Current version
 	private var _majVersion:Int = 1;
-	private var _minVersion:Int = 2;
-	private var _subVersion:Int = 6;
+	private var _minVersion:Int = 6;
+	private var _subVersion:Int = 0;
 
 	
 	// The socket engine
@@ -1015,7 +1026,7 @@ class SmartFox extends EventDispatcher
 	 * 
 	 * Available under the kernel namespace
 	 */
-	var socketEngine(get_socketEngine, null):BitSwarmClient;
+	public var socketEngine(get_socketEngine, null):BitSwarmClient;
  	private function get_socketEngine():BitSwarmClient
 	{
 		return _bitSwarm;
@@ -1706,6 +1717,47 @@ class SmartFox extends EventDispatcher
 	private function isAirRuntime():Bool
 	{
 		return Capabilities.playerType.toLowerCase() == "desktop";
+	}
+	
+	/**
+	 * Initialized the connection cryptography. Once this process is successfully completed all of the server's data
+	 * will be encrypted using standard AES 128-bit algorithm, using a secure key served over HTTPS.
+	 * 
+	 * @example This call must be executed right after a successful connection, like in this example:
+	 * 
+	 * <listing version="3.0">
+	 * var sfs:SmartFox = new SmartFox();
+	 * sfs.addEventListener(SFSEvent.CONNECTION, onConnect);
+	 * sfs.addEventListener(SFSEvent.CRYPTO_INIT, onCryptInit);
+	 * 
+	 * sfs.connect("mysecuredomain.com", 9933);
+	 * 
+	 * function onConnect(evt:SFSEvent):void
+	 * {
+	 * 	if (evt.param.success)
+	 * 		sfs.initCrypto();
+	 * 		
+	 * 	else
+	 * 		trace("Sorry, connection failed");
+	 * }
+	 * 
+	 * function onCryptInit(evt:SFSEvent):void
+	 * {
+	 * 	ta_data.text = evt.params.success;
+	 * 	
+	 * 	if (evt.params.success)
+	 * 		sfs.send(new LoginRequest("MyName", "MyPassword", "MyZone"));
+	 * 
+	 * 	else
+	 * 		trace("Crypto init failed. Caused by: " + evt.params.errorMsg)
+	 * }
+	 * </listing>
+	 * 
+	 * @see #event:cryptoInit cryptoInit event
+	 */
+	public function initCrypto():void
+	{
+		new CryptoInitializer(this);			
 	}
 	
 	/** @private */

@@ -9,6 +9,7 @@ import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.logging.Logger;
 import com.smartfoxserver.v2.util.ClientDisconnectionReason;
 import com.smartfoxserver.v2.util.ConnectionMode;
+import com.smartfoxserver.v2.util.CryptoKey;
 import openfl.errors.ArgumentError;
 
 import openfl.errors.IllegalOperationError;
@@ -40,6 +41,8 @@ class BitSwarmClient extends EventDispatcher
 	private var _extController:ExtensionController;
 	private var _udpManager:IUDPManager;
 	private var _controllersInited:Bool = false;
+	
+	public var _cryptoKey(get, set):CryptoKey;
 	
 	private var _useBlueBox:Bool = false;
 	private var _connectionMode:String;
@@ -565,6 +568,16 @@ class BitSwarmClient extends EventDispatcher
 	function get_socket():Socket 
 	{
 		return _socket;
+	}
+	
+	function get_cryptoKey():CryptoKey 
+	{
+		return _cryptoKey;
+	}
+	
+	function set_cryptoKey(value:CryptoKey):CryptoKey 
+	{
+		return _cryptoKey = value;
 	}
 	
 }
