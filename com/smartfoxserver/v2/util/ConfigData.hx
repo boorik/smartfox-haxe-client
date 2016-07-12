@@ -73,7 +73,7 @@ class ConfigData
 	 * 
 	 * @default 8443
 	 */
-	public var httpsPort:int = 8443
+	public var httpsPort:int = 8443;
 	
 	/**
 	 * Indicates whether the SmartFoxServer's BlueBox should be enabled or not.
