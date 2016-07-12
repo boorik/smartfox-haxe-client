@@ -48,8 +48,8 @@ class ConfigLoader extends EventDispatcher
 		if(fastDoc.att.httpPort != null)
 			cfgData.httpPort = Std.parseInt(fastDoc.att.httpPort);
 		
-		if ( fastDoc.att.httpsPort != undefined )
-				cfgData.httpsPort = int( fastDoc.att.httpsPort )	
+		if ( fastDoc.att.httpsPort != null )
+				cfgData.httpsPort = Std.parseInt( fastDoc.att.httpsPort );	
 			
 		if(fastDoc.att.blueBoxPollingRate != null)
 			cfgData.blueBoxPollingRate = Std.parseInt(fastDoc.att.blueBoxPollingRate);

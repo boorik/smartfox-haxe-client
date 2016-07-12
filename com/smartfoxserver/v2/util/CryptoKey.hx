@@ -7,22 +7,22 @@ import openfl.utils.ByteArray;
  */
 class CryptoKey
 {
-	private var _iv(get, null):ByteArray;
-	private var _key(get, null):ByteArray;
+	public var iv(get, null):ByteArray;
+	public var key(get, null):ByteArray;
 	public function new(iv:ByteArray, key:ByteArray) 
 	{
-		this._iv = iv;
-		this._key = key;	
+		this.iv = iv;
+		this.key = key;	
 	}
 	
 	function get_iv():ByteArray 
 	{
-		return _iv;
+		return iv;
 	}
 	
 	function get_key():ByteArray 
 	{
-		return _key;
+		return key;
 	}
 	
 }

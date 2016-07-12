@@ -5,7 +5,7 @@
         "openfl",
         "server"
     ],
-    "description": "openfl smartfox client, use smartfox in your openfl projects without plateform specific libraries",
+    "description": "use smartfox in your openfl projects without plateform specific libraries",
     "contributors": [
         "boorik <Vincent Blanchet>"
     ],
@@ -15,6 +15,6 @@
     "dependencies": {
         "lime": "",
         "openfl": "",
-		"haxe-crypto"
+		"haxe-crypto":""
     }
 }

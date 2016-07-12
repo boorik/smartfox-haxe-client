@@ -12,14 +12,13 @@ import com.hurlant.crypto.symmetric.IVMode;
 import com.hurlant.crypto.symmetric.PKCS5;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.bitswarm.BitSwarmClient;
-import com.smartfoxserver.v2.kernel;
 import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
 import com.smartfoxserver.v2.util.CryptoKey;
 
 import flash.errors.IllegalOperationError;
 import flash.utils.ByteArray;
 
-public class DefaultPacketEncrypter implements IPacketEncrypter
+class DefaultPacketEncrypter implements IPacketEncrypter
 {
 	private var bitSwarm:BitSwarmClient;
 	private static var ALGORITHM:String = "aes-cbc";
@@ -40,7 +39,7 @@ public class DefaultPacketEncrypter implements IPacketEncrypter
 		*/
 		var padding:IPad = new PKCS5();
 		
-		var cipher:ICipher = Crypto.getCipher(ALGORITHM, ck.key, padding);
+		var cipher:ICipher = Crypto.getCipher(ALGORITHM, ck.key,cast padding);
 		var ivmode:IVMode = cast(cipher, IVMode);
 		ivmode.IV = ck.iv;
 		
@@ -49,11 +48,11 @@ public class DefaultPacketEncrypter implements IPacketEncrypter
 	
 	public function decrypt(data:ByteArray):Void
 	{
-		var ck:CryptoKey = bitSwarm.cryptoKey
+		var ck:CryptoKey = bitSwarm.cryptoKey;
 			
 		var padding:IPad = new PKCS5();
 		
-		var cipher:ICipher = Crypto.getCipher(ALGORITHM, ck.key, padding);
+		var cipher:ICipher = Crypto.getCipher(ALGORITHM, ck.key,cast padding);
 		var ivmode:IVMode = cast(cipher, IVMode);
 		ivmode.IV = ck.iv;
 		

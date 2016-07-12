@@ -1755,7 +1755,7 @@ class SmartFox extends EventDispatcher
 	 * 
 	 * @see #event:cryptoInit cryptoInit event
 	 */
-	public function initCrypto():void
+	public function initCrypto():Void
 	{
 		new CryptoInitializer(this);			
 	}

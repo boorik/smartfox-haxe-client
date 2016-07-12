@@ -8,6 +8,6 @@ import openfl.utils.ByteArray;
 interface IPacketEncrypter
 {
 
-	function encrypt(data:ByteArray):Void		
-	function decrypt(data:ByteArray):Void
+	function encrypt(data:ByteArray):Void;		
+	function decrypt(data:ByteArray):Void;
 }

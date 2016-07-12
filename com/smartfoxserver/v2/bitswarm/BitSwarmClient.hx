@@ -41,8 +41,8 @@ class BitSwarmClient extends EventDispatcher
 	private var _extController:ExtensionController;
 	private var _udpManager:IUDPManager;
 	private var _controllersInited:Bool = false;
-	
-	public var _cryptoKey(get, set):CryptoKey;
+	@:isVar
+	public var cryptoKey(get, set):CryptoKey;
 	
 	private var _useBlueBox:Bool = false;
 	private var _connectionMode:String;
@@ -572,12 +572,12 @@ class BitSwarmClient extends EventDispatcher
 	
 	function get_cryptoKey():CryptoKey 
 	{
-		return _cryptoKey;
+		return cryptoKey;
 	}
 	
 	function set_cryptoKey(value:CryptoKey):CryptoKey 
 	{
-		return _cryptoKey = value;
+		return cryptoKey = value;
 	}
 	
 }

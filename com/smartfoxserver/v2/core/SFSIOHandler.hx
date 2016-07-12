@@ -314,8 +314,8 @@ class SFSIOHandler implements IoHandler
 		// 2. Handle Encryption
 		if (bitSwarm.cryptoKey != null)
 		{
-			packetEncrypter.encrypt(binData)
-			isEncrypted = true
+			packetEncrypter.encrypt(binData);
+			isEncrypted = true;
 		}
 		
 		var sizeBytes:Int = SHORT_BYTE_SIZE;
