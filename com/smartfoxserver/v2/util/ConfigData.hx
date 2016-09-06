@@ -88,4 +88,14 @@ class ConfigData
 	 * @default 750
 	 */
 	public var blueBoxPollingRate:Int = 750;
+	
+	public function toString():String
+	{
+		var s = "=== SFS Config ====\n";
+		for (f in Reflect.fields(this))
+		{
+			s += f + " : " + Reflect.field(this, f) + "\n";
+		}
+		return s;
+	}
 }
