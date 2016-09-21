@@ -10,6 +10,7 @@ import com.smartfoxserver.v2.logging.Logger;
 import com.smartfoxserver.v2.util.ClientDisconnectionReason;
 import com.smartfoxserver.v2.util.ConnectionMode;
 import com.smartfoxserver.v2.util.CryptoKey;
+import haxe.CallStack;
 import openfl.errors.ArgumentError;
 
 import openfl.errors.IllegalOperationError;
@@ -454,18 +455,19 @@ class BitSwarmClient extends EventDispatcher
 	
 	private function onSocketData(evt:ProgressEvent):Void
 	{
+		var buffer:ByteArray = new ByteArray();
 		try
 		{
-			var buffer:ByteArray = new ByteArray();
 			
 			_socket.readBytes(buffer);
 			_ioHandler.onDataRead(buffer);
 		}
-		catch(error:SFSError)
+		catch(error:Dynamic)
 		{
 			try{
-			trace("## SocketDataError:" + error.message);
-			
+			trace("## SocketDataError:" + error + " " + error.message);
+			trace(haxe.CallStack.toString( haxe.CallStack.exceptionStack()));
+			trace(buffer.toString());
 			var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.DATA_ERROR);
 			event.params = { message:error.message, details:error.details };
 			

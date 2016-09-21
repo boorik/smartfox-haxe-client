@@ -298,13 +298,11 @@ class SFSRoomManager implements IRoomManager
 		var rooms:Array<Room> = [];
 		
 		// Cycle through all Rooms
-		while(_roomsById.iterator().hasNext())
+		for (room in _roomsById)
 		{
-			var room:Room = _roomsById.iterator().next();
-			
 			if(room.containsUser(user))
 				rooms.push(room);
-		}
+		}	
 		
 		return rooms;
 	}
@@ -314,13 +312,11 @@ class SFSRoomManager implements IRoomManager
 	{
 		
 		// Cycle through all Rooms
-		while(_roomsById.iterator().hasNext())
+		for (room in _roomsById)
 		{
-			var room:Room = _roomsById.iterator().next();
-			
 			if(room.containsUser(user))
 				room.removeUser(user);
-		}
+		}	
 	}
 	
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

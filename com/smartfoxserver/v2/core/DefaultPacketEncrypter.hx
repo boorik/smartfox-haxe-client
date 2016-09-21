@@ -39,11 +39,11 @@ class DefaultPacketEncrypter implements IPacketEncrypter
 		*/
 		var padding:IPad = new PKCS5();
 		
-		var cipher:ICipher = Crypto.getCipher(ALGORITHM, ck.key,cast padding);
+		var cipher:ICipher = Crypto.getCipher(ALGORITHM,cast ck.key,cast padding);
 		var ivmode:IVMode = cast(cipher, IVMode);
-		ivmode.IV = ck.iv;
+		ivmode.IV = cast ck.iv;
 		
-		cipher.encrypt(data);
+		cipher.encrypt(cast data);
 	}
 	
 	public function decrypt(data:ByteArray):Void
@@ -52,11 +52,11 @@ class DefaultPacketEncrypter implements IPacketEncrypter
 			
 		var padding:IPad = new PKCS5();
 		
-		var cipher:ICipher = Crypto.getCipher(ALGORITHM, ck.key,cast padding);
+		var cipher:ICipher = Crypto.getCipher(ALGORITHM, cast ck.key,cast padding);
 		var ivmode:IVMode = cast(cipher, IVMode);
-		ivmode.IV = ck.iv;
+		ivmode.IV = cast ck.iv;
 		
-		cipher.decrypt(data);
+		cipher.decrypt(cast data);
 	}
 }
 	

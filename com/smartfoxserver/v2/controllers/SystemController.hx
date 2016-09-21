@@ -348,19 +348,19 @@ class SystemController extends BaseController
 		
 		var uId:Int = sfso.getInt("u");
 		var user:User = sfs.userManager.getUserById(uId);
-		
+
 		if(user !=null)
 		{
 			// keep a copy of the rooms joined by this user
 			var joinedRooms:Array<Dynamic> = sfs.roomManager.getUserRooms(user);
-			
+
 			// remove from all rooms
 			sfs.roomManager.removeUser(user);
-			
+
 			// remove from global user manager
 			var globalUserMan:SFSGlobalUserManager = cast sfs.userManager;
 			globalUserMan.removeUserReference(user, true);
-				
+
 			// Fire one event in each room
 			for(room in joinedRooms)
 			{
