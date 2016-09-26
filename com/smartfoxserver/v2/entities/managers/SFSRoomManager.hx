@@ -281,10 +281,8 @@ class SFSRoomManager implements IRoomManager
 	public function getJoinedRooms():Array<Room>
 	{
 		var rooms:Array<Room> = [];
-		while(_roomsById.iterator().hasNext())
-		{
-			var room:Room = _roomsById.iterator().next();
-			
+		for(room in _roomsById)
+		{		
 			if(room.isJoined)
 				rooms.push(room);
 		}
