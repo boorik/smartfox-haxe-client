@@ -9,6 +9,8 @@ import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.logging.Logger;
 import com.smartfoxserver.v2.util.ClientDisconnectionReason;
 import com.smartfoxserver.v2.util.ConnectionMode;
+import com.smartfoxserver.v2.util.CryptoKey;
+import haxe.CallStack;
 import openfl.errors.ArgumentError;
 
 import openfl.errors.IllegalOperationError;
@@ -40,6 +42,8 @@ class BitSwarmClient extends EventDispatcher
 	private var _extController:ExtensionController;
 	private var _udpManager:IUDPManager;
 	private var _controllersInited:Bool = false;
+	@:isVar
+	public var cryptoKey(get, set):CryptoKey;
 	
 	private var _useBlueBox:Bool = false;
 	private var _connectionMode:String;
@@ -451,18 +455,19 @@ class BitSwarmClient extends EventDispatcher
 	
 	private function onSocketData(evt:ProgressEvent):Void
 	{
+		var buffer:ByteArray = new ByteArray();
 		try
 		{
-			var buffer:ByteArray = new ByteArray();
 			
 			_socket.readBytes(buffer);
 			_ioHandler.onDataRead(buffer);
 		}
-		catch(error:SFSError)
+		catch(error:Dynamic)
 		{
 			try{
-			trace("## SocketDataError:" + error.message);
-			
+			trace("## SocketDataError:" + error + " " + error.message);
+			trace(haxe.CallStack.toString( haxe.CallStack.exceptionStack()));
+			trace(buffer.toString());
 			var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.DATA_ERROR);
 			event.params = { message:error.message, details:error.details };
 			
@@ -565,6 +570,16 @@ class BitSwarmClient extends EventDispatcher
 	function get_socket():Socket 
 	{
 		return _socket;
+	}
+	
+	function get_cryptoKey():CryptoKey 
+	{
+		return cryptoKey;
+	}
+	
+	function set_cryptoKey(value:CryptoKey):CryptoKey 
+	{
+		return cryptoKey = value;
 	}
 	
 }

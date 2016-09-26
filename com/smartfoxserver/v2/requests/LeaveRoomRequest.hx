@@ -38,9 +38,9 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
 class LeaveRoomRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_ROOM_ID:String="r"
+	public static inline var KEY_ROOM_ID:String = "r";
 	
-	private var _room:Room
+	private var _room:Room;
 	
 	/**
 	 * Creates a new<em>LeaveRoomRequest</em>instance.
@@ -53,27 +53,27 @@ class LeaveRoomRequest extends BaseRequest
 	 */
 	public function new(theRoom:Room=null)
 	{
-		super(BaseRequest.LeaveRoom)
-		_room=theRoom
+		super(BaseRequest.LeaveRoom);
+		_room = theRoom;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
-		
+		var errors:Array<String> = [];
+
 		// no validation needed
 		if(sfs.joinedRooms.length<1)
-			errors.push("You are not joined in any rooms")
+			errors.push("You are not joined in any rooms");
 			
 		if(errors.length>0)
-			throw new SFSValidationError("LeaveRoom request error", errors)
+			throw new SFSValidationError("LeaveRoom request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
 		if(_room !=null)
-			_sfso.putInt(KEY_ROOM_ID, _room.id)
+			_sfso.putInt(KEY_ROOM_ID, _room.id);
 	}
 }

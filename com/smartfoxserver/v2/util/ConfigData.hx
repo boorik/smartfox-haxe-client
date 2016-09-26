@@ -66,6 +66,15 @@ class ConfigData
 	 */
 	public var httpPort:Int = 8080;
 	
+				
+	/**
+	 * Specifies the port for HTTPS communication. 
+	 * E.g. the initialization of an encrypted connection.
+	 * 
+	 * @default 8443
+	 */
+	public var httpsPort:Int = 8443;
+	
 	/**
 	 * Indicates whether the SmartFoxServer's BlueBox should be enabled or not.
 	 * 
@@ -79,4 +88,14 @@ class ConfigData
 	 * @default 750
 	 */
 	public var blueBoxPollingRate:Int = 750;
+	
+	public function toString():String
+	{
+		var s = "=== SFS Config ====\n";
+		for (f in Reflect.fields(this))
+		{
+			s += f + " : " + Reflect.field(this, f) + "\n";
+		}
+		return s;
+	}
 }

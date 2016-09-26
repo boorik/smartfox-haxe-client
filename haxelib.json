@@ -5,15 +5,16 @@
         "openfl",
         "server"
     ],
-    "description": "openfl smartfox client",
+    "description": "use smartfox in your openfl projects without plateform specific libraries",
     "contributors": [
         "boorik <Vincent Blanchet>"
     ],
-    "releasenote": "First release",
-    "version": "0.1.0",
+    "releasenote": "now match as3 version 1.6.0",
+    "version": "0.2.0",
     "url": "https://github.com/chapatiz/smartfox-haxe-client",
     "dependencies": {
         "lime": "",
-        "openfl": ""
+        "openfl": "",
+		"haxe-crypto":""
     }
 }

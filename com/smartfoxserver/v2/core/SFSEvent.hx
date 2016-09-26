@@ -1616,7 +1616,52 @@ class SFSEvent extends BaseEvent
 	 */ 
 	public static inline var MMOITEM_VARIABLES_UPDATE:String = "mmoItemVariablesUpdate";
 	
-	//========================================================
+	/**
+	 * The <em>SFSEvent.CRYPTO_INIT</em> constant defines the value of the <em>type</em> property of the event object for a <em>cryptoInit</em> call.
+	 * 
+	 * <p>The properties of the <em>params</em> object contained in the event object have the following values:</p>
+	 * <table class="innertable">
+	 * <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+	 * <tr><td>success</td><td><em>Boolean</em></td><td><code>true</code> if a unique encryption key was successfully retrieved via HTTPS, <code>false</code> if the transaction failed.</td></tr>
+	 * <tr><td>errorMsg</td><td><em>Boolean</em></td><td>May contain further details if an error occurred (success==false)</td></tr>
+	 * </table>
+	 * 
+	 * @example	The following example initializes the socket cryptography. <b>Always makes sure to initialize cryptography right after having connected</b>.
+	 * 
+	 * <listing version="3.0">
+	 * var sfs:SmartFox = new SmartFox();
+	 * sfs.addEventListener(SFSEvent.CONNECTION, onConnect);
+	 * sfs.addEventListener(SFSEvent.CRYPTO_INIT, onCryptInit);
+	 * 
+	 * sfs.connect("mysecuredomain.com", 9933);
+	 * 
+	 * function onConnect(evt:SFSEvent):void
+	 * {
+	 * 	if (evt.param.success)
+	 * 		sfs.initCrypto();
+	 * 		
+	 * 	else
+	 * 		trace("Sorry, connection failed");
+	 * }
+	 * 
+	 * function onCryptInit(evt:SFSEvent):void
+	 * {
+	 * 	ta_data.text = evt.params.success;
+	 * 	
+	 * 	if (evt.params.success)
+	 * 		sfs.send(new LoginRequest("MyName", "MyPassword", "MyZone"));
+	 * 
+	 * 	else
+	 * 		trace("Crypto init failed. Caused by: " + evt.params.errorMsg)
+	 * }
+	 * </listing>
+	 * 
+	 * @eventType	cryptoInit
+	 */
+	 public static inline var CRYPTO_INIT:String = "CryptoInit";
+	
+	
+	//==========================================================================================================
 	
 	
 	/**
