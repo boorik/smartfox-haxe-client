@@ -48,7 +48,12 @@ import flash.events.Event;
  * 
  * @see 	SFSBuddyEvent
  */
-class SFSEvent extends BaseEvent
+#if html5
+@:native('SFS2X.SFSEvent')
+extern class SFSEvent implements Dynamic
+#else
+ class SFSEvent extends BaseEvent
+#end
 {
 	/** @private */
 	public static inline var HANDSHAKE:String = "handshake";
@@ -1660,6 +1665,7 @@ class SFSEvent extends BaseEvent
 	 */
 	 public static inline var CRYPTO_INIT:String = "CryptoInit";
 	
+	 #if !html5
 	
 	//==========================================================================================================
 	
@@ -1695,4 +1701,5 @@ class SFSEvent extends BaseEvent
 	//{
 		//return formatToString("SFSEvent", "type", "bubbles", "cancelable", "eventPhase", "params");
 	//}
+	#end
 }

@@ -1,5 +1,9 @@
 package com.smartfoxserver.v2.entities.data;
 
+#if html5
+class SFSObject implements Dynamic{}
+#else
+
 import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
 import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
@@ -575,3 +579,4 @@ class SFSObject implements ISFSObject
 		dataHolder[key] = value;			
 	}
 }
+#end
