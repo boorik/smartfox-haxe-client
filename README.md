@@ -3,7 +3,7 @@ SmartFoxServer 2X Haxe client API
 
 Haxe openfl translation of the as3 client for the Smartfox server http://www.smartfoxserver.com/
 
-**WARNING : Currently doesn't work for html5 target!**
+**WARNING : HTML5 support is a work in progress!**
 
 Tested ( a little :) ) on flash, windows and android targets.
 
