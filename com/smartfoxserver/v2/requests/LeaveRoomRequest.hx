@@ -1,5 +1,11 @@
 package com.smartfoxserver.v2.requests;
 
+#if html5
+@:native('SFS2X.Requests.System.LeaveRoomRequest')
+extern class LeaveRoomRequest{
+	public function new();
+}
+#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
@@ -77,3 +83,4 @@ class LeaveRoomRequest extends BaseRequest
 			_sfso.putInt(KEY_ROOM_ID, _room.id);
 	}
 }
+#end

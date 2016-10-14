@@ -1,5 +1,12 @@
 package com.smartfoxserver.v2.requests;
 
+#if html5
+@:native('SFS2X.Requests.System.ExtensionRequest')
+extern class ExtensionRequest{
+	public function new(extCmd:String, params:Dynamic=null, room:Dynamic=null);
+}
+
+#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
@@ -121,3 +128,4 @@ class ExtensionRequest extends BaseRequest
 		_sfso.putSFSObject(KEY_PARAMS, _params);
 	}
 }
+#end

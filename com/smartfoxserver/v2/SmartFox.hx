@@ -9,6 +9,46 @@
 
 package com.smartfoxserver.v2;
 
+#if html5
+@:jsRequire("SFS2X")
+typedef ConfigObj = {
+	var host:String;
+	var port:Int;
+	var useSSL:Bool;
+	var zone:String;
+	var debug:Bool;
+}
+@:native('SFS2X.SmartFox')
+extern class SmartFox
+{
+	public var buddyManager:Dynamic;
+	public var config:Dynamic;
+	public var debug:Bool;
+	public var lastJoinedRoom:Dynamic;
+	public var logger:Dynamic;
+	public var mySelf:Dynamic;
+	public var roomManager:Dynamic;
+	public var sessionToken:Dynamic;	
+	public var userManager:Dynamic;
+	public var version:String;
+	public function new(?configObj:ConfigObj):Void;
+	public function addEventListener(evtType:String, listener:Dynamic, scope:Dynamic):Void;
+	public function connect(?host:String, ?port:Float, ?useSSL:Bool):Void;
+	public function disconnect():Void;
+	public function enableLagMonitor(enabled:Bool, interval:Float, queueSize:Float):Void;
+	public function getJoinedRooms():Dynamic;
+	public function getMaxMessageSize():Float;
+	public function getRoomById(id:Int):Dynamic;
+	public function getRoomByName(name:String):Dynamic;
+	public function getRoomList():Dynamic;
+	public function getRoomListFromGroup(groupId:Int):Dynamic;
+	public function isConnected():Bool;
+	public function removeEventListener(evtType:Dynamic, listener:Dynamic):Void;
+	public function send(request:Dynamic):Void;
+	public function setClientDetails(platformId:Int, version:String):Void;
+}
+#else
+
 import com.smartfoxserver.v2.bitswarm.BitSwarmClient;
 import com.smartfoxserver.v2.bitswarm.BitSwarmEvent;
 import com.smartfoxserver.v2.bitswarm.DefaultUDPManager;
@@ -2211,3 +2251,4 @@ class SmartFox extends EventDispatcher
 		_config = cfgData;
 	}
 }
+#end
