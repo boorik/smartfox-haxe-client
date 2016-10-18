@@ -1,5 +1,12 @@
 package com.smartfoxserver.v2.requests;
 
+#if html5
+@:native('SFS2X.Requests.System.PublicMessageRequest')
+extern class PublicMessageRequest
+{
+	public function new(message:String,?params:Dynamic,?targetRoom:Dynamic):Void;
+}
+#else
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 
@@ -66,3 +73,4 @@ class PublicMessageRequest extends GenericMessageRequest
 		_params = params;
 	}		
 }
+#end
