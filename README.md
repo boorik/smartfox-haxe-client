@@ -5,7 +5,9 @@ Haxe openfl translation of the as3 client for the Smartfox server http://www.sma
 
 **WARNING : HTML5 support is a work in progress!**
 
-Tested ( a little :) ) on flash, windows and android targets.
+Tested on flash, windows, ios and android targets.
+
+You can have a look at https://github.com/boorik/smartfox-haxe-fullstack to check a sample project that use the api and haxe all the way.
 
 Pull requests are welcome
 
