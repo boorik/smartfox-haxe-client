@@ -1,8 +1,6 @@
 package com.smartfoxserver.v2.entities;
 
 #if html5
-@:jsRequire("SFS2X")
-
 @:native('SFS2X.Entities.SFSUser')
 extern class SFSUser
 {
