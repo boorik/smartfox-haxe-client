@@ -1,5 +1,12 @@
 package com.smartfoxserver.v2.requests;
 
+#if html5
+@:native('SFS2X.Requests.System.LogoutRequest')
+extern class LogoutRequest{
+	public function new();
+}
+#else
+
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 
@@ -51,3 +58,4 @@ class LogoutRequest  extends BaseRequest
 			throw new SFSValidationError("LogoutRequest Dynamic", ["You are not logged in a the moment!"]);
 	}
 }
+#end
