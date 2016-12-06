@@ -1,5 +1,10 @@
 package com.smartfoxserver.v2.entities.data;
 
+#if html5
+abstract SFSArray(Array<Dynamic>){
+	public function new(s) this = s;
+}
+#else
 import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
 import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
@@ -537,3 +542,4 @@ class SFSArray implements ISFSArray
 		return(wrapper != null ?(cast(wrapper.data,ISFSObject)):null);
 	}
 }
+#end

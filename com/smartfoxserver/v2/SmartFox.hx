@@ -29,7 +29,7 @@ extern class SmartFox
 	public var mySelf:Dynamic;
 	public var roomManager:Dynamic;
 	public var sessionToken:Dynamic;	
-	public var userManager:Dynamic;
+	public var userManager:com.smartfoxserver.v2.entities.managers.SFSUserManager;
 	public var version:String;
 	public function new(?configObj:ConfigObj):Void;
 	public function addEventListener(evtType:String, listener:Dynamic, scope:Dynamic):Void;
