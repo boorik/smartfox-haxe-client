@@ -50,7 +50,7 @@ class SFSUserVariable implements UserVariable
 	 * 
 	 * @see		VariableType
 	 */
-	function new(name:String, value:Dynamic, type:Int=-1)
+	public function new(name:String, value:Dynamic, type:Int=-1)
 	{
 		_name = name;
 		
