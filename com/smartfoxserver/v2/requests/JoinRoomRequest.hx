@@ -75,7 +75,7 @@ class JoinRoomRequest extends BaseRequest
 	/** @private */
 	public static inline var KEY_AS_SPECTATOR:String = "sp";
 	
-	//private var _id:Int = -1;
+	private var _rid:Int = -1;
 	private var _name:String;
 	private var _pass:String;
 	private var _roomIdToLeave:Int;
@@ -96,11 +96,11 @@ class JoinRoomRequest extends BaseRequest
 	public function new(id:Dynamic, pass:String=null, roomIdToLeave:Int=-1, asSpect:Bool=false)
 	{
 		super(BaseRequest.JoinRoom);
-		
+
 		if(Std.is(id, String))
 			_name = id;
 		else if(Std.is(id, Float))
-			_id = id;
+			_rid = id;
 		else if(Std.is(id, Room))
 			_id = cast(id, Room).id;
 		
@@ -115,7 +115,7 @@ class JoinRoomRequest extends BaseRequest
 		var errors:Array<String> = [];
 		
 		// Missing room id
-		if(_id<0 && _name==null)
+		if(_rid<0 && _name==null)
 			errors.push("Missing Room id or name, you should provide at least one");
 			
 		if(errors.length>0)
@@ -125,7 +125,7 @@ class JoinRoomRequest extends BaseRequest
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		if(_id>-1)
+		if(_rid>-1)
 			_sfso.putInt(KEY_ROOM_ID, _id);
 			
 		else if(_name !=null)
