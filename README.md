@@ -17,7 +17,7 @@ Instructions:
 =====
 Installation
 ```
-haxelib git smartfox-haxe-client https://github.com/chapatiz/smartfox-haxe-client
+haxelib git smartfox-haxe-client https://github.com/boorik/smartfox-haxe-client
 ```
 
 add in your project.xml :
