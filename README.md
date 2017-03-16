@@ -13,6 +13,19 @@ Pull requests are welcome
 
 Let me know how it works on other targets
 
+---------------------------------
+CURRENTLY WORKING WITH :
+
+haxe 3.4.0
+
+lime: [2.9.1]
+
+openfl: [3.6.1]
+
+actuate: [1.8.7]
+
+---------------------------------
+
 Instructions:
 =====
 Installation
