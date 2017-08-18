@@ -38,7 +38,7 @@ class Main extends Sprite
 		var ck = "jhbjhjbjhb";
 		loginCredentials.putUtfString("sid",sid);
 		loginCredentials.putUtfString("key", ck);
-		sfs.send( new LoginRequest("Booorik","","Chapatiz",loginCredentials) );
+		sfs.send( new LoginRequest("Booorik","","BasicExamples") );
 	}
 	
 	private function onLogin(e:SFSEvent):Void 

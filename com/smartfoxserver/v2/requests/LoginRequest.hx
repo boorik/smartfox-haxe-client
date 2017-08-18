@@ -1,8 +1,8 @@
 package com.smartfoxserver.v2.requests;
 #if html5
-@:native('SFS2X.Requests.System.LoginRequest')
+@:native('SFS2X.LoginRequest')
 extern class LoginRequest{
-	public function new(userName:String = "", password:String = "", params:Dynamic = null, zoneName:String = "");
+	public function new(userName:String = "", password:String = null, params:Dynamic = null, zoneName:String = "");
 }
 #else
 

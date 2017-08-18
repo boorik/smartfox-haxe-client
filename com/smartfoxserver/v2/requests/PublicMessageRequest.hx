@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.requests;
 
 #if html5
-@:native('SFS2X.Requests.System.PublicMessageRequest')
+@:native('SFS2X.PublicMessageRequest')
 extern class PublicMessageRequest
 {
 	public function new(message:String,?params:Dynamic,?targetRoom:Dynamic):Void;

@@ -2,7 +2,7 @@ package com.smartfoxserver.v2.requests;
 
 
 #if html5
- @:native('SFS2X.Requests.System.JoinRoomRequest')
+ @:native('SFS2X.JoinRoomRequest')
  extern class JoinRoomRequest
  {
  	public function new(room:Dynamic, ?password:String, ?roomIdToLeave:Int, ?asSpect:Bool):Void;

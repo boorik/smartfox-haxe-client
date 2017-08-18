@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.requests;
 
 #if html5
-@:native('SFS2X.Requests.System.LogoutRequest')
+@:native('SFS2X.LogoutRequest')
 extern class LogoutRequest{
 	public function new();
 }

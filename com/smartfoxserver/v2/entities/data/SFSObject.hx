@@ -1,7 +1,58 @@
 package com.smartfoxserver.v2.entities.data;
 
 #if html5
-class SFSObject implements Dynamic{}
+@:native('SFS2X.SFSObject')
+extern class SFSObject
+{
+	function new();
+	function get(key:Dynamic):Dynamic;
+	function getBool(key:String):Bool;
+	function getBoolArray(key:String):Array<Bool>;
+	function getByte(key:String):Int;
+	function getByteArray(key:String):haxe.io.Bytes;
+	function getDouble(key:String):Int;
+	function getDoubleArray(key:String):Array<Int>;
+	function getDump(?format:Dynamic):String;
+	function getFloat(key:String):Float;
+	function getFloatArray(key:String):Array<Float>;
+	function getHexDump():String;
+	function getInt(key:String):Int;
+	function getIntArray(key:String):Array<Int>;
+	function getKeysArray():Array<String>;
+	function getLong(key:String):Int;
+
+	function getLongArray(key:String):Array<Int>;
+	function getSFSArray(key:String):SFSArray;
+	function getSFSObject(key:String):SFSObject;
+	function getShort(key:String):Int;
+	function getShortArray(key:String):Array<Int>;
+	function getText(key:String):String;
+	function getUtfString(key:String):String;
+	function getUtfStringArray(key:String):Array<String>;
+	function put(key:String, value:Dynamic, typeId:Int):Void;
+	function putBool(key:String, value:Bool):Void;
+	function putBoolArray(key:String, array:Array<Bool>):Void;
+	function putByte(key:String, value:Int):Void;
+	function putByteArray(key:String, array:haxe.io.Bytes):Void;
+	function putDouble(key:String, value:Int):Void;
+	function putDoubleArray(key:String, array:Array<Int>):Void;
+
+	function putFloat(key:String, value:Float):Void;
+	function putFloatArray(key:String, array:Array<Float>):Void;
+	function putInt(key:String, value:Int):Void;
+	function putIntArray(key:String, array:Array<Int>):Void;
+	function putLong(key:String, value:Int):Void;
+	function putLongArray(key:String, array:Array<Int>):Void;
+	function putNull(key:String):Void;
+	function putSFSArray(key:String, value:SFSArray):Void;
+	function putSFSObject(key:String, value:SFSObject):Void;
+	function putShort(key:String, value:Int):Void;
+	function putShortArray(key:String, array:Array<Int>):Void;
+	function putText(key:String, value:String):Void;
+	function putUtfString(key:String, value:String):Void;
+	function putUtfStringArray(key:String, array:Array<String>):Void;
+	function size():Int;
+}
 #else
 
 import com.smartfoxserver.v2.exceptions.SFSError;
