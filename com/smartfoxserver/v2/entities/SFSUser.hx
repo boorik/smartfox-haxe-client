@@ -12,18 +12,18 @@ extern class SFSUser
 	public var properties:Dynamic;
 	
 	public function containsVariable(varName:String):Bool;
-	public function getPlayerId(room:Dynamic):Int;
-	public function getUserManager():Dynamic;
-	public function getVariable(varName:String):Dynamic;
-	public function getVariables():Array<Dynamic>;
+	public function getPlayerId(room:SFSRoom):Int;
+	public function getUserManager():SFSUserManager;
+	public function getVariable(varName:String):SFSUserVariable;
+	public function getVariables():Array<SFSUserVariable>;
 	public function isAdmin():Bool;
 	public function isGuest():Bool;
-	public function isJoinedInRoom(room:Dynamic):Bool;
+	public function isJoinedInRoom(room:SFSRoom):Bool;
 	public function isModerator():Bool;
 	public function isPlayer():Bool;
-	public function isPlayerInRoom(room:Dynamic):Bool;
+	public function isPlayerInRoom(room:SFSRoom):Bool;
 	public function isSpectator():Bool;
-	public function isSpectatorInRoom(room:Dynamic):Bool;
+	public function isSpectatorInRoom(room:SFSRoom):Bool;
 	public function isStandardUser():Bool;
 	public function toString():String;		
 }

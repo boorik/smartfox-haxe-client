@@ -1,5 +1,36 @@
 package com.smartfoxserver.v2.entities;
+#if html5
+@:native('SFS2X.SFSRoom')
+extern class SFSRoom{
+	var capacity:Int;
+	var groupId:Int;
+	var id:Int;
+	var isGame:Bool;
+	var isHidden:Bool;
+	var isJoined:Bool;
+	var isPasswordProtected:Bool;
+	var maxSpectators:Int;
+	var maxUsers:Int;
+	var name:String;
+	var properties:Dynamic;
+	var spectatorCount:Int;
+	var userCount:Int;
 
+	public function new();
+
+	function containsUser(user:SFSUser):Bool;
+	function containsVariable(varName:String):Bool;
+	function getPlayerList():Array<SFSUser>;
+	function getRoomManager():SFSRoomManager;
+	function getSpectatorList():Array<SFSUser>;
+	function getUserById(id:Int):SFSUser;
+	function getUserByName(name:String):SFSUser;
+	function getUserList():Array<SFSUser>;
+	function getVariable(varName:String):SFSRoomVariable;
+	function getVariables():Array<SFSRoomVariable>;
+	function toString():String;
+}
+#else
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.managers.IRoomManager;
@@ -514,3 +545,4 @@ class SFSRoom implements Room
 		
 	}
 }
+#end

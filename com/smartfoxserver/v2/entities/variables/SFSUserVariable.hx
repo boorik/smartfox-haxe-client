@@ -1,5 +1,19 @@
 package com.smartfoxserver.v2.entities.variables;
+#if html5
+@:native('SFS2X.SFSUserVariable')
+extern class SFSUserVariable
+{
+	var isNull:Bool;
+	var isPrivate:Bool;
+	var name:String;
+	var type:Dynamic;
+	var value:Dynamic;
 
+	public function new(name:String, value:Dynamic, ?type:Dynamic);
+
+	function toString():String;		
+}
+#else
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
@@ -218,3 +232,4 @@ class SFSUserVariable implements UserVariable
 		}	
 	}	
 }
+#end
