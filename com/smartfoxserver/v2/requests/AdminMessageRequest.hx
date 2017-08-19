@@ -1,5 +1,10 @@
 package com.smartfoxserver.v2.requests;
-
+#if html5
+@:native('SFS2X.AdminMessageRequest')
+extern class AdminMessageRequest{
+	public function new(message:String, recipientMode:Dynamic, ?params:SFSObject);
+}
+#else
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 
 /**
@@ -59,3 +64,4 @@ class AdminMessageRequest extends GenericMessageRequest
 		_sendMode=recipientMode.mode  
 	}
 }
+#end
