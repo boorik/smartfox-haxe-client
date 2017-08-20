@@ -52,6 +52,8 @@ extern class SFSObject
 	function putUtfString(key:String, value:String):Void;
 	function putUtfStringArray(key:String, array:Array<String>):Void;
 	function size():Int;
+	
+	function containsKey(key:String):Bool;
 }
 #else
 
