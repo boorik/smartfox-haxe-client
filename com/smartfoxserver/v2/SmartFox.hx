@@ -31,6 +31,7 @@ extern class SmartFox
 	public var sessionToken:Dynamic;	
 	public var userManager:com.smartfoxserver.v2.entities.managers.SFSUserManager;
 	public var version:String;
+	public var isConnected:Bool;
 	public function new(?configObj:ConfigObj):Void;
 	public function addEventListener(evtType:String, listener:Dynamic, scope:Dynamic):Void;
 	public function connect(?host:String, ?port:Float, ?useSSL:Bool):Void;
@@ -42,7 +43,6 @@ extern class SmartFox
 	public function getRoomByName(name:String):Dynamic;
 	public function getRoomList():Dynamic;
 	public function getRoomListFromGroup(groupId:Int):Dynamic;
-	public function isConnected():Bool;
 	public function removeEventListener(evtType:Dynamic, listener:Dynamic):Void;
 	public function send(request:Dynamic):Void;
 	public function setClientDetails(platformId:Int, version:String):Void;

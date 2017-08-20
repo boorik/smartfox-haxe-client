@@ -1,4 +1,6 @@
 package com.smartfoxserver.v2.entities;
+import com.smartfoxserver.v2.entities.managers.SFSUserManager;
+import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
 
 #if html5
 @:native('SFS2X.Entities.SFSUser')
@@ -32,7 +34,6 @@ extern class SFSUser
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.managers.IUserManager;
-import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
 import com.smartfoxserver.v2.exceptions.SFSError;
 import haxe.ds.IntMap;
