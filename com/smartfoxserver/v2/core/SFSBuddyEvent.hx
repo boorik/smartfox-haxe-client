@@ -308,7 +308,7 @@ class SFSBuddyEvent extends BaseEvent
 	 *<tr><td>buddy</td><td><em>Buddy</em></td><td>The<em>Buddy</em>object representing the message sender. If the<em>isItMe</em>parameter is<code>true</code>, the value of this parameter is<code>null</code>(because a user is not buddy to himself).</td></tr>
 	 *<tr><td>isItMe</td><td><em>Boolean</em></td><td><code>true</code>if the message sender is the current user himself(in this case this event is a sort of message delivery confirmation).</td></tr>
 	 *<tr><td>message</td><td><em>String</em></td><td>The message text.</td></tr>
-	 *<tr><td>data</td><td><em>ISFSObject</em></td><td>An instance of<em>SFSObject</em>containing additional custom parameters(e.g. the message color, an emoticon id, etc).</td></tr>
+	 *<tr><td>data</td><td><em>SFSObject</em></td><td>An instance of<em>SFSObject</em>containing additional custom parameters(e.g. the message color, an emoticon id, etc).</td></tr>
 	 *</table>
 	 * 
 	 * @example	The following example sends a message to a buddy and handles the related event:

@@ -59,7 +59,7 @@ import com.smartfoxserver.v2.core.SFSEvent;
 import com.smartfoxserver.v2.core.SFSIOHandler;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.entities.managers.IBuddyManager;
 import com.smartfoxserver.v2.entities.managers.IRoomManager;
 import com.smartfoxserver.v2.entities.managers.IUserManager;
@@ -1861,7 +1861,7 @@ class SmartFox extends EventDispatcher
 	 * @example	The following example creates an object containing some parameters and sends it to the server-side Extension:
 	 *<listing version="3.0">
 	 * 
-	 * var params:ISFSObject=new SFSObject();
+	 * var params:SFSObject=new SFSObject();
 	 * params.putInt("x", 10);
 	 * params.putInt("y", 37);
 	 * 
@@ -2110,7 +2110,7 @@ class SmartFox extends EventDispatcher
 	private function handleHandShake(evt:SFSEvent):Void
 	{
 		var msg:IMessage = evt.params.message;
-		var obj:ISFSObject = msg.content;
+		var obj:SFSObject = msg.content;
 		
 		// Success
 		if(obj.isNull(BaseRequest.KEY_ERROR_CODE))

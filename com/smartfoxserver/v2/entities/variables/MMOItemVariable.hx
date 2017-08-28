@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.entities.variables;
 
-import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 
 /**
  * The<em>MMOItemVariable</em>object represents a SmartFoxServer MMOItem Variable entity on the client.
@@ -16,7 +16,7 @@ class MMOItemVariable extends SFSUserVariable implements IMMOItemVariable
 {
 	
 	/** @private */
-	public static function fromSFSArray(sfsa:ISFSArray):IMMOItemVariable
+	public static function fromSFSArray(sfsa:SFSArray):IMMOItemVariable
 	{
 		var variable:IMMOItemVariable=new MMOItemVariable(
 			sfsa.getUtfString(0), 	// name

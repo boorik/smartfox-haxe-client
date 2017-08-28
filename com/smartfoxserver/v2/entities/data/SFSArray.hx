@@ -77,7 +77,7 @@ import flash.utils.ByteArray;
  * @see 	SFSObject
  * @see 	SFSDataType
  */
-class SFSArray implements ISFSArray
+class SFSArray
 {
 	private var serializer:ISFSDataSerializer;
 	
@@ -148,8 +148,8 @@ class SFSArray implements ISFSArray
 	/** @inheritDoc */
 	public function contains(obj:Dynamic):Bool
 	{
-		if(Std.is(obj, ISFSArray) || Std.is(obj,ISFSObject))
-			throw new SFSError("ISFSArray and ISFSObject are not supported by this method.");
+		if(Std.is(obj, SFSArray) || Std.is(obj,SFSObject))
+			throw new SFSError("SFSArray and SFSObject are not supported by this method.");
 			
 		var found:Bool = false;
 		
@@ -395,13 +395,13 @@ class SFSArray implements ISFSArray
 	}
 	
 	/** @inheritDoc */
-	public function addSFSArray(value:ISFSArray):Void
+	public function addSFSArray(value:SFSArray):Void
 	{
 		addObject(value, SFSDataType.SFS_ARRAY);
 	}
 	
 	/** @inheritDoc */
-	public function addSFSObject(value:ISFSObject):Void
+	public function addSFSObject(value:SFSObject):Void
 	{
 		addObject(value, SFSDataType.SFS_OBJECT);
 	}
@@ -574,10 +574,10 @@ class SFSArray implements ISFSArray
 	}
 	
 	/** @inheritDoc */
-	public function getSFSArray(index:Int):ISFSArray
+	public function getSFSArray(index:Int):SFSArray
 	{
 		var wrapper:SFSDataWrapper = dataHolder[index];
-		return (wrapper != null ?(cast(wrapper.data, ISFSArray)):null);
+		return (wrapper != null ?(cast(wrapper.data, SFSArray)):null);
 	}
 	
 	/** @inheritDoc */
@@ -588,10 +588,10 @@ class SFSArray implements ISFSArray
 	}
 	
 	/** @inheritDoc */
-	public function getSFSObject(index:Int):ISFSObject
+	public function getSFSObject(index:Int):SFSObject
 	{
 		var wrapper:SFSDataWrapper = dataHolder[index];
-		return(wrapper != null ?(cast(wrapper.data,ISFSObject)):null);
+		return(wrapper != null ?(cast(wrapper.data,SFSObject)):null);
 	}
 }
 #end

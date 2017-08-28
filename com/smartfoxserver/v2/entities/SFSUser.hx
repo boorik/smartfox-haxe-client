@@ -31,7 +31,7 @@ extern class SFSUser
 }
 #else
 
-import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.managers.IUserManager;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
@@ -81,7 +81,7 @@ class SFSUser implements User
 	private var _aoiEntryPoint:Vec3D;
 	
 	/** @private */
-	public static function fromSFSArray(sfsa:ISFSArray, room:Room=null):User
+	public static function fromSFSArray(sfsa:SFSArray, room:Room=null):User
 	{
 		// Pass id and name
 		var newUser:User = new SFSUser(sfsa.getInt(0), sfsa.getUtfString(1));
@@ -94,7 +94,7 @@ class SFSUser implements User
 			newUser.setPlayerId(sfsa.getShort(3), room);
 		
 		// Populate variables
-		var uVars:ISFSArray = sfsa.getSFSArray(4);
+		var uVars:SFSArray = sfsa.getSFSArray(4);
 		for(i in 0...uVars.size())
 		{
 			newUser.setVariable(SFSUserVariable.fromSFSArray(uVars.getSFSArray(i)));

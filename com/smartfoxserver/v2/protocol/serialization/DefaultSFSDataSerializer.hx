@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.protocol.serialization;
 
-import com.smartfoxserver.v2.entities.data.ISFSArray;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSArray;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.SFSDataType;
 import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
@@ -43,7 +43,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 *  SFSObject==>Binary
 	 *::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	 */
-	public function object2binary(obj:ISFSObject):ByteArray
+	public function object2binary(obj:SFSObject):ByteArray
 	{
 		var buffer:ByteArray = new ByteArray();
 		buffer.writeByte(SFSDataType.SFS_OBJECT);
@@ -52,7 +52,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return obj2bin(obj, buffer);
 	}
 	
-	private function obj2bin(obj:ISFSObject, buffer:ByteArray):ByteArray
+	private function obj2bin(obj:SFSObject, buffer:ByteArray):ByteArray
 	{
 		var keys:Array<Dynamic> = obj.getKeys();
 		var wrapper:SFSDataWrapper;
@@ -75,7 +75,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 *  SFSArray<Dynamic>==>Binary
 	 *::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	 */
-	public function array2binary(array:ISFSArray):ByteArray
+	public function array2binary(array:SFSArray):ByteArray
 	{
 		var buffer:ByteArray = new ByteArray();
 		buffer.writeByte(SFSDataType.SFS_ARRAY);
@@ -84,7 +84,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return arr2bin(array, buffer);
 	}
 	
-	private function arr2bin(array:ISFSArray, buffer:ByteArray):ByteArray
+	private function arr2bin(array:SFSArray, buffer:ByteArray):ByteArray
 	{
 		var wrapper:SFSDataWrapper;
 		
@@ -101,7 +101,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 *  Binary==>SFSObject
 	 *::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	 */
-	public function binary2object(data:ByteArray):ISFSObject
+	public function binary2object(data:ByteArray):SFSObject
 	{
 		if(data.length<3)
 			throw new SFSCodecError("Can't decode an SFSObject. Byte data is insufficient. Size:" + data.length + " byte(s)");
@@ -110,7 +110,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return decodeSFSObject(data);
 	}
 	
-	private function decodeSFSObject(buffer:ByteArray):ISFSObject
+	private function decodeSFSObject(buffer:ByteArray):SFSObject
 	{
 		var sfsObject:SFSObject = SFSObject.newInstance();
 		
@@ -162,7 +162,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 *  Binary==>SFSArray
 	 *::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	 */
-	public function binary2array(data:ByteArray):ISFSArray
+	public function binary2array(data:ByteArray):SFSArray
 	{
 		if(data.length<3)
 			throw new SFSCodecError("Can't decode an SFSArray. Byte data is insufficient. Size:" + data.length + " byte(s)");
@@ -171,9 +171,9 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return decodeSFSArray(data);
 	}
 	
-	private function decodeSFSArray(buffer:ByteArray):ISFSArray
+	private function decodeSFSArray(buffer:ByteArray):SFSArray
 	{
-		var sfsArray:ISFSArray = SFSArray.newInstance();
+		var sfsArray:SFSArray = SFSArray.newInstance();
 		
 		// Get tpyeId
 		var headerByte:Int = buffer.readByte();
@@ -290,7 +290,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			/*
 		 	* See if this is a special type of SFSObject, the one that actually describes a Class
 		 	*/
-		 	var sfsObj:ISFSObject = decodeSFSObject(buffer);
+		 	var sfsObj:SFSObject = decodeSFSObject(buffer);
 		 	var type:Int = SFSDataType.SFS_OBJECT;
 		 	var finalSfsObj:Dynamic = sfsObj;
 			
@@ -827,9 +827,9 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 *::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	 */
 	
-	public function as2sfs(asObj:Dynamic):ISFSObject
+	public function as2sfs(asObj:Dynamic):SFSObject
 	{
-		var sfsObj:ISFSObject = SFSObject.newInstance();
+		var sfsObj:SFSObject = SFSObject.newInstance();
 		convertAsObj(asObj, sfsObj);
 		
 		return sfsObj;
@@ -844,7 +844,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return StringTools.replace(name, "::", ".");
 	}
 	 
-	private function convertAsObj(asObj:Dynamic, sfsObj:ISFSObject):Void
+	private function convertAsObj(asObj:Dynamic, sfsObj:SFSObject):Void
 	{
 		//var type:Type = Type.forInstance(asObj);
 		var type:Class<Dynamic> = Type.getClass(asObj);
@@ -856,7 +856,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		if(!(Std.is(asObj, SerializableSFSType)))
 			throw new SFSCodecError("Cannot serialize object:" + asObj + ", type:" + classFullName + " -- It doesn't implement the SerializableSFSType Interface");
 			
-		var fieldList:ISFSArray = SFSArray.newInstance();
+		var fieldList:SFSArray = SFSArray.newInstance();
 		
 		sfsObj.putUtfString(CLASS_MARKER_KEY, classFullName);
 		sfsObj.putSFSArray(CLASS_FIELDS_KEY, fieldList);
@@ -879,7 +879,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 				
 			//trace("working on field:", fieldName, ":", fieldValue + ", " + Type.forInstance(fieldValue).name)
 			
-			var fieldDescriptor:ISFSObject = SFSObject.newInstance();
+			var fieldDescriptor:SFSObject = SFSObject.newInstance();
 			
 			// store field name
 			fieldDescriptor.putUtfString(FIELD_NAME_KEY, fieldName);
@@ -934,9 +934,9 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return wrapper;
 	}
 	
-	private function unrollArray(arr:Array<Dynamic>):ISFSArray
+	private function unrollArray(arr:Array<Dynamic>):SFSArray
 	{
-		var sfsArray:ISFSArray = SFSArray.newInstance();
+		var sfsArray:SFSArray = SFSArray.newInstance();
 		
 		for(j in 0...arr.length)
 			sfsArray.add(wrapASField(arr[j]));
@@ -944,9 +944,9 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return sfsArray;
 	}
 	
-	private function unrollDictionary(dict:Dynamic):ISFSObject
+	private function unrollDictionary(dict:Dynamic):SFSObject
 	{
-		var sfsObj:ISFSObject = SFSObject.newInstance();
+		var sfsObj:SFSObject = SFSObject.newInstance();
 		
 		for(key in Reflect.fields(dict))
 			sfsObj.put(key, wrapASField(Reflect.field(dict,key)));
@@ -962,7 +962,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	 *::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	 */
 	 
-	 public function sfs2as(sfsObj:ISFSObject):Dynamic
+	 public function sfs2as(sfsObj:SFSObject):Dynamic
 	 {
 	 	var asObj:Dynamic;
 	 	
@@ -982,9 +982,9 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return asObj;
 	 }
 	
-	private function convertSFSObject(fieldList:ISFSArray, asObj:Dynamic):Void
+	private function convertSFSObject(fieldList:SFSArray, asObj:Dynamic):Void
 	{
-		var fieldDescriptor:ISFSObject;
+		var fieldDescriptor:SFSObject;
 		
 		var fieldName:String;
 		var fieldValue:Dynamic;
@@ -1012,17 +1012,17 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			obj = wrapper.data;
 		
 		else if(type==SFSDataType.SFS_ARRAY)
-			obj = rebuildArray(cast(wrapper.data,ISFSArray));
+			obj = rebuildArray(cast(wrapper.data,SFSArray));
 			
 		else if(type==SFSDataType.SFS_OBJECT)
 		{
 			/*
-			var sfsObj:ISFSObject=wrapper.data as ISFSObject
+			var sfsObj:SFSObject=wrapper.data as SFSObject
 			if(sfsObj.containsKey(CLASS_MARKER_KEY)&& sfsObj.containsKey(CLASS_FIELDS_KEY))
 				obj=sfs2as(sfsObj)
 			else
 			*/
-			obj = rebuildDict(cast(wrapper.data,ISFSObject));
+			obj = rebuildDict(cast(wrapper.data,SFSObject));
 		}	
 		else if(type==SFSDataType.CLASS)
 			obj = wrapper.data;
@@ -1030,7 +1030,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return obj;
 	}
 	
-	private function rebuildArray(sfsArr:ISFSArray):Array<Dynamic>
+	private function rebuildArray(sfsArr:SFSArray):Array<Dynamic>
 	{
 		var arr:Array<Dynamic> = [];
 		
@@ -1042,7 +1042,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return arr;
 	}
 	
-	private function rebuildDict(sfsObj:ISFSObject):Dynamic
+	private function rebuildDict(sfsObj:SFSObject):Dynamic
 	{
 		var dict:Dynamic = { };
 		
@@ -1069,7 +1069,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return sfso;
 	}
 	
-	private function _scanGenericObject(obj:Dynamic, sfso:ISFSObject, forceToNumber:Bool=false):Void
+	private function _scanGenericObject(obj:Dynamic, sfso:SFSObject, forceToNumber:Bool=false):Void
 	{
 		for(key in Reflect.fields(obj))
 		{
@@ -1085,7 +1085,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			 */
 			else if(item.toString()=="[object Dynamic]" && !(Std.is(item, Array)))
 			{
-				var subSfso:ISFSObject = new SFSObject();
+				var subSfso:SFSObject = new SFSObject();
 				sfso.putSFSObject(key, subSfso);
 					
 				// Call recursively
@@ -1109,7 +1109,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		}
 	}
 	
-	public function sfsObjectToGenericObject(sfso:ISFSObject):Dynamic
+	public function sfsObjectToGenericObject(sfso:SFSObject):Dynamic
 	{
 		var obj:Dynamic = { };
 		_scanSFSObject(sfso, obj);
@@ -1117,7 +1117,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return obj;
 	}
 	
-	private function _scanSFSObject(sfso:ISFSObject, obj:Dynamic):Void
+	private function _scanSFSObject(sfso:SFSObject, obj:Dynamic):Void
 	{
 		var keys:Array<Dynamic>=sfso.getKeys();
 		
@@ -1134,7 +1134,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 				Reflect.setField(obj,key, subObj);
 				
 				// Call recursively
-				_scanSFSObject(cast(item.data,ISFSObject), subObj);
+				_scanSFSObject(cast(item.data,SFSObject), subObj);
 			}	
 			
 			else if(item.type==SFSDataType.SFS_ARRAY)
@@ -1164,7 +1164,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return sfsa;
 	}
 	
-	private function _scanGenericArray(arr:Array<Dynamic>, sfsa:ISFSArray, forceToNumber:Bool=false):Void
+	private function _scanGenericArray(arr:Array<Dynamic>, sfsa:SFSArray, forceToNumber:Bool=false):Void
 	{
 		for(ii in 0...arr.length)
 		{
@@ -1179,7 +1179,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			
 			else if(Std.is(item, Array))
 			{
-				var subSfsa:ISFSArray = new SFSArray();
+				var subSfsa:SFSArray = new SFSArray();
 				sfsa.addSFSArray(subSfsa);
 				
 				// Call recursively
@@ -1201,7 +1201,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		}
 	}
 	
-	public function sfsArrayToGenericArray(sfsa:ISFSArray):Array<Dynamic>
+	public function sfsArrayToGenericArray(sfsa:SFSArray):Array<Dynamic>
 	{
 		var arr:Array<Dynamic> = [];
 		_scanSFSArray(sfsa, arr);
@@ -1209,7 +1209,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		return arr;
 	}
 			
-	private function _scanSFSArray(sfsa:ISFSArray, arr:Array<Dynamic>):Void
+	private function _scanSFSArray(sfsa:SFSArray, arr:Array<Dynamic>):Void
 	{
 		for(ii in 0...sfsa.size())
 		{
@@ -1226,7 +1226,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 				arr.push(subArr);
 				
 				// Call recursively
-				_scanSFSArray(cast(item.data,ISFSArray), subArr);
+				_scanSFSArray(cast(item.data,SFSArray), subArr);
 			}
 			
 			// Skip CLASS types

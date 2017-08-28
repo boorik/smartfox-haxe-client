@@ -3,8 +3,8 @@ package com.smartfoxserver.v2.requests.game;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.entities.User;
-import com.smartfoxserver.v2.entities.data.ISFSArray;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSArray;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.BaseRequest;
@@ -30,7 +30,7 @@ import com.smartfoxserver.v2.requests.BaseRequest;
  * 	var friend2:User=sfs.userManager.getUserByName("Gonzo");
  * 	
  * 	// Set the custom invitation details
- * 	var params:ISFSObject=new SFSObject();
+ * 	var params:SFSObject=new SFSObject();
  * 	params.putUtfString("msg", "Would you like to join me in my private room?");
  * 	params.putUtfString("roomName", "Kermit's room");
  * 	params.putUtfString("roomPwd", "drowssap");
@@ -96,7 +96,7 @@ class InviteUsersRequest extends BaseRequest
 	
 	private var _invitedUsers:Array<User>;
 	private var _secondsForAnswer:Int;
-	private var _params:ISFSObject;
+	private var _params:SFSObject;
 	
 	/**
 	 * Creates a new<em>InviteUsersRequest</em>instance.
@@ -110,7 +110,7 @@ class InviteUsersRequest extends BaseRequest
 	 * @see		com.smartfoxserver.v2.entities.User User
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 */
-	public function new(invitedUsers:Array<User>, secondsForAnswer:Int, params:ISFSObject)
+	public function new(invitedUsers:Array<User>, secondsForAnswer:Int, params:SFSObject)
 	{
 		super(BaseRequest.InviteUser);
 		
