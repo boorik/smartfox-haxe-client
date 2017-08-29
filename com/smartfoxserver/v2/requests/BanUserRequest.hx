@@ -1,5 +1,10 @@
 package com.smartfoxserver.v2.requests;
-
+#if html5
+@:native('SFS2X.BanUserRequest')
+extern class BanUserRequest{
+	public function new(userId:Int, ?message:String, ?banMode:Dynamic, ?delaySeconds:Int, ?durationHours:Int);
+}
+#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 
@@ -103,3 +108,4 @@ class BanUserRequest extends BaseRequest
 			_sfso.putUtfString(KEY_MESSAGE, _message);
 	}
 }
+#end

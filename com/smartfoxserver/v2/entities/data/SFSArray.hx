@@ -1,9 +1,61 @@
 package com.smartfoxserver.v2.entities.data;
 
 #if html5
-abstract SFSArray(Array<Dynamic>){
-	public function new(s) this = s;
+@:native('SFS2X.SFSArray')
+extern class SFSArray
+{
+	function new();
+	function get(key:Dynamic):Dynamic;
+	function getBool(index:Int):Bool;
+	function getBoolArray(index:Int):Array<Bool>;
+	function getByte(index:Int):Int;
+	function getByteArray(index:Int):haxe.io.Bytes;
+	function getDouble(index:Int):Int;
+	function getDoubleArray(index:Int):Array<Int>;
+	function getDump(?format:Dynamic):String;
+	function getFloat(index:Int):Float;
+	function getFloatArray(index:Int):Array<Float>;
+	function getHexDump():String;
+	function getInt(index:Int):Int;
+	function getIntArray(index:Int):Array<Int>;
+	function getKeysArray():Array<String>;
+	function getLong(index:Int):Int;
+
+	function getLongArray(index:Int):Array<Int>;
+	function getSFSArray(index:Int):SFSArray;
+	function getSFSObject(index:Int):SFSObject;
+	function getShort(index:Int):Int;
+	function getShortArray(index:Int):Array<Int>;
+	function getText(index:Int):String;
+	function getUtfString(index:Int):String;
+	function getUtfStringArray(index:Int):Array<String>;
+	function put(key:String, value:Dynamic, typeId:Int):Void;
+	function addBool(value:Bool):Void;
+	function addBoolArray(array:Array<Bool>):Void;
+	function addByte(value:Int):Void;
+	function addByteArray(array:haxe.io.Bytes):Void;
+	function addDouble(value:Float):Void;
+	function addDoubleArray(array:Array<Float>):Void;
+
+	function addFloat(value:Float):Void;
+	function addFloatArray(array:Array<Float>):Void;
+	function addInt(value:Int):Void;
+	function addIntArray(array:Array<Int>):Void;
+	function addLong(value:Int):Void;
+	function addLongArray(array:Array<Int>):Void;
+	function addNull():Void;
+	function addSFSArray(value:SFSArray):Void;
+	function addSFSObject(value:SFSObject):Void;
+	function addShort(value:Int):Void;
+	function addShortArray(array:Array<Int>):Void;
+	function addText(value:String):Void;
+	function addUtfString(value:String):Void;
+	function addUtfStringArray(array:Array<String>):Void;
+	function size():Int;
+	
+	function isNull(index:Int):Bool;
 }
+
 #else
 import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
@@ -25,7 +77,7 @@ import flash.utils.ByteArray;
  * @see 	SFSObject
  * @see 	SFSDataType
  */
-class SFSArray implements ISFSArray
+class SFSArray
 {
 	private var serializer:ISFSDataSerializer;
 	
@@ -96,8 +148,8 @@ class SFSArray implements ISFSArray
 	/** @inheritDoc */
 	public function contains(obj:Dynamic):Bool
 	{
-		if(Std.is(obj, ISFSArray) || Std.is(obj,ISFSObject))
-			throw new SFSError("ISFSArray and ISFSObject are not supported by this method.");
+		if(Std.is(obj, SFSArray) || Std.is(obj,SFSObject))
+			throw new SFSError("SFSArray and SFSObject are not supported by this method.");
 			
 		var found:Bool = false;
 		
@@ -343,13 +395,13 @@ class SFSArray implements ISFSArray
 	}
 	
 	/** @inheritDoc */
-	public function addSFSArray(value:ISFSArray):Void
+	public function addSFSArray(value:SFSArray):Void
 	{
 		addObject(value, SFSDataType.SFS_ARRAY);
 	}
 	
 	/** @inheritDoc */
-	public function addSFSObject(value:ISFSObject):Void
+	public function addSFSObject(value:SFSObject):Void
 	{
 		addObject(value, SFSDataType.SFS_OBJECT);
 	}
@@ -522,10 +574,10 @@ class SFSArray implements ISFSArray
 	}
 	
 	/** @inheritDoc */
-	public function getSFSArray(index:Int):ISFSArray
+	public function getSFSArray(index:Int):SFSArray
 	{
 		var wrapper:SFSDataWrapper = dataHolder[index];
-		return (wrapper != null ?(cast(wrapper.data, ISFSArray)):null);
+		return (wrapper != null ?(cast(wrapper.data, SFSArray)):null);
 	}
 	
 	/** @inheritDoc */
@@ -536,10 +588,10 @@ class SFSArray implements ISFSArray
 	}
 	
 	/** @inheritDoc */
-	public function getSFSObject(index:Int):ISFSObject
+	public function getSFSObject(index:Int):SFSObject
 	{
 		var wrapper:SFSDataWrapper = dataHolder[index];
-		return(wrapper != null ?(cast(wrapper.data,ISFSObject)):null);
+		return(wrapper != null ?(cast(wrapper.data,SFSObject)):null);
 	}
 }
 #end

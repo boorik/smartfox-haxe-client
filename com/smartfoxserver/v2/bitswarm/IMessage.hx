@@ -1,14 +1,14 @@
 package com.smartfoxserver.v2.bitswarm;
 
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 
 /** @private */
 interface IMessage
 {
 	var id(get,set):Int;
-	var content(get, set):ISFSObject;
-	//function get_content():ISFSObject;
-	//function set_content(obj:ISFSObject):Void;
+	var content(get, set):SFSObject;
+	//function get_content():SFSObject;
+	//function set_content(obj:SFSObject):Void;
 	
 	var targetController(get, set):Int;
 	//function get_targetController():Int;

@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.requests;
 
 #if html5
-@:native('SFS2X.Requests.System.LeaveRoomRequest')
+@:native('SFS2X.LeaveRoomRequest')
 extern class LeaveRoomRequest{
 	public function new();
 }

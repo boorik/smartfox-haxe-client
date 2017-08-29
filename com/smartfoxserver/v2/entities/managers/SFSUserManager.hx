@@ -3,7 +3,7 @@ package com.smartfoxserver.v2.entities.managers;
 @:native('SFS2X.Managers.UserManager')
 extern class SFSUserManager
 {
-	function containsUser(user:com.smartfoxserver.v2.entities.SFSUser):User;
+	function containsUser(user:com.smartfoxserver.v2.entities.SFSUser):Bool;
 	function containsUserId(userId:Int):Bool;
 	function containsUserName(userName:String):Bool;
 	function getUserById(userId:Int):SFSUser;

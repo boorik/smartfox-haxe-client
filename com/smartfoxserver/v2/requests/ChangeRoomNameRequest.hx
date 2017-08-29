@@ -1,5 +1,10 @@
 package com.smartfoxserver.v2.requests;
-
+#if html5
+@:native('SFS2X.ChangeRoomNameRequest')
+extern class ChangeRoomNameRequest{
+	public function new(room:SFSRoom, newMaxUsers:Int, newMaxSpect:Int);
+}
+#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
@@ -92,3 +97,4 @@ class ChangeRoomNameRequest extends BaseRequest
 		_sfso.putUtfString(KEY_NAME, _newName);
 	}
 }
+#end

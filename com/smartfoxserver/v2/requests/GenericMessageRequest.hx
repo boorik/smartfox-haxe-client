@@ -3,7 +3,7 @@ package com.smartfoxserver.v2.requests;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
@@ -53,7 +53,7 @@ class GenericMessageRequest extends BaseRequest
 	private var _message:String;
 	
 	/** @exclude */  									
-	private var _params:ISFSObject;
+	private var _params:SFSObject;
 	
 	/** @exclude */ 
 	private var _recipient:Dynamic;

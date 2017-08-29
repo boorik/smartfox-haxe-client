@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.requests;
 
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import openfl.errors.ArgumentError;
 
 /**
@@ -48,7 +48,7 @@ class ModeratorMessageRequest extends GenericMessageRequest
 	 * @see		com.smartfoxserver.v2.SmartFox#send()SmartFox.send()
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 */
-	public function new(message:String, recipientMode:MessageRecipientMode, params:ISFSObject=null)
+	public function new(message:String, recipientMode:MessageRecipientMode, params:SFSObject=null)
 	{
 		super();
 		

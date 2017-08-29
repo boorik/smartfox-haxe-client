@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.entities.variables;
 
-import com.smartfoxserver.v2.entities.data.ISFSArray;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSArray;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 
 /**
  * The<em>UserVariable</em>interface defines all the public methods and properties that an object representing a SmartFoxServer User Variable exposes.
@@ -62,16 +62,16 @@ interface UserVariable
 	/**
 	 * Retrieves the value of a<em>SFSObject</em>variable.
 	 * 
-	 * @return  The variable value as an<em>ISFSObject</em>.
+	 * @return  The variable value as an<em>SFSObject</em>.
 	 */
-	function getSFSObjectValue():ISFSObject;
+	function getSFSObjectValue():SFSObject;
 	
 	/**
 	 * Retrieves the value of a<em>SFSArray</em>variable.
 	 * 
-	 * @return  The variable value as an<em>ISFSArray</em>.
+	 * @return  The variable value as an<em>SFSArray</em>.
 	 */
-	function getSFSArrayValue():ISFSArray;
+	function getSFSArrayValue():SFSArray;
 	
 	/**
 	 * Indicates if the variable is<code>null</code>.
@@ -81,5 +81,5 @@ interface UserVariable
 	function isNull():Bool;
 	
 	/** @private */
-	function toSFSArray():ISFSArray;
+	function toSFSArray():SFSArray;
 }

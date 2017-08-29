@@ -1,7 +1,21 @@
 package com.smartfoxserver.v2.entities.variables;
+#if html5
+@:native('SFS2X.SFSUserVariable')
+extern class SFSUserVariable
+{
+	var isNull:Bool;
+	var isPrivate:Bool;
+	var name:String;
+	var type:Dynamic;
+	var value:Dynamic;
 
-import com.smartfoxserver.v2.entities.data.ISFSArray;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+	public function new(name:String, value:Dynamic, ?type:Dynamic);
+
+	function toString():String;		
+}
+#else
+import com.smartfoxserver.v2.entities.data.SFSArray;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.exceptions.SFSError;
 import Type;
@@ -31,7 +45,7 @@ class SFSUserVariable implements UserVariable
 	private var _value:Dynamic;
 	
 	/** @private */
-	public static function fromSFSArray(sfsa:ISFSArray):UserVariable
+	public static function fromSFSArray(sfsa:SFSArray):UserVariable
 	{
 		var variable:UserVariable=new SFSUserVariable(
 																	sfsa.getUtfString(0), 	// name
@@ -111,15 +125,15 @@ class SFSUserVariable implements UserVariable
 	}
 	
 	/** @inheritDoc */
-	public function getSFSObjectValue():ISFSObject
+	public function getSFSObjectValue():SFSObject
 	{
-		return cast(_value, ISFSObject);
+		return cast(_value, SFSObject);
 	}
 	
 	/** @inheritDoc */
-	public function getSFSArrayValue():ISFSArray
+	public function getSFSArrayValue():SFSArray
 	{
-		return cast(_value, ISFSArray);
+		return cast(_value, SFSArray);
 	}
 	
 	/** @inheritDoc */
@@ -129,9 +143,9 @@ class SFSUserVariable implements UserVariable
 	}
 	
 	/** @private */
-	public function toSFSArray():ISFSArray
+	public function toSFSArray():SFSArray
 	{
-		var sfsa:ISFSArray = SFSArray.newInstance();
+		var sfsa:SFSArray = SFSArray.newInstance();
 		
 		// var name(0)
 		sfsa.addUtfString(_name);
@@ -155,7 +169,7 @@ class SFSUserVariable implements UserVariable
 		return "[UVar:" + _name + ", type:" + _type + ", value:" + _value + "]";
 	}
 	
-	private function populateArrayWithValue(arr:ISFSArray):Void
+	private function populateArrayWithValue(arr:SFSArray):Void
 	{
 		var typeId:Int = VariableType.getTypeFromName(_type);
 		
@@ -218,3 +232,4 @@ class SFSUserVariable implements UserVariable
 		}	
 	}	
 }
+#end

@@ -1,4 +1,6 @@
 package com.smartfoxserver.v2.entities;
+import com.smartfoxserver.v2.entities.managers.SFSUserManager;
+import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
 
 #if html5
 @:native('SFS2X.Entities.SFSUser')
@@ -12,27 +14,26 @@ extern class SFSUser
 	public var properties:Dynamic;
 	
 	public function containsVariable(varName:String):Bool;
-	public function getPlayerId(room:Dynamic):Int;
-	public function getUserManager():Dynamic;
-	public function getVariable(varName:String):Dynamic;
-	public function getVariables():Array<Dynamic>;
+	public function getPlayerId(room:SFSRoom):Int;
+	public function getUserManager():SFSUserManager;
+	public function getVariable(varName:String):SFSUserVariable;
+	public function getVariables():Array<SFSUserVariable>;
 	public function isAdmin():Bool;
 	public function isGuest():Bool;
-	public function isJoinedInRoom(room:Dynamic):Bool;
+	public function isJoinedInRoom(room:SFSRoom):Bool;
 	public function isModerator():Bool;
 	public function isPlayer():Bool;
-	public function isPlayerInRoom(room:Dynamic):Bool;
+	public function isPlayerInRoom(room:SFSRoom):Bool;
 	public function isSpectator():Bool;
-	public function isSpectatorInRoom(room:Dynamic):Bool;
+	public function isSpectatorInRoom(room:SFSRoom):Bool;
 	public function isStandardUser():Bool;
 	public function toString():String;		
 }
 #else
 
-import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.managers.IUserManager;
-import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
 import com.smartfoxserver.v2.exceptions.SFSError;
 import haxe.ds.IntMap;
@@ -80,7 +81,7 @@ class SFSUser implements User
 	private var _aoiEntryPoint:Vec3D;
 	
 	/** @private */
-	public static function fromSFSArray(sfsa:ISFSArray, room:Room=null):User
+	public static function fromSFSArray(sfsa:SFSArray, room:Room=null):User
 	{
 		// Pass id and name
 		var newUser:User = new SFSUser(sfsa.getInt(0), sfsa.getUtfString(1));
@@ -93,7 +94,7 @@ class SFSUser implements User
 			newUser.setPlayerId(sfsa.getShort(3), room);
 		
 		// Populate variables
-		var uVars:ISFSArray = sfsa.getSFSArray(4);
+		var uVars:SFSArray = sfsa.getSFSArray(4);
 		for(i in 0...uVars.size())
 		{
 			newUser.setVariable(SFSUserVariable.fromSFSArray(uVars.getSFSArray(i)));

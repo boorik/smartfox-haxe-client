@@ -1,13 +1,13 @@
 package com.smartfoxserver.v2.requests;
 #if html5
-@:native('SFS2X.Requests.System.LoginRequest')
+@:native('SFS2X.LoginRequest')
 extern class LoginRequest{
-	public function new(userName:String = "", password:String = "", params:Dynamic = null, zoneName:String = "");
+	public function new(userName:String = "", password:String = null, params:Dynamic = null, zoneName:String = "");
 }
 #else
 
 import com.smartfoxserver.v2.SmartFox;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 
 import flash.utils.ByteArray;
@@ -77,7 +77,7 @@ class LoginRequest extends BaseRequest
 	private var _zoneName:String;
 	private var _userName:String;
 	private var _password:String;
-	private var _params:ISFSObject;
+	private var _params:SFSObject;
 	
 	/**
 	 * Creates a new<em>LoginRequest</em>instance.
@@ -93,7 +93,7 @@ class LoginRequest extends BaseRequest
 	 * @see		com.smartfoxserver.v2.SmartFox#loadConfig()SmartFox.loadConfig()
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 */
-	public function new(userName:String="", password:String="", zoneName:String="", params:ISFSObject=null)
+	public function new(userName:String="", password:String="", zoneName:String="", params:SFSObject=null)
 	{
 		super(BaseRequest.Login);
 		

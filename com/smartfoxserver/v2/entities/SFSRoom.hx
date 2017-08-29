@@ -1,12 +1,44 @@
 package com.smartfoxserver.v2.entities;
+import com.smartfoxserver.v2.entities.managers.SFSRoomManager;
+import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
+#if html5
+@:native('SFS2X.SFSRoom')
+extern class SFSRoom{
+	var capacity:Int;
+	var groupId:Int;
+	var id:Int;
+	var isGame:Bool;
+	var isHidden:Bool;
+	var isJoined:Bool;
+	var isPasswordProtected:Bool;
+	var maxSpectators:Int;
+	var maxUsers:Int;
+	var name:String;
+	var properties:Dynamic;
+	var spectatorCount:Int;
+	var userCount:Int;
 
-import com.smartfoxserver.v2.entities.data.ISFSArray;
+	public function new();
+
+	function containsUser(user:SFSUser):Bool;
+	function containsVariable(varName:String):Bool;
+	function getPlayerList():Array<SFSUser>;
+	function getRoomManager():SFSRoomManager;
+	function getSpectatorList():Array<SFSUser>;
+	function getUserById(id:Int):SFSUser;
+	function getUserByName(name:String):SFSUser;
+	function getUserList():Array<SFSUser>;
+	function getVariable(varName:String):SFSRoomVariable;
+	function getVariables():Array<SFSRoomVariable>;
+	function toString():String;
+}
+#else
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.managers.IRoomManager;
 import com.smartfoxserver.v2.entities.managers.IUserManager;
 import com.smartfoxserver.v2.entities.managers.SFSUserManager;
 import com.smartfoxserver.v2.entities.variables.RoomVariable;
-import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
 import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.util.ArrayUtil;
 import haxe.ds.StringMap;
@@ -82,7 +114,7 @@ class SFSRoom implements Room
 	private var _roomManager:IRoomManager;
 	
 	/** @private */
-	public static function fromSFSArray(sfsa:ISFSArray):Room
+	public static function fromSFSArray(sfsa:SFSArray):Room
 	{
 		// An MMORoom contains 14 properties
 		var isMMORoom:Bool=sfsa.size()==14;
@@ -100,7 +132,7 @@ class SFSRoom implements Room
 		newRoom.maxUsers = sfsa.getShort(7);
 		
 		// Room vars
-		var varsList:ISFSArray = sfsa.getSFSArray(8);
+		var varsList:SFSArray = sfsa.getSFSArray(8);
 		if(varsList.size()>0)
 		{
 			var vars:Array<RoomVariable> = [];
@@ -514,3 +546,4 @@ class SFSRoom implements Room
 		
 	}
 }
+#end

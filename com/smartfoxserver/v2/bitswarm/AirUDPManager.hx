@@ -5,7 +5,7 @@ import com.smartfoxserver.v2.core.DefaultPacketEncrypter;
 import com.smartfoxserver.v2.core.IPacketEncrypter;
 import com.smartfoxserver.v2.core.SFSEvent;
 import com.smartfoxserver.v2.entities.SFSConstants;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.kernel;
 import com.smartfoxserver.v2.logging.Logger;
@@ -232,7 +232,7 @@ class AirUDPManager implements IUDPManager
 		if (compressed)
 			objBytes.uncompress();
 		
-		var reqObj:ISFSObject = SFSObject.newFromBinaryData(objBytes);
+		var reqObj:SFSObject = SFSObject.newFromBinaryData(objBytes);
 
 		// Check if this is an UDP Handshake response. If so, fire event and stop here.
 		if(reqObj.containsKey("h"))
@@ -261,7 +261,7 @@ class AirUDPManager implements IUDPManager
 	private function sendInitializationRequest():Void
 	{
 		// Prepare full packet
-		var message:ISFSObject=new SFSObject();
+		var message:SFSObject=new SFSObject();
 		message.putByte("c", 1);		
 		message.putByte("h", 1);//<<---- Handshake!
 		message.putLong("i", nextUdpPacketId());

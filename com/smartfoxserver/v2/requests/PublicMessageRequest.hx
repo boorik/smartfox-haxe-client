@@ -1,14 +1,14 @@
 package com.smartfoxserver.v2.requests;
 
 #if html5
-@:native('SFS2X.Requests.System.PublicMessageRequest')
+@:native('SFS2X.PublicMessageRequest')
 extern class PublicMessageRequest
 {
 	public function new(message:String,?params:Dynamic,?targetRoom:Dynamic):Void;
 }
 #else
 import com.smartfoxserver.v2.entities.Room;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 
 /**
  * Sends a public chat message.
@@ -63,7 +63,7 @@ class PublicMessageRequest extends GenericMessageRequest
 	 * @see		com.smartfoxserver.v2.SmartFox#send()SmartFox.send()
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 */
-	public function new(message:String, params:ISFSObject=null, targetRoom:Room=null)
+	public function new(message:String, params:SFSObject=null, targetRoom:Room=null)
 	{
 		super();
 		
