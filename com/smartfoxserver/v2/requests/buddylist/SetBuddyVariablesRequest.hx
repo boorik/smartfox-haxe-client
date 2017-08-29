@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.requests.buddylist;
 
 import com.smartfoxserver.v2.SmartFox;
-import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.variables.BuddyVariable;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
@@ -123,7 +123,7 @@ class SetBuddyVariablesRequest extends BaseRequest
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
-		var varList:ISFSArray = new SFSArray();
+		var varList:SFSArray = new SFSArray();
 		 
 		for(bVar in _buddyVariables)
 		{

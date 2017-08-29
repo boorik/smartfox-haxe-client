@@ -33,7 +33,7 @@ extern class SFSRoom{
 	function toString():String;
 }
 #else
-import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.managers.IRoomManager;
 import com.smartfoxserver.v2.entities.managers.IUserManager;
@@ -114,7 +114,7 @@ class SFSRoom implements Room
 	private var _roomManager:IRoomManager;
 	
 	/** @private */
-	public static function fromSFSArray(sfsa:ISFSArray):Room
+	public static function fromSFSArray(sfsa:SFSArray):Room
 	{
 		// An MMORoom contains 14 properties
 		var isMMORoom:Bool=sfsa.size()==14;
@@ -132,7 +132,7 @@ class SFSRoom implements Room
 		newRoom.maxUsers = sfsa.getShort(7);
 		
 		// Room vars
-		var varsList:ISFSArray = sfsa.getSFSArray(8);
+		var varsList:SFSArray = sfsa.getSFSArray(8);
 		if(varsList.size()>0)
 		{
 			var vars:Array<RoomVariable> = [];

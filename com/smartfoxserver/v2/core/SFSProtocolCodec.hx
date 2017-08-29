@@ -5,7 +5,7 @@ import com.smartfoxserver.v2.bitswarm.IController;
 import com.smartfoxserver.v2.bitswarm.IMessage;
 import com.smartfoxserver.v2.bitswarm.IoHandler;
 import com.smartfoxserver.v2.bitswarm.Message;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSCodecError;
 import com.smartfoxserver.v2.exceptions.SFSError;
@@ -36,7 +36,7 @@ class SFSProtocolCodec implements IProtocolCodec
 	
 	public function onPacketRead(packet:Dynamic):Void
 	{		
-		var sfsObj:ISFSObject = null;
+		var sfsObj:SFSObject = null;
 			
 		/*
 		* TCP Data provides a ByteArray
@@ -45,10 +45,10 @@ class SFSProtocolCodec implements IProtocolCodec
 			sfsObj = SFSObject.newFromBinaryData(packet);
 				
 		/*
-		* UDP and JSON provide an ISFSObject
+		* UDP and JSON provide an SFSObject
 		*/
 		else
-			sfsObj = cast(packet, ISFSObject);
+			sfsObj = cast(packet, SFSObject);
 				
 		// Create a Request and dispatch to ProtocolCodec
 		dispatchRequest(sfsObj);
@@ -56,7 +56,7 @@ class SFSProtocolCodec implements IProtocolCodec
 	
 	public function onPacketWrite(message:IMessage):Void
 	{
-		var sfsObj:ISFSObject;
+		var sfsObj:SFSObject;
 		
 		if(message.isUDP)
 			sfsObj = prepareUDPPacket(message);
@@ -73,9 +73,9 @@ class SFSProtocolCodec implements IProtocolCodec
 		ioHandler.onDataWrite(message);
 	}
 	
-	private function prepareTCPPacket(message:IMessage):ISFSObject
+	private function prepareTCPPacket(message:IMessage):SFSObject
 	{
-		var sfsObj:ISFSObject = new SFSObject();
+		var sfsObj:SFSObject = new SFSObject();
 		
 		// Target controller
 		sfsObj.putByte(CONTROLLER_ID, message.targetController);
@@ -89,9 +89,9 @@ class SFSProtocolCodec implements IProtocolCodec
 		return sfsObj;
 	}
 	
-	private function prepareUDPPacket(message:IMessage):ISFSObject
+	private function prepareUDPPacket(message:IMessage):SFSObject
 	{
-		var sfsObj:ISFSObject = new SFSObject();
+		var sfsObj:SFSObject = new SFSObject();
 			
 		// Target controller
 		sfsObj.putByte(CONTROLLER_ID, message.targetController);
@@ -122,7 +122,7 @@ class SFSProtocolCodec implements IProtocolCodec
 		return this._ioHandler = ioHandler;
 	}
 	
-	private function dispatchRequest(requestObject:ISFSObject):Void
+	private function dispatchRequest(requestObject:SFSObject):Void
 	{
 		var message:IMessage = new Message();
 

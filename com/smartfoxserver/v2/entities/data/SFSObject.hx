@@ -5,7 +5,7 @@ package com.smartfoxserver.v2.entities.data;
 extern class SFSObject
 {
 	function new();
-	function get(key:Dynamic):Dynamic;
+	function get(key:String):Dynamic;
 	function getBool(key:String):Bool;
 	function getBoolArray(key:String):Array<Bool>;
 	function getByte(key:String):Int;
@@ -52,9 +52,8 @@ extern class SFSObject
 	function putUtfString(key:String, value:String):Void;
 	function putUtfStringArray(key:String, array:Array<String>):Void;
 	function size():Int;
-	
-	function containsKey(key:String):Bool;
 }
+
 #else
 
 import com.smartfoxserver.v2.exceptions.SFSError;
@@ -78,7 +77,7 @@ import flash.utils.ByteArray;
  * @see 	com.smartfoxserver.v2.requests.ExtensionRequest ExtensionRequest
  * @see 	SFSDataType
  */
-class SFSObject implements ISFSObject
+class SFSObject
 {
 	private var dataHolder:Map<String,Dynamic>;
 	private var serializer:ISFSDataSerializer;
@@ -456,7 +455,7 @@ class SFSObject implements ISFSObject
 	// Nested objects
 	
 	/** @inheritDoc */
-	public function getSFSArray(key:String):ISFSArray
+	public function getSFSArray(key:String):SFSArray
 	{
 		var wrapper:SFSDataWrapper = cast dataHolder.get(key);
 		
@@ -467,7 +466,7 @@ class SFSObject implements ISFSObject
 	}
 	
 	/** @inheritDoc */
-	public function getSFSObject(key:String):ISFSObject
+	public function getSFSObject(key:String):SFSObject
 	{
 		var wrapper:SFSDataWrapper = cast dataHolder[key];
 		
@@ -480,7 +479,7 @@ class SFSObject implements ISFSObject
 	/**
 	 * @inheritDoc
 	 * 
-	 * @see		ISFSObject#getClass()
+	 * @see		SFSObject#getClass()
 	 */
 	public function getClass(key:String):Dynamic
 	{
@@ -607,13 +606,13 @@ class SFSObject implements ISFSObject
 	// Nested objects
 	
 	/** @inheritDoc */
-	public function putSFSArray(key:String, value:ISFSArray):Void
+	public function putSFSArray(key:String, value:SFSArray):Void
 	{
 		dataHolder[key] = new SFSDataWrapper(SFSDataType.SFS_ARRAY, value);
 	}
 	
 	/** @inheritDoc */
-	public function putSFSObject(key:String, value:ISFSObject):Void
+	public function putSFSObject(key:String, value:SFSObject):Void
 	{
 		dataHolder[key] = new SFSDataWrapper(SFSDataType.SFS_OBJECT, value);
 	}

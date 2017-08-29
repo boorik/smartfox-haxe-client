@@ -1,8 +1,8 @@
 package com.smartfoxserver.v2.entities.invitation;
 
 import com.smartfoxserver.v2.entities.User;
-import com.smartfoxserver.v2.entities.data.ISFSArray;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSArray;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 
 /**
@@ -31,7 +31,7 @@ class SFSInvitation implements Invitation
 	private var _secondsForAnswer:Int;
 	
 	/** @private */
-	private var _params:ISFSObject;
+	private var _params:SFSObject;
 	
 	/**
 	 * Creates a new<em>SFSInvitation</em>instance.
@@ -48,7 +48,7 @@ class SFSInvitation implements Invitation
 	 * @see		com.smartfoxserver.v2.entities.User User
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 */
-	public function new(inviter:User, invitee:User, secondsForAnswer:Int=15, params:ISFSObject=null)
+	public function new(inviter:User, invitee:User, secondsForAnswer:Int=15, params:SFSObject=null)
 	{
 		_inviter = inviter;
 		_invitee = invitee;
@@ -91,8 +91,8 @@ class SFSInvitation implements Invitation
 	}
 	
 	/** @inheritDoc */
-	public var params(get_params, null):ISFSObject;
- 	private function get_params():ISFSObject
+	public var params(get_params, null):SFSObject;
+ 	private function get_params():SFSObject
 	{
 		return _params;
 	}

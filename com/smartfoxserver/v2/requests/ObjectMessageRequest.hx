@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.requests;
 
 import com.smartfoxserver.v2.entities.Room;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 
 /**
  * Sends an object containing custom data to all users in a Room, or a subset of them.
@@ -18,7 +18,7 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
  * 	sfs.addEventListener(SFSEvent.OBJECT_MESSAGE, onObjectMessage);
  * 	
  * 	// Send my movement to all players
- * 	var dataObj:ISFSObject=new SFSObject();
+ * 	var dataObj:SFSObject=new SFSObject();
  * 	dataObj.putInt("x", myCharacter.x);
  * 	dataObj.putInt("y", myCharacter.y);
  * 	
@@ -27,7 +27,7 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
  * 
  * private function onObjectMessage(evt:SFSEvent):Void
  * {
- * 	var dataObj:ISFSObject=evt.params.message as SFSObject;
+ * 	var dataObj:SFSObject=evt.params.message as SFSObject;
  * 	
  * 	var sender:User=evt.params.sender;
  * 	var character:Sprite=getUserCharacter(sender.id);
@@ -53,7 +53,7 @@ class DynamicMessageRequest extends GenericMessageRequest
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 * @see		com.smartfoxserver.v2.entities.User User
 	 */
-	public function new(obj:ISFSObject, targetRoom:Room=null, recipients:Array<Dynamic>=null)
+	public function new(obj:SFSObject, targetRoom:Room=null, recipients:Array<Dynamic>=null)
 	{
 		_type=GenericMessageType.OBJECT_MSG
 		_params=obj

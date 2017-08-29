@@ -3,7 +3,7 @@ package com.smartfoxserver.v2.requests;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.bitswarm.IMessage;
 import com.smartfoxserver.v2.bitswarm.Message;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 
 /** @private */
@@ -145,7 +145,7 @@ class BaseRequest implements IRequest
 	public static inline var KEY_ERROR_PARAMS:String = "ep";
 	
 	/** @private */
-	private var _sfso:ISFSObject;
+	private var _sfso:SFSObject;
 	
 	/** @private */
 	private var _id:Int;

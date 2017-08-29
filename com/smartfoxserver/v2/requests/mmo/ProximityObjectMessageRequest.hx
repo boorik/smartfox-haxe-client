@@ -3,7 +3,7 @@ package com.smartfoxserver.v2.requests.mmo;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.MMORoom;
 import com.smartfoxserver.v2.entities.Room;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.GenericMessageType;
@@ -12,7 +12,7 @@ import com.smartfoxserver.v2.requests.ObjectMessageRequest;
 /** @private */
 internal class ProximityObjectMessageRequest extends DynamicMessageRequest
 {
-	public function ProximityObjectMessageRequest(obj:ISFSObject, targetRoom:Room, aoi:Vec3D)
+	public function ProximityObjectMessageRequest(obj:SFSObject, targetRoom:Room, aoi:Vec3D)
 	{
 		super(obj, targetRoom, null);
 		_aoi=aoi;
