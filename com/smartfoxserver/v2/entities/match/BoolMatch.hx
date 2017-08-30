@@ -7,38 +7,40 @@ package com.smartfoxserver.v2.entities.match;
  */
 class BoolMatch implements IMatcher
 {
-	private static inline var TYPE_ID:Int=0
+	private static inline var TYPE_ID:Int = 0;
 	
-	private static var lock:Bool=false
+	private static var lock:Bool = false;
 	
 	/**
 	 * An instance of<em>BoolMatch</em>representing the following condition:<em>bool1==bool2</em>.
 	 */
-	public static inline var EQUALS:BoolMatch=new BoolMatch("==")
+	public static inline var EQUALS:BoolMatch = new BoolMatch("==");
 	
 	/**
 	 * An instance of<em>BoolMatch</em>representing the following condition:<em>bool1 !=bool2</em>.
 	 */
-	public static inline var NOT_EQUALS:BoolMatch=new BoolMatch("!=")
+	public static inline var NOT_EQUALS:BoolMatch = new BoolMatch("!=");
 	
-	lock=true
+	private static var init = {
+		lock = true;
+	}
 	
-	private var _symbol:String
+	private var _symbol:String;
 	
 	/** @private */
 	function new(symbol:String)
 	{
 		if(lock)
-			throw new Dynamic("Cannot instantiate Enum!");
+			throw new Error("Cannot instantiate Enum!");
 			
-		_symbol=symbol	
+		_symbol = symbol;	
 	}
 	
 	/** @inheritDoc */
 	public var symbol(get_symbol, null):String;
  	private function get_symbol():String
 	{
-		return _symbol
+		return _symbol;
 	}
 	
 	/** @inheritDoc */
