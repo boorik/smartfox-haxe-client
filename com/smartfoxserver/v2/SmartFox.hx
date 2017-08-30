@@ -33,7 +33,10 @@ extern class SmartFox
 	public var version:String;
 	public var isConnected:Bool;
 	public function new(?configObj:ConfigObj):Void;
-	public function addEventListener(evtType:String, listener:Dynamic, scope:Dynamic):Void;
+	inline function addEventListener(evtType:String, listener:Dynamic, ?scope:Dynamic):Void
+	{
+		addEventListener(evtType,listener,untyped __js__('this'));
+	}
 	public function connect(?host:String, ?port:Float, ?useSSL:Bool):Void;
 	public function disconnect():Void;
 	public function enableLagMonitor(enabled:Bool, interval:Float, queueSize:Float):Void;
