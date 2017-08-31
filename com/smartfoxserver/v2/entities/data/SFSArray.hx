@@ -5,6 +5,8 @@ package com.smartfoxserver.v2.entities.data;
 extern class SFSArray
 {
 	function new();
+
+	function contains(object:Dynamic):Bool;
 	function get(key:Dynamic):Dynamic;
 	function getBool(index:Int):Bool;
 	function getBoolArray(index:Int):Array<Bool>;

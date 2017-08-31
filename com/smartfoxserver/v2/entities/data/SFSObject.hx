@@ -29,6 +29,7 @@ extern class SFSObject
 	function getText(key:String):String;
 	function getUtfString(key:String):String;
 	function getUtfStringArray(key:String):Array<String>;
+	function isNull(key:String):Bool;
 	function put(key:String, value:Dynamic, typeId:Int):Void;
 	function putBool(key:String, value:Bool):Void;
 	function putBoolArray(key:String, array:Array<Bool>):Void;
