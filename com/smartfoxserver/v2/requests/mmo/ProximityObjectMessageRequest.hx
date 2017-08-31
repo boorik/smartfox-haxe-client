@@ -21,10 +21,10 @@ internal class ProximityObjectMessageRequest extends DynamicMessageRequest
 	/** @exclude */ 
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<Dynamic>=[];
 			
 		if(_params==null)
-			errors.push("Object message is null!")
+			errors.push("Object message is null!");
 		
 		if(!(Std.is(_room, MMORoom)))
 			errors.push("Target Room is not an MMORoom");

@@ -16,16 +16,16 @@ import com.smartfoxserver.v2.requests.RoomSettings;
  */
 class SFSGameSettings extends RoomSettings
 {
-	private var _isPublic:Bool
-	private var _minPlayersToStartGame:Int
-	private var _invitedPlayers:Array
-	private var _searchableRooms:Array
-	private var _playerMatchExpression:MatchExpression
-	private var _spectatorMatchExpression:MatchExpression
-	private var _invitationExpiryTime:Int 
-	private var _leaveLastJoinedRoom:Bool
-	private var _notifyGameStarted:Bool
-	private var _invitationParams:SFSObject
+	private var _isPublic:Bool;
+	private var _minPlayersToStartGame:Int;
+	private var _invitedPlayers:Array;
+	private var _searchableRooms:Array;
+	private var _playerMatchExpression:MatchExpression;
+	private var _spectatorMatchExpression:MatchExpression;
+	private var _invitationExpiryTime:Int;
+	private var _leaveLastJoinedRoom:Bool;
+	private var _notifyGameStarted:Bool;
+	private var _invitationParams:SFSObject;
 
 	/**
 	 * Creates a new<em>SFSGameSettings</em>instance.
@@ -37,12 +37,12 @@ class SFSGameSettings extends RoomSettings
 	 */
 	public function new(name:String)
 	{
-		super(name)
+		super(name);
 		
-		_isPublic=true
-		_minPlayersToStartGame=2
-		_invitationExpiryTime=15
-		_leaveLastJoinedRoom=true
+		_isPublic=true;
+		_minPlayersToStartGame=2;
+		_invitationExpiryTime=15;
+		_leaveLastJoinedRoom=true;
 	}
 	
 	/**
@@ -58,7 +58,7 @@ class SFSGameSettings extends RoomSettings
 	public var isPublic(get_isPublic, set_isPublic):Bool;
  	private function get_isPublic():Bool
 	{
-		return _isPublic
+		return _isPublic;
 	}
 	
 	/**
@@ -72,7 +72,7 @@ class SFSGameSettings extends RoomSettings
 	public var minPlayersToStartGame(get_minPlayersToStartGame, set_minPlayersToStartGame):Int;
  	private function get_minPlayersToStartGame():Int
 	{
-		return _minPlayersToStartGame
+		return _minPlayersToStartGame;
 	}
 	
 	/**
@@ -94,7 +94,7 @@ class SFSGameSettings extends RoomSettings
 	public var invitedPlayers(get_invitedPlayers, set_invitedPlayers):Array;
  	private function get_invitedPlayers():Array
 	{
-		return _invitedPlayers 
+		return _invitedPlayers;
 	}
 	
 	/**
@@ -114,7 +114,7 @@ class SFSGameSettings extends RoomSettings
 	public var searchableRooms(get_searchableRooms, set_searchableRooms):Array;
  	private function get_searchableRooms():Array
 	{
-		return _searchableRooms 
+		return _searchableRooms;
 	}
 	
 	/**
@@ -126,7 +126,7 @@ class SFSGameSettings extends RoomSettings
 	public var invitationExpiryTime(get_invitationExpiryTime, set_invitationExpiryTime):Int;
  	private function get_invitationExpiryTime():Int
 	{
-		return _invitationExpiryTime 
+		return _invitationExpiryTime; 
 	}
 	
 	/**
@@ -140,7 +140,7 @@ class SFSGameSettings extends RoomSettings
 	public var leaveLastJoinedRoom(get_leaveLastJoinedRoom, set_leaveLastJoinedRoom):Bool;
  	private function get_leaveLastJoinedRoom():Bool
 	{
-		return _leaveLastJoinedRoom
+		return _leaveLastJoinedRoom;
 	}
 	
 	/**
@@ -162,7 +162,7 @@ class SFSGameSettings extends RoomSettings
 	public var notifyGameStarted(get_notifyGameStarted, set_notifyGameStarted):Bool;
  	private function get_notifyGameStarted():Bool
 	{
-		return _notifyGameStarted 
+		return _notifyGameStarted;
 	}
 	
 	/**
@@ -186,7 +186,7 @@ class SFSGameSettings extends RoomSettings
 	public var playerMatchExpression(get_playerMatchExpression, set_playerMatchExpression):MatchExpression;
  	private function get_playerMatchExpression():MatchExpression
 	{
-		return _playerMatchExpression
+		return _playerMatchExpression;
 	}
 	
 	/**
@@ -201,7 +201,7 @@ class SFSGameSettings extends RoomSettings
 	public var spectatorMatchExpression(get_spectatorMatchExpression, set_spectatorMatchExpression):MatchExpression;
  	private function get_spectatorMatchExpression():MatchExpression
 	{
-		return _spectatorMatchExpression
+		return _spectatorMatchExpression;
 	}
 	
 	/**
@@ -216,66 +216,66 @@ class SFSGameSettings extends RoomSettings
 	public var invitationParams(get_invitationParams, set_invitationParams):SFSObject;
  	private function get_invitationParams():SFSObject
 	{
-		return _invitationParams
+		return _invitationParams;
 	}
 	
 	/** @private */
 	private function set_isPublic(value:Bool):Void
 	{
-		_isPublic=value
+		_isPublic=value;
 	}
 	
 	/** @private */
 	private function set_minPlayersToStartGame(value:Int):Void
 	{
-		_minPlayersToStartGame=value
+		_minPlayersToStartGame=value;
 	}
 	
 	/** @private */
 	private function set_invitedPlayers(value:Array):Void
 	{
-		_invitedPlayers=value
+		_invitedPlayers=value;
 	}
 	
 	/** @private */
 	private function set_searchableRooms(value:Array):Void
 	{
-		_searchableRooms=value
+		_searchableRooms=value;
 	}
 	
 	/** @private */
 	private function set_invitationExpiryTime(value:Int):Void
 	{
-		_invitationExpiryTime=value
+		_invitationExpiryTime=value;
 	}
 	
 	/** @private */
 	private function set_leaveLastJoinedRoom(value:Bool):Void
 	{
-		_leaveLastJoinedRoom=value
+		_leaveLastJoinedRoom=value;
 	}
 	
 	/** @private */
 	private function set_notifyGameStarted(value:Bool):Void
 	{
-		_notifyGameStarted=value
+		_notifyGameStarted=value;
 	}
 	
 	/** @private */
 	private function set_playerMatchExpression(value:MatchExpression):Void
 	{
-		_playerMatchExpression=value
+		_playerMatchExpression=value;
 	}
 	
 	/** @private */
 	private function set_spectatorMatchExpression(value:MatchExpression):Void
 	{
-		_spectatorMatchExpression=value
+		_spectatorMatchExpression=value;
 	}
 	
 	/** @private */
 	private function set_invitationParams(value:SFSObject):Void
 	{
-		_invitationParams=value
+		_invitationParams=value;
 	}
 }
