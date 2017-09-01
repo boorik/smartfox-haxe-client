@@ -14,12 +14,12 @@ class BoolMatch implements IMatcher
 	/**
 	 * An instance of<em>BoolMatch</em>representing the following condition:<em>bool1==bool2</em>.
 	 */
-	public static inline var EQUALS:BoolMatch = new BoolMatch("==");
+	public static var EQUALS:BoolMatch = new BoolMatch("==");
 	
 	/**
 	 * An instance of<em>BoolMatch</em>representing the following condition:<em>bool1 !=bool2</em>.
 	 */
-	public static inline var NOT_EQUALS:BoolMatch = new BoolMatch("!=");
+	public static var NOT_EQUALS:BoolMatch = new BoolMatch("!=");
 	
 	private static var init = {
 		lock = true;
@@ -31,7 +31,7 @@ class BoolMatch implements IMatcher
 	function new(symbol:String)
 	{
 		if(lock)
-			throw new Error("Cannot instantiate Enum!");
+			throw "Cannot instantiate Enum!";
 			
 		_symbol = symbol;	
 	}
