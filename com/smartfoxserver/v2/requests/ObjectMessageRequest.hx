@@ -22,7 +22,7 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
  * 	dataObj.putInt("x", myCharacter.x);
  * 	dataObj.putInt("y", myCharacter.y);
  * 	
- * 	sfs.send(new DynamicMessageRequest(dataObj));
+ * 	sfs.send(new ObjectMessageRequest(dataObj));
  * }
  * 
  * private function onObjectMessage(evt:SFSEvent):Void
@@ -39,7 +39,7 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
  * 
  * @see		com.smartfoxserver.v2.SmartFox#event:objectMessage objectMessage event
  */
-class DynamicMessageRequest extends GenericMessageRequest
+class ObjectMessageRequest extends GenericMessageRequest
 {
 	/**
 	 * Creates a new<em>ObjectMessageRequest</em>instance.
@@ -55,9 +55,10 @@ class DynamicMessageRequest extends GenericMessageRequest
 	 */
 	public function new(obj:ISFSObject, targetRoom:Room=null, recipients:Array<Dynamic>=null)
 	{
-		_type=GenericMessageType.OBJECT_MSG
-		_params=obj
-		_room=targetRoom
-		_recipient=recipients
+		super();
+		_type=GenericMessageType.OBJECT_MSG;
+		_params=obj;
+		_room=targetRoom;
+		_recipient=recipients;
 	}
 }

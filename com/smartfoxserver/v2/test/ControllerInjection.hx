@@ -5,11 +5,11 @@ import com.smartfoxserver.v2.kernel;
 
 class ControllerInjection
 {
-	var sfs:SmartFox
+	var sfs:SmartFox;
 	
 	public function new()
 	{
-		sfs=new SmartFox()
+		sfs=new SmartFox();
 		//sfs.kernel::socketEngine.addCustomController(4, new GridController())
 	}
 }

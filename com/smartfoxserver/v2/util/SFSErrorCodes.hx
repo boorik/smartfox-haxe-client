@@ -10,7 +10,7 @@ package com.smartfoxserver.v2.util;
  */
 class SFSErrorCodes
 {
-	private static var errorsByCode:Array<Dynamic>=	
+	private static var errorsByCode:Array<String>=	
 	[
 		"Client API version is obsolete:{0};required version:{1}", 												// 0
 		"Requested Zone {0} does not exist",							
