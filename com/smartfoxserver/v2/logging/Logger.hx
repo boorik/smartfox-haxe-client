@@ -168,6 +168,7 @@ class Logger extends EventDispatcher
 	 */
 	private function log(level:Int, message:String):Void
 	{
+		trace(message);
 		if(level<_loggingLevel)
 			return;
 		

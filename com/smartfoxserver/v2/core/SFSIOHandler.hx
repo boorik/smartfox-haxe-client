@@ -294,9 +294,9 @@ class SFSIOHandler implements IoHandler
 		// 1. Handle Compression
 		if (cast(binData.length,Int) > bitSwarm.compressionThreshold)
 		{
-			//trace("Before compression:" + binData.length)
+			//trace("Before compression:" + binData.length);
 			binData.compress();
-			//trace("After compression:" + binData.length)
+			//trace("After compression:" + binData.length);
 			isCompressed = true;
 		}	
 		
@@ -326,9 +326,11 @@ class SFSIOHandler implements IoHandler
 		// BlueBoxed flag is not implemented yet
 		var packetHeader:PacketHeader = new PacketHeader(isEncrypted, isCompressed, false, sizeBytes == INT_BYTE_SIZE);
 		
+		
+		trace("packetHeader:" + packetHeader.encode());
 		// 1. Write packet header byte
 		writeBuffer.writeByte(packetHeader.encode());
-		
+		trace(binData.length);
 		// 2. Write packet size
 		if(sizeBytes>SHORT_BYTE_SIZE)
 			writeBuffer.writeInt(binData.length);
@@ -362,7 +364,10 @@ class SFSIOHandler implements IoHandler
 			bitSwarm.socket.flush();
 			
 			if (bitSwarm.sfs.debug)
+			{
 				log.info("Data written:" + message.content.getHexDump());
+				trace(writeBuffer.length);
+			}
 		}
 		catch(error:IOError)
 		{
