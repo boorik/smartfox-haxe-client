@@ -918,7 +918,23 @@ class SmartFox extends EventDispatcher
 	private var _lastIpAddress:String;
 	
 	// Client details passed to setClientDetails method
-	private var _clientDetails:String="Flash";
+	private var _clientDetails:String =
+	#if flash 
+ 	"Flash"
+	#elseif android
+ 	"Android"
+	#elseif windows
+ 	"Windows"
+	#elseif neko
+ 	"Neko"
+	#elseif ios
+	"IOS"
+ 	#elseif linux
+	"Linux"
+	#else
+	"Unknown :)"
+	#end
+	;	
 	
 	/**
 	 * Creates a new<em>SmartFox</em>instance.
