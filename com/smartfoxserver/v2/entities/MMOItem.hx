@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.entities;
 
-import com.smartfoxserver.v2.entities.data.SFSArray;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.variables.IMMOItemVariable;
 import com.smartfoxserver.v2.entities.variables.MMOItemVariable;
@@ -25,13 +25,13 @@ class MMOItem implements IMMOItem
 	private var _aoiEntryPoint:Vec3D;
 	
 	/** @private */
-	public static function fromSFSArray(encodedItem:SFSArray):IMMOItem
+	public static function fromSFSArray(encodedItem:ISFSArray):IMMOItem
 	{
 		// Create the MMO Item with the server side ID(Index=0 of the SFSArray)
 		var item:IMMOItem=new MMOItem(encodedItem.getElementAt(0));
 		
 		// Decode ItemVariables(Index=1 of the SFSArray)
-		var encodedVars:SFSArray = encodedItem.getSFSArray(1);
+		var encodedVars:ISFSArray = encodedItem.getSFSArray(1);
 		
 		for(i in 0...encodedVars.size())
 		{

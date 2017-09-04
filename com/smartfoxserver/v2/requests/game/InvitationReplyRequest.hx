@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.requests.game;
 
 import com.smartfoxserver.v2.SmartFox;
-import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.invitation.Invitation;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.BaseRequest;
@@ -55,7 +55,7 @@ class InvitationReplyRequest extends BaseRequest
 	
 	private var _invitation:Invitation;
 	private var _reply:Int;
-	private var _params:SFSObject;
+	private var _params:ISFSObject;
 	
 	/**
 	 * Creates a new<em>InvitationReplyRequest</em>instance.
@@ -70,7 +70,7 @@ class InvitationReplyRequest extends BaseRequest
 	 * @see		com.smartfoxserver.v2.entities.invitation.InvitationReply InvitationReply
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 */
-	public function new(invitation:Invitation, invitationReply:Int, params:SFSObject=null)
+	public function new(invitation:Invitation, invitationReply:Int, params:ISFSObject=null)
 	{
 		super(BaseRequest.InvitationReply);
 		_invitation = invitation;

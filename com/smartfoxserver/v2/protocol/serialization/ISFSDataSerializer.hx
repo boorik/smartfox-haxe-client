@@ -1,15 +1,15 @@
 package com.smartfoxserver.v2.protocol.serialization;
 
-import com.smartfoxserver.v2.entities.data.SFSArray;
-import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 
 import flash.utils.ByteArray;
 
 /** @private */
 interface ISFSDataSerializer
 {
-	function object2binary(object:SFSObject):ByteArray;
-	function array2binary(array:SFSArray):ByteArray;
-	function binary2object(data:ByteArray):SFSObject;
-	function binary2array(data:ByteArray):SFSArray;
+	function object2binary(object:ISFSObject):ByteArray;
+	function array2binary(array:ISFSArray):ByteArray;
+	function binary2object(data:ByteArray):ISFSObject;
+	function binary2array(data:ByteArray):ISFSArray;
 }

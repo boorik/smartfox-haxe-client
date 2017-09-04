@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.requests.game;
 
-import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.match.MatchExpression;
 import com.smartfoxserver.v2.requests.RoomSettings;
 
@@ -25,7 +25,8 @@ class SFSGameSettings extends RoomSettings
 	private var _invitationExpiryTime:Int;
 	private var _leaveLastJoinedRoom:Bool;
 	private var _notifyGameStarted:Bool;
-	private var _invitationParams:SFSObject;
+	private var _invitationParams:ISFSObject;
+
 
 	/**
 	 * Creates a new<em>SFSGameSettings</em>instance.
@@ -213,8 +214,8 @@ class SFSGameSettings extends RoomSettings
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 */ 
-	public var invitationParams(get_invitationParams, set_invitationParams):SFSObject;
- 	private function get_invitationParams():SFSObject
+	public var invitationParams(get_invitationParams, set_invitationParams):ISFSObject;
+ 	private function get_invitationParams():ISFSObject
 	{
 		return _invitationParams;
 	}
@@ -274,7 +275,7 @@ class SFSGameSettings extends RoomSettings
 	}
 	
 	/** @private */
-	private function set_invitationParams(value:SFSObject):Void
+	private function set_invitationParams(value:ISFSObject):Void
 	{
 		_invitationParams=value;
 	}

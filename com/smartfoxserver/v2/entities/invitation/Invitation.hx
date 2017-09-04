@@ -1,8 +1,8 @@
 package com.smartfoxserver.v2.entities.invitation;
 
 import com.smartfoxserver.v2.entities.User;
-import com.smartfoxserver.v2.entities.data.SFSArray;
-import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 
 /**
  * The<em>Invitation</em>interface defines all the methods and properties that an object representing an invitation entity exposes.
@@ -46,6 +46,6 @@ interface Invitation
 	 * Returns an instance of<em>SFSObject</em>containing a custom set of parameters.
 	 * It usually stores invitation details, like a message to the invitee and any other relevant data. 
 	 */
-	var params(get_params, null):SFSObject;
-	//function get params():SFSObject
+	var params(get_params, null):ISFSObject;
+	//function get params():ISFSObject
 }

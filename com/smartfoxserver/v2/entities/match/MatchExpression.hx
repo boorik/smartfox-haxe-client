@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.entities.match;
 
-import com.smartfoxserver.v2.entities.data.SFSArray;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 
 /**
@@ -278,12 +278,12 @@ class MatchExpression
 	}
 	
 	/** @private */
-	public function toSFSArray():SFSArray
+	public function toSFSArray():ISFSArray
 	{
 		var expr:MatchExpression = rewind();
 		
 		// Start with the main expression
-		var sfsa:SFSArray = new SFSArray();
+		var sfsa:ISFSArray = new SFSArray();
 		sfsa.addSFSArray(expr.expressionAsSFSArray());
 		
 		// continue with other linked expressions, if any
@@ -296,9 +296,9 @@ class MatchExpression
 		return sfsa;
 	}
 	
-	private function expressionAsSFSArray():SFSArray
+	private function expressionAsSFSArray():ISFSArray
 	{
-		var expr:SFSArray = new SFSArray();
+		var expr:ISFSArray = new SFSArray();
 	
 		// 0 ->Logic operator
 		if(_logicOp !=null)

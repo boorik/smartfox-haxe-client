@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.entities;
 
-import com.smartfoxserver.v2.entities.data.SFSArray;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.variables.BuddyVariable;
 import com.smartfoxserver.v2.entities.variables.ReservedBuddyVariables;
 import com.smartfoxserver.v2.entities.variables.SFSBuddyVariable;
@@ -45,7 +45,7 @@ class SFSBuddy implements Buddy
 	private var _isTemp:Bool;
 	
 	/** @private */
-	public static function fromSFSArray(arr:SFSArray):Buddy
+	public static function fromSFSArray(arr:ISFSArray):Buddy
 	{
 		var buddy:Buddy=new SFSBuddy
 		(
@@ -55,7 +55,7 @@ class SFSBuddy implements Buddy
 			arr.size()>3 ? arr.getBool(4):false			// isTemp is optional, we have to check
 		);
 		
-		var bVarsData:SFSArray = arr.getSFSArray(3);// variables data array
+		var bVarsData:ISFSArray = arr.getSFSArray(3);// variables data array
 		
 		for(j in 0...bVarsData.size())
 		{

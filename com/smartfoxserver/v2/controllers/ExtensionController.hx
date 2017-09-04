@@ -5,7 +5,7 @@ import com.smartfoxserver.v2.bitswarm.BaseController;
 import com.smartfoxserver.v2.bitswarm.BitSwarmClient;
 import com.smartfoxserver.v2.bitswarm.IMessage;
 import com.smartfoxserver.v2.core.SFSEvent;
-import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 
 /** @private */
 class ExtensionController extends BaseController
@@ -29,7 +29,7 @@ class ExtensionController extends BaseController
 		if(sfs.debug)
 			log.info(Std.string(message));
 		
-		var obj:SFSObject = message.content;
+		var obj:ISFSObject = message.content;
 		var evtParams:Dynamic = { };
 		
 		evtParams.cmd = obj.getUtfString(KEY_CMD);

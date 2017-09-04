@@ -1,12 +1,12 @@
 package com.smartfoxserver.v2.bitswarm;
 
-import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 
 /** @private */
 class Message implements IMessage
 {
 	private var _id:Int;
-	private var _content:SFSObject;
+	private var _content:ISFSObject;
 	private var _targetController:Int;
 	private var _isEncrypted:Bool;
 	private var _isUDP:Bool;
@@ -28,13 +28,13 @@ class Message implements IMessage
 		return this._id = value;
 	}
 	
-	public var content(get_content, set_content):SFSObject;
- 	private function get_content():SFSObject
+	public var content(get_content, set_content):ISFSObject;
+ 	private function get_content():ISFSObject
 	{
 		return _content;
 	}
 	
-	private function set_content(obj:SFSObject):SFSObject
+	private function set_content(obj:ISFSObject):ISFSObject
 	{
 		return this._content = obj	;
 	}

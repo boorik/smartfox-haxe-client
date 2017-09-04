@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.entities.variables;
 
-import com.smartfoxserver.v2.entities.data.SFSArray;
-import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.exceptions.SFSError;
 import Type;
@@ -46,7 +46,7 @@ class SFSBuddyVariable implements BuddyVariable
 	private var _value:Dynamic;
 	
 	/** @private */
-	public static function fromSFSArray(sfsa:SFSArray):BuddyVariable
+	public static function fromSFSArray(sfsa:ISFSArray):BuddyVariable
 	{
 		var variable:SFSBuddyVariable=new SFSBuddyVariable(
 																	sfsa.getUtfString(0), 	// name
@@ -133,15 +133,15 @@ class SFSBuddyVariable implements BuddyVariable
 	}
 	
 	/** @inheritDoc */
-	public function getSFSObjectValue():SFSObject
+	public function getSFSObjectValue():ISFSObject
 	{
-		return cast(_value, SFSObject);	
+		return cast(_value, ISFSObject);	
 	}
 	
 	/** @inheritDoc */
-	public function getSFSArrayValue():SFSArray
+	public function getSFSArrayValue():ISFSArray
 	{
-		return cast(_value, SFSArray);
+		return cast(_value, ISFSArray);
 	}
 	
 	/** @inheritDoc */
@@ -151,9 +151,9 @@ class SFSBuddyVariable implements BuddyVariable
 	}
 	
 	/** @private */
-	public function toSFSArray():SFSArray
+	public function toSFSArray():ISFSArray
 	{
-		var sfsa:SFSArray = SFSArray.newInstance();
+		var sfsa:ISFSArray = SFSArray.newInstance();
 		
 		// var name(0)
 		sfsa.addUtfString(_name);
@@ -177,7 +177,7 @@ class SFSBuddyVariable implements BuddyVariable
 		return "[BuddyVar:" + _name + ", type:" + _type + ", value:" + _value + "]";
 	}
 	
-	private function populateArrayWithValue(arr:SFSArray):Void
+	private function populateArrayWithValue(arr:ISFSArray):Void
 	{
 		var typeId:Int = VariableType.getTypeFromName(_type);
 		

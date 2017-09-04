@@ -9,7 +9,7 @@ extern class ExtensionRequest{
 #else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
-import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 
@@ -33,7 +33,7 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
  * 	sfs.addEventListener(SFSEvent.EXTENSION_RESPONSE, onExtensionResponse);
  * 	
  * 	// Send two Integers to the Zone extension and get their sum in return
- * 	var params:SFSObject=new SFSObject();
+ * 	var params:ISFSObject=new SFSObject();
  * 	params.putInt("n1", 26);
  * 	params.putInt("n2", 16);
  * 	
@@ -44,7 +44,7 @@ import com.smartfoxserver.v2.exceptions.SFSValidationError;
  * {
  * 	if(evt.params.cmd=="add")
  * 	{
- * 		var responseParams:SFSObject=evt.params.params as SFSObject;
+ * 		var responseParams:ISFSObject=evt.params.params as SFSObject;
  * 		
  * 		// We expect an Int parameter called "sum"
  * 		trace("The sum is:" + responseParams.getInt("sum"));
@@ -67,7 +67,7 @@ class ExtensionRequest extends BaseRequest
 	public static inline var KEY_ROOM:String = "r";
 	
 	private var _extCmd:String;
-	private var _params:SFSObject;
+	private var _params:ISFSObject;
 	private var _room:Room;
 	private var _useUDP:Bool;
 	
@@ -84,7 +84,7 @@ class ExtensionRequest extends BaseRequest
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 * @see		com.smartfoxserver.v2.SmartFox#udpAvailable SmartFox.udpAvailable
 	 */
-	public function new(extCmd:String, params:SFSObject=null, room:Room=null, useUDP:Bool=false)
+	public function new(extCmd:String, params:ISFSObject=null, room:Room=null, useUDP:Bool=false)
 	{
 		super(BaseRequest.CallExtension);
 		

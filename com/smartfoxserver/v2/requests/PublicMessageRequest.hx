@@ -8,7 +8,7 @@ extern class PublicMessageRequest
 }
 #else
 import com.smartfoxserver.v2.entities.Room;
-import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 
 /**
  * Sends a public chat message.
@@ -63,7 +63,7 @@ class PublicMessageRequest extends GenericMessageRequest
 	 * @see		com.smartfoxserver.v2.SmartFox#send()SmartFox.send()
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 */
-	public function new(message:String, params:SFSObject=null, targetRoom:Room=null)
+	public function new(message:String, params:ISFSObject=null, targetRoom:Room=null)
 	{
 		super();
 		

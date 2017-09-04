@@ -2,7 +2,7 @@ package com.smartfoxserver.v2.requests;
 
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
-import com.smartfoxserver.v2.entities.data.SFSArray;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.variables.RoomVariable;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
@@ -160,7 +160,7 @@ class CreateRoomRequest extends BaseRequest
 		// Handle Room Variables
 		if(_settings.variables !=null && _settings.variables.length>0)
 		{
-			var roomVars:SFSArray = SFSArray.newInstance();
+			var roomVars:ISFSArray = SFSArray.newInstance();
 			
 			for(item in _settings.variables)
 			{

@@ -325,7 +325,7 @@ extern class SFSEvent implements Dynamic
 	 *<table class="innertable">
 	 *<tr><th>Property</th><th>Type</th><th>Description</th></tr>
 	 *<tr><td>user</td><td><em>User</em></td><td>An object representing the user who performed the login.</td></tr>
-	 *<tr><td>data</td><td><em>SFSObject</em></td><td>An object containing custom parameters returned by a custom login system, if any.</td></tr>
+	 *<tr><td>data</td><td><em>ISFSObject</em></td><td>An object containing custom parameters returned by a custom login system, if any.</td></tr>
 	 *</table>
 	 * 
 	 * @example	The following example performs a login in the "SimpleChat" Zone:
@@ -666,7 +666,7 @@ extern class SFSEvent implements Dynamic
 	 *<tr><td>room</td><td><em>Room</em></td><td>An object representing the Room at which the message is targeted.</td></tr>
 	 *<tr><td>sender</td><td><em>User</em></td><td>An object representing the user who sent the message.</td></tr>
 	 *<tr><td>message</td><td><em>String</em></td><td>The message sent by the user.</td></tr>
-	 *<tr><td>data</td><td><em>SFSObject</em></td><td>An object containing custom parameters which might accompany the message.</td></tr>
+	 *<tr><td>data</td><td><em>ISFSObject</em></td><td>An object containing custom parameters which might accompany the message.</td></tr>
 	 *</table>
 	 * 
 	 * @example	The following example sends a public message and handles the respective event:
@@ -708,7 +708,7 @@ extern class SFSEvent implements Dynamic
 	 *<tr><th>Property</th><th>Type</th><th>Description</th></tr>
 	 *<tr><td>sender</td><td><em>User</em></td><td>An object representing the user who sent the message.</td></tr>
 	 *<tr><td>message</td><td><em>String</em></td><td>The message sent by the user.</td></tr>
-	 *<tr><td>data</td><td><em>SFSObject</em></td><td>An object containing custom parameters which might accompany the message.</td></tr>
+	 *<tr><td>data</td><td><em>ISFSObject</em></td><td>An object containing custom parameters which might accompany the message.</td></tr>
 	 *</table>
 	 * 
 	 * @example	The following example sends a private message and handles the respective event:
@@ -760,7 +760,7 @@ extern class SFSEvent implements Dynamic
 	 * 	sfs.addEventListener(SFSEvent.OBJECT_MESSAGE, onObjectMessage);
 	 * 	
 	 * 	// Send my movement to all players
-	 * 	var dataObj:SFSObject=new SFSObject();
+	 * 	var dataObj:ISFSObject=new SFSObject();
 	 * 	dataObj.putInt("x", myCharacter.x);
 	 * 	dataObj.putInt("y", myCharacter.y);
 	 * 	
@@ -769,7 +769,7 @@ extern class SFSEvent implements Dynamic
 	 * 
 	 * private function onObjectMessage(evt:SFSEvent):Void
 	 * {
-	 * 	var dataObj:SFSObject=evt.params.message as SFSObject;
+	 * 	var dataObj:ISFSObject=evt.params.message as SFSObject;
 	 * 	
 	 * 	var sender:User=evt.params.sender;
 	 * 	var character:Sprite=getUserCharacter(sender.id);
@@ -791,7 +791,7 @@ extern class SFSEvent implements Dynamic
 	 *<tr><th>Property</th><th>Type</th><th>Description</th></tr>
 	 *<tr><td>sender</td><td><em>User</em></td><td>An object representing the moderator user who sent the message.</td></tr>
 	 *<tr><td>message</td><td><em>String</em></td><td>The message sent by the moderator.</td></tr>
-	 *<tr><td>data</td><td><em>SFSObject</em></td><td>An object containing custom parameters which might accompany the message.</td></tr>
+	 *<tr><td>data</td><td><em>ISFSObject</em></td><td>An object containing custom parameters which might accompany the message.</td></tr>
 	 *</table>
 	 * 
 	 * @example	The following example sends a moderator message to all the users in the last joned Room;it also shows how to handle the related event:
@@ -828,7 +828,7 @@ extern class SFSEvent implements Dynamic
 	 *<tr><th>Property</th><th>Type</th><th>Description</th></tr>
 	 *<tr><td>sender</td><td><em>User</em></td><td>An object representing the administrator user who sent the message.</td></tr>
 	 *<tr><td>message</td><td><em>String</em></td><td>The message sent by the administrator.</td></tr>
-	 *<tr><td>data</td><td><em>SFSObject</em></td><td>An object containing custom parameters which might accompany the message.</td></tr>
+	 *<tr><td>data</td><td><em>ISFSObject</em></td><td>An object containing custom parameters which might accompany the message.</td></tr>
 	 *</table>
 	 * 
 	 * @example	The following example sends an administration message to all the users in the Zone;it also shows how to handle the related event:
@@ -866,7 +866,7 @@ extern class SFSEvent implements Dynamic
 	 *<tr><td>cmd</td><td><em>String</em></td><td>The name of the command which identifies an action that should be executed by the client.
 	 * 												If this event is fired in response to a request sent by the client, it is a common practice
 	 * 												to use the same command name passed to the request also in the response.</td></tr>
-	 *<tr><td>params</td><td><em>SFSObject</em></td><td>An object containing custom data sent by the Extension.</td></tr>
+	 *<tr><td>params</td><td><em>ISFSObject</em></td><td>An object containing custom data sent by the Extension.</td></tr>
 	 *<tr><td>sourceRoom</td><td><em>Number</em></td><td>The id of the Room which the Extension is attached to(for Room Extensions only).</td></tr>
 	 *<tr><td>packetId</td><td><em>Number</em></td><td>The id of the packet when the UDP protocol is used. As this is an auto-increment value generated by the server,
 	 * 													it can be useful to detect UDP packets received in the wrong order.</td></tr>
@@ -881,7 +881,7 @@ extern class SFSEvent implements Dynamic
 	 * 	sfs.addEventListener(SFSEvent.EXTENSION_RESPONSE, onExtensionResponse);
 	 * 	
 	 * 	// Send two Integers to the Zone extension and get their sum in return
-	 * 	var params:SFSObject=new SFSObject();
+	 * 	var params:ISFSObject=new SFSObject();
 	 * 	params.putInt("n1", 26);
 	 * 	params.putInt("n2", 16);
 	 * 	
@@ -892,7 +892,7 @@ extern class SFSEvent implements Dynamic
 	 * {
 	 * 	if(evt.params.cmd=="add")
 	 * 	{
-	 * 		var responseParams:SFSObject=evt.params.params as SFSObject;
+	 * 		var responseParams:ISFSObject=evt.params.params as SFSObject;
 	 * 		
 	 * 		// We expect an Int parameter called "sum"
 	 * 		trace("The sum is:" + responseParams.getInt("sum"));
@@ -1509,7 +1509,7 @@ extern class SFSEvent implements Dynamic
 	 *<tr><th>Property</th><th>Type</th><th>Description</th></tr>
 	 *<tr><td>invitee</td><td><em>User</em></td><td>An object representing the user who replied to the invitation.</td></tr>
 	 *<tr><td>reply</td><td><em>int</em></td><td>The answer to the invitation among those available as constants in the<em>InvitationReply</em>class.</td></tr>
-	 *<tr><td>data</td><td><em>SFSObject</em></td><td>An object containing custom parameters, for example a message describing the reason of refusal.</td></tr>
+	 *<tr><td>data</td><td><em>ISFSObject</em></td><td>An object containing custom parameters, for example a message describing the reason of refusal.</td></tr>
 	 *</table>
 	 * 
 	 * @example	See the example provided in the<em>INVITATION</em>constant description.

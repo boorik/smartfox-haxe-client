@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.requests;
 
-import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 
 /**
  * Sends a private chat message.
@@ -49,7 +49,7 @@ class PrivateMessageRequest extends GenericMessageRequest
 	 * @see		com.smartfoxserver.v2.SmartFox#send()SmartFox.send()
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 */
-	public function new(message:String, recipientId:Int, params:SFSObject=null)
+	public function new(message:String, recipientId:Int, params:ISFSObject=null)
 	{
 		super();
 		

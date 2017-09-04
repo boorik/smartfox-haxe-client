@@ -5,11 +5,10 @@ extern class AdminMessageRequest{
 	public function new(message:String, recipientMode:Dynamic, ?params:SFSObject);
 }
 #else
-import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.requests.GenericMessageRequest;
 import com.smartfoxserver.v2.requests.MessageRecipientMode;
 import flash.errors.ArgumentError;
-
 /**
  * Sends an administrator message to a specific user or a group of users.
  * 
@@ -55,7 +54,7 @@ class AdminMessageRequest extends GenericMessageRequest
 	 * @see		com.smartfoxserver.v2.SmartFox#send()SmartFox.send()
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 */
-	public function new(message:String, recipientMode:MessageRecipientMode, params:SFSObject=null)
+	public function new(message:String, recipientMode:MessageRecipientMode, params:ISFSObject=null)
 	{
 		if(recipientMode==null)
 			throw new ArgumentError("RecipientMode cannot be null!");

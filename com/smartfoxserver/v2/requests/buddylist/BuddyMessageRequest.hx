@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.requests.buddylist;
 
 import com.smartfoxserver.v2.entities.Buddy;
-import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.requests.GenericMessageRequest;
 import com.smartfoxserver.v2.requests.GenericMessageType;
 
@@ -61,7 +61,7 @@ class BuddyMessageRequest extends GenericMessageRequest
 	 * @see		com.smartfoxserver.v2.SmartFox#send()SmartFox.send()
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 */
-	public function new(message:String, targetBuddy:Buddy, params:SFSObject=null)
+	public function new(message:String, targetBuddy:Buddy, params:ISFSObject=null)
 	{
 		super();
 		_type = GenericMessageType.BUDDY_MSG;

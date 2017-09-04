@@ -14,7 +14,7 @@ extern class SFSRoomVariable{
 	function toString():String;
 }
 #else
-import com.smartfoxserver.v2.entities.data.SFSArray;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 
 /**
  * The<em>SFSRoomVariable</em>object represents a SmartFoxServer Room Variable entity on the client.
@@ -44,7 +44,7 @@ class SFSRoomVariable extends SFSUserVariable implements RoomVariable
 	private var _isPrivate:Bool;
 	
 	/** @private */
-	public static function fromSFSArray(sfsa:SFSArray):RoomVariable
+	public static function fromSFSArray(sfsa:ISFSArray):RoomVariable
 	{
 		var roomVariable:RoomVariable=new SFSRoomVariable
 		(
@@ -110,9 +110,9 @@ class SFSRoomVariable extends SFSUserVariable implements RoomVariable
 	}
 	
 	/** @private */
-	override public function toSFSArray():SFSArray
+	override public function toSFSArray():ISFSArray
 	{
-		var arr:SFSArray = super.toSFSArray();
+		var arr:ISFSArray = super.toSFSArray();
 		
 		// isPrivate(3)
 		arr.addBool(_isPrivate);
