@@ -10,6 +10,7 @@ import openfl.net.URLRequest;
 import openfl.net.URLRequestMethod;
 import openfl.net.URLVariables;
 import openfl.utils.ByteArray;
+import openfl.utils.Endian;
 
 /**
  * ...
@@ -73,7 +74,9 @@ class CryptoInitializer
 		var byteData:ByteArray = cast Base64.decodeToByteArray(rawData);
 		
 		var iv:ByteArray = new ByteArray();
+		iv.endian = Endian.BIG_ENDIAN;
 		var key:ByteArray = new ByteArray();
+		key.endian = Endian.BIG_ENDIAN;
 		
 		// Extract the key and init vector and pass them to the BitSwarmClient
 		key.writeBytes(byteData, 0, 16);

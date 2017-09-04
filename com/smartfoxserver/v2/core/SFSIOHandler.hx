@@ -12,6 +12,7 @@ import com.smartfoxserver.v2.logging.Logger;
 import com.smartfoxserver.v2.protocol.IProtocolCodec;
 import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
 import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
+import openfl.utils.Endian;
 
 import flash.errors.IOError;
 import flash.utils.ByteArray;
@@ -35,7 +36,7 @@ class SFSIOHandler implements IoHandler
 	public function new(bitSwarm:BitSwarmClient)
 	{
 		EMPTY_BUFFER = new ByteArray();
-		
+		EMPTY_BUFFER.endian = Endian.BIG_ENDIAN;
 		this.bitSwarm = bitSwarm;
 		this.log = bitSwarm.sfs.logger;
 		this.packetEncrypter = new DefaultPacketEncrypter(bitSwarm);
@@ -211,6 +212,7 @@ class SFSIOHandler implements IoHandler
 			log.debug('DataSize is ready:$dataSize bytes');
 			pendingPacket.header.expectedLen = dataSize;
 			pendingPacket.buffer = new ByteArray();
+			pendingPacket.buffer.endian = Endian.BIG_ENDIAN;
 			
 			// Next state
 			readState = PacketReadState.WAIT_DATA;
@@ -277,6 +279,7 @@ class SFSIOHandler implements IoHandler
 	private function resizeByteArray(array:ByteArray, pos:Int, len:Int):ByteArray
 	{
 		var newArray:ByteArray = new ByteArray();
+		newArray.endian = Endian.BIG_ENDIAN;
 		newArray.writeBytes(array, pos, len);
 		newArray.position = 0;
 		
@@ -287,6 +290,7 @@ class SFSIOHandler implements IoHandler
 	public function onDataWrite(message:IMessage):Void
 	{
 		var writeBuffer:ByteArray = new ByteArray();
+		writeBuffer.endian = Endian.BIG_ENDIAN;//fix for new openfl versions
 		var binData:ByteArray = message.content.toBinary();
 		var isCompressed:Bool = false;
 		var isEncrypted:Bool = false;

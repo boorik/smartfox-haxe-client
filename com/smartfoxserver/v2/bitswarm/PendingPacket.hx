@@ -1,6 +1,7 @@
 package com.smartfoxserver.v2.bitswarm;
 
 import com.smartfoxserver.v2.core.PacketHeader;
+import openfl.utils.Endian;
 
 import flash.utils.ByteArray;
 
@@ -14,6 +15,7 @@ class PendingPacket
 	{
 		_header = header;
 		_buffer = new ByteArray();
+		_buffer.endian = Endian.BIG_ENDIAN;
 	}
 	
 	public var header(get, set):PacketHeader;

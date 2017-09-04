@@ -50,7 +50,8 @@ class TestProtocolCodec implements IProtocolCodec
 	
 	public function setVerificationPacket(bb:ByteArray):Void
 	{
-		verificationPacket=new ByteArray();
+		verificationPacket = new ByteArray();
+		verificationPacket.endian = Endian.BIG_ENDIAN;
 		verificationPacket.writeBytes(bb, 3, bb.length - 3)
 	}
 	
