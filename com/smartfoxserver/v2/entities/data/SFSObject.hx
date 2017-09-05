@@ -329,9 +329,8 @@ class SFSObject implements ISFSObject
 	public function getInt(key:String):Int
 	{
 		var wrapper:SFSDataWrapper = cast dataHolder[key];
-		
 		if(wrapper !=null)
-			return cast wrapper.data;
+			return Std.parseInt(wrapper.data);
 		else 
 			return 0; //==0
 	}

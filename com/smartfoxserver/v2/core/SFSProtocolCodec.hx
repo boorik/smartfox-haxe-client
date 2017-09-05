@@ -51,6 +51,7 @@ class SFSProtocolCodec implements IProtocolCodec
 			sfsObj = cast(packet, ISFSObject);
 				
 		// Create a Request and dispatch to ProtocolCodec
+		trace(sfsObj.getDump());
 		dispatchRequest(sfsObj);
 	}
 	
@@ -135,6 +136,8 @@ class SFSProtocolCodec implements IProtocolCodec
 			throw new SFSCodecError("Request rejected:No Action ID in request!");
 		
 		message.id = requestObject.getByte(ACTION_ID);
+		trace("???"+requestObject.getByte(ACTION_ID));
+		trace("message.id=" + message.id);
 		message.content = requestObject.getSFSObject(PARAM_ID);
 		message.isUDP = requestObject.containsKey(UDP_PACKET_ID);
 		
@@ -142,6 +145,7 @@ class SFSProtocolCodec implements IProtocolCodec
 			message.packetId = requestObject.getLong(UDP_PACKET_ID);
 		
 		var controllerId:Int = requestObject.getByte(CONTROLLER_ID);
+		
 		var controller:IController = bitSwarm.getController(controllerId);
 		
 		if(controller==null)
