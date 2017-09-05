@@ -1,4 +1,5 @@
 package com.smartfoxserver.v2.requests;
+import com.smartfoxserver.v2.entities.Room;
 #if html5
 @:native('SFS2X.CreateRoomRequest')
 extern class CreateRoomRequest{
@@ -6,7 +7,6 @@ extern class CreateRoomRequest{
 }
 #else
 import com.smartfoxserver.v2.SmartFox;
-import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.variables.RoomVariable;
