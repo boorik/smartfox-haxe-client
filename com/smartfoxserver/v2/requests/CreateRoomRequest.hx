@@ -1,5 +1,10 @@
 package com.smartfoxserver.v2.requests;
-
+#if html5
+@:native('SFS2X.CreateRoomRequest')
+extern class CreateRoomRequest{
+	public function new(settings:RoomSettings, autoJoin:Bool=false, roomToLeave:Room=null);
+}
+#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.data.ISFSArray;
@@ -285,3 +290,4 @@ class CreateRoomRequest extends BaseRequest
 			throw new SFSValidationError("CreateRoom request error", errors);	
 	}
 }
+#end
