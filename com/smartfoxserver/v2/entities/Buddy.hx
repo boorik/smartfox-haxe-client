@@ -1,5 +1,8 @@
 package com.smartfoxserver.v2.entities;
-
+#if html5
+import com.smartfoxserver.v2.entities.SFSBuddy;
+typedef Buddy = SFSBuddy;
+#else
 import com.smartfoxserver.v2.entities.variables.BuddyVariable;
 
 /**
@@ -128,3 +131,4 @@ interface Buddy
 	/** @private */
 	function clearVolatileVariables():Void;
 }
+#end
