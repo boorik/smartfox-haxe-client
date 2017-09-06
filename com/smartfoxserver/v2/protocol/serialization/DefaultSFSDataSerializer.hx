@@ -141,7 +141,6 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		 	{
 		 		// Decode object key
 		 		var key:String = buffer.readUTF();
-		 		trace("key:" + key);
 		 		// Decode the next object
 		 		var decodedObject:SFSDataWrapper = decodeObject(buffer);
 		 		
