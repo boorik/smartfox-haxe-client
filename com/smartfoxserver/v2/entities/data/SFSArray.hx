@@ -1,11 +1,15 @@
 package com.smartfoxserver.v2.entities.data;
 
+import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
 #if html5
 @:native('SFS2X.SFSArray')
 extern class SFSArray
 {
+	inline static function newInstance():SFSArray
+	{
+		return new SFSArray();
+	}
 	function new();
-
 	function contains(object:Dynamic):Bool;
 	function get(key:Dynamic):Dynamic;
 	function getBool(index:Int):Bool;
@@ -31,7 +35,18 @@ extern class SFSArray
 	function getText(index:Int):String;
 	function getUtfString(index:Int):String;
 	function getUtfStringArray(index:Int):Array<String>;
-	function put(key:String, value:Dynamic, typeId:Int):Void;
+	inline function getWrappedElementAt(index:Int):Dynamic
+	{
+		return getWrappedItem(index);
+	}
+	function getWrappedItem(index:Int):Dynamic;
+	@:overload(function (value:Dynamic, typeId:Int):Void{})
+	inline function add(data:SFSDataWrapper):Void
+	{
+		add(data.data,data.type);
+	}
+	
+
 	function addBool(value:Bool):Void;
 	function addBoolArray(array:Array<Bool>):Void;
 	function addByte(value:Int):Void;
@@ -56,12 +71,15 @@ extern class SFSArray
 	function size():Int;
 	
 	function isNull(index:Int):Bool;
+	inline function toArray():Array<Dynamic>
+	{
+		return [];
+	}
 }
 
 #else
 import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
-import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
 import com.smartfoxserver.v2.protocol.serialization.ISFSDataSerializer;
 
 import flash.utils.ByteArray;

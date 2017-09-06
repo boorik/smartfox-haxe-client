@@ -1,15 +1,24 @@
 package com.smartfoxserver.v2.entities.data;
 
+import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
 #if html5
 @:native('SFS2X.SFSObject')
 extern class SFSObject
 {
+	inline static function newInstance():SFSObject
+	{
+		return new SFSObject();
+	}
 	function new();
 	function get(key:Dynamic):Dynamic;
 	function getBool(key:String):Bool;
 	function getBoolArray(key:String):Array<Bool>;
 	function getByte(key:String):Int;
 	function getByteArray(key:String):haxe.io.Bytes;
+	inline function getData(key:String):SFSDataWrapper
+	{
+		return getWrappedItem(key);
+	}
 	function getDouble(key:String):Int;
 	function getDoubleArray(key:String):Array<Int>;
 	function getDump(?format:Dynamic):String;
@@ -19,6 +28,10 @@ extern class SFSObject
 	function getInt(key:String):Int;
 	function getIntArray(key:String):Array<Int>;
 	function getKeysArray():Array<String>;
+	inline function getKeys():Array<String>
+	{
+		return getKeysArray();
+	}
 	function getLong(key:String):Float;
 
 	function getLongArray(key:String):Array<Float>;
@@ -29,8 +42,13 @@ extern class SFSObject
 	function getText(key:String):String;
 	function getUtfString(key:String):String;
 	function getUtfStringArray(key:String):Array<String>;
+	function getWrappedItem(key:String):SFSDataWrapper;
 	function isNull(key:String):Bool;
-	function put(key:String, value:Dynamic, typeId:Int):Void;
+	@:overload(function (key:String, value:Dynamic, typeId:Int):Void{})
+	inline function put(key:String,dataWrapper:SFSDataWrapper):Void
+	{
+		put(key,dataWrapper.data,dataWrapper.type);
+	}
 	function putBool(key:String, value:Bool):Void;
 	function putBoolArray(key:String, array:Array<Bool>):Void;
 	function putByte(key:String, value:Int):Void;
@@ -55,12 +73,16 @@ extern class SFSObject
 	function size():Int;
 	
 	function containsKey(key:String):Bool;
+
+	inline function toObject():Dynamic
+	{
+		return this;
+	}
 }
 #else
 
 import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
-import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
 import com.smartfoxserver.v2.protocol.serialization.ISFSDataSerializer;
 import haxe.ds.StringMap;
 

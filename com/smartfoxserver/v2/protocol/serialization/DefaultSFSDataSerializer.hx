@@ -1,5 +1,22 @@
 package com.smartfoxserver.v2.protocol.serialization;
 
+import flash.utils.ByteArray;
+/*
+#if html5
+@native(_DataSerializer.SFSDataSerializer)
+extern class DefaultSFSDataSerializer
+{
+	static var instance:DefaultSFSDataSerializer;
+
+	inline static function getInstance():DefaultSFSDataSerializer
+	{
+		return instance;
+	}
+	function object2binary(o:Dynamic):ByteArray;
+	function binary2object(b:ByteArray):Dynamic;
+}
+#else
+**/
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
@@ -8,8 +25,6 @@ import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSCodecError;
 import openfl.utils.Endian;
-
-import flash.utils.ByteArray;
 
 /** @private */
 class DefaultSFSDataSerializer implements ISFSDataSerializer
@@ -56,18 +71,20 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function obj2bin(obj:ISFSObject, buffer:ByteArray):ByteArray
 	{
-		var keys:Array<Dynamic> = obj.getKeys();
+		var keys:Array<String> = obj.getKeys();
 		var wrapper:SFSDataWrapper;
 		
 		for(key in keys)
 		{
 			wrapper = obj.getData(key);
-
 			// Store the key
 			buffer = encodeSFSObjectKey(buffer, key);
-			
 			// Convert 2 binary
+			#if html5
+			buffer = encodeObject(buffer, wrapper.type, wrapper.value);
+			#else
 			buffer = encodeObject(buffer, wrapper.type, wrapper.data);
+			#end
 		}
 		
 		return buffer;
