@@ -19,9 +19,9 @@ extern class SFSObject
 	function getInt(key:String):Int;
 	function getIntArray(key:String):Array<Int>;
 	function getKeysArray():Array<String>;
-	function getLong(key:String):Int;
+	function getLong(key:String):Float;
 
-	function getLongArray(key:String):Array<Int>;
+	function getLongArray(key:String):Array<Float>;
 	function getSFSArray(key:String):SFSArray;
 	function getSFSObject(key:String):SFSObject;
 	function getShort(key:String):Int;
@@ -42,8 +42,8 @@ extern class SFSObject
 	function putFloatArray(key:String, array:Array<Float>):Void;
 	function putInt(key:String, value:Int):Void;
 	function putIntArray(key:String, array:Array<Int>):Void;
-	function putLong(key:String, value:Int):Void;
-	function putLongArray(key:String, array:Array<Int>):Void;
+	function putLong(key:String, value:Float):Void;
+	function putLongArray(key:String, array:Array<Float>):Void;
 	function putNull(key:String):Void;
 	function putSFSArray(key:String, value:SFSArray):Void;
 	function putSFSObject(key:String, value:SFSObject):Void;

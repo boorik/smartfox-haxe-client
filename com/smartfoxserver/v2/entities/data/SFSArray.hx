@@ -21,9 +21,9 @@ extern class SFSArray
 	function getInt(index:Int):Int;
 	function getIntArray(index:Int):Array<Int>;
 	function getKeysArray():Array<String>;
-	function getLong(index:Int):Int;
+	function getLong(index:Int):Float;
 
-	function getLongArray(index:Int):Array<Int>;
+	function getLongArray(index:Int):Array<Float>;
 	function getSFSArray(index:Int):SFSArray;
 	function getSFSObject(index:Int):SFSObject;
 	function getShort(index:Int):Int;
@@ -43,8 +43,8 @@ extern class SFSArray
 	function addFloatArray(array:Array<Float>):Void;
 	function addInt(value:Int):Void;
 	function addIntArray(array:Array<Int>):Void;
-	function addLong(value:Int):Void;
-	function addLongArray(array:Array<Int>):Void;
+	function addLong(value:Float):Void;
+	function addLongArray(array:Array<Float>):Void;
 	function addNull():Void;
 	function addSFSArray(value:SFSArray):Void;
 	function addSFSObject(value:SFSObject):Void;
