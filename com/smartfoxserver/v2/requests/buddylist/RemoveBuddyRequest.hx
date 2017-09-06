@@ -1,5 +1,10 @@
 package com.smartfoxserver.v2.requests.buddylist;
-
+#if html5
+@:native('SFS2X.RemoveBuddyRequest')
+extern class RemoveBuddyRequest{
+	public function new(buddyName:String);
+}
+#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.BaseRequest;
@@ -85,3 +90,4 @@ class RemoveBuddyRequest extends BaseRequest
 		_sfso.putUtfString(KEY_BUDDY_NAME, _name);
 	}
 }
+#end
