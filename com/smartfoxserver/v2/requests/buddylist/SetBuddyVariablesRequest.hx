@@ -1,9 +1,15 @@
 package com.smartfoxserver.v2.requests.buddylist;
-
+import com.smartfoxserver.v2.entities.variables.BuddyVariable;
+#if html5
+@:native('SFS2X.SetBuddyVariablesRequest')
+extern class SetBuddyVariablesRequest{
+	public function new(buddyVariables:Array<BuddyVariable>);
+}
+#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.SFSArray;
-import com.smartfoxserver.v2.entities.variables.BuddyVariable;
+
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.BaseRequest;
 
@@ -133,3 +139,4 @@ class SetBuddyVariablesRequest extends BaseRequest
 		_sfso.putSFSArray(KEY_BUDDY_VARS, varList);
 	}
 }
+#end

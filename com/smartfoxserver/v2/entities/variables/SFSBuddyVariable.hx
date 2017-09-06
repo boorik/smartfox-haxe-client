@@ -1,5 +1,18 @@
 package com.smartfoxserver.v2.entities.variables;
-
+#if html5
+@:native('SFS2X.SFSBuddyVariable')
+extern class SFSBuddyVariable
+{
+	static OFFLINE_PREFIX:String;
+	var isNull(default,null):Bool;
+	var isOffline(default,null):Bool;
+	var name(default,null):String;
+	var type(default,null):Int;
+	var value(default,null):Dynamic;
+	function new(name:String, value:Dynamic, type:Int=-1);
+	function toString():String;
+}
+#else
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
@@ -240,3 +253,4 @@ class SFSBuddyVariable implements BuddyVariable
 		}
 	}
 }
+#end
