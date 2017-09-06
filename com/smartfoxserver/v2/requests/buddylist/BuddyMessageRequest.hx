@@ -63,9 +63,10 @@ class BuddyMessageRequest extends GenericMessageRequest
 	 */
 	public function new(message:String, targetBuddy:Buddy, params:ISFSObject=null)
 	{
-		_type=GenericMessageType.BUDDY_MSG
-		_message=message
-		_recipient=targetBuddy !=null ? targetBuddy.id:-1
-		_params=params
+		super();
+		_type = GenericMessageType.BUDDY_MSG;
+		_message = message;
+		_recipient = targetBuddy != null ? targetBuddy.id: -1;
+		_params = params;
 	}
 }
