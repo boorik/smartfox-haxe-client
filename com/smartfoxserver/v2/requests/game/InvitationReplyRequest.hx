@@ -1,8 +1,14 @@
 package com.smartfoxserver.v2.requests.game;
 
-import com.smartfoxserver.v2.SmartFox;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.invitation.Invitation;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
+#if html5
+@:native('SFS2X.InvitationReplyRequest')
+extern class InvitationReplyRequest{
+	public function new(invitation:Invitation, invitationReply:Float, params:ISFSObject=null);
+}
+#else
+import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.BaseRequest;
 
@@ -100,3 +106,4 @@ class InvitationReplyRequest extends BaseRequest
 			_sfso.putSFSObject(KEY_INVITATION_PARAMS, _params);
 	}
 }
+#end

@@ -4,8 +4,8 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 #if html5
-@:native('SFS2X.SetBuddyVariablesRequest')
-extern class SetBuddyVariablesRequest{
+@:native('SFS2X.SFSInvitation')
+extern class SFSInvitation{
 	var id(default,null):Int;
 	var invitee(default,null):User;
 	var inviter(default,null):User;
