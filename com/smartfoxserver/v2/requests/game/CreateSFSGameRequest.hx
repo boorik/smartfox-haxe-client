@@ -1,5 +1,12 @@
 package com.smartfoxserver.v2.requests.game;
 
+import com.smartfoxserver.v2.requests.game.SFSGameSettings;
+#if html5
+@:native('SFS2X.CreateSFSGameRequest')
+extern class CreateSFSGameRequest{
+	public function new(settings:SFSGameSettings);
+}
+#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.entities.User;
@@ -67,37 +74,37 @@ import com.smartfoxserver.v2.requests.CreateRoomRequest;
 class CreateSFSGameRequest extends BaseRequest
 {
 	/** @private */
-	public static inline var KEY_IS_PUBLIC:String="gip"
+	public static inline var KEY_IS_PUBLIC:String = "gip";
 	
 	/** @private */
-	public static inline var KEY_MIN_PLAYERS:String="gmp"
+	public static inline var KEY_MIN_PLAYERS:String = "gmp";
 	
 	/** @private */
-	public static inline var KEY_INVITED_PLAYERS:String="ginp"
+	public static inline var KEY_INVITED_PLAYERS:String = "ginp";
 	
 	/** @private */
-	public static inline var KEY_SEARCHABLE_ROOMS:String="gsr"
+	public static inline var KEY_SEARCHABLE_ROOMS:String = "gsr";
 	
 	/** @private */
-	public static inline var KEY_PLAYER_MATCH_EXP:String="gpme"
+	public static inline var KEY_PLAYER_MATCH_EXP:String = "gpme";
 	
 	/** @private */
-	public static inline var KEY_SPECTATOR_MATCH_EXP:String="gsme"
+	public static inline var KEY_SPECTATOR_MATCH_EXP:String = "gsme";
 	
 	/** @private */
-	public static inline var KEY_INVITATION_EXPIRY:String="gie"
+	public static inline var KEY_INVITATION_EXPIRY:String = "gie";
 	
 	/** @private */
-	public static inline var KEY_LEAVE_ROOM:String="glr"
+	public static inline var KEY_LEAVE_ROOM:String = "glr";
 	
 	/** @private */
-	public static inline var KEY_NOTIFY_GAME_STARTED:String="gns"
+	public static inline var KEY_NOTIFY_GAME_STARTED:String = "gns";
 	
 	/** @private */
 	public static inline var KEY_INVITATION_PARAMS:String="ip";
 	
-	private var _createRoomRequest:CreateRoomRequest
-	private var _settings:SFSGameSettings
+	private var _createRoomRequest:CreateRoomRequest;
+	private var _settings:SFSGameSettings;
 	
 	/**
 	 * Creates a new<em>CreateSFSGameRequest</em>instance.
@@ -110,79 +117,80 @@ class CreateSFSGameRequest extends BaseRequest
 	 */
 	public function new(settings:SFSGameSettings)
 	{
-		super(BaseRequest.CreateSFSGame)
-		_settings=settings
-		_createRoomRequest=new CreateRoomRequest(settings, false, null)
+		super(BaseRequest.CreateSFSGame);
+		_settings = settings;
+		_createRoomRequest = new CreateRoomRequest(settings, false, null);
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<String> = [];
 		
 		// First validate Room settings
 		try
 		{
-			_createRoomRequest.validate(sfs)
+			_createRoomRequest.validate(sfs);
 		}
 		catch(err:SFSValidationError)
 		{
 			// Take the current errors and continue checking...
-			errors=err.errors	
+			errors = err.errors	;
 		}
 		
 		if(_settings.minPlayersToStartGame>_settings.maxUsers)
-			errors.push("minPlayersToStartGame cannot be greater than maxUsers")
+			errors.push("minPlayersToStartGame cannot be greater than maxUsers");
 			
-		if(_settings.invitationExpiryTime<InviteUsersRequest.MIN_EXPIRY_TIME || _settings.invitationExpiryTime>InviteUsersRequest.MAX_EXPIRY_TIME)
-			errors.push("Expiry time value is out of range(" + InviteUsersRequest.MIN_EXPIRY_TIME + "-" + InviteUsersRequest.MAX_EXPIRY_TIME + ")")
+		if(_settings.invitationExpiryTime < InviteUsersRequest.MIN_EXPIRY_TIME || _settings.invitationExpiryTime > InviteUsersRequest.MAX_EXPIRY_TIME)
+			errors.push("Expiry time value is out of range(" + InviteUsersRequest.MIN_EXPIRY_TIME + "-" + InviteUsersRequest.MAX_EXPIRY_TIME + ")");
 					
 		if(_settings.invitedPlayers !=null && _settings.invitedPlayers.length>InviteUsersRequest.MAX_INVITATIONS_FROM_CLIENT_SIDE)
-			errors.push("Cannot invite more than " + InviteUsersRequest.MAX_INVITATIONS_FROM_CLIENT_SIDE + " players from client side")
+			errors.push("Cannot invite more than " + InviteUsersRequest.MAX_INVITATIONS_FROM_CLIENT_SIDE + " players from client side");
 					
 		if(errors.length>0)
-			throw new SFSValidationError("CreateSFSGameRoom request error", errors)
+			throw new SFSValidationError("CreateSFSGameRoom request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
 		// Execute the parent Request and grab the populated SFSObject
-		_createRoomRequest.execute(sfs)
-		_sfso=_createRoomRequest.getMessage().content
+		_createRoomRequest.execute(sfs);
+		_sfso = _createRoomRequest.getMessage().content;
 		
 		// Proceed populating the other fields in the child class
-		_sfso.putBool(KEY_IS_PUBLIC, _settings.isPublic)
-		_sfso.putShort(KEY_MIN_PLAYERS, _settings.minPlayersToStartGame)
-		_sfso.putShort(KEY_INVITATION_EXPIRY, _settings.invitationExpiryTime)
-		_sfso.putBool(KEY_LEAVE_ROOM, _settings.leaveLastJoinedRoom)
-		_sfso.putBool(KEY_NOTIFY_GAME_STARTED, _settings.notifyGameStarted)
+		_sfso.putBool(KEY_IS_PUBLIC, _settings.isPublic);
+		_sfso.putShort(KEY_MIN_PLAYERS, _settings.minPlayersToStartGame);
+		_sfso.putShort(KEY_INVITATION_EXPIRY, _settings.invitationExpiryTime);
+		_sfso.putBool(KEY_LEAVE_ROOM, _settings.leaveLastJoinedRoom);
+		_sfso.putBool(KEY_NOTIFY_GAME_STARTED, _settings.notifyGameStarted);
 		
 		if(_settings.playerMatchExpression !=null)
-			_sfso.putSFSArray(KEY_PLAYER_MATCH_EXP, _settings.playerMatchExpression.toSFSArray())
+			_sfso.putSFSArray(KEY_PLAYER_MATCH_EXP, _settings.playerMatchExpression.toSFSArray());
 			
 		if(_settings.spectatorMatchExpression !=null)
-			_sfso.putSFSArray(KEY_SPECTATOR_MATCH_EXP, _settings.spectatorMatchExpression.toSFSArray())
+			_sfso.putSFSArray(KEY_SPECTATOR_MATCH_EXP, _settings.spectatorMatchExpression.toSFSArray());
 		
 		// Invited players
 		if(_settings.invitedPlayers !=null)
 		{
-			var playerIds:Array<Dynamic>=[]
+			var playerIds:Array<Int> = [];
 			
-			for(var player:Dynamic in _settings.invitedPlayers)
+			for(player in _settings.invitedPlayers)
 			{
-				if(Std.is(player, User) || player is Buddy)
-					playerIds.push(player.id)
+				if(Std.is(player, User) || Std.is(player,Buddy))
+					playerIds.push(player.id);
 			} 
-			_sfso.putIntArray(KEY_INVITED_PLAYERS, playerIds)
+			_sfso.putIntArray(KEY_INVITED_PLAYERS, playerIds);
 		}
 		
 		// Searchable rooms
 		if(_settings.searchableRooms !=null)
-			_sfso.putUtfStringArray(KEY_SEARCHABLE_ROOMS, _settings.searchableRooms)
+			_sfso.putUtfStringArray(KEY_SEARCHABLE_ROOMS, _settings.searchableRooms);
 			
 		// Invitation params
 		if(_settings.invitationParams !=null)
-			_sfso.putSFSObject(KEY_INVITATION_PARAMS, _settings.invitationParams)
+			_sfso.putSFSObject(KEY_INVITATION_PARAMS, _settings.invitationParams);
 	}
 }
+#end

@@ -2,6 +2,24 @@ package com.smartfoxserver.v2.requests.game;
 
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.match.MatchExpression;
+import com.smartfoxserver.v2.entities.User;
+
+#if html5
+@:native('SFS2X.SFSGameSettings')
+extern class SFSGameSettings{
+	var invitationExpiryTime:Float;
+	var invitationParams:ISFSObject;
+	var invitedPlayers:Array<User>;
+	var isPublic:Bool;
+	var leaveLastJoinedRoom:Bool;
+	var minPlayersToStartGame:Int;
+	var notifyGameStarted:Bool;
+	var playerMatchExpression:MatchExpression;
+	var searchableRooms:Array<String>;
+	var spectatorMatchExpression:MatchExpression;
+	public function new(name:String);
+}
+#else
 import com.smartfoxserver.v2.requests.RoomSettings;
 
 /**
@@ -16,16 +34,6 @@ import com.smartfoxserver.v2.requests.RoomSettings;
  */
 class SFSGameSettings extends RoomSettings
 {
-	private var _isPublic:Bool;
-	private var _minPlayersToStartGame:Int;
-	private var _invitedPlayers:Array;
-	private var _searchableRooms:Array;
-	private var _playerMatchExpression:MatchExpression;
-	private var _spectatorMatchExpression:MatchExpression;
-	private var _invitationExpiryTime:Int;
-	private var _leaveLastJoinedRoom:Bool;
-	private var _notifyGameStarted:Bool;
-	private var _invitationParams:ISFSObject;
 
 
 	/**
@@ -40,10 +48,10 @@ class SFSGameSettings extends RoomSettings
 	{
 		super(name);
 		
-		_isPublic=true;
-		_minPlayersToStartGame=2;
-		_invitationExpiryTime=15;
-		_leaveLastJoinedRoom=true;
+		isPublic=true;
+		minPlayersToStartGame=2;
+		invitationExpiryTime=15;
+		leaveLastJoinedRoom=true;
 	}
 	
 	/**
@@ -56,12 +64,7 @@ class SFSGameSettings extends RoomSettings
 	 * @see		#playerMatchExpression
 	 * @see		#invitedPlayers
 	 */
-	public var isPublic(get_isPublic, set_isPublic):Bool;
- 	private function get_isPublic():Bool
-	{
-		return _isPublic;
-	}
-	
+	public var isPublic:Bool;
 	/**
 	 * Defines the minimum number of players required to start the game.
 	 * If the<em>notifyGameStarted</em>property is set to<code>true</code>, when this number is reached, the game start is notified.
@@ -70,11 +73,7 @@ class SFSGameSettings extends RoomSettings
 	 * 
 	 * @see		#notifyGameStarted
 	 */
-	public var minPlayersToStartGame(get_minPlayersToStartGame, set_minPlayersToStartGame):Int;
- 	private function get_minPlayersToStartGame():Int
-	{
-		return _minPlayersToStartGame;
-	}
+	public var minPlayersToStartGame:Int = 2;
 	
 	/**
 	 * In private games, defines a list of<em>User</em>objects representing players to be invited to join the game.
@@ -92,11 +91,7 @@ class SFSGameSettings extends RoomSettings
 	 * @see 	#playerMatchExpression
 	 * @see		com.smartfoxserver.v2.entities.User
 	 */
-	public var invitedPlayers(get_invitedPlayers, set_invitedPlayers):Array;
- 	private function get_invitedPlayers():Array
-	{
-		return _invitedPlayers;
-	}
+	public var invitedPlayers:Array<User>;
 	
 	/**
 	 * In private games, defines a list of Groups names where to search players to invite.
@@ -112,11 +107,7 @@ class SFSGameSettings extends RoomSettings
 	 * @see		#minPlayersToStartGame
 	 * @see 	#playerMatchExpression
 	 */
-	public var searchableRooms(get_searchableRooms, set_searchableRooms):Array;
- 	private function get_searchableRooms():Array
-	{
-		return _searchableRooms;
-	}
+	public var searchableRooms:Array<String>;
 	
 	/**
 	 * In private games, defines the number of seconds that the users invited to join the game have to reply to the invitation.
@@ -124,11 +115,7 @@ class SFSGameSettings extends RoomSettings
 	 * 
 	 * @default	15
 	 */
-	public var invitationExpiryTime(get_invitationExpiryTime, set_invitationExpiryTime):Int;
- 	private function get_invitationExpiryTime():Int
-	{
-		return _invitationExpiryTime; 
-	}
+	public var invitationExpiryTime:Int = 15;
 	
 	/**
 	 * In private games, indicates whether the players must leave the previous Room when joining the game or not.
@@ -138,11 +125,7 @@ class SFSGameSettings extends RoomSettings
 	 * 
 	 * @default	true
 	 */
-	public var leaveLastJoinedRoom(get_leaveLastJoinedRoom, set_leaveLastJoinedRoom):Bool;
- 	private function get_leaveLastJoinedRoom():Bool
-	{
-		return _leaveLastJoinedRoom;
-	}
+	public var leaveLastJoinedRoom:Bool = true;
 	
 	/**
 	 * Indicates if a game state change must be notified when the minimum number of players is reached.
@@ -160,11 +143,7 @@ class SFSGameSettings extends RoomSettings
 	 * @see		com.smartfoxserver.v2.SmartFox#event:roomVariablesUpdate roomVariablesUpdate event
 	 * @see		com.smartfoxserver.v2.entities.variables.SFSRoomVariable
 	 */
-	public var notifyGameStarted(get_notifyGameStarted, set_notifyGameStarted):Bool;
- 	private function get_notifyGameStarted():Bool
-	{
-		return _notifyGameStarted;
-	}
+	public var notifyGameStarted:Bool;
 	
 	/**
 	 * Defines the game matching expression to be used to filters players.
@@ -184,11 +163,7 @@ class SFSGameSettings extends RoomSettings
 	 * @see 	#invitedPlayers
 	 * @see 	#searchableRooms
 	 */ 
-	public var playerMatchExpression(get_playerMatchExpression, set_playerMatchExpression):MatchExpression;
- 	private function get_playerMatchExpression():MatchExpression
-	{
-		return _playerMatchExpression;
-	}
+	public var playerMatchExpression:MatchExpression;
 	
 	/**
 	 * Defines the game matching expression to be used to filters spectators.
@@ -199,11 +174,7 @@ class SFSGameSettings extends RoomSettings
 	 * 
 	 * @see 	#playerMatchExpression
 	 */ 
-	public var spectatorMatchExpression(get_spectatorMatchExpression, set_spectatorMatchExpression):MatchExpression;
- 	private function get_spectatorMatchExpression():MatchExpression
-	{
-		return _spectatorMatchExpression;
-	}
+	public var spectatorMatchExpression:MatchExpression;
 	
 	/**
 	 * In private games, defines an optional object containing additional custom parameters to be sent together with the invitation.
@@ -213,70 +184,8 @@ class SFSGameSettings extends RoomSettings
 	 * @default	null
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
-	 */ 
-	public var invitationParams(get_invitationParams, set_invitationParams):ISFSObject;
- 	private function get_invitationParams():ISFSObject
-	{
-		return _invitationParams;
-	}
+	 */
+	public var invitationParams:ISFSObject;
 	
-	/** @private */
-	private function set_isPublic(value:Bool):Void
-	{
-		_isPublic=value;
-	}
-	
-	/** @private */
-	private function set_minPlayersToStartGame(value:Int):Void
-	{
-		_minPlayersToStartGame=value;
-	}
-	
-	/** @private */
-	private function set_invitedPlayers(value:Array):Void
-	{
-		_invitedPlayers=value;
-	}
-	
-	/** @private */
-	private function set_searchableRooms(value:Array):Void
-	{
-		_searchableRooms=value;
-	}
-	
-	/** @private */
-	private function set_invitationExpiryTime(value:Int):Void
-	{
-		_invitationExpiryTime=value;
-	}
-	
-	/** @private */
-	private function set_leaveLastJoinedRoom(value:Bool):Void
-	{
-		_leaveLastJoinedRoom=value;
-	}
-	
-	/** @private */
-	private function set_notifyGameStarted(value:Bool):Void
-	{
-		_notifyGameStarted=value;
-	}
-	
-	/** @private */
-	private function set_playerMatchExpression(value:MatchExpression):Void
-	{
-		_playerMatchExpression=value;
-	}
-	
-	/** @private */
-	private function set_spectatorMatchExpression(value:MatchExpression):Void
-	{
-		_spectatorMatchExpression=value;
-	}
-	
-	/** @private */
-	private function set_invitationParams(value:ISFSObject):Void
-	{
-		_invitationParams=value;
-	}
 }
+#end
