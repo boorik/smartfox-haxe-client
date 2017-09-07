@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.requests;
 #if html5
-@:native('SFS2X.RoomEvents')
-extern class RoomEvents{
+@:native('SFS2X.RoomExtension')
+extern class RoomExtension{
 	var id:String;
 	var className:String;
 	var propertiesFile:String;
