@@ -1,9 +1,14 @@
 package com.smartfoxserver.v2.requests;
-
+import com.smartfoxserver.v2.entities.variables.UserVariable;
+#if html5
+@:native('SFS2X.SetUserVariablesRequest')
+extern class SetUserVariablesRequest{
+	function new(userVariables:Array<UserVariable>);
+}
+#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.SFSArray;
-import com.smartfoxserver.v2.entities.variables.UserVariable;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 
 /**
@@ -98,3 +103,4 @@ class SetUserVariablesRequest extends BaseRequest
 		_sfso.putSFSArray(KEY_VAR_LIST, varList);
 	}
 }
+#end
