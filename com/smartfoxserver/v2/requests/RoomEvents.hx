@@ -1,5 +1,14 @@
 package com.smartfoxserver.v2.requests;
-
+#if html5
+@:native('SFS2X.RoomEvents')
+extern class RoomEvents{
+	var allowUserCountChange:Bool;
+	var allowUserEnter:Bool;
+	var allowUserExit:Bool;
+	var allowUserVariablesUpdate:Bool;
+	function new();
+}
+#else
 /**
  * The<em>RoomEvents</em>class contains a specific subset of the<em>RoomSettings</em>required to create a Room.
  * It defines which events related to the Room will be fired by the<em>SmartFox</em>client.
@@ -104,3 +113,4 @@ class RoomEvents
 		return _allowUserVariablesUpdate = value;
 	}
 }
+#end
