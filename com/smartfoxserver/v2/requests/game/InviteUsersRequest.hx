@@ -1,11 +1,15 @@
 package com.smartfoxserver.v2.requests.game;
-
+import com.smartfoxserver.v2.entities.User;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
+#if html5
+@:native('SFS2X.InviteUsersRequest')
+extern class InviteUsersRequest{
+	public function new(invitedUsers:Array<User>, secondsForAnswer:Int, params:ISFSObject=null);
+}
+#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Buddy;
-import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSArray;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
-import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.BaseRequest;
 
@@ -110,7 +114,7 @@ class InviteUsersRequest extends BaseRequest
 	 * @see		com.smartfoxserver.v2.entities.User User
 	 * @see		com.smartfoxserver.v2.entities.data.SFSObject SFSObject
 	 */
-	public function new(invitedUsers:Array<User>, secondsForAnswer:Int, params:ISFSObject)
+	public function new(invitedUsers:Array<User>, secondsForAnswer:Int, params:ISFSObject=null)
 	{
 		super(BaseRequest.InviteUser);
 		
@@ -127,10 +131,10 @@ class InviteUsersRequest extends BaseRequest
 		if(_invitedUsers==null || _invitedUsers.length<1)
 			errors.push("No invitation(s)to send");
 					
-		if(_invitedUsers.length>MAX_INVITATIONS_FROM_CLIENT_SIDE)
+		else if(_invitedUsers.length>MAX_INVITATIONS_FROM_CLIENT_SIDE)
 			errors.push("Too many invitations. Max allowed from client side is:" + MAX_INVITATIONS_FROM_CLIENT_SIDE);
 			
-		if(_secondsForAnswer<MIN_EXPIRY_TIME || _secondsForAnswer>MAX_EXPIRY_TIME)
+		else if(_secondsForAnswer<MIN_EXPIRY_TIME || _secondsForAnswer>MAX_EXPIRY_TIME)
 			errors.push("SecondsForAnswer value is out of range(" + MIN_EXPIRY_TIME + "-" + MAX_EXPIRY_TIME + ")");
 
 		if(errors.length>0)
@@ -166,3 +170,4 @@ class InviteUsersRequest extends BaseRequest
 			_sfso.putSFSObject(KEY_PARAMS, _params);
 	}
 }
+#end
