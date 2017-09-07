@@ -1,5 +1,5 @@
 package com.smartfoxserver.v2.requests;
-
+import com.smartfoxserver.v2.entities.match.MatchExpression;
 #if html5
 @:native('SFS2X.FindRoomsRequest')
 extern class FindRoomsRequest{
@@ -8,7 +8,7 @@ extern class FindRoomsRequest{
 #else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
-import com.smartfoxserver.v2.entities.match.*;
+
 
 /**
  * Retrieves a list of Rooms from the server which match the specified criteria.
