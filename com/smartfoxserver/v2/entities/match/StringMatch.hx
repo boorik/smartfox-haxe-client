@@ -46,7 +46,6 @@ class StringMatch implements IMatcher
 		return new StringMatch("endsWith");
 	}
 	
-	private var _symbol:String;
 	
 	/** @private */
 	function new(symbol:String)
@@ -54,20 +53,14 @@ class StringMatch implements IMatcher
 		if(lock)
 			throw "Cannot instantiate Enum!";
 			
-		_symbol = symbol;
+		this.symbol = symbol;
 	}
 	
 	/** @inheritDoc */
-	public var type(get_type, null):Int;
- 	private function get_type():Int
-	{
-		return TYPE_ID;
-	}
+	public var type:Int;
+
 	
 	/** @inheritDoc */
-	public var symbol(get_symbol, null):String;
- 	private function get_symbol():String
-	{
-		return _symbol;
-	}
+	public var symbol:String;
+
 }
