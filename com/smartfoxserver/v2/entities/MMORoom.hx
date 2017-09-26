@@ -1,6 +1,17 @@
 package com.smartfoxserver.v2.entities;
 
 import com.smartfoxserver.v2.entities.data.Vec3D;
+#if html5
+@:native('SFS2X.MMORoom')
+extern class MMORoom{
+	var defaultAOI:Vec3D;
+	var higherMapLimit:Vec3D;
+	var lowerMapLimit:Vec3D;
+	
+	function getMMOItem(id:Int):MMOItem;
+	function getMMOItems():Array<MMOItem>;
+}
+#else
 import com.smartfoxserver.v2.util.ArrayUtil;
 import haxe.ds.IntMap;
 
@@ -144,3 +155,4 @@ class MMORoom extends SFSRoom
 		_itemsById.remove(id);
 	}
 }
+#end
