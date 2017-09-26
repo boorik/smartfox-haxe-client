@@ -7,7 +7,12 @@ import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.BaseRequest;
-
+#if html5
+@:native('SFS2X.SetUserPositionRequest')
+extern class SetUserPositionRequest{
+	function new(pos:Vec3D, theRoom:Room=null):Void;
+}
+#else
 /**
  * Updates the User position inside an MMORoom.
  * 
@@ -105,3 +110,4 @@ class SetUserPositionRequest extends BaseRequest
 			_sfso.putIntArray(KEY_VEC3D, _pos.toIntArray());
 	}
 }
+#end
