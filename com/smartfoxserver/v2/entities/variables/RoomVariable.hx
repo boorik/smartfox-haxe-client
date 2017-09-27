@@ -1,5 +1,5 @@
 package com.smartfoxserver.v2.entities.variables;
-#html5
+#if html5
 import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
 typedef RoomVariable = SFSRoomVariable;
 #else

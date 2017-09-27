@@ -1,5 +1,5 @@
 package com.smartfoxserver.v2.requests;
-
+import com.smartfoxserver.v2.entities.Room;
 #if html5
 @:native('SFS2X.SpectatorToPlayerRequest')
 extern class SpectatorToPlayerRequest{
@@ -7,7 +7,6 @@ extern class SpectatorToPlayerRequest{
 }
 #else
 import com.smartfoxserver.v2.SmartFox;
-import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 
 /**

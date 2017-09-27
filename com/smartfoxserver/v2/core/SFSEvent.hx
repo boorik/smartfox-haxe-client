@@ -1701,5 +1701,17 @@ extern class SFSEvent implements Dynamic
 	//{
 		//return formatToString("SFSEvent", "type", "bubbles", "cancelable", "eventPhase", "params");
 	//}
+	
+	public var parameters(get, null):Dynamic;
+	function get_parameters():Dynamic 
+	{
+		return this.params;
+	}
+	#else
+	public var parameters(get, null):Dynamic;
+	inline function get_parameters():Dynamic 
+	{
+		return this;
+	}
 	#end
 }

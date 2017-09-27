@@ -6,9 +6,9 @@ import com.smartfoxserver.v2.requests.RoomSettings;
 extern class MMORoomSettings{
 	var defaultAOI:Vec3D;
 	var mapLimits:MapLimits;
-	var proximityListUpdateMillis:Float;
+	var proximityListUpdateMillis:Int;
 	var sendAOIEntryPoint:Bool=true;
-	var userMaxLimboSeconds:Float;
+	var userMaxLimboSeconds:Int;
 }
 #else
 
@@ -22,8 +22,8 @@ class MMORoomSettings extends RoomSettings
 {
 	private var _defaultAOI:Vec3D;
 	private var _mapLimits:MapLimits;
-	private var _userMaxLimboSeconds:Float=50;
-	private var _proximityListUpdateMillis:Float=250;
+	private var _userMaxLimboSeconds:Int=50;
+	private var _proximityListUpdateMillis:Int=250;
 	private var _sendAOIEntryPoint:Bool=true;
 	
 	/**
