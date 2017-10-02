@@ -1,18 +1,19 @@
 package com.smartfoxserver.v2.requests.mmo;
 
-import com.smartfoxserver.v2.SmartFox;
-import com.smartfoxserver.v2.entities.MMOItem;
-import com.smartfoxserver.v2.entities.MMORoom;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.data.Vec3D;
-import com.smartfoxserver.v2.exceptions.SFSValidationError;
-import com.smartfoxserver.v2.requests.BaseRequest;
+
 #if html5
 @:native('SFS2X.SetUserPositionRequest')
 extern class SetUserPositionRequest{
 	function new(pos:Vec3D, theRoom:Room=null):Void;
 }
 #else
+import com.smartfoxserver.v2.SmartFox;
+import com.smartfoxserver.v2.entities.MMOItem;
+import com.smartfoxserver.v2.entities.MMORoom;
+import com.smartfoxserver.v2.exceptions.SFSValidationError;
+import com.smartfoxserver.v2.requests.BaseRequest;
 /**
  * Updates the User position inside an MMORoom.
  * 
