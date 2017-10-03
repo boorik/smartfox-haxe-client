@@ -1,5 +1,7 @@
 package com.smartfoxserver.v2.entities;
-
+#if html5
+typedef User = SFSUser;
+#else
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.managers.IUserManager;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
@@ -262,3 +264,4 @@ interface User
 	 */
 	var aoiEntryPoint(get,set):Vec3D;
 }
+#end

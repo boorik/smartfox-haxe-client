@@ -255,8 +255,8 @@ class SFSUser implements User
 	/** @private */
 	private function set_userManager(manager:IUserManager):IUserManager
 	{
-		if(_userManager !=null)
-			throw new SFSError("Cannot re-assign the User Manager. Already set. User:" + this);
+		//if(_userManager !=null)
+		//	throw new SFSError("Cannot re-assign the User Manager. Already set. User:" + this);
 			
 		return _userManager = manager;
 	}
