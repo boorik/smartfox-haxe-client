@@ -3,7 +3,7 @@ package com.smartfoxserver.v2.entities.variables;
 @:native('SFS2X.SFSBuddyVariable')
 extern class SFSBuddyVariable
 {
-	static OFFLINE_PREFIX:String;
+	static var OFFLINE_PREFIX:String;
 	var isNull(default,null):Bool;
 	var isOffline(default,null):Bool;
 	var name(default,null):String;

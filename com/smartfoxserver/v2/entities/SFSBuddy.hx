@@ -13,7 +13,7 @@ extern class SFSBuddy
 
 	function containsVariable(varName:String):Bool;
 	function getOfflineVariables():Array<BuddyVariable>;
-	function getOnlineVariables()::Array<BuddyVariable>;
+	function getOnlineVariables():Array<BuddyVariable>;
 	function getVariable(varName:String):BuddyVariable;
 	function getVariables():Array<BuddyVariable>;
 	function toString():String;

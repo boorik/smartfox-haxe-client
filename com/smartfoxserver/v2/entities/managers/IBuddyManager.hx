@@ -1,5 +1,7 @@
 package com.smartfoxserver.v2.entities.managers;
-
+#if html5
+typedef IBuddyManager = SFSBuddyManager;
+#end
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.entities.variables.BuddyVariable;
 
@@ -201,3 +203,4 @@ interface IBuddyManager
 	/** @private */
 	function clearAll():Void;
 }
+#end
