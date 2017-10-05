@@ -7,6 +7,11 @@ import com.smartfoxserver.v2.entities.variables.BuddyVariable;
 #if html5
 @:native('SFS2X.SFSBuddyManager')
 extern class SFSBuddyManager{
+	public var buddyList(get_buddyList,null):Array<Buddy>;
+	inline function get_buddyList():Array<Buddy>
+	{
+		return getBuddyList();
+	}
 	var isInited:Bool;
 	function containsBuddy(name:String):Bool;
 	function getBuddyById(id:Int):Buddy;

@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.entities.managers;
 #if html5
 typedef IBuddyManager = SFSBuddyManager;
-#end
+#else
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.entities.variables.BuddyVariable;
 
