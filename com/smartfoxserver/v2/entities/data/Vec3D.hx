@@ -11,6 +11,9 @@ package com.smartfoxserver.v2.entities.data;
  @:native('SFS2X.Vec3D')
 extern class Vec3D
 {
+	var px:Float;
+	var py:Float;
+	var pz:Float;
 	function new(px:Float,px:Float,pz:Float=0,useFloats:Bool=false);
 }
 #else

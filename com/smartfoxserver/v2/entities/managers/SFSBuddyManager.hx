@@ -1,13 +1,39 @@
 package com.smartfoxserver.v2.entities.managers;
 
-import com.smartfoxserver.v2.SmartFox;
+
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.entities.variables.BuddyVariable;
+
+#if html5
+@:native('SFS2X.SFSBuddyManager')
+extern class SFSBuddyManager{
+	public var buddyList(get_buddyList,null):Array<Buddy>;
+	inline function get_buddyList():Array<Buddy>
+	{
+		return getBuddyList();
+	}
+	var isInited:Bool;
+	function containsBuddy(name:String):Bool;
+	function getBuddyById(id:Int):Buddy;
+	function getBuddyByName(name:String):Buddy;
+	function getBuddyByNickName(nickName:String):Buddy;
+	function getBuddyList():Array<Buddy>;
+	function getBuddyStates():Array<String>;
+	function getMyNickName():String;
+	function getMyOnlineState():Bool;
+	function getMyState():String;
+	function getMyVariable(varName:String):BuddyVariable;
+	function getMyVariables():Array<BuddyVariable>;
+	function getOfflineBuddies():Array<Buddy>;
+	function getOnlineBuddies():Array<Buddy>;
+}
+#else
+
+import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.variables.ReservedBuddyVariables;
 import com.smartfoxserver.v2.entities.variables.SFSBuddyVariable;
 import com.smartfoxserver.v2.util.ArrayUtil;
 import haxe.ds.StringMap;
-
 /**
  * The<em>SFSBuddyManager</em>class is the entity in charge of managing the current user's<b>Buddy List</b>system.
  * It keeps track of all the user's buddies, their state and their Buddy Variables.
@@ -273,3 +299,4 @@ class SFSBuddyManager implements IBuddyManager
 		_buddyStates = states;
 	}
 }
+#end

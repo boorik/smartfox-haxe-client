@@ -1,6 +1,7 @@
 package com.smartfoxserver.v2.core;
-
+#if !html5
 import flash.events.Event;
+#end
 
 /**
  *<em>SFSBuddyEvent</em>is the class representing all the events related to the Buddy List system dispatched by the SmartFoxServer 2X ActionScript 3 API.
@@ -9,7 +10,7 @@ import flash.events.Event;
  * 
  * @see 	SFSEvent
  */
-class SFSBuddyEvent extends BaseEvent
+#if html5 extern #end class SFSBuddyEvent #if !html5 extends BaseEvent #end
 {
 	/**
 	 * The<em>SFSBuddyEvent.BUDDY_LIST_INIT</em>constant defines the value of the<em>type</em>property of the event object for a<em>buddyListInit</em>event.
@@ -347,7 +348,7 @@ class SFSBuddyEvent extends BaseEvent
 	
 	//========================================================
 	
-	
+	#if !html5
 	/**
 	 * Creates a new<em>SFSBuddyEvent</em>instance.
 	 * 
@@ -369,6 +370,7 @@ class SFSBuddyEvent extends BaseEvent
 	{
 		return new SFSBuddyEvent(this.type, this.params);
 	}
+	#end
 	
 	/**
 	 * Generates a string containing all the properties of the<em>SFSBuddyEvent</em>object.

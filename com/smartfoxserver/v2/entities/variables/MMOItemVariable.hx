@@ -1,6 +1,17 @@
 package com.smartfoxserver.v2.entities.variables;
-
 import com.smartfoxserver.v2.entities.data.ISFSArray;
+#if html5
+@:native('SFS2X.MMOItemVariable')
+extern class MMOItemVariable{
+	var isNull:Bool;
+	var name:String;
+	var type:Dynamic;
+	var value:Dynamic;
+
+	function toString():String;
+}
+#else
+
 
 /**
  * The<em>MMOItemVariable</em>object represents a SmartFoxServer MMOItem Variable entity on the client.
@@ -28,7 +39,7 @@ class MMOItemVariable extends SFSUserVariable implements IMMOItemVariable
 	}
 	
 	/** @private */
-	public function new(name:String, value:Dynamic, type:Int=-1)
+	private function new(name:String, value:Dynamic, type:Int=-1)
 	{
 		super(name, value, type);
 	}
@@ -43,3 +54,4 @@ class MMOItemVariable extends SFSUserVariable implements IMMOItemVariable
 		return "[ItemVar:" + _name + ", type:" + _type + ", value:" + _value + "]";
 	}
 }
+#end

@@ -8,7 +8,7 @@
  */
 
 package com.smartfoxserver.v2;
-
+import com.smartfoxserver.v2.entities.managers.IBuddyManager;
 #if html5
 @:jsRequire("SFS2X")
 typedef ConfigObj = {
@@ -21,7 +21,7 @@ typedef ConfigObj = {
 @:native('SFS2X.SmartFox')
 extern class SmartFox
 {
-	public var buddyManager:Dynamic;
+	public var buddyManager:IBuddyManager;
 	public var config:Dynamic;
 	public var debug:Bool;
 	public var lastJoinedRoom:Dynamic;
@@ -63,7 +63,7 @@ import com.smartfoxserver.v2.core.SFSIOHandler;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
-import com.smartfoxserver.v2.entities.managers.IBuddyManager;
+
 import com.smartfoxserver.v2.entities.managers.IRoomManager;
 import com.smartfoxserver.v2.entities.managers.IUserManager;
 import com.smartfoxserver.v2.entities.managers.SFSBuddyManager;

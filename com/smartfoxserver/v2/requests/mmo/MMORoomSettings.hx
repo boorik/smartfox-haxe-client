@@ -1,7 +1,16 @@
 package com.smartfoxserver.v2.requests.mmo;
-
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.requests.RoomSettings;
+#if html5
+@:native('SFS2X.MMORoomSettings')
+extern class MMORoomSettings{
+	var defaultAOI:Vec3D;
+	var mapLimits:MapLimits;
+	var proximityListUpdateMillis:Int;
+	var sendAOIEntryPoint:Bool=true;
+	var userMaxLimboSeconds:Int;
+}
+#else
 
 /**
  * The<em>MMORoomSettings</em>class is a container for the settings required to create an MMORoom using the<em>CreateRoomRequest</em>request.
@@ -144,3 +153,4 @@ class MMORoomSettings extends RoomSettings
 		return _sendAOIEntryPoint=value;
 	}
 }
+#end

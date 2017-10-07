@@ -1,4 +1,6 @@
 package com.smartfoxserver.v2.entities.variables;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 #if html5
 @:native('SFS2X.SFSUserVariable')
 extern class SFSUserVariable
@@ -12,10 +14,43 @@ extern class SFSUserVariable
 	public function new(name:String, value:Dynamic, ?type:Dynamic);
 
 	function toString():String;		
+
+	inline public function getValue():Dynamic
+	{
+		return value;
+	}
+	
+	inline public function getBoolValue():Bool
+	{
+		return cast(value, Bool);
+	}
+	
+	inline public function getIntValue():Int
+	{
+		return cast(value, Int);	
+	}
+	
+	inline public function getDoubleValue():Float
+	{
+		return cast(value, Float);
+	}
+	
+	inline public function getStringValue():String
+	{
+		return cast(value, String);	
+	}
+	
+	inline public function getSFSObjectValue():ISFSObject
+	{
+		return cast(value, ISFSObject);
+	}
+	
+	inline public function getSFSArrayValue():ISFSArray
+	{
+		return cast(value, ISFSArray);
+	}
 }
 #else
-import com.smartfoxserver.v2.entities.data.ISFSArray;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.exceptions.SFSError;
 import Type;

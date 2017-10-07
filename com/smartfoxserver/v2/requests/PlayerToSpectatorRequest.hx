@@ -89,3 +89,4 @@ class PlayerToSpectatorRequest extends BaseRequest
 		_sfso.putInt(KEY_ROOM_ID, _room.id);
 	}
 }
+#end
