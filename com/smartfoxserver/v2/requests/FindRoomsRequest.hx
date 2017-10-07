@@ -1,8 +1,14 @@
 package com.smartfoxserver.v2.requests;
-
+import com.smartfoxserver.v2.entities.match.MatchExpression;
+#if html5
+@:native('SFS2X.FindRoomsRequest')
+extern class FindRoomsRequest{
+	public function new(expr:MatchExpression, groupId:String=null, limit:Int=0);
+}
+#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
-import com.smartfoxserver.v2.entities.match.*;
+
 
 /**
  * Retrieves a list of Rooms from the server which match the specified criteria.
@@ -96,3 +102,4 @@ class FindRoomsRequest extends BaseRequest
 			_sfso.putShort(KEY_LIMIT, _limit);
 	}
 }
+#end

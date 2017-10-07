@@ -12,6 +12,7 @@ import com.smartfoxserver.v2.logging.Logger;
 import com.smartfoxserver.v2.protocol.IProtocolCodec;
 import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
 import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
+import openfl.utils.Endian;
 
 import flash.errors.IOError;
 import flash.utils.ByteArray;
@@ -35,7 +36,7 @@ class SFSIOHandler implements IoHandler
 	public function new(bitSwarm:BitSwarmClient)
 	{
 		EMPTY_BUFFER = new ByteArray();
-		
+		EMPTY_BUFFER.endian = Endian.BIG_ENDIAN;
 		this.bitSwarm = bitSwarm;
 		this.log = bitSwarm.sfs.logger;
 		this.packetEncrypter = new DefaultPacketEncrypter(bitSwarm);
@@ -211,6 +212,7 @@ class SFSIOHandler implements IoHandler
 			log.debug('DataSize is ready:$dataSize bytes');
 			pendingPacket.header.expectedLen = dataSize;
 			pendingPacket.buffer = new ByteArray();
+			pendingPacket.buffer.endian = Endian.BIG_ENDIAN;
 			
 			// Next state
 			readState = PacketReadState.WAIT_DATA;
@@ -277,6 +279,7 @@ class SFSIOHandler implements IoHandler
 	private function resizeByteArray(array:ByteArray, pos:Int, len:Int):ByteArray
 	{
 		var newArray:ByteArray = new ByteArray();
+		newArray.endian = Endian.BIG_ENDIAN;
 		newArray.writeBytes(array, pos, len);
 		newArray.position = 0;
 		
@@ -287,6 +290,7 @@ class SFSIOHandler implements IoHandler
 	public function onDataWrite(message:IMessage):Void
 	{
 		var writeBuffer:ByteArray = new ByteArray();
+		writeBuffer.endian = Endian.BIG_ENDIAN;//fix for new openfl versions
 		var binData:ByteArray = message.content.toBinary();
 		var isCompressed:Bool = false;
 		var isEncrypted:Bool = false;
@@ -294,9 +298,9 @@ class SFSIOHandler implements IoHandler
 		// 1. Handle Compression
 		if (cast(binData.length,Int) > bitSwarm.compressionThreshold)
 		{
-			//trace("Before compression:" + binData.length)
+			//trace("Before compression:" + binData.length);
 			binData.compress();
-			//trace("After compression:" + binData.length)
+			//trace("After compression:" + binData.length);
 			isCompressed = true;
 		}	
 		
@@ -326,9 +330,11 @@ class SFSIOHandler implements IoHandler
 		// BlueBoxed flag is not implemented yet
 		var packetHeader:PacketHeader = new PacketHeader(isEncrypted, isCompressed, false, sizeBytes == INT_BYTE_SIZE);
 		
+		
+		trace("packetHeader:" + packetHeader.encode());
 		// 1. Write packet header byte
 		writeBuffer.writeByte(packetHeader.encode());
-		
+		trace(binData.length);
 		// 2. Write packet size
 		if(sizeBytes>SHORT_BYTE_SIZE)
 			writeBuffer.writeInt(binData.length);
@@ -362,7 +368,10 @@ class SFSIOHandler implements IoHandler
 			bitSwarm.socket.flush();
 			
 			if (bitSwarm.sfs.debug)
+			{
 				log.info("Data written:" + message.content.getHexDump());
+				trace(writeBuffer.length);
+			}
 		}
 		catch(error:IOError)
 		{

@@ -7,9 +7,9 @@ import com.smartfoxserver.v2.core.SFSEvent;
 import com.smartfoxserver.v2.entities.SFSConstants;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
-import com.smartfoxserver.v2.kernel;
 import com.smartfoxserver.v2.logging.Logger;
 import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
+import openfl.utils.Endian;
 
 import flash.errors.IOError;
 import flash.events.DatagramSocketDataEvent;
@@ -17,7 +17,7 @@ import flash.events.Event;
 import flash.events.IOErrorEvent;
 import flash.events.TimerEvent;
 import flash.net.DatagramSocket;
-import flash.utils.ByteArray<Dynamic>;
+import flash.utils.ByteArray;
 import flash.utils.Timer;
 	
 /**
@@ -169,7 +169,7 @@ class AirUDPManager implements IUDPManager
 		_log = sfs.logger;
 		
 		// Init packet encrypter only when we have a reference to SFS
-		packetEncrypter = new DefaultPacketEncrypter(sfs.kernel::socketEngine);
+		packetEncrypter = new DefaultPacketEncrypter();
 	}
 	
 	/**
@@ -221,7 +221,8 @@ class AirUDPManager implements IUDPManager
 		}
 		
 		// Grab the message body and deserialize it
-		var objBytes:ByteArray<Dynamic> = new ByteArray();
+		var objBytes:ByteArray= new ByteArray();
+		objBytes.endian = Endian.BIG_ENDIAN;
 		bytes.readBytes(objBytes, 0, bytes.bytesAvailable);
 		
 		// Handle encryption
@@ -271,7 +272,8 @@ class AirUDPManager implements IUDPManager
 		//var compress:Bool=false;
 		
 		// Assemble SFS2X packet
-		var writeBuffer:ByteArray<Dynamic>=new ByteArray();
+		var writeBuffer:ByteArray = new ByteArray();
+		writeBuffer.endian = Endian.BIG_ENDIAN;
 		
 		// Regular Header
 		writeBuffer.writeByte(0x80);

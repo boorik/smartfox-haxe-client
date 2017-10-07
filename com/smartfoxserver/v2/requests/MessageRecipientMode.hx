@@ -1,4 +1,19 @@
 package com.smartfoxserver.v2.requests;
+#if html5
+@:native('SFS2X.MessageRecipientMode')
+extern class MessageRecipientMode
+{
+	static var TO_GROUP:Int;
+	static var TO_ROOM:Int;
+	static var TO_USER:Int;
+	static var TO_ZONE:Int;
+
+	var mode(default,null):Int;
+	var target(default,null):Int;
+	function new(mode:Int, target:Dynamic);
+}
+#else
+
 import openfl.errors.ArgumentError;
 
 /**
@@ -80,3 +95,4 @@ class MessageRecipientMode
 		return _target;
 	}
 }
+#end

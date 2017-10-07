@@ -12,6 +12,7 @@ import com.smartfoxserver.v2.util.ConnectionMode;
 import com.smartfoxserver.v2.util.CryptoKey;
 import haxe.CallStack;
 import openfl.errors.ArgumentError;
+import openfl.utils.Endian;
 
 import openfl.errors.IllegalOperationError;
 import openfl.events.Event;
@@ -456,6 +457,7 @@ class BitSwarmClient extends EventDispatcher
 	private function onSocketData(evt:ProgressEvent):Void
 	{
 		var buffer:ByteArray = new ByteArray();
+		buffer.endian = Endian.BIG_ENDIAN;
 		try
 		{
 			

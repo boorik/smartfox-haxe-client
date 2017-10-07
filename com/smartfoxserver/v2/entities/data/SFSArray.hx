@@ -1,11 +1,15 @@
 package com.smartfoxserver.v2.entities.data;
 
+import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
 #if html5
 @:native('SFS2X.SFSArray')
 extern class SFSArray
 {
+	inline static function newInstance():SFSArray
+	{
+		return new SFSArray();
+	}
 	function new();
-
 	function contains(object:Dynamic):Bool;
 	function get(key:Dynamic):Dynamic;
 	function getBool(index:Int):Bool;
@@ -21,9 +25,9 @@ extern class SFSArray
 	function getInt(index:Int):Int;
 	function getIntArray(index:Int):Array<Int>;
 	function getKeysArray():Array<String>;
-	function getLong(index:Int):Int;
+	function getLong(index:Int):Float;
 
-	function getLongArray(index:Int):Array<Int>;
+	function getLongArray(index:Int):Array<Float>;
 	function getSFSArray(index:Int):SFSArray;
 	function getSFSObject(index:Int):SFSObject;
 	function getShort(index:Int):Int;
@@ -31,7 +35,18 @@ extern class SFSArray
 	function getText(index:Int):String;
 	function getUtfString(index:Int):String;
 	function getUtfStringArray(index:Int):Array<String>;
-	function put(key:String, value:Dynamic, typeId:Int):Void;
+	inline function getWrappedElementAt(index:Int):Dynamic
+	{
+		return getWrappedItem(index);
+	}
+	function getWrappedItem(index:Int):Dynamic;
+	@:overload(function (value:Dynamic, typeId:Int):Void{})
+	inline function add(data:SFSDataWrapper):Void
+	{
+		add(data.data,data.type);
+	}
+	
+
 	function addBool(value:Bool):Void;
 	function addBoolArray(array:Array<Bool>):Void;
 	function addByte(value:Int):Void;
@@ -43,8 +58,8 @@ extern class SFSArray
 	function addFloatArray(array:Array<Float>):Void;
 	function addInt(value:Int):Void;
 	function addIntArray(array:Array<Int>):Void;
-	function addLong(value:Int):Void;
-	function addLongArray(array:Array<Int>):Void;
+	function addLong(value:Float):Void;
+	function addLongArray(array:Array<Float>):Void;
 	function addNull():Void;
 	function addSFSArray(value:SFSArray):Void;
 	function addSFSObject(value:SFSObject):Void;
@@ -56,12 +71,15 @@ extern class SFSArray
 	function size():Int;
 	
 	function isNull(index:Int):Bool;
+	inline function toArray():Array<Dynamic>
+	{
+		return [];
+	}
 }
 
 #else
 import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
-import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
 import com.smartfoxserver.v2.protocol.serialization.ISFSDataSerializer;
 
 import flash.utils.ByteArray;

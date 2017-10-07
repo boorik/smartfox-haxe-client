@@ -35,7 +35,7 @@ class ProtocolExcerciser
 	private function generateTestPacket():Void
 	{
 		testPacket=new ByteArray();
-		
+		testPacket.endian = Endian.BIG_ENDIAN;
 		for(i in 0...testPacketData.length)
 		{
 			testPacket.writeByte(testPacketData[i])	
@@ -130,7 +130,8 @@ class ProtocolExcerciser
 		if(len<0)
 			len=testPacket.length - start;
 		
-		var ba:ByteArray<Dynamic>=new ByteArray();
+		var ba:ByteArray = new ByteArray();
+		ba.endian = Endian.BIG_ENDIAN;
 		ba.writeBytes(testPacket, start, len);
 		
 		return ba;

@@ -62,18 +62,17 @@ import com.smartfoxserver.v2.entities.data.SFSArray;
  */
 class MatchExpression
 {
-	private var _varName:String;
-	private var _condition:IMatcher;
-	private var _value:Dynamic;
 	
-	/** @private */
-	private var _logicOp:LogicOperator;
-	
-	/** @private */
-	private var _parent:MatchExpression;
-	
-	/** @private */
-	private var _next:MatchExpression;
+	//private var condition(default,null):IMatcher;
+	//private var value(default,null):Dynamic;
+	//
+	///** @private */
+	//private var _logicOp:LogicOperator;
+	//
+	public var parent:MatchExpression;
+	//
+	///** @private */
+	//private var _next:MatchExpression;
 	
 	/*
 	* Poor's man version of an overloaded constructor
@@ -82,8 +81,8 @@ class MatchExpression
 	static function chainedMatchExpression(varName:String, condition:IMatcher, value:Dynamic, logicOp:LogicOperator, parent:MatchExpression):MatchExpression
 	{
 		var matchingExpression:MatchExpression = new MatchExpression(varName, condition, value);
-		matchingExpression._logicOp = logicOp;
-		matchingExpression._parent = parent;
+		matchingExpression.logicOp = logicOp;
+		matchingExpression.parent = parent;
 		
 		return matchingExpression;
 	}
@@ -101,9 +100,9 @@ class MatchExpression
 	 */
 	public function new(varName:String, condition:IMatcher, value:Dynamic)
 	{
-		_varName = varName;
-		_condition = condition;
-		_value = value;
+		this.varName = varName;
+		this.condition = condition;
+		this.value = value;
 	}
 	
 	/**
@@ -122,8 +121,8 @@ class MatchExpression
 	 */
 	public function and(varName:String, condition:IMatcher, value:Dynamic):MatchExpression
 	{
-		_next = chainedMatchExpression(varName, condition, value, LogicOperator.AND(), this);
-		return _next;
+		this.next = chainedMatchExpression(varName, condition, value, LogicOperator.AND(), this);
+		return next;
 	}
 	
 	/**
@@ -142,8 +141,8 @@ class MatchExpression
 	 */
 	public function or(varName:String, condition:IMatcher, value:Dynamic):MatchExpression
 	{
-		_next = chainedMatchExpression(varName, condition, value, LogicOperator.OR(), this);
-		return _next;
+		this.next = chainedMatchExpression(varName, condition, value, LogicOperator.OR(), this);
+		return next;
 	}
 	
 	/**
@@ -160,11 +159,8 @@ class MatchExpression
 	 * @see		com.smartfoxserver.v2.entities.Room Room
 	 * @see		com.smartfoxserver.v2.entities.User User
 	 */
-	public var varName(get_varName, null):String;
- 	private function get_varName():String
-	{
-		return _varName;
-	}
+	public var varName(default, null):String;
+
 	
 	/**
 	 * Returns the matching criteria used during values comparison.
@@ -175,31 +171,19 @@ class MatchExpression
 	 * @see		NumberMatch
 	 * @see		StringMatch
 	 */
-	public var condition(get_condition, null):IMatcher;
- 	private function get_condition():IMatcher
-	{
-		return _condition;
-	}
+	public var condition(default, null):IMatcher;
 	
 	/**
 	 * Returns the value against which the variable or property corresponding to<em>varName</em>is compared.
 	 */
-	public var value(get_value, null):Dynamic;
- 	private function get_value():Dynamic
-	{
-		return _value;
-	}
+	public var value(default, null):Dynamic;
 	
 	/**
 	 * In case of concatenated expressions, returns the current logical operator.
 	 * 
 	 * @default null
 	 */
-	public var logicOp(get_logicOp, null):LogicOperator;
- 	private function get_logicOp():LogicOperator
-	{
-		return _logicOp;
-	}
+	public var logicOp:LogicOperator;
 	
 	/**
 	 * Checks if the current matching expression is concatenated to another one through a logical operator.
@@ -210,17 +194,13 @@ class MatchExpression
 	 */
 	public function hasNext():Bool
 	{
-		return _next != null;
+		return next != null;
 	}
 	
 	/**
 	 * Returns the next matching expression concatenated to the current one.
 	 */
-	public var next(get_next, null):MatchExpression;
- 	private function get_next():MatchExpression
-	{
-		return _next;
-	}
+	public var next(default, null):MatchExpression;
 	
 	/**
 	 * Moves the iterator cursor to the first matching expression in the chain.
@@ -234,8 +214,8 @@ class MatchExpression
 	
 		while(true)
 		{
-			if(currNode._parent !=null)
-				currNode = currNode._parent;
+			if(currNode.parent !=null)
+				currNode = currNode.parent;
 			else
 				break;
 		}
@@ -248,11 +228,11 @@ class MatchExpression
 	{
 		var sb:String = "";
 		
-		if(_logicOp !=null)
+		if(logicOp !=null)
 			sb += " " + logicOp.id + " ";
 			
 		sb += "(";
-		sb += _varName + " " + _condition.symbol + " " +(Std.is(value, String) ?("'" + value + "'"):value);
+		sb += varName + " " + condition.symbol + " " +(Std.is(value, String) ?("'" + value + "'"):value);
 		sb += ")";
 		
 		return sb;
@@ -301,29 +281,29 @@ class MatchExpression
 		var expr:ISFSArray = new SFSArray();
 	
 		// 0 ->Logic operator
-		if(_logicOp !=null)
-			expr.addUtfString(_logicOp.id);
+		if(logicOp !=null)
+			expr.addUtfString(logicOp.id);
 		else
 			expr.addNull();
 		
 		// 1 ->Var name
-		expr.addUtfString(_varName);
+		expr.addUtfString(varName);
 		
 		// 2 ->Matcher type
-		expr.addByte(_condition.type);
+		expr.addByte(condition.type);
 		
 		// 3 ->Condition symbol
-		expr.addUtfString(_condition.symbol);
+		expr.addUtfString(condition.symbol);
 		
 		// 4 ->Value to match against
-		if(_condition.type==0)
-			expr.addBool(_value);
+		if(condition.type==0)
+			expr.addBool(value);
 			
-		else if(_condition.type==1)
-			expr.addDouble(_value);
+		else if(condition.type==1)
+			expr.addDouble(value);
 			
 		else
-			expr.addUtfString(_value);
+			expr.addUtfString(value);
 			
 		return expr;
 	}	

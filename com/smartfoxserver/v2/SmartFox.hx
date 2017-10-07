@@ -919,20 +919,16 @@ class SmartFox extends EventDispatcher
 	
 	// Client details passed to setClientDetails method
 	private var _clientDetails:String =
-	#if flash 
+	#if flash
  	"Flash"
-	#elseif android
- 	"Android"
-	#elseif windows
- 	"Windows"
 	#elseif neko
- 	"Neko"
-	#elseif ios
-	"IOS"
- 	#elseif linux
+	"Neko"
+	#elseif linux
 	"Linux"
+	#elseif windows
+	"Windows"
 	#else
-	"Unknown :)"
+	"Unknown"
 	#end
 	;	
 	

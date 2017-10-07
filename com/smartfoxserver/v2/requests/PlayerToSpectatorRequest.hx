@@ -1,7 +1,12 @@
 package com.smartfoxserver.v2.requests;
-
-import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
+#if html5
+@:native('SFS2X.PlayerToSpectatorRequest')
+extern class PlayerToSpectatorRequest{
+	public function new(targetRoom:Room=null);
+}
+#else
+import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 
 /**

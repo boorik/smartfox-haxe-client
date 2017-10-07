@@ -1,5 +1,22 @@
 package com.smartfoxserver.v2.protocol.serialization;
 
+import flash.utils.ByteArray;
+/*
+#if html5
+@native(_DataSerializer.SFSDataSerializer)
+extern class DefaultSFSDataSerializer
+{
+	static var instance:DefaultSFSDataSerializer;
+
+	inline static function getInstance():DefaultSFSDataSerializer
+	{
+		return instance;
+	}
+	function object2binary(o:Dynamic):ByteArray;
+	function binary2object(b:ByteArray):Dynamic;
+}
+#else
+**/
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
@@ -7,8 +24,7 @@ import com.smartfoxserver.v2.entities.data.SFSDataType;
 import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSCodecError;
-
-import flash.utils.ByteArray;
+import openfl.utils.Endian;
 
 /** @private */
 class DefaultSFSDataSerializer implements ISFSDataSerializer
@@ -46,6 +62,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	public function object2binary(obj:ISFSObject):ByteArray
 	{
 		var buffer:ByteArray = new ByteArray();
+		buffer.endian = Endian.BIG_ENDIAN;//fix for new openfl version
 		buffer.writeByte(SFSDataType.SFS_OBJECT);
 		buffer.writeShort(obj.size());
 		
@@ -54,18 +71,20 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	
 	private function obj2bin(obj:ISFSObject, buffer:ByteArray):ByteArray
 	{
-		var keys:Array<Dynamic> = obj.getKeys();
+		var keys:Array<String> = obj.getKeys();
 		var wrapper:SFSDataWrapper;
 		
 		for(key in keys)
 		{
 			wrapper = obj.getData(key);
-
 			// Store the key
 			buffer = encodeSFSObjectKey(buffer, key);
-			
 			// Convert 2 binary
+			#if html5
+			buffer = encodeObject(buffer, wrapper.type, wrapper.value);
+			#else
 			buffer = encodeObject(buffer, wrapper.type, wrapper.data);
+			#end
 		}
 		
 		return buffer;
@@ -78,6 +97,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	public function array2binary(array:ISFSArray):ByteArray
 	{
 		var buffer:ByteArray = new ByteArray();
+		buffer.endian = Endian.BIG_ENDIAN;
 		buffer.writeByte(SFSDataType.SFS_ARRAY);
 		buffer.writeShort(array.size());
 		
@@ -105,7 +125,6 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	{
 		if(data.length<3)
 			throw new SFSCodecError("Can't decode an SFSObject. Byte data is insufficient. Size:" + data.length + " byte(s)");
-		
 		data.position = 0;
 		return decodeSFSObject(data);
 	}
@@ -139,7 +158,6 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		 	{
 		 		// Decode object key
 		 		var key:String = buffer.readUTF();
-		 		
 		 		// Decode the next object
 		 		var decodedObject:SFSDataWrapper = decodeObject(buffer);
 		 		
@@ -509,7 +527,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			throw new SFSCodecError("Array negative size:" + size);
 		
 		var array:ByteArray = new ByteArray();
-		
+		array.endian = Endian.BIG_ENDIAN;
 		// copy bytes
 		buffer.readBytes(array, 0, size);
 		
@@ -617,6 +635,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_NULL(buffer:ByteArray):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(0x00);
 		
 		return addData(buffer, data);
@@ -625,6 +644,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_BOOL(buffer:ByteArray, value:Bool):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.BOOL);
 		data.writeBoolean(value);
 		
@@ -634,6 +654,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_BYTE(buffer:ByteArray, value:Int):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.BYTE);
 		data.writeByte(value);
 		
@@ -643,6 +664,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_SHORT(buffer:ByteArray, value:Int):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.SHORT);
 		data.writeShort(value);
 		
@@ -652,6 +674,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_INT(buffer:ByteArray, value:Int):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.INT);
 		data.writeInt(value);
 		
@@ -661,6 +684,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_LONG(buffer:ByteArray, value:Float):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.LONG);
 		encodeLongValue(value, data);
 		
@@ -670,6 +694,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_FLOAT(buffer:ByteArray, value:Float):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.FLOAT);
 		data.writeFloat(value);
 		
@@ -679,6 +704,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_DOUBLE(buffer:ByteArray, value:Float):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.DOUBLE);
 		data.writeDouble(value);
 		
@@ -688,6 +714,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_UTF_STRING(buffer:ByteArray, value:String):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.UTF_STRING);
 		data.writeUTF(value);
 		
@@ -697,6 +724,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_BOOL_ARRAY(buffer:ByteArray, value:Array<Bool>):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.BOOL_ARRAY);
 		data.writeShort(value.length);
 		
@@ -711,6 +739,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_BYTE_ARRAY(buffer:ByteArray, value:ByteArray):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.BYTE_ARRAY);
 		data.writeInt(value.length);
 		
@@ -722,6 +751,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_SHORT_ARRAY(buffer:ByteArray, value:Array<Int>):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.SHORT_ARRAY);
 		data.writeShort(value.length);
 		
@@ -736,6 +766,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_INT_ARRAY(buffer:ByteArray, value:Array<Int>):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.INT_ARRAY);
 		data.writeShort(value.length);
 		
@@ -750,6 +781,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_LONG_ARRAY(buffer:ByteArray, value:Array<Float>):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.LONG_ARRAY);
 		data.writeShort(value.length);
 		
@@ -764,6 +796,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_FLOAT_ARRAY(buffer:ByteArray, value:Array<Float>):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.FLOAT_ARRAY);
 		data.writeShort(value.length);
 		
@@ -778,6 +811,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_DOUBLE_ARRAY(buffer:ByteArray, value:Array<Float>):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.DOUBLE_ARRAY);
 		data.writeShort(value.length);
 		
@@ -792,6 +826,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 	private function binEncode_UTF_STRING_ARRAY(buffer:ByteArray, value:Array<String>):ByteArray
 	{
 		var data:ByteArray = new ByteArray();
+		data.endian = Endian.BIG_ENDIAN;
 		data.writeByte(SFSDataType.UTF_STRING_ARRAY);
 		data.writeShort(value.length);
 		

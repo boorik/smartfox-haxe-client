@@ -12,8 +12,8 @@ class SFSValidationError extends Error
 		_errors = errors;
 	}
 	
-	public var errors(get_errors, null):Array<Dynamic>;
- 	private function get_errors():Array<Dynamic>
+	public var errors(get_errors, null):Array<String>;
+ 	private function get_errors():Array<String>
 	{
 		return _errors;
 	}

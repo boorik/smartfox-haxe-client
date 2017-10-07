@@ -1,5 +1,10 @@
 package com.smartfoxserver.v2.requests.buddylist;
-
+#if html5
+@:native('SFS2X.GoOnlineRequest')
+extern class GoOnlineRequest{
+	public function new(online:Bool);
+}
+#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.BaseRequest;
@@ -97,3 +102,4 @@ class GoOnlineRequest extends BaseRequest
 		_sfso.putBool(KEY_ONLINE, _online);
 	}
 }
+#end

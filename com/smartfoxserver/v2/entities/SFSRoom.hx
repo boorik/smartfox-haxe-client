@@ -503,9 +503,10 @@ class SFSRoom implements Room
 	/** @private */
 	private function set_roomManager(value:IRoomManager):IRoomManager
 	{
+		/** THIS IS INSANE BECAUSE _roomManager is never null
 		if(_roomManager !=null)
 			throw new SFSError("Room manager already assigned. Room:" + this);
-			
+		**/
 		return _roomManager = value	;  
 	}
 	

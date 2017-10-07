@@ -82,6 +82,7 @@ class SystemController extends BaseController
 	
 	private function initRequestHandlers():Void
 	{
+	    trace("initRequestHandlers()");
 		// Request codes
 		requestHandlers.set(BaseRequest.Handshake, { name:"Handshake", handler:fnHandshake });
 		requestHandlers.set(BaseRequest.Login, { name:"Login", handler:fnLogin });
@@ -125,6 +126,7 @@ class SystemController extends BaseController
 	
 	public override function handleMessage(message:IMessage):Void
 	{
+	    trace("handleMessage : "+message.id);
 		var command:Dynamic = requestHandlers[message.id];
 			
 		if(command !=null)
@@ -653,6 +655,7 @@ class SystemController extends BaseController
 	
 	private function fnSubscribeRoomGroup(msg:IMessage):Void
 	{
+	    trace("function fnSubscribeRoomGroup "+sfso.isNull(BaseRequest.KEY_ERROR_CODE));
 		var sfso:ISFSObject = msg.content;
 		var evtParams:Dynamic = { };
 		
@@ -674,16 +677,19 @@ class SystemController extends BaseController
 			// Pass the new rooms that are present in the subscribed group
 			evtParams.newRooms = sfs.roomManager.getRoomListFromGroup(groupId);
 			
+			trace("dispatchEvent(new SFSEvent(SFSEvent.ROOM_GROUP_SUBSCRIBE");
 			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_GROUP_SUBSCRIBE, evtParams));
 		}
 		
 		//:::Failure:::::::::::::::::::::::::::::::::::::::::::::::::::::
 		else
 		{
+		trace("ERROR else");
 			var errorCd:Int = sfso.getShort(BaseRequest.KEY_ERROR_CODE);
 			var errorMsg:String = SFSErrorCodes.getErrorMessage(errorCd, sfso.getUtfStringArray(BaseRequest.KEY_ERROR_PARAMS));
 			evtParams = { errorMessage:errorMsg, errorCode:errorCd };
 			
+			trace("dispatchEvent(new SFSEvent(SFSEvent.ROOM_GROUP_SUBSCRIBE_ERROR");
 			sfs.dispatchEvent(new SFSEvent(SFSEvent.ROOM_GROUP_SUBSCRIBE_ERROR, evtParams));
 		}
 	}

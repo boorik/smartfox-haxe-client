@@ -1,6 +1,14 @@
 package com.smartfoxserver.v2.requests;
 
 import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.requests.MessageRecipientMode;
+#if html5
+@:native('SFS2X.ModeratorMessageRequest')
+extern class ModeratorMessageRequest
+{
+	public function new(message:String, recipientMode:MessageRecipientMode, params:ISFSObject=null):Void;
+}
+#else
 import openfl.errors.ArgumentError;
 
 /**
@@ -62,3 +70,4 @@ class ModeratorMessageRequest extends GenericMessageRequest
 		_sendMode = recipientMode.mode;
 	}
 }
+#end

@@ -1,8 +1,15 @@
 package com.smartfoxserver.v2.requests.game;
 
-import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.match.MatchExpression;
+#if html5
+@:native('SFS2X.QuickJoinGameRequest')
+extern class QuickJoinGameRequest{
+	public function new(matchExpression:MatchExpression, whereToSearch:Array<Room>, roomToLeave:Room=null);
+}
+#else
+import openfl.errors.ArgumentError;
+import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.BaseRequest;
 
@@ -40,23 +47,23 @@ import com.smartfoxserver.v2.requests.BaseRequest;
  */
 class QuickJoinGameRequest extends BaseRequest
 {
-	private static inline var MAX_ROOMS:Int=32
+	private static inline var MAX_ROOMS:Int = 32;
 	
 	/** @private */
-	public static inline var KEY_ROOM_LIST:String="rl"
+	public static inline var KEY_ROOM_LIST:String = "rl";
 	
 	/** @private */
-	public static inline var KEY_GROUP_LIST:String="gl"
+	public static inline var KEY_GROUP_LIST:String = "gl";
 	
 	/** @private */
-	public static inline var KEY_ROOM_TO_LEAVE:String="tl"
+	public static inline var KEY_ROOM_TO_LEAVE:String = "tl";
 	
 	/** @private */
-	public static inline var KEY_MATCH_EXPRESSION:String="me"
+	public static inline var KEY_MATCH_EXPRESSION:String = "me";
 	
-	private var _whereToSearch:Array
-	private var _matchExpression:MatchExpression
-	private var _roomToLeave:Room
+	private var _whereToSearch:Array<Dynamic>;
+	private var _matchExpression:MatchExpression;
+	private var _roomToLeave:Room;
 		
 	/*
 	* Due to the lack of constructor overloading in AS3 we allow the developer to pass
@@ -75,64 +82,65 @@ class QuickJoinGameRequest extends BaseRequest
 	 * @see		com.smartfoxserver.v2.SmartFox#send()SmartFox.send()
 	 * @see		com.smartfoxserver.v2.entities.Room Room
 	 */
-	public function new(matchExpression:MatchExpression, whereToSearch:Array, roomToLeave:Room=null)
+	public function new(matchExpression:MatchExpression, whereToSearch:Array<Dynamic>, roomToLeave:Room=null)
 	{
-		super(BaseRequest.QuickJoinGame)
+		super(BaseRequest.QuickJoinGame);
 		
-		_matchExpression=matchExpression
-		_whereToSearch=whereToSearch
-		_roomToLeave=roomToLeave
+		_matchExpression = matchExpression;
+		_whereToSearch = whereToSearch;
+		_roomToLeave = roomToLeave;
 	}
 	
 	/** @private */
 	override public function validate(sfs:SmartFox):Void
 	{
-		var errors:Array<Dynamic>=[]
+		var errors:Array<String> = [];
 		
 		// NOTE:match expression can be null, in which case the first Room found is going to be good
 		if(_whereToSearch==null || _whereToSearch.length<1)
-			errors.push("Missing whereToSearch parameter")
+			errors.push("Missing whereToSearch parameter");
 			
 		else if(_whereToSearch.length>MAX_ROOMS)
-			errors.push("Too many Rooms specified in the whereToSearch parameter. Client limit is:" + MAX_ROOMS)
+			errors.push("Too many Rooms specified in the whereToSearch parameter. Client limit is:" + MAX_ROOMS);
 			
 		if(errors.length>0)
-			throw new SFSValidationError("QuickJoinGame request error", errors)
+			throw new SFSValidationError("QuickJoinGame request error", errors);
 	}
 	
 	/** @private */
 	override public function execute(sfs:SmartFox):Void
 	{
 		// Auto detect whereToSearch types --->>String, GroupId
-		if(_whereToSearch[0] is String)
-			_sfso.putUtfStringArray(KEY_GROUP_LIST, _whereToSearch)
+		if(Std.is(_whereToSearch[0],String))
+			_sfso.putUtfStringArray(KEY_GROUP_LIST, cast _whereToSearch);
 		
 		// --->>Room
-		else if(_whereToSearch[0] is Room)
+		else if(Std.is(_whereToSearch[0],Room))
 		{
-			var roomIds:Array<Dynamic>=[]
+			var roomIds:Array<Int> = [];
 			
 			for(i in 0..._whereToSearch.length)
 			{
-				var item:Dynamic=_whereToSearch[i]
+				var item:Room = _whereToSearch[i];
 				
 				if(Std.is(item, Room))
-					roomIds.push((item as Room).id)
+					roomIds.push(item.id);
 			}
 			
-			_sfso.putIntArray(KEY_ROOM_LIST, roomIds)				
+			_sfso.putIntArray(KEY_ROOM_LIST, roomIds);			
 		}
 		
 		// Bad type, stop the process via runtime error
 		else
 		{
-			throw new ArgumentError("Invalid type in whereToSearch parameter:" + _whereToSearch[0])	
+			throw new ArgumentError("Invalid type in whereToSearch parameter:" + _whereToSearch[0])	;
 		}
 		
 		if(_roomToLeave !=null)
-			_sfso.putInt(KEY_ROOM_TO_LEAVE, _roomToLeave.id)
+			_sfso.putInt(KEY_ROOM_TO_LEAVE, _roomToLeave.id);
 			
 		if(_matchExpression !=null)
-			_sfso.putSFSArray(KEY_MATCH_EXPRESSION, _matchExpression.toSFSArray())
+			_sfso.putSFSArray(KEY_MATCH_EXPRESSION, _matchExpression.toSFSArray());
 	}
 }
+#end

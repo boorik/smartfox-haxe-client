@@ -133,15 +133,21 @@ class SFSProtocolCodec implements IProtocolCodec
 		// Check if action ID exist 
 		if(requestObject.isNull(ACTION_ID))
 			throw new SFSCodecError("Request rejected:No Action ID in request!");
-		
-		message.id = requestObject.getByte(ACTION_ID);
-		message.content = requestObject.getSFSObject(PARAM_ID);
-		message.isUDP = requestObject.containsKey(UDP_PACKET_ID);
+		var id:Int = requestObject.getByte(ACTION_ID);//Strange fix to avoid message.id == null by doing message.id = requestObject.getByte(ACTION_ID) directly
+		message.id =id;
+		var content:ISFSObject = requestObject.getSFSObject(PARAM_ID);
+		message.content = content;
+		var isUDP:Bool = requestObject.containsKey(UDP_PACKET_ID);
+		message.isUDP = isUDP;
 		
 		if(message.isUDP)
-			message.packetId = requestObject.getLong(UDP_PACKET_ID);
+		{
+			var packetId:Float = requestObject.getLong(UDP_PACKET_ID);
+			message.packetId = packetId;
+		}
 		
 		var controllerId:Int = requestObject.getByte(CONTROLLER_ID);
+		
 		var controller:IController = bitSwarm.getController(controllerId);
 		
 		if(controller==null)

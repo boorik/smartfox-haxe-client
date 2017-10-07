@@ -1,7 +1,12 @@
 package com.smartfoxserver.v2.requests;
-
-import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
+#if html5
+@:native('SFS2X.ChangeRoomPasswordStateRequest')
+extern class ChangeRoomPasswordStateRequest{
+	function new(room:Room, newPass:String);
+}
+#else
+import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import openfl.errors.Error;
 
@@ -93,3 +98,4 @@ class ChangeRoomPasswordStateRequest extends BaseRequest
 		_sfso.putUtfString(KEY_PASS, _newPass);
 	}
 }
+#end

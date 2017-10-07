@@ -17,17 +17,8 @@ class Message implements IMessage
 		_isEncrypted = false;
 		_isUDP = false;
 	}
-	
-	public var id(get_id, set_id):Int;
- 	private function get_id():Int
-	{
-		return _id;
-	}
-	private function set_id(value:Int):Int
-	{
-		return this._id = value;
-	}
-	
+	@:isVar
+	public var id(get, set):Int;
 	public var content(get_content, set_content):ISFSObject;
  	private function get_content():ISFSObject
 	{
@@ -88,5 +79,15 @@ class Message implements IMessage
 		str += _content.getDump();
 		
 		return str;
+	}
+	
+	function get_id():Int 
+	{
+		return _id;
+	}
+	
+	function set_id(value:Int):Int 
+	{
+		return _id = value;
 	}
 }
