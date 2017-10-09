@@ -9,6 +9,9 @@
 
 package com.smartfoxserver.v2;
 import com.smartfoxserver.v2.entities.managers.IBuddyManager;
+import com.smartfoxserver.v2.entities.Room;
+import com.smartfoxserver.v2.entities.User;
+import com.smartfoxserver.v2.entities.managers.IRoomManager;
 #if html5
 @:jsRequire("SFS2X")
 typedef ConfigObj = {
@@ -24,10 +27,10 @@ extern class SmartFox
 	public var buddyManager:IBuddyManager;
 	public var config:Dynamic;
 	public var debug:Bool;
-	public var lastJoinedRoom:Dynamic;
+	public var lastJoinedRoom:Room;
 	public var logger:Dynamic;
-	public var mySelf:Dynamic;
-	public var roomManager:Dynamic;
+	public var mySelf:User;
+	public var roomManager:IRoomManager;
 	public var sessionToken:Dynamic;	
 	public var userManager:com.smartfoxserver.v2.entities.managers.SFSUserManager;
 	public var version:String;
@@ -60,11 +63,7 @@ import com.smartfoxserver.v2.bitswarm.IUDPManager;
 import com.smartfoxserver.v2.bitswarm.IoHandler;
 import com.smartfoxserver.v2.core.SFSEvent;
 import com.smartfoxserver.v2.core.SFSIOHandler;
-import com.smartfoxserver.v2.entities.Room;
-import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
-
-import com.smartfoxserver.v2.entities.managers.IRoomManager;
 import com.smartfoxserver.v2.entities.managers.IUserManager;
 import com.smartfoxserver.v2.entities.managers.SFSBuddyManager;
 import com.smartfoxserver.v2.entities.managers.SFSGlobalUserManager;
