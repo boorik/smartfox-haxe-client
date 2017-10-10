@@ -47,11 +47,16 @@ extern class SmartFox
 	public function getMaxMessageSize():Float;
 	public function getRoomById(id:Int):Dynamic;
 	public function getRoomByName(name:String):Dynamic;
-	public function getRoomList():Dynamic;
-	public function getRoomListFromGroup(groupId:Int):Dynamic;
+	public function getRoomList():Array<Room>;
+	public function getRoomListFromGroup(groupId:Int):Array<Room>;
 	public function removeEventListener(evtType:Dynamic, listener:Dynamic):Void;
 	public function send(request:Dynamic):Void;
 	public function setClientDetails(platformId:Int, version:String):Void;
+	public var roomList(get_roomList, null):Array<Room>;
+ 	inline function get_roomList():Array<Room>
+	{
+		return this.getRoomList();
+	}
 }
 #else
 
