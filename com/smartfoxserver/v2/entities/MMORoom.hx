@@ -4,7 +4,7 @@ import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.IMMOItem;
 #if html5
 @:native('SFS2X.MMORoom')
-extern class MMORoom{
+extern class MMORoom extends com.smartfoxserver.v2.entities.Room{
 	var defaultAOI:Vec3D;
 	var higherMapLimit:Vec3D;
 	var lowerMapLimit:Vec3D;
