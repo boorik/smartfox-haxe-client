@@ -2,13 +2,8 @@ package com.smartfoxserver.v2.entities.variables;
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 #if html5
 @:native('SFS2X.MMOItemVariable')
-extern class MMOItemVariable{
-	var isNull:Bool;
-	var name:String;
-	var type:Dynamic;
-	var value:Dynamic;
+extern class MMOItemVariable extends SFSUserVariable{
 
-	function toString():String;
 }
 #else
 

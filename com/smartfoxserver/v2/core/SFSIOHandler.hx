@@ -331,10 +331,10 @@ class SFSIOHandler implements IoHandler
 		var packetHeader:PacketHeader = new PacketHeader(isEncrypted, isCompressed, false, sizeBytes == INT_BYTE_SIZE);
 		
 		
-		trace("packetHeader:" + packetHeader.encode());
+		//trace("packetHeader:" + packetHeader.encode());
 		// 1. Write packet header byte
 		writeBuffer.writeByte(packetHeader.encode());
-		trace(binData.length);
+		//trace(binData.length);
 		// 2. Write packet size
 		if(sizeBytes>SHORT_BYTE_SIZE)
 			writeBuffer.writeInt(binData.length);
