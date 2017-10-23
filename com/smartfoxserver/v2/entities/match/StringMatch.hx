@@ -5,11 +5,12 @@ package com.smartfoxserver.v2.entities.match;
  * 
  * @see MatchExpression
  */
+#if html5 
+ @:native('SFS2X.StringMatch')
+ extern #end 
 class StringMatch implements IMatcher
 {
 	private static inline var TYPE_ID:Int = 2;
-	
-	private static var lock:Bool = true;
 	
 	/**
 	 * An instance of<em>StringMatch</em>representing the following condition:<em>string1==string2</em>.
@@ -49,11 +50,9 @@ class StringMatch implements IMatcher
 	
 	/** @private */
 	function new(symbol:String)
-	{
-		if(lock)
-			throw "Cannot instantiate Enum!";
-			
+	{			
 		this.symbol = symbol;
+		this.type = TYPE_ID;
 	}
 	
 	/** @inheritDoc */
