@@ -8,45 +8,31 @@ package com.smartfoxserver.v2.entities.match;
 class BoolMatch implements IMatcher
 {
 	private static inline var TYPE_ID:Int = 0;
-	
-	private static var lock:Bool = false;
+
 	
 	/**
 	 * An instance of<em>BoolMatch</em>representing the following condition:<em>bool1==bool2</em>.
 	 */
-	public static var EQUALS:BoolMatch = new BoolMatch("==");
+	public static inline function EQUALS():BoolMatch { return new BoolMatch("==");};
 	
 	/**
 	 * An instance of<em>BoolMatch</em>representing the following condition:<em>bool1 !=bool2</em>.
 	 */
-	public static var NOT_EQUALS:BoolMatch = new BoolMatch("!=");
+	public static inline function NOT_EQUALS(){return new BoolMatch("!=");};
 	
-	private static var init = {
-		lock = true;
-	}
-	
-	private var _symbol:String;
 	
 	/** @private */
 	function new(symbol:String)
 	{
-		if(lock)
-			throw "Cannot instantiate Enum!";
-			
-		_symbol = symbol;	
+		this.symbol = symbol;
+		type = TYPE_ID;	
 	}
 	
 	/** @inheritDoc */
-	public var symbol(get_symbol, null):String;
- 	private function get_symbol():String
-	{
-		return _symbol;
-	}
+	public var symbol:String;
+
 	
 	/** @inheritDoc */
-	public var type(get_type, null):Int;
- 	private function get_type():Int
-	{
-		return TYPE_ID;
-	}
+	public var type:Int;
+
 }
