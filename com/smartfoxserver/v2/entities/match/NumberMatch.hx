@@ -57,6 +57,7 @@ package com.smartfoxserver.v2.entities.match;
 			throw "Cannot instantiate Enum!";
 			
 		this.symbol=symbol;
+		type = TYPE_ID;
 	}
 
 	public var type:Int;
