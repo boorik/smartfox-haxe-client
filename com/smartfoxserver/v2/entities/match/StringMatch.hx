@@ -15,37 +15,27 @@ class StringMatch implements IMatcher
 	/**
 	 * An instance of<em>StringMatch</em>representing the following condition:<em>string1==string2</em>.
 	 */
-	public static inline function EQUALS():StringMatch{
-		return new StringMatch("==");
-	}
+	public static var EQUALS:StringMatch #if html5 ; #else = new StringMatch("==");#end
 	
 	/**
 	 * An instance of<em>StringMatch</em>representing the following condition:<em>string1 !=string2</em>.
 	 */
-	public static inline function NOT_EQUALS():StringMatch {
-		return new StringMatch("!=");
-	}
+	public static var NOT_EQUALS:StringMatch  #if html5 ; #else = new StringMatch("!=");#end
 	
 	/**
 	 * An instance of<em>StringMatch</em>representing the following condition:<em>string1.indexOf(string2)!=-1</em>.
 	 */
-	public static inline function CONTAINS():StringMatch {
-		return new StringMatch("contains");
-	}
+	public static var CONTAINS:StringMatch #if html5 ; #else = new StringMatch("contains");#end
 	
 	/**
 	 * An instance of<em>StringMatch</em>representing the following condition:<em>string1</em>starts with characters contained in<em>string2</em>.
 	 */
-	public static inline function STARTS_WITH():StringMatch {
-		return new StringMatch("startsWith");
-	}
+	public static var STARTS_WITH:StringMatch #if html5 ; #else = new StringMatch("startsWith");#end
 	
 	/**
 	 * An instance of<em>StringMatch</em>representing the following condition:<em>string1</em>ends with characters contained in<em>string2</em>.
 	 */
-	public static inline function ENDS_WITH():StringMatch {
-		return new StringMatch("endsWith");
-	}
+	public static var ENDS_WITH:StringMatch #if html5 ; #else = new StringMatch("endsWith");#end
 	
 	
 	/** @private */

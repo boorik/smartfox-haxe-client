@@ -13,12 +13,12 @@ class BoolMatch implements IMatcher
 	/**
 	 * An instance of<em>BoolMatch</em>representing the following condition:<em>bool1==bool2</em>.
 	 */
-	public static inline function EQUALS():BoolMatch { return new BoolMatch("==");};
-	
+	public static var EQUALS:BoolMatch #if html5 ; #else = new BoolMatch("==");#end
+
 	/**
 	 * An instance of<em>BoolMatch</em>representing the following condition:<em>bool1 !=bool2</em>.
 	 */
-	public static inline function NOT_EQUALS(){return new BoolMatch("!=");};
+	public static var NOT_EQUALS:BoolMatch #if html5 ; #else = new BoolMatch("!=");#end
 	
 	
 	/** @private */
