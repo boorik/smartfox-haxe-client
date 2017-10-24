@@ -5,7 +5,9 @@ package com.smartfoxserver.v2.entities.match;
  * 
  * @see MatchExpression
  */
-class BoolMatch implements IMatcher
+#if html5 
+ @:native('SFS2X.BoolMatch')
+extern #end class BoolMatch implements IMatcher
 {
 	private static inline var TYPE_ID:Int = 0;
 

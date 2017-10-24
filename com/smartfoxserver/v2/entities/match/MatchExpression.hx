@@ -4,6 +4,7 @@ package com.smartfoxserver.v2.entities.match;
 extern class MatchExpression{
 	function new(varName:String, condition:IMatcher, value:Dynamic);
 	function toString():String;
+	var condition:IMatcher;
 }
 #else
 import com.smartfoxserver.v2.entities.data.ISFSArray;
