@@ -4,7 +4,7 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
 #if html5
 @:native('SFS2X.BuddyMessageRequest')
 extern class BuddyMessageRequest{
-	public function new(message:String,targetBuddy:Buddy,params:ISFSObject);
+	public function new(message:String,targetBuddy:Buddy,params:ISFSObject=null);
 }
 #else
 

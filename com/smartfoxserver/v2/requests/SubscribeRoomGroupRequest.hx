@@ -1,5 +1,11 @@
 package com.smartfoxserver.v2.requests;
+#if html5
+@:native('SFS2X.SubscribeRoomGroupRequest')
+extern class SubscribeRoomGroupRequest{
+	public function new(groupId:String):Void;
 
+}
+#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 
@@ -80,3 +86,4 @@ class SubscribeRoomGroupRequest extends BaseRequest
 		_sfso.putUtfString(KEY_GROUP_ID, _groupId);
 	}
 }
+#end

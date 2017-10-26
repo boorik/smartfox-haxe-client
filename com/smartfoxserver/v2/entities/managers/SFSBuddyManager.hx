@@ -12,7 +12,7 @@ extern class SFSBuddyManager{
 	{
 		return getBuddyList();
 	}
-	var isInited:Bool;
+	function isInited():Bool;
 	function containsBuddy(name:String):Bool;
 	function getBuddyById(id:Int):Buddy;
 	function getBuddyByName(name:String):Buddy;

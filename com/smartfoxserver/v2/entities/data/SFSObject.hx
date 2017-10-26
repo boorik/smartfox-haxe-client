@@ -14,7 +14,7 @@ extern class SFSObject
 	function getBool(key:String):Bool;
 	function getBoolArray(key:String):Array<Bool>;
 	function getByte(key:String):Int;
-	function getByteArray(key:String):haxe.io.Bytes;
+	function getByteArray(key:String):Array<Int>;
 	inline function getData(key:String):SFSDataWrapper
 	{
 		return getWrappedItem(key);
@@ -52,9 +52,9 @@ extern class SFSObject
 	function putBool(key:String, value:Bool):Void;
 	function putBoolArray(key:String, array:Array<Bool>):Void;
 	function putByte(key:String, value:Int):Void;
-	function putByteArray(key:String, array:haxe.io.Bytes):Void;
-	function putDouble(key:String, value:Int):Void;
-	function putDoubleArray(key:String, array:Array<Int>):Void;
+	function putByteArray(key:String, array:Array<Int>):Void;
+	function putDouble(key:String, value:Float):Void;
+	function putDoubleArray(key:String, array:Array<Float>):Void;
 
 	function putFloat(key:String, value:Float):Void;
 	function putFloatArray(key:String, array:Array<Float>):Void;

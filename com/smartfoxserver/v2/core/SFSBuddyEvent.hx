@@ -10,7 +10,7 @@ import flash.events.Event;
  * 
  * @see 	SFSEvent
  */
-#if html5 extern #end class SFSBuddyEvent #if !html5 extends BaseEvent #end
+#if html5 extern #end class SFSBuddyEvent #if html5 implements Dynamic #else extends BaseEvent #end
 {
 	/**
 	 * The<em>SFSBuddyEvent.BUDDY_LIST_INIT</em>constant defines the value of the<em>type</em>property of the event object for a<em>buddyListInit</em>event.

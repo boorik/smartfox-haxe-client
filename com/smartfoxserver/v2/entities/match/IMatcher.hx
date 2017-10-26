@@ -13,10 +13,10 @@ interface IMatcher
 	/**
 	 * Returns the condition symbol of this matcher.
 	 */
-	 var symbol:String;
+	 public var symbol(get_symbol, null):String;
 	
 	/**
 	 * Returns the type id of this matcher.
 	 */
-	 var type:Int;
+	 public var type(get_type, null):Int;
 }
