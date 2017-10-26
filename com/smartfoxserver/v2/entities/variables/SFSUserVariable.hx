@@ -247,6 +247,8 @@ class SFSUserVariable implements UserVariable
 			switch(typeValue) {
 				case ValueType.TBool:
 					_type = VariableType.getTypeName(VariableType.BOOL);
+				case ValueType.TInt:
+					_type =  VariableType.getTypeName(VariableType.INT);
 				case ValueType.TFloat:
 					_type = VariableType.getTypeName(VariableType.DOUBLE);
 				case ValueType.TClass(c):

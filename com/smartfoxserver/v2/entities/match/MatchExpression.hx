@@ -1,5 +1,12 @@
 package com.smartfoxserver.v2.entities.match;
-
+#if html5
+@:native('SFS2X.MatchExpression')
+extern class MatchExpression{
+	function new(varName:String, condition:IMatcher, value:Dynamic);
+	function toString():String;
+	var condition:IMatcher;
+}
+#else
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 
@@ -308,3 +315,4 @@ class MatchExpression
 		return expr;
 	}	
 }
+#end

@@ -5,48 +5,36 @@ package com.smartfoxserver.v2.entities.match;
  * 
  * @see MatchExpression
  */
-class BoolMatch implements IMatcher
+#if html5 
+ @:native('SFS2X.BoolMatch')
+extern #end class BoolMatch implements IMatcher
 {
 	private static inline var TYPE_ID:Int = 0;
-	
-	private static var lock:Bool = false;
+
 	
 	/**
 	 * An instance of<em>BoolMatch</em>representing the following condition:<em>bool1==bool2</em>.
 	 */
-	public static var EQUALS:BoolMatch = new BoolMatch("==");
-	
+	public static var EQUALS:BoolMatch #if html5 ; #else = new BoolMatch("==");#end
+
 	/**
 	 * An instance of<em>BoolMatch</em>representing the following condition:<em>bool1 !=bool2</em>.
 	 */
-	public static var NOT_EQUALS:BoolMatch = new BoolMatch("!=");
+	public static var NOT_EQUALS:BoolMatch #if html5 ; #else = new BoolMatch("!=");#end
 	
-	private static var init = {
-		lock = true;
-	}
-	
-	private var _symbol:String;
 	
 	/** @private */
 	function new(symbol:String)
 	{
-		if(lock)
-			throw "Cannot instantiate Enum!";
-			
-		_symbol = symbol;	
+		this.symbol = symbol;
+		type = TYPE_ID;	
 	}
 	
 	/** @inheritDoc */
-	public var symbol(get_symbol, null):String;
- 	private function get_symbol():String
-	{
-		return _symbol;
-	}
+	public var symbol:String;
+
 	
 	/** @inheritDoc */
-	public var type(get_type, null):Int;
- 	private function get_type():Int
-	{
-		return TYPE_ID;
-	}
+	public var type:Int;
+
 }
