@@ -1,15 +1,16 @@
 package com.smartfoxserver.v2.entities;
 
 import com.smartfoxserver.v2.entities.data.Vec3D;
+import com.smartfoxserver.v2.entities.IMMOItem;
 #if html5
 @:native('SFS2X.MMORoom')
-extern class MMORoom{
+extern class MMORoom extends com.smartfoxserver.v2.entities.Room{
 	var defaultAOI:Vec3D;
 	var higherMapLimit:Vec3D;
 	var lowerMapLimit:Vec3D;
 	
-	function getMMOItem(id:Int):MMOItem;
-	function getMMOItems():Array<MMOItem>;
+	function getMMOItem(id:Int):IMMOItem;
+	function getMMOItems():Array<IMMOItem>;
 }
 #else
 import com.smartfoxserver.v2.util.ArrayUtil;

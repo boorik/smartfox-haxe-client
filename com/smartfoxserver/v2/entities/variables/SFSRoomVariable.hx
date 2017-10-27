@@ -1,17 +1,17 @@
 package com.smartfoxserver.v2.entities.variables;
 #if html5
 @:native('SFS2X.SFSRoomVariable')
-extern class SFSRoomVariable{
-	var isNull:Bool;
+extern class SFSRoomVariable extends SFSUserVariable{
+	//var isNull:Bool;
 	var isPersistent:Bool;
-	var isPrivate:Bool;
-	var name:String;
-	var type:Dynamic;
-	var value:Dynamic;
+	//var isPrivate:Bool;
+	//var name:String;
+	//var type:Dynamic;
+	//var value:Dynamic;
 
 	public function new(name:String, value:Dynamic, ?type:Dynamic);
 
-	function toString():String;
+	//function toString():String;
 }
 #else
 import com.smartfoxserver.v2.entities.data.ISFSArray;

@@ -1,6 +1,7 @@
 package com.smartfoxserver.v2.entities;
+import com.smartfoxserver.v2.entities.managers.IRoomManager;
 import com.smartfoxserver.v2.entities.managers.SFSRoomManager;
-import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
+import com.smartfoxserver.v2.entities.variables.RoomVariable;
 #if html5
 @:native('SFS2X.SFSRoom')
 extern class SFSRoom{
@@ -28,17 +29,22 @@ extern class SFSRoom{
 	function getUserById(id:Int):SFSUser;
 	function getUserByName(name:String):SFSUser;
 	function getUserList():Array<SFSUser>;
-	function getVariable(varName:String):SFSRoomVariable;
-	function getVariables():Array<SFSRoomVariable>;
+	function getVariable(varName:String):RoomVariable;
+	function getVariables():Array<RoomVariable>;
 	function toString():String;
+	public var roomManager(get_roomManager, set_roomManager):IRoomManager;
+ 	inline private function get_roomManager():IRoomManager
+	{
+		return getRoomManager();
+	}
 }
 #else
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.Vec3D;
-import com.smartfoxserver.v2.entities.managers.IRoomManager;
 import com.smartfoxserver.v2.entities.managers.IUserManager;
 import com.smartfoxserver.v2.entities.managers.SFSUserManager;
 import com.smartfoxserver.v2.entities.variables.RoomVariable;
+import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
 import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.util.ArrayUtil;
 import haxe.ds.StringMap;
