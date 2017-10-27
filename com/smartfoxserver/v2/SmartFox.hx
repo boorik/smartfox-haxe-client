@@ -8,13 +8,11 @@
  */
 
 package com.smartfoxserver.v2;
-
-#if html5
-
+import com.smartfoxserver.v2.entities.managers.IBuddyManager;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
-import com.smartfoxserver.v2.entities.managers.SFSBuddyManager;
-
+import com.smartfoxserver.v2.entities.managers.IRoomManager;
+#if html5
 @:jsRequire("SFS2X")
 typedef ConfigObj = {
 	var host:String;
@@ -26,13 +24,13 @@ typedef ConfigObj = {
 @:native('SFS2X.SmartFox')
 extern class SmartFox
 {
-	public var buddyManager:SFSBuddyManager;
+	public var buddyManager:IBuddyManager;
 	public var config:Dynamic;
 	public var debug:Bool;
 	public var lastJoinedRoom:Room;
 	public var logger:Dynamic;
 	public var mySelf:User;
-	public var roomManager:Dynamic;
+	public var roomManager:IRoomManager;
 	public var sessionToken:Dynamic;	
 	public var userManager:com.smartfoxserver.v2.entities.managers.SFSUserManager;
 	public var version:String;
@@ -49,11 +47,16 @@ extern class SmartFox
 	public function getMaxMessageSize():Float;
 	public function getRoomById(id:Int):Dynamic;
 	public function getRoomByName(name:String):Dynamic;
-	public function getRoomList():Dynamic;
-	public function getRoomListFromGroup(groupId:Int):Dynamic;
+	public function getRoomList():Array<Room>;
+	public function getRoomListFromGroup(groupId:Int):Array<Room>;
 	public function removeEventListener(evtType:Dynamic, listener:Dynamic):Void;
 	public function send(request:Dynamic):Void;
 	public function setClientDetails(platformId:Int, version:String):Void;
+	public var roomList(get_roomList, null):Array<Room>;
+ 	inline function get_roomList():Array<Room>
+	{
+		return this.getRoomList();
+	}
 }
 #else
 
@@ -65,11 +68,7 @@ import com.smartfoxserver.v2.bitswarm.IUDPManager;
 import com.smartfoxserver.v2.bitswarm.IoHandler;
 import com.smartfoxserver.v2.core.SFSEvent;
 import com.smartfoxserver.v2.core.SFSIOHandler;
-import com.smartfoxserver.v2.entities.Room;
-import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
-import com.smartfoxserver.v2.entities.managers.IBuddyManager;
-import com.smartfoxserver.v2.entities.managers.IRoomManager;
 import com.smartfoxserver.v2.entities.managers.IUserManager;
 import com.smartfoxserver.v2.entities.managers.SFSBuddyManager;
 import com.smartfoxserver.v2.entities.managers.SFSGlobalUserManager;
