@@ -17,6 +17,7 @@ extern class SFSBuddy
 	function getVariable(varName:String):BuddyVariable;
 	function getVariables():Array<BuddyVariable>;
 	function toString():String;
+	function setVariable(bVar:BuddyVariable):Void;
 }
 #else
 import com.smartfoxserver.v2.entities.data.ISFSArray;

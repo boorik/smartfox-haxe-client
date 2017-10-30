@@ -1,6 +1,7 @@
 package com.smartfoxserver.v2.entities;
 import com.smartfoxserver.v2.entities.managers.SFSUserManager;
 import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
+import com.smartfoxserver.v2.entities.variables.UserVariable;
 
 #if html5
 @:native('SFS2X.Entities.SFSUser')
@@ -12,7 +13,10 @@ extern class SFSUser
 	public var name:String;
 	public var privilegeId:Int;
 	public var properties:Dynamic;
+	public var isPlayer:Bool;
+	public var isSpectator:Bool;
 	
+	public function setVariable(userVariable:UserVariable):Void;
 	public function containsVariable(varName:String):Bool;
 	public function getPlayerId(room:SFSRoom):Int;
 	public function getUserManager():SFSUserManager;
@@ -22,9 +26,7 @@ extern class SFSUser
 	public function isGuest():Bool;
 	public function isJoinedInRoom(room:SFSRoom):Bool;
 	public function isModerator():Bool;
-	public function isPlayer():Bool;
 	public function isPlayerInRoom(room:SFSRoom):Bool;
-	public function isSpectator():Bool;
 	public function isSpectatorInRoom(room:SFSRoom):Bool;
 	public function isStandardUser():Bool;
 	public function toString():String;		
@@ -34,7 +36,6 @@ extern class SFSUser
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.managers.IUserManager;
-import com.smartfoxserver.v2.entities.variables.UserVariable;
 import com.smartfoxserver.v2.exceptions.SFSError;
 import haxe.ds.IntMap;
 import haxe.ds.StringMap;

@@ -14,6 +14,7 @@ extern class SFSRoomManager{
 	function getRoomList():Array<SFSRoom>;
 	function getRoomListFromGroup(groupId:Int):Array<SFSRoom>;
 	function getUserRooms(user:SFSUser):Array<SFSRoom>;
+	function removeGroup(groupId:String):Void;
 
 }
 #else
@@ -54,7 +55,7 @@ class SFSRoomManager implements IRoomManager
 	public function new(sfs:SmartFox)
 	{
 		_groups = new Array();
-		_roomsById = new IntMap();
+		_roomsById = new IntMap<Room>();
 		_roomsByName = new StringMap();
 	}
 	
@@ -166,7 +167,7 @@ class SFSRoomManager implements IRoomManager
 		// Remove group
 		ArrayUtil.removeElement(_groups, groupId);
 		
-		var roomsInGroup:Array<Dynamic> = getRoomListFromGroup(groupId);
+		var roomsInGroup:Array<Room> = getRoomListFromGroup(groupId);
 		
 		/*
 		* We remove all rooms from the Group with the exception
@@ -203,7 +204,7 @@ class SFSRoomManager implements IRoomManager
 	/** @inheritDoc */
 	public function containsRoomInGroup(idOrName:Dynamic, groupId:String):Bool
 	{
-		var roomList:Array<Dynamic> = getRoomListFromGroup(groupId);
+		var roomList:Array<Room> = getRoomListFromGroup(groupId);
 		var found:Bool = false;	
 		var searchById:Bool = (Std.is(idOrName,Float));
 		
@@ -258,9 +259,9 @@ class SFSRoomManager implements IRoomManager
 	public function getRoomListFromGroup(groupId:String):Array<Room>
 	{
 		var roomList:Array<Room> = new Array();
-		while(_roomsById.iterator().hasNext())
+		for(room in _roomsById)
 		{
-			var room:Room = cast _roomsById.iterator().next();
+			var room:Room =  _roomsById.iterator().next();
 			
 			if(room.groupId==groupId)
 				roomList.push(room);
