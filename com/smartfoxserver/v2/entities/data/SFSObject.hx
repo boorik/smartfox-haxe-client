@@ -10,11 +10,18 @@ extern class SFSObject
 		return new SFSObject();
 	}
 	function new();
-	function get(key:Dynamic):Dynamic;
+	function get(key:Dynamic,?typeId:Int):Dynamic;
 	function getBool(key:String):Bool;
 	function getBoolArray(key:String):Array<Bool>;
 	function getByte(key:String):Int;
-	function getByteArray(key:String):Array<Int>;
+	inline function getByteArray(key:String):openfl.utils.ByteArray
+	{
+		var arrInt:Array<Int> =  this.get(key,SFSDataType.BYTE_ARRAY);
+		var bt:haxe.io.Bytes = haxe.io.Bytes.alloc(arrInt.length);
+		for (i in 0...arrInt.length) 
+			bt.set(i, arrInt[i]);
+		return openfl.utils.ByteArray.fromBytes(bt);
+	}
 	inline function getData(key:String):SFSDataWrapper
 	{
 		return getWrappedItem(key);
