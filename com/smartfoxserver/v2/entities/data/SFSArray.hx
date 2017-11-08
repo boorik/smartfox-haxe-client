@@ -11,11 +11,18 @@ extern class SFSArray
 	}
 	function new();
 	function contains(object:Dynamic):Bool;
-	function get(key:Dynamic):Dynamic;
+	function get(key:Int,?typeId:Int):Dynamic;
 	function getBool(index:Int):Bool;
 	function getBoolArray(index:Int):Array<Bool>;
 	function getByte(index:Int):Int;
-	function getByteArray(index:Int):haxe.io.Bytes;
+	inline function getByteArray(key:Int):openfl.utils.ByteArray
+	{
+		var arrInt:Array<Int> =  this.get(key,SFSDataType.BYTE_ARRAY);
+		var bt:haxe.io.Bytes = haxe.io.Bytes.alloc(arrInt.length);
+		for (i in 0...arrInt.length) 
+			bt.set(i, arrInt[i]);
+		return openfl.utils.ByteArray.fromBytes(bt);
+	}
 	function getDouble(index:Int):Int;
 	function getDoubleArray(index:Int):Array<Int>;
 	function getDump(?format:Dynamic):String;
