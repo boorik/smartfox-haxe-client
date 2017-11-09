@@ -164,13 +164,12 @@ class BaseRequest implements IRequest
 		_isEncrypted = false;
 		_id = id;
 	}
-	
-	public var id(get_id, set_id):Int;
+
+	public var id(get, set):Int;
  	private function get_id():Int
 	{
 		return _id;
 	}
-	
 	private function set_id(id:Int):Int
 	{
 		return _id = id;
@@ -196,7 +195,6 @@ class BaseRequest implements IRequest
 			
 		return message;
 	}
-	
 	public var targetController(get, set):Int;
  	private function get_targetController():Int
 	{
@@ -207,8 +205,7 @@ class BaseRequest implements IRequest
 	{
 		return _targetController = target;	
 	}
-	
-	public var isEncrypted(get_isEncrypted, set_isEncrypted):Bool;
+	public var isEncrypted(get, set):Bool;
  	private function get_isEncrypted():Bool
 	{
 		return _isEncrypted;

@@ -2,8 +2,8 @@ package com.smartfoxserver.v2.bitswarm;
 
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 
-/** @private */
-class Message implements IMessage
+@:build(JsProp.all())
+class Message #if !html5 implements IMessage #end
 {
 	private var _id:Int;
 	private var _content:ISFSObject;
@@ -17,9 +17,19 @@ class Message implements IMessage
 		_isEncrypted = false;
 		_isUDP = false;
 	}
-	@:isVar
+
 	public var id(get, set):Int;
-	public var content(get_content, set_content):ISFSObject;
+	function get_id():Int 
+	{
+		return _id;
+	}
+	
+	function set_id(value:Int):Int 
+	{
+		return _id = value;
+	}
+
+	public var content(get, set):ISFSObject;
  	private function get_content():ISFSObject
 	{
 		return _content;
@@ -30,7 +40,7 @@ class Message implements IMessage
 		return this._content = obj	;
 	}
 	
-	public var targetController(get_targetController, set_targetController):Int;
+	public var targetController(get, set):Int;
  	private function get_targetController():Int
 	{
 		return _targetController;
@@ -40,7 +50,7 @@ class Message implements IMessage
 		return this._targetController = value;	
 	}
 	
-	public var isEncrypted(get_isEncrypted, set_isEncrypted):Bool;
+	public var isEncrypted(get, set):Bool;
  	private function get_isEncrypted():Bool
 	{
 		return _isEncrypted;
@@ -50,7 +60,7 @@ class Message implements IMessage
 		return _isEncrypted = value;
 	}
 	
-	public var isUDP(get_isUDP, set_isUDP):Bool;
+	public var isUDP(get, set):Bool;
  	private function get_isUDP():Bool
 	{
 		return _isUDP;
@@ -61,7 +71,7 @@ class Message implements IMessage
 		return _isUDP=value;
 	}
 	
-	public var packetId(get_packetId, set_packetId):Float;
+	public var packetId(get, set):Float;
  	private function get_packetId():Float
 	{
 		return _packetId;
@@ -79,15 +89,5 @@ class Message implements IMessage
 		str += _content.getDump();
 		
 		return str;
-	}
-	
-	function get_id():Int 
-	{
-		return _id;
-	}
-	
-	function set_id(value:Int):Int 
-	{
-		return _id = value;
 	}
 }
