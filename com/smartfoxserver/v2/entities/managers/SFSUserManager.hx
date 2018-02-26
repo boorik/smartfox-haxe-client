@@ -84,7 +84,7 @@ class SFSUserManager implements IUserManager
 	public function addUser(user:User):Void
 	{
 		// TODO:very defensive, no need to fire exception, however we keep it for debugging
-		if(_usersById.exists(user.id))
+		if(_usersById.exists(user.id) && _smartFox != null)
 			_smartFox.logger.warn("Unexpected:duplicate user in UserManager:" + user);
 			
 		_addUser(user);
