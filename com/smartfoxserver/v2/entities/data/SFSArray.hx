@@ -472,7 +472,7 @@ class SFSArray implements ISFSArray
 	public function getBool(index:Int):Null<Bool>
 	{
 		var wrapper:SFSDataWrapper = dataHolder[index];
-		return(wrapper != null ?cast(wrapper.data,Bool):null);
+		return(wrapper != null ?cast(wrapper.data):null);
 	}
 	
 	/** @inheritDoc */
