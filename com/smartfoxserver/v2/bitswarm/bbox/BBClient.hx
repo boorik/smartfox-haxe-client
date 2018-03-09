@@ -240,8 +240,8 @@ class BBClient extends EventDispatcher
 		_urlRequest.method=URLRequestMethod.POST;
 		
 		// Encode request variables
-		var vars:URLVariables=new URLVariables(encodeRequest(cmd, data));
-		//vars[SFS_HTTP]=encodeRequest(cmd, data);
+		var vars:URLVariables=new URLVariables();
+		Reflect.setField(vars, SFS_HTTP, encodeRequest(cmd, data));
 		_urlRequest.data=vars;
 		
 		if(_debug)
@@ -295,7 +295,7 @@ class BBClient extends EventDispatcher
 		// Encode from ByteArray to Base64-String
 		#if flash
 		else if(Std.is(data, ByteArray))
-			data = Base64.encode(data);
+			data = Base64.encode(haxe.io.Bytes.ofData(cast(data, ByteArray)));
 		#else
 		else if(Std.is(data, openfl.utils.ByteArray.ByteArrayData))
 			data = Base64.encode(data);
@@ -312,7 +312,11 @@ class BBClient extends EventDispatcher
 		if(rawData.substr(0, SFS_HTTP.length)!=SFS_HTTP)
 			throw new ArgumentError("Unexpected Response format. Missing BlueBox header:" +(rawData.length<1024 ? rawData:"[too big data]"));
 		*/
-		return cast(Base64.decode(rawData),ByteArray);			
+		#if flash
+		return Base64.decode(rawData).getData();
+		#else
+		return cast(Base64.decode(rawData), ByteArray);			
+		#end
 	}
 	
 	

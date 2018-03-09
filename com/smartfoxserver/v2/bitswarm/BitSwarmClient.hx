@@ -67,8 +67,11 @@ class BitSwarmClient extends EventDispatcher
 	
 	
 	
-	public var connectionMode:String;
-
+	public var connectionMode(get, never):String;
+	private function get_connectionMode():String
+	{
+		return _connectionMode;
+	}
 	
 	public var ioHandler(get_ioHandler, set_ioHandler):IoHandler;
  	private function get_ioHandler():IoHandler
@@ -277,7 +280,12 @@ class BitSwarmClient extends EventDispatcher
 		//return _socket;
 	//}
 	
-	public var httpSocket:BBClient;
+	public var httpSocket(get , never):BBClient;
+	
+	public function get_httpSocket():BBClient
+	{
+		return _bbClient;
+	}
 	
 	
 	
