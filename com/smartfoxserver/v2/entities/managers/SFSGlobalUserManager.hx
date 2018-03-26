@@ -31,8 +31,8 @@ class SFSGlobalUserManager extends SFSUserManager
 		{
 			//trace("User duplicate FOUND. Incrementing value")
 			super._addUser(user);
-			var n = _roomRefCount.get(user);
-			_roomRefCount.set(user,n++);	
+			var newCount = _roomRefCount.get(user) + 1;
+			_roomRefCount.set(user,newCount);	
 		}			
 	}
 	
