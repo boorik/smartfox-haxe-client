@@ -12,6 +12,7 @@ import com.smartfoxserver.v2.entities.managers.IBuddyManager;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.managers.IRoomManager;
+import com.smartfoxserver.v2.util.ConnectionMode;
 #if html5
 @:jsRequire("SFS2X")
 typedef ConfigObj = {
@@ -57,6 +58,11 @@ extern class SmartFox
 	{
 		return this.getRoomList();
 	}
+	public var connectionMode(get_connectionMode, null):String;
+	inline function get_connectionMode():String
+	{
+		return ConnectionMode.SOCKET;
+	}
 }
 #else
 
@@ -85,7 +91,6 @@ import com.smartfoxserver.v2.requests.ManualDisconnectionRequest;
 import com.smartfoxserver.v2.util.ClientDisconnectionReason;
 import com.smartfoxserver.v2.util.ConfigData;
 import com.smartfoxserver.v2.util.ConfigLoader;
-import com.smartfoxserver.v2.util.ConnectionMode;
 import com.smartfoxserver.v2.util.CryptoInitializer;
 import com.smartfoxserver.v2.util.LagMonitor;
 import com.smartfoxserver.v2.util.SFSErrorCodes;
