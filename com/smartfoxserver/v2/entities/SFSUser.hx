@@ -4,7 +4,7 @@ import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
 
 #if html5
-@:native('SFS2X.Entities.SFSUser')
+@:native('Object')
 extern class SFSUser
 {
 	public var aoiEntryPoint:Dynamic;
