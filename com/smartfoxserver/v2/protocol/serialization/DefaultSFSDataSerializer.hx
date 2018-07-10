@@ -80,11 +80,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			// Store the key
 			buffer = encodeSFSObjectKey(buffer, key);
 			// Convert 2 binary
-			#if html5
-			buffer = encodeObject(buffer, wrapper.type, wrapper.value);
-			#else
 			buffer = encodeObject(buffer, wrapper.type, wrapper.data);
-			#end
 		}
 		
 		return buffer;
