@@ -261,8 +261,7 @@ class SFSRoomManager implements IRoomManager
 		var roomList:Array<Room> = new Array();
 		for(room in _roomsById)
 		{
-			var room:Room =  _roomsById.iterator().next();
-			
+
 			if(room.groupId==groupId)
 				roomList.push(room);
 		}
