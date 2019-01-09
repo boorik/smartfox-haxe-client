@@ -53,12 +53,12 @@ extern class SmartFox
 	public function removeEventListener(evtType:Dynamic, listener:Dynamic):Void;
 	public function send(request:Dynamic):Void;
 	public function setClientDetails(platformId:Int, version:String):Void;
-	public var roomList(get_roomList, null):Array<Room>;
+	public var roomList(get, null):Array<Room>;
  	inline function get_roomList():Array<Room>
 	{
 		return this.getRoomList();
 	}
-	public var connectionMode(get_connectionMode, null):String;
+	public var connectionMode(get, null):String;
 	inline function get_connectionMode():String
 	{
 		return ConnectionMode.SOCKET;
@@ -958,7 +958,7 @@ class SmartFox extends EventDispatcher
 	{
 		super();
 		
-		_log = new Logger();
+		_log = @:privateAccess new Logger();
 		_log.enableEventDispatching = true;
 		_debug = debug;
 		
@@ -1090,7 +1090,7 @@ class SmartFox extends EventDispatcher
 	 * 
 	 * Available under the kernel namespace
 	 */
-	public var socketEngine(get_socketEngine, null):BitSwarmClient;
+	public var socketEngine(get, null):BitSwarmClient;
  	private function get_socketEngine():BitSwarmClient
 	{
 		return _bitSwarm;
@@ -1103,7 +1103,7 @@ class SmartFox extends EventDispatcher
 	 * Available under the Kernel namespace
 	 */
 	@:allow(com.smartfoxserver.v2.controllers)
-	var lagMonitor(get_lagMonitor, null):LagMonitor;
+	var lagMonitor(get, null):LagMonitor;
  	private function get_lagMonitor():LagMonitor
 	{
 		return _lagMonitor;
@@ -1118,7 +1118,7 @@ class SmartFox extends EventDispatcher
 	 * trace("Am I connected?", sfs.isConnected);
 	 *</listing>
 	 */
-	public var isConnected(get_isConnected, null):Bool;
+	public var isConnected(get, null):Bool;
  	private function get_isConnected():Bool
 	{
 		var value:Bool = false;
@@ -1141,7 +1141,7 @@ class SmartFox extends EventDispatcher
 	 * 
 	 * @see	com.smartfoxserver.v2.util.ConnectionMode ConnectionMode
 	 */
-	public var connectionMode(get_connectionMode, null):String;
+	public var connectionMode(get, null):String;
  	private function get_connectionMode():String
 	{
 		return _bitSwarm.connectionMode;
@@ -1156,7 +1156,7 @@ class SmartFox extends EventDispatcher
 	 * trace("Current API version:", sfs.version);
 	 *</listing>
 	 */
-	public var version(get_version, null):String;
+	public var version(get, null):String;
  	private function get_version():String
 	{
 		return "" + _majVersion + "." + _minVersion + "." + _subVersion;
@@ -1195,7 +1195,7 @@ class SmartFox extends EventDispatcher
 	 * }
 	 *</listing>
 	 */
-	public var httpUploadURI(get_httpUploadURI, null):String;
+	public var httpUploadURI(get, null):String;
  	private function get_httpUploadURI():String
 	{
 		if(config==null || mySelf==null)
@@ -1211,7 +1211,7 @@ class SmartFox extends EventDispatcher
 	 * @see		#loadConfig()
 	 * @see		#connectWithConfig()
 	 */
-	public var config(get_config, null):ConfigData;
+	public var config(get, null):ConfigData;
  	private function get_config():ConfigData
 	{
 		return _config;
@@ -1222,7 +1222,7 @@ class SmartFox extends EventDispatcher
 	 *<p>This value represents the maximum message size(in bytes)before the protocol compression is activated. 
 	 * It is determined by the server configuration.</p>
 	 */
-	public var compressionThreshold(get_compressionThreshold, null):Int;
+	public var compressionThreshold(get, null):Int;
  	private function get_compressionThreshold():Int
 	{
 		return _bitSwarm.compressionThreshold;
@@ -1233,7 +1233,7 @@ class SmartFox extends EventDispatcher
 	 *<p>Any request exceeding this size will not be sent.
 	 * The value is determined by the server configuration.</p>
 	 */
-	public var maxMessageSize(get_maxMessageSize, null):Int;
+	public var maxMessageSize(get, null):Int;
  	private function get_maxMessageSize():Int
 	{
 		return _bitSwarm.maxMessageSize;
@@ -1442,7 +1442,7 @@ class SmartFox extends EventDispatcher
 	 * If set to<code>true</code>, detailed debugging informations for all the incoming and outgoing messages are provided.
 	 *<p>Debugging can be enabled when instantiating the<em>SmartFox</em>class too.</p>
 	 */
-	public var debug(get_debug, set_debug):Bool;
+	public var debug(get, set):Bool;
  	private function get_debug():Bool
 	{
 		return _debug;
@@ -1461,7 +1461,7 @@ class SmartFox extends EventDispatcher
 	 * @see		#connect()
 	 * @see		#loadConfig()
 	 */
-	public var currentIp(get_currentIp, null):String;
+	public var currentIp(get, null):String;
  	private function get_currentIp():String
 	{
 		return _bitSwarm.connectionIp;
@@ -1474,7 +1474,7 @@ class SmartFox extends EventDispatcher
 	 * @see		#connect()
 	 * @see		#loadConfig()
 	 */
-	public var currentPort(get_currentPort, null):Int;
+	public var currentPort(get, null):Int;
  	private function get_currentPort():Int
 	{
 		return _bitSwarm.connectionPort;
@@ -1486,7 +1486,7 @@ class SmartFox extends EventDispatcher
 	 * @see		#loadConfig()
 	 * @see		com.smartfoxserver.v2.requests.LoginRequest LoginRequest
 	 */
-	public var currentZone(get_currentZone, null):String;
+	public var currentZone(get, null):String;
  	private function get_currentZone():String
 	{
 		return _currentZone;
@@ -1501,7 +1501,7 @@ class SmartFox extends EventDispatcher
 	 * @see		com.smartfoxserver.v2.entities.User#isItMe User.isItMe
 	 * @see		com.smartfoxserver.v2.requests.LoginRequest LoginRequest
 	 */
-	public var mySelf(get_mySelf, set_mySelf):User;
+	public var mySelf(get, set):User;
  	private function get_mySelf():User
 	{
 		return _mySelf;
@@ -1522,7 +1522,7 @@ class SmartFox extends EventDispatcher
 	 * @see #connectionMode connectionMode
 	 * @see #loadConfig()
 	 */ 
-	public var useBlueBox(get_useBlueBox, set_useBlueBox):Bool;
+	public var useBlueBox(get, set):Bool;
  	private function get_useBlueBox():Bool
 	{
 		return _useBlueBox;
@@ -1537,7 +1537,7 @@ class SmartFox extends EventDispatcher
 	/**
 	 * Returns a reference to the Internal<em>Logger</em>instance used by SmartFoxServer 2X.
 	 */
-	public var logger(get_logger, null):Logger;
+	public var logger(get, null):Logger;
  	private function get_logger():Logger
 	{
 		return _log;
@@ -1553,7 +1553,7 @@ class SmartFox extends EventDispatcher
 	 * @see		#joinedRooms()
 	 * @see		com.smartfoxserver.v2.requests.JoinRoomRequest JoinRoomRequest
 	 */
-	public var lastJoinedRoom(get_lastJoinedRoom, set_lastJoinedRoom):Room;
+	public var lastJoinedRoom(get, set):Room;
  	private function get_lastJoinedRoom():Room
 	{
 		return _lastJoinedRoom;
@@ -1576,7 +1576,7 @@ class SmartFox extends EventDispatcher
 	 * @see		com.smartfoxserver.v2.entities.Room Room
 	 * @see		com.smartfoxserver.v2.requests.JoinRoomRequest JoinRoomRequest
 	 */
-	public var joinedRooms(get_joinedRooms, null):Array<Room>;
+	public var joinedRooms(get, null):Array<Room>;
  	private function get_joinedRooms():Array<Room>
 	{
 		return roomManager.getJoinedRooms();
@@ -1596,7 +1596,7 @@ class SmartFox extends EventDispatcher
 	 * @see 	com.smartfoxserver.v2.requests.SubscribeRoomGroupRequest SubscribeRoomGroupRequest
 	 * @see 	com.smartfoxserver.v2.requests.UnsubscribeRoomGroupRequest UnsubscribeRoomGroupRequest
 	 */
-	public var roomList(get_roomList, null):Array<Room>;
+	public var roomList(get, null):Array<Room>;
  	private function get_roomList():Array<Room>
 	{
 		return _roomManager.getRoomList();
@@ -1607,7 +1607,7 @@ class SmartFox extends EventDispatcher
 	 * This manager is used Internally by the SmartFoxServer 2X API;the reference returned by this property
 	 * gives access to the Rooms list and Groups, allowing Interaction with<em>Room</em>objects.
 	 */
-	public var roomManager(get_roomManager, null):IRoomManager;
+	public var roomManager(get, null):IRoomManager;
  	private function get_roomManager():IRoomManager
 	{
 		return _roomManager;
@@ -1618,7 +1618,7 @@ class SmartFox extends EventDispatcher
 	 * This manager is used Internally by the SmartFoxServer 2X API;the reference returned by this property
 	 * gives access to the users list, allowing Interaction with<em>User</em>objects.
 	 */
-	public var userManager(get_userManager, set_userManager):IUserManager;
+	public var userManager(get, set):IUserManager;
  	private function get_userManager():IUserManager
 	{
 		return _userManager;
@@ -1634,7 +1634,7 @@ class SmartFox extends EventDispatcher
 	 * This manager is used Internally by the SmartFoxServer 2X API;the reference returned by this property
 	 * gives access to the buddies list, allowing Interaction with<em>Buddy</em>and<em>BuddyVariable</em>objects and access to user properties in the<b>Buddy List</b>system.
 	 */
-	public var buddyManager(get_buddyManager, set_buddyManager):IBuddyManager;
+	public var buddyManager(get, set):IBuddyManager;
  	private function get_buddyManager():IBuddyManager
 	{
 		return _buddyManager;
@@ -1654,7 +1654,7 @@ class SmartFox extends EventDispatcher
 	 * 
 	 * @see		#initUDP()
 	 */
-	public var udpAvailable(get_udpAvailable, null):Bool;
+	public var udpAvailable(get, null):Bool;
  	private function get_udpAvailable():Bool
 	{
 		return isAirRuntime();
@@ -1666,7 +1666,7 @@ class SmartFox extends EventDispatcher
 	 * @see		#udpAvailable
 	 * @see		#initUDP()
 	 */
-	public var udpInited(get_udpInited, null):Bool;
+	public var udpInited(get, null):Bool;
  	private function get_udpInited():Bool
 	{
 		return _bitSwarm.udpManager.inited;
@@ -1825,7 +1825,7 @@ class SmartFox extends EventDispatcher
 	}
 	
 	/** @private */
-	public var isJoining(get_isJoining, set_isJoining):Bool;
+	public var isJoining(get, set):Bool;
  	private function get_isJoining():Bool
 	{
 		return _isJoining;
@@ -1844,7 +1844,7 @@ class SmartFox extends EventDispatcher
 	 * 
 	 * @see		#httpUploadURI
 	 */
-	public var sessionToken(get_sessionToken, null):String;
+	public var sessionToken(get, null):String;
  	private function get_sessionToken():String
 	{
 		return _sessionToken;

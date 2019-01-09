@@ -49,7 +49,7 @@ class SFSIOHandler implements IoHandler
 		fullPacketDump=b;
 	}
 	
-	public var codec(get_codec, set_codec):IProtocolCodec;
+	public var codec(get, set):IProtocolCodec;
  	private function get_codec():IProtocolCodec
 	{
 		return protocolCodec;

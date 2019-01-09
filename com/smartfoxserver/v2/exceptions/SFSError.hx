@@ -12,7 +12,7 @@ class SFSError extends Error
 		_details=extra;
 	}
 	
-	public var details(get_details, null):String;
+	public var details(get, null):String;
  	private function get_details():String
 	{
 		return _details;

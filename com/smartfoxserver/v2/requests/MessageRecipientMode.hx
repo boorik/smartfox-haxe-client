@@ -80,7 +80,7 @@ class MessageRecipientMode
 	/**
 	 * Returns the selected recipient mode.
 	 */
-	public var mode(get_mode, null):Int;
+	public var mode(get, null):Int;
  	private function get_mode():Int
 	{
 		return _mode;
@@ -89,7 +89,7 @@ class MessageRecipientMode
 	/**
 	 * Returns the moderator/administrator message target, according to the selected recipient mode.
 	 */
-	public var target(get_target, null):Dynamic;
+	public var target(get, null):Dynamic;
  	private function get_target():Dynamic
 	{
 		return _target;

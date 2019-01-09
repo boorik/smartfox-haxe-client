@@ -95,21 +95,21 @@ class SFSBuddyVariable implements BuddyVariable
 	}
 	
 	/** @inheritDoc */
-	public var isOffline(get_isOffline, null):Bool;
+	public var isOffline(get, null):Bool;
  	private function get_isOffline():Bool
 	{
 		return _name.charAt(0) == "$";
 	}
 
 	/** @inheritDoc */
-	public var name(get_name, null):String;
+	public var name(get, null):String;
  	private function get_name():String
 	{
 		return _name;
 	}
 	
 	/** @inheritDoc */
-	public var type(get_type, null):String;
+	public var type(get, null):String;
  	private function get_type():String
 	{
 		return _type;

@@ -60,7 +60,7 @@ class SFSRoomManager implements IRoomManager
 	}
 	
 	/** @private */
-	public var ownerZone(get_ownerZone, set_ownerZone):String;
+	public var ownerZone(get, set):String;
  	private function get_ownerZone():String
 	{
 		return _ownerZone;
@@ -73,7 +73,7 @@ class SFSRoomManager implements IRoomManager
 	}
 	
 	/** @private */
-	public var smartFox(get_smartFox, null):SmartFox;
+	public var smartFox(get, null):SmartFox;
  	private function get_smartFox():SmartFox
 	{
 		return _smartFox;

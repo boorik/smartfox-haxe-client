@@ -11,7 +11,7 @@ interface IRequest
 	
 	public var targetController(get, set):Int;
 	
-	public var isEncrypted(get_isEncrypted, set_isEncrypted):Bool;
+	public var isEncrypted(get, set):Bool;
 	
 	function getMessage():IMessage;
 }

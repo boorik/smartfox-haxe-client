@@ -45,7 +45,7 @@ class MapLimits
 	/**
 	 * Returns the lower coordinates limit of the virtual environment along the X,Y,Z axes.
 	 */
-	public var lowerLimit(get_lowerLimit, null):Vec3D;
+	public var lowerLimit(get, null):Vec3D;
  	private function get_lowerLimit():Vec3D
 	{
 		return _lowerLimit;
@@ -54,7 +54,7 @@ class MapLimits
 	/**
 	 * Returns the higher coordinates limit of the virtual environment along the X,Y,Z axes.
 	 */
-	public var higherLimit(get_higherLimit, null):Vec3D;
+	public var higherLimit(get, null):Vec3D;
  	private function get_higherLimit():Vec3D
 	{
 		return _higherLimit;

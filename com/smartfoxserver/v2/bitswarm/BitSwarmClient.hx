@@ -73,7 +73,7 @@ class BitSwarmClient extends EventDispatcher
 		return _connectionMode;
 	}
 	
-	public var ioHandler(get_ioHandler, set_ioHandler):IoHandler;
+	public var ioHandler(get, set):IoHandler;
  	private function get_ioHandler():IoHandler
 	{
 		return _ioHandler;
@@ -87,7 +87,7 @@ class BitSwarmClient extends EventDispatcher
 		return _ioHandler = value;
 	}
 	
-	public var maxMessageSize(get_maxMessageSize, set_maxMessageSize):Int;
+	public var maxMessageSize(get, set):Int;
  	private function get_maxMessageSize():Int
 	{
 		return _maxMessageSize;
@@ -98,7 +98,7 @@ class BitSwarmClient extends EventDispatcher
 		return _maxMessageSize = value;
 	}
 	
-	public var compressionThreshold(get_compressionThreshold, set_compressionThreshold):Int;
+	public var compressionThreshold(get, set):Int;
  	private function get_compressionThreshold():Int
 	{
 		return _compressionThreshold;
@@ -116,13 +116,13 @@ class BitSwarmClient extends EventDispatcher
 			throw new ArgumentError("Compression threshold cannot be<100 bytes.");
 	}
 	
-	public var reconnectionDelayMillis(get_reconnectionDelayMillis, set_reconnectionDelayMillis):Int;
+	public var reconnectionDelayMillis(get, set):Int;
  	private function get_reconnectionDelayMillis():Int
 	{
 		return _reconnectionDelayMillis;
 	}
 	
-	public var useBlueBox(get_useBlueBox, null):Bool;
+	public var useBlueBox(get, null):Bool;
  	private function get_useBlueBox():Bool
 	{
 		return _useBlueBox;	
@@ -193,19 +193,19 @@ class BitSwarmClient extends EventDispatcher
 		return _controllers.get(id);
 	}
 	
-	public var systemController(get_systemController, null):SystemController;
+	public var systemController(get, null):SystemController;
  	private function get_systemController():SystemController
 	{
 		return _sysController;
 	}
 	
-	public var extensionController(get_extensionController, null):ExtensionController;
+	public var extensionController(get, null):ExtensionController;
  	private function get_extensionController():ExtensionController
 	{
 		return _extController;
 	}
 	
-	public var isReconnecting(get_isReconnecting, set_isReconnecting):Bool;
+	public var isReconnecting(get, set):Bool;
  	private function get_isReconnecting():Bool
 	{
 		return _attemptingReconnection;
@@ -221,7 +221,7 @@ class BitSwarmClient extends EventDispatcher
 		return _controllers.get(id);
 	}
 	
-	public var connectionIp(get_connectionIp, null):String;
+	public var connectionIp(get, null):String;
  	private function get_connectionIp():String
 	{
 		if(!connected)
@@ -328,7 +328,7 @@ class BitSwarmClient extends EventDispatcher
 		executeDisconnection(null);
 	}
 	
-	public var udpManager(get_udpManager, set_udpManager):IUDPManager;
+	public var udpManager(get, set):IUDPManager;
  	private function get_udpManager():IUDPManager
 	{
 		return _udpManager;
@@ -351,7 +351,7 @@ class BitSwarmClient extends EventDispatcher
 		addController(1, _extController);
 	}
 	
-	public var reconnectionSeconds(get_reconnectionSeconds, set_reconnectionSeconds):Int;
+	public var reconnectionSeconds(get, set):Int;
  	private function get_reconnectionSeconds():Int
 	{
 		return _reconnectionSeconds;
