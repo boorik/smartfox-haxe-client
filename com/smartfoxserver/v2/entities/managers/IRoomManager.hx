@@ -193,7 +193,7 @@ interface IRoomManager
 	function removeUser(user:User):Void;
 	
 	/** @private */
-	var  smartFox(get_smartFox, null):SmartFox;
+	var smartFox(get, null):SmartFox;
 	//function get smartFox():SmartFox
 }
 #end
