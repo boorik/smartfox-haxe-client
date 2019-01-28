@@ -74,14 +74,14 @@ class SFSRoomVariable extends SFSUserVariable implements RoomVariable
 	}
 	
 	/** @inheritDoc */
-	public var isPrivate(get_isPrivate, set_isPrivate):Bool;
+	public var isPrivate(get, set):Bool;
  	private function get_isPrivate():Bool
 	{
 		return _isPrivate;
 	}
 	
 	/** @inheritDoc */
-	public var isPersistent(get_isPersistent, set_isPersistent):Bool;
+	public var isPersistent(get, set):Bool;
  	private function get_isPersistent():Bool
 	{
 		return _isPersistent;

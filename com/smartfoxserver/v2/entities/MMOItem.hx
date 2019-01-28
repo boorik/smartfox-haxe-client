@@ -67,7 +67,7 @@ class MMOItem implements IMMOItem
 	}
 	
 	/** @inheritDoc */
-	public var id(get_id, set_id):Int;
+	public var id(get, set):Int;
  	private function get_id():Int
 	{
 		return _id;
@@ -124,7 +124,7 @@ class MMOItem implements IMMOItem
 	}
 	
 	/** @inheritDoc */
-	public var aoiEntryPoint(get_aoiEntryPoint, set_aoiEntryPoint):Vec3D;
+	public var aoiEntryPoint(get, set):Vec3D;
  	private function get_aoiEntryPoint():Vec3D
 	{
 		return _aoiEntryPoint;

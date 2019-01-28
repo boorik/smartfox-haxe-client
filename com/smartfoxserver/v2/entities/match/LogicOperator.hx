@@ -33,7 +33,7 @@ class LogicOperator
 	 * Returns the id of the current<em>LogicOperator</em>instance.
 	 * It can be the string "AND" or "OR".
 	 */
-	public var id(get_id, null):String;
+	public var id(get, null):String;
  	private function get_id():String
 	{
 		return _id;

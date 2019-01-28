@@ -51,7 +51,7 @@ class MMORoomSettings extends RoomSettings
 	 * 
 	 * @example	A<code>Vec3D(120,120,60)</code>describes a range of 120 units in all four directions(top, bottom, left, right)and 60 units along the two Z-axis directions(backward, forward)with respect to the user position in a 3D coordinates system.
 	 */
-	public var defaultAOI(get_defaultAOI, set_defaultAOI):Vec3D;
+	public var defaultAOI(get, set):Vec3D;
  	private function get_defaultAOI():Vec3D
 	{
 		return _defaultAOI;
@@ -66,7 +66,7 @@ class MMORoomSettings extends RoomSettings
 	 * 
 	 *<p>This setting is optional but its usage is highly recommended.</p>
 	 */
-	public var mapLimits(get_mapLimits, set_mapLimits):MapLimits;
+	public var mapLimits(get, set):MapLimits;
  	private function get_mapLimits():MapLimits
 	{
 		return _mapLimits;
@@ -81,7 +81,7 @@ class MMORoomSettings extends RoomSettings
 	 * 
 	 * @default	50 seconds
 	 */
-	public var userMaxLimboSeconds(get_userMaxLimboSeconds, set_userMaxLimboSeconds):Int;
+	public var userMaxLimboSeconds(get, set):Int;
  	private function get_userMaxLimboSeconds():Int
 	{
 		return _userMaxLimboSeconds;
@@ -99,7 +99,7 @@ class MMORoomSettings extends RoomSettings
 	 * 
 	 * @see		com.smartfoxserver.v2.SmartFox#event:proximityListUpdate proximityListUpdate event
 	 */
-	public var proximityListUpdateMillis(get_proximityListUpdateMillis, set_proximityListUpdateMillis):Int;
+	public var proximityListUpdateMillis(get, set):Int;
  	private function get_proximityListUpdateMillis():Int
 	{
 		return _proximityListUpdateMillis;
@@ -117,7 +117,7 @@ class MMORoomSettings extends RoomSettings
 	 * @see		com.smartfoxserver.v2.entities.MMOItem#aoiEntryPoint MMOItem.aoiEntryPoint
 	 * @see		com.smartfoxserver.v2.SmartFox#event:proximityListUpdate proximityListUpdate event
 	 */
-	public var sendAOIEntryPoint(get_sendAOIEntryPoint, set_sendAOIEntryPoint):Bool;
+	public var sendAOIEntryPoint(get, set):Bool;
  	private function get_sendAOIEntryPoint():Bool
 	{
 		return _sendAOIEntryPoint;

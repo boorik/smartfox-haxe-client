@@ -14,7 +14,7 @@ class BaseController implements IController
 		log = bitSwarm.sfs.logger;
 	}
 	
-	public var id(get_id, set_id):Int;
+	public var id(get, set):Int;
  	private function get_id():Int
 	{
 		return _id;

@@ -12,7 +12,7 @@ class SFSValidationError extends Error
 		_errors = errors;
 	}
 	
-	public var errors(get_errors, null):Array<String>;
+	public var errors(get, null):Array<String>;
  	private function get_errors():Array<String>
 	{
 		return _errors;

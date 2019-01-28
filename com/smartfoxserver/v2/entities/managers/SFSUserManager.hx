@@ -114,14 +114,14 @@ class SFSUserManager implements IUserManager
 	}
 	
 	/** @inheritDoc */
-	public var userCount(get_userCount, null):Int;
+	public var userCount(get, null):Int;
  	private function get_userCount():Int
 	{
 		return Lambda.count(_usersById);
 	}
 	
 	/** @private */
-	public var smartFox(get_smartFox, null):SmartFox;
+	public var smartFox(get, null):SmartFox;
  	private function get_smartFox():SmartFox
 	{
 		return _smartFox;

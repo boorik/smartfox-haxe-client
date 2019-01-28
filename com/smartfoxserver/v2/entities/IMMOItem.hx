@@ -64,6 +64,6 @@ interface IMMOItem
 	 * @see com.smartfoxserver.v2.requests.mmo.MMORoomSettings#sendAOIEntryPoint sendAOIEntryPoint
 	 * @see	com.smartfoxserver.v2.SmartFox#event:proximityListUpdate proximityListUpdate event 
 	 */
-	public var aoiEntryPoint(get_aoiEntryPoint, set_aoiEntryPoint):Vec3D;
+	public var aoiEntryPoint(get, set):Vec3D;
 }
 #end

@@ -78,7 +78,7 @@ interface IUserManager
 	/**
 	 * Returns the total number of users in the local users list.
 	 */
-	var userCount(get_userCount, null):Int;
+	var userCount(get, null):Int;
 	//function get userCount():Int
 	
 	/**
@@ -89,6 +89,6 @@ interface IUserManager
 	function getUserList():Array<User>;
 	
 	/** @private */
-	var smartFox(get_smartFox, null):SmartFox;
+	var smartFox(get, null):SmartFox;
 	//function get smartFox():SmartFox
 }

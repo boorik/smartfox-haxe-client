@@ -64,7 +64,7 @@ class RoomSettings
 	/**
 	 * Defines the name of the Room.
 	 */
-	public var name(get_name, set_name):String;
+	public var name(get, set):String;
  	private function get_name():String 
 	{ 
 		return _name;
@@ -82,7 +82,7 @@ class RoomSettings
 	 * 
 	 *<p>The default value is an empty string.</p>
 	 */
-	public var password(get_password, set_password):String;
+	public var password(get, set):String;
  	private function get_password():String 
 	{ 
 		return _password;
@@ -99,7 +99,7 @@ class RoomSettings
 	 * 
 	 * @default	false
 	 */
-	public var isGame(get_isGame, set_isGame):Bool;
+	public var isGame(get, set):Bool;
  	private function get_isGame():Bool 
 	{ 
 		return _isGame;
@@ -119,7 +119,7 @@ class RoomSettings
 	 * 
 	 * @see		#maxSpectators
 	 */
-	public var maxUsers(get_maxUsers, set_maxUsers):Int;
+	public var maxUsers(get, set):Int;
  	private function get_maxUsers():Int 
 	{ 
 		return _maxUsers;
@@ -136,7 +136,7 @@ class RoomSettings
 	 * 
 	 * @default	5
 	 */
-	public var maxVariables(get_maxVariables, set_maxVariables):Int;
+	public var maxVariables(get, set):Int;
  	private function get_maxVariables():Int 
 	{ 
 		return _maxVariables;
@@ -155,7 +155,7 @@ class RoomSettings
 	 * 
 	 * @see		#maxUsers
 	 */
-	public var maxSpectators(get_maxSpectators, set_maxSpectators):Int;
+	public var maxSpectators(get, set):Int;
  	private function get_maxSpectators():Int 
 	{ 
 		return _maxSpectators;
@@ -174,7 +174,7 @@ class RoomSettings
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.variables.RoomVariable RoomVariable
 	 */
-	public var variables(get_variables, set_variables):Array<RoomVariable>;
+	public var variables(get, set):Array<RoomVariable>;
  	private function get_variables():Array<RoomVariable>
 	{ 
 		return _variables;
@@ -194,7 +194,7 @@ class RoomSettings
 	 * 
 	 * @default	null
 	 */ 
-	public var permissions(get_permissions, set_permissions):RoomPermissions;
+	public var permissions(get, set):RoomPermissions;
  	private function get_permissions():RoomPermissions 
 	{ 
 		return _permissions;
@@ -214,7 +214,7 @@ class RoomSettings
 	 * 
 	 * @default	null
 	 */ 
-	public var events(get_events, set_events):RoomEvents;
+	public var events(get, set):RoomEvents;
  	private function get_events():RoomEvents 
 	{ 
 		return _events;
@@ -229,7 +229,7 @@ class RoomSettings
 	/**
 	 * Defines the Extension that must be attached to the Room on the server-side, and its settings.
 	 */
-	public var extension(get_extension, set_extension):RoomExtension;
+	public var extension(get, set):RoomExtension;
  	private function get_extension():RoomExtension
 	{
 		return _extension;
@@ -249,7 +249,7 @@ class RoomSettings
 	 * 
 	 * @see com.smartfoxserver.v2.entities.Room#groupId
 	 */	
-	public var groupId(get_groupId, set_groupId):String;
+	public var groupId(get, set):String;
  	private function get_groupId():String
 	{
 		return _groupId;

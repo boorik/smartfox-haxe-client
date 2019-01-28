@@ -153,7 +153,7 @@ class AirUDPManager implements IUDPManager
 	/**
 	 * @private
 	 */
-	public var inited(get_inited, set_inited):Bool;
+	public var inited(get, set):Bool;
  	private function get_inited():Bool
 	{
 		return _initSuccess;			
@@ -162,7 +162,7 @@ class AirUDPManager implements IUDPManager
 	/**
 	 * @private
 	 */
-	public var sfs(null, set_sfs):SmartFox;
+	public var sfs(null, set):SmartFox;
  	private function set_sfs(sfs:SmartFox):Void
 	{
 		this._sfs = sfs;

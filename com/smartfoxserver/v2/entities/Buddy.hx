@@ -19,7 +19,7 @@ interface Buddy
 	 * 
 	 * @see		User#id
 	 */
-	public var id(get_id, null):Int;
+	public var id(get, null):Int;
 	
 	/**
 	 * Indicates the name of this buddy.
@@ -27,7 +27,7 @@ interface Buddy
 	 * 
 	 * @see		User#name
 	 */
-	var  name(get_name,null):String;
+	var  name(get,null):String;
 	
 	/**
 	 * Indicates whether this buddy is blocked in the current user's buddies list or not.
@@ -40,12 +40,12 @@ interface Buddy
 	/**
 	 * Indicates whether this buddy is online in the Buddy List system or not.
 	 */
-	var isOnline(get_isOnline,null):Bool;
+	var isOnline(get,null):Bool;
 	
 	/**
 	 * Indicates whether this buddy is temporary(non-persistent)in the current user's buddies list or not.
 	 */
-	var isTemp(get_isTemp,null):Bool;
+	var isTemp(get,null):Bool;
 	
 	/**
 	 * Returns the custom state of this buddy.
@@ -55,13 +55,13 @@ interface Buddy
 	 * 
 	 * @see		com.smartfoxserver.v2.entities.managers.IBuddyManager#buddyStates IBuddyManager.buddyStates
 	 */
-	var state(get_state,null):String;
+	var state(get,null):String;
 	
 	/**
 	 * Returns the nickname of this buddy.
 	 * If the nickname is not set,<code>null</code>is returned.
 	 */
-	var nickName(get_nickName,null):String;
+	var nickName(get,null):String;
 	
 	/**
 	 * Returns a list of<em>BuddyVariable</em>objects associated with the buddy.
@@ -69,7 +69,7 @@ interface Buddy
 	 * @see		com.smartfoxserver.v2.entities.variables.BuddyVariable BuddyVariable
 	 * @see		#getVariable()
 	 */ 
-	var variables(get_variables,null):Array<BuddyVariable>;
+	var variables(get,null):Array<BuddyVariable>;
 	
 	/**
 	 * Retrieves a Buddy Variable from its name.

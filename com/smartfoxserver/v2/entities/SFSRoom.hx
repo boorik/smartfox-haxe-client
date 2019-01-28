@@ -32,7 +32,7 @@ extern class SFSRoom{
 	function getVariable(varName:String):RoomVariable;
 	function getVariables():Array<RoomVariable>;
 	function toString():String;
-	public var roomManager(get_roomManager, set_roomManager):IRoomManager;
+	public var roomManager(get, set):IRoomManager;
  	inline private function get_roomManager():IRoomManager
 	{
 		return getRoomManager();
@@ -201,14 +201,14 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public var id(get_id, null):Int;
+	public var id(get, null):Int;
  	private function get_id():Int
 	{
 		return _id;
 	}
 	
 	/** @inheritDoc */
-	public var name(get_name, set_name):String;
+	public var name(get, set):String;
  	private function get_name():String	
 	{
 		return _name;
@@ -221,28 +221,28 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public var groupId(get_groupId, null):String;
+	public var groupId(get, null):String;
  	private function get_groupId():String
 	{
 		return _groupId;
 	}
 	
 	/** @inheritDoc */
-	public var isGame(get_isGame, set_isGame):Bool;
+	public var isGame(get, set):Bool;
  	private function get_isGame():Bool
 	{
 		return _isGame;		
 	}
 	
 	/** @inheritDoc */
-	public var isHidden(get_isHidden, set_isHidden):Bool;
+	public var isHidden(get, set):Bool;
  	private function get_isHidden():Bool
 	{
 		return _isHidden;
 	}
 	
 	/** @inheritDoc */
-	public var isJoined(get_isJoined, set_isJoined):Bool;
+	public var isJoined(get, set):Bool;
  	private function get_isJoined():Bool
 	{
 		return _isJoined;
@@ -280,7 +280,7 @@ class SFSRoom implements Room
 	}
 	
 	/** @private */
-	public var isManaged(get_isManaged, set_isManaged):Bool;
+	public var isManaged(get, set):Bool;
  	private function get_isManaged():Bool
 	{
 		return _isManaged;
@@ -311,7 +311,7 @@ class SFSRoom implements Room
 	*/
 	
 	/** @inheritDoc */
-	public var userCount(get_userCount, set_userCount):Int;
+	public var userCount(get, set):Int;
  	private function get_userCount():Int
 	{
 		// Return server count from UCountUpdate	
@@ -332,21 +332,21 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public var maxUsers(get_maxUsers, set_maxUsers):Int;
+	public var maxUsers(get, set):Int;
  	private function get_maxUsers():Int
 	{
 		return _maxUsers;
 	}
 	
 	/** @inheritDoc */
-	public var capacity(get_capacity, null):Int;
+	public var capacity(get, null):Int;
  	private function get_capacity():Int
 	{
 		return _maxUsers + _maxSpectators;
 	}
 	
 	/** @inheritDoc */
-	public var spectatorCount(get_spectatorCount, set_spectatorCount):Int;
+	public var spectatorCount(get, set):Int;
  	private function get_spectatorCount():Int
 	{
 		// No spectators in regular rooms
@@ -363,7 +363,7 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public var maxSpectators(get_maxSpectators, set_maxSpectators):Int;
+	public var maxSpectators(get, set):Int;
  	private function get_maxSpectators():Int
 	{
 		return _maxSpectators;
@@ -406,14 +406,14 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public var userList(get_userList, null):Array<User>;
+	public var userList(get, null):Array<User>;
  	private function get_userList():Array<User>
 	{
 		return _userManager.getUserList();
 	}
 	
 	/** @inheritDoc */
-	public var playerList(get_playerList, null):Array<User>;
+	public var playerList(get, null):Array<User>;
  	private function get_playerList():Array<User>
 	{
 		var playerList:Array<User> = [];
@@ -428,7 +428,7 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public var spectatorList(get_spectatorList, null):Array<User>;
+	public var spectatorList(get, null):Array<User>;
  	private function get_spectatorList():Array<User>
 	{
 		var spectatorList:Array<User> = [];
@@ -475,7 +475,7 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public var properties(get_properties, set_properties):Dynamic;
+	public var properties(get, set):Dynamic;
  	private function get_properties():Dynamic
 	{
 		return _properties;
@@ -500,7 +500,7 @@ class SFSRoom implements Room
 	}
 	
 	/** @inheritDoc */
-	public var roomManager(get_roomManager, set_roomManager):IRoomManager;
+	public var roomManager(get, set):IRoomManager;
  	private function get_roomManager():IRoomManager
 	{
 		return _roomManager;

@@ -101,7 +101,7 @@ class ExtensionRequest extends BaseRequest
 	}
 	
 	/** @private */
-	public var useUDP(get_useUDP, null):Bool;
+	public var useUDP(get, null):Bool;
  	private function get_useUDP():Bool
 	{
 		return _useUDP;

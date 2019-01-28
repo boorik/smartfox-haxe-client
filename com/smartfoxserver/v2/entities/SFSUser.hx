@@ -125,21 +125,21 @@ class SFSUser implements User
 	}
 	
 	/** @inheritDoc */
-	public var id(get_id, null):Int;
+	public var id(get, null):Int;
  	private function get_id():Int
 	{
 		return _id;
 	}
 	
 	/** @inheritDoc */
-	public var name(get_name, null):String;
+	public var name(get, null):String;
  	private function get_name():String
 	{
 		return _name;
 	}
 	
 	/** @inheritDoc */
-	public var playerId(get_playerId, null):Null<Int>;
+	public var playerId(get, null):Null<Int>;
  	private function get_playerId():Null<Int>
 	{
 		// Return from default room
@@ -154,7 +154,7 @@ class SFSUser implements User
 	
 	
 	/** @inheritDoc */
-	public var privilegeId(get_privilegeId, set_privilegeId):Int;
+	public var privilegeId(get, set):Int;
  	private function get_privilegeId():Int
 	{
 		return _privilegeId;
@@ -191,14 +191,14 @@ class SFSUser implements User
 	}
 	
 	/** @inheritDoc */
-	public var isPlayer(get_isPlayer, null):Bool;
+	public var isPlayer(get, null):Bool;
  	private function get_isPlayer():Bool
 	{
 		return playerId > 0;
 	}
 	
 	/** @inheritDoc */
-	public var isSpectator(get_isSpectator, null):Bool;
+	public var isSpectator(get, null):Bool;
  	private function get_isSpectator():Bool
 	{
 		return !this.isPlayer;
@@ -240,14 +240,14 @@ class SFSUser implements User
 	}
 	
 	/** @inheritDoc */
-	public var isItMe(get_isItMe, null):Bool;
+	public var isItMe(get, null):Bool;
  	private function get_isItMe():Bool
 	{
 		return _isItMe;
 	}
 	
 	/** @inheritDoc */
-	public var userManager(get_userManager, set_userManager):IUserManager;
+	public var userManager(get, set):IUserManager;
  	private function get_userManager():IUserManager
 	{
 		return _userManager;
@@ -314,7 +314,7 @@ class SFSUser implements User
 	}
 	
 	/** @inheritDoc */
-	public var properties(get_properties, set_properties):Dynamic;
+	public var properties(get, set):Dynamic;
  	private function get_properties():Dynamic
 	{
 		return _properties;
@@ -327,7 +327,7 @@ class SFSUser implements User
 	}
 	
 	/** @inheritDoc */
-	public var aoiEntryPoint(get_aoiEntryPoint, set_aoiEntryPoint):Vec3D;
+	public var aoiEntryPoint(get, set):Vec3D;
  	private function get_aoiEntryPoint():Vec3D
 	{
 		return _aoiEntryPoint;

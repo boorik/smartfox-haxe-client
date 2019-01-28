@@ -60,7 +60,7 @@ class LagMonitor extends EventDispatcher
 		}
 	}
 	
-	public var isRunning(get_isRunning, null):Bool;
+	public var isRunning(get, null):Bool;
  	private function get_isRunning():Bool
 	{
 		return _thread.running;
@@ -81,7 +81,7 @@ class LagMonitor extends EventDispatcher
 		return averagePingTime;
 	}
 	
-	public var lastPingTime(get_lastPingTime, null):Float;
+	public var lastPingTime(get, null):Float;
  	private function get_lastPingTime():Float
 	{
 		if(_valueQueue.length>0)
@@ -90,7 +90,7 @@ class LagMonitor extends EventDispatcher
 			return 0;
 	}
 	
-	public var averagePingTime(get_averagePingTime, null):Float;
+	public var averagePingTime(get, null):Float;
  	private function get_averagePingTime():Float
 	{
 		if(_valueQueue.length==0)

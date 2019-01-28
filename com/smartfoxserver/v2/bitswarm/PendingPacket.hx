@@ -21,7 +21,7 @@ class PendingPacket
 	public var header(get, set):PacketHeader;
 	
 	
-	public var buffer(get_buffer, set_buffer):ByteArray;
+	public var buffer(get, set):ByteArray;
  	private function get_buffer():ByteArray
 	{
 		return _buffer;

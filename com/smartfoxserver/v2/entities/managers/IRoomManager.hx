@@ -17,7 +17,7 @@ import com.smartfoxserver.v2.entities.User;
 interface IRoomManager
 {
 	/** @private */
-	var ownerZone(get_ownerZone, null):String;
+	var ownerZone(get, null):String;
 	//function get ownerZone():String
 	
 	/** @private */
@@ -193,7 +193,7 @@ interface IRoomManager
 	function removeUser(user:User):Void;
 	
 	/** @private */
-	var  smartFox(get_smartFox, null):SmartFox;
+	var smartFox(get, null):SmartFox;
 	//function get smartFox():SmartFox
 }
 #end
