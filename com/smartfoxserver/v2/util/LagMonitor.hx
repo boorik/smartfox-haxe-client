@@ -69,7 +69,7 @@ class LagMonitor extends EventDispatcher
 	public function onPingPong():Float
 	{
 		// Calculate lag
-		var lagValue:Float= haxe.Timer.stamp() - _lastReqTime;
+		var lagValue:Float= 1000. * (haxe.Timer.stamp() - _lastReqTime);
 		
 		// Remove older value
 		if(_valueQueue.length>=_queueSize)
