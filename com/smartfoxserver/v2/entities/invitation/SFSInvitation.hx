@@ -3,16 +3,6 @@ package com.smartfoxserver.v2.entities.invitation;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
-#if html5
-@:native('SFS2X.SFSInvitation')
-extern class SFSInvitation{
-	var id(default,null):Int;
-	var invitee(default,null):User;
-	var inviter(default,null):User;
-	var params(default,null):ISFSObject;
-	var secondsForAnswer(default,null):Int;
-}
-#else
 
 /**
  * The<em>SFSInvitation</em>object contains all the informations about an invitation received by the current user.
@@ -106,4 +96,3 @@ class SFSInvitation implements Invitation
 		return _params;
 	}
 }
-#end

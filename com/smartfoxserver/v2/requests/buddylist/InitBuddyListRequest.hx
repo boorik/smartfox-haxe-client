@@ -1,10 +1,4 @@
 package com.smartfoxserver.v2.requests.buddylist;
-#if html5
-@:native('SFS2X.InitBuddyListRequest')
-extern class InitBuddyListRequest{
-	public function new();
-}
-#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.BaseRequest;
@@ -89,4 +83,3 @@ class InitBuddyListRequest extends BaseRequest
 		// no params to add
 	}
 }
-#end

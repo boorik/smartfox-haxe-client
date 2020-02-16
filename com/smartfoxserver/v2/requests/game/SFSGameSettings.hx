@@ -3,23 +3,6 @@ package com.smartfoxserver.v2.requests.game;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.match.MatchExpression;
 import com.smartfoxserver.v2.entities.User;
-
-#if html5
-@:native('SFS2X.SFSGameSettings')
-extern class SFSGameSettings{
-	var invitationExpiryTime:Float;
-	var invitationParams:ISFSObject;
-	var invitedPlayers:Array<User>;
-	var isPublic:Bool;
-	var leaveLastJoinedRoom:Bool;
-	var minPlayersToStartGame:Int;
-	var notifyGameStarted:Bool;
-	var playerMatchExpression:MatchExpression;
-	var searchableRooms:Array<String>;
-	var spectatorMatchExpression:MatchExpression;
-	public function new(name:String);
-}
-#else
 import com.smartfoxserver.v2.requests.RoomSettings;
 
 /**
@@ -188,4 +171,3 @@ class SFSGameSettings extends RoomSettings
 	public var invitationParams:ISFSObject;
 	
 }
-#end

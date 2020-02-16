@@ -1,8 +1,5 @@
 package com.smartfoxserver.v2.bitswarm;
 
-#if html5
-typedef IMessage = Message;
-#else
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 
 /** @private */
@@ -29,4 +26,3 @@ interface IMessage
 	//function get_packetId():Float;
 	//function set_packetId(value:Float):Void;
 }
-#end

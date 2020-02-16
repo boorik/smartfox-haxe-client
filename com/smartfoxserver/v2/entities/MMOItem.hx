@@ -1,18 +1,6 @@
 package com.smartfoxserver.v2.entities;
 import com.smartfoxserver.v2.entities.variables.MMOItemVariable;
 import com.smartfoxserver.v2.entities.data.Vec3D;
-#if html5
-@:native('SFS2X.MMOItem')
-extern class MMOItem{
-	var aoiEntryPoint:Vec3D;
-	var id:Float;
-
-	function containsVariable(varName:String):Bool;
-	function getVariable(varName:String):MMOItemVariable;
-	function getVariables():Array<MMOItemVariable>;
-	function toString():String;
-}
-#else
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.variables.IMMOItemVariable;
 
@@ -146,4 +134,3 @@ class MMOItem implements IMMOItem
 		return "[Item:" + _id + "]";
 	}
 }
-#end

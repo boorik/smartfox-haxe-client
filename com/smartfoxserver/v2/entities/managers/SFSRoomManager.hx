@@ -1,23 +1,4 @@
 package com.smartfoxserver.v2.entities.managers;
-#if html5
-@:native('SFS2X.SFSRoomManager')
-extern class SFSRoomManager{
-
-	function containsGroup(groupId:Int):Bool;
-	function containsRoom(idOrName:Dynamic):Bool;
-	function containsRoomInGroup(idOrName:Dynamic, groupId:Int):Bool;
-	function getJoinedRooms():Array<SFSRoom>;
-	function getRoomById(id:Int):SFSRoom;
-	function getRoomByName(name:String):SFSRoom;
-	function getRoomCount():Int;
-	function getRoomGroups():Array<String>;
-	function getRoomList():Array<SFSRoom>;
-	function getRoomListFromGroup(groupId:Int):Array<SFSRoom>;
-	function getUserRooms(user:SFSUser):Array<SFSRoom>;
-	function removeGroup(groupId:String):Void;
-
-}
-#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
@@ -344,4 +325,3 @@ class SFSRoomManager implements IRoomManager
 		_roomsByName.remove(name);
 	}
 }
-#end

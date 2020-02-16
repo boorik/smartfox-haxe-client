@@ -1,10 +1,4 @@
 package com.smartfoxserver.v2.requests.buddylist;
-#if html5
-@:native('SFS2X.AddBuddyRequest')
-extern class AddBuddyRequest{
-	public function new(buddyName:String);
-}
-#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
@@ -96,4 +90,3 @@ class AddBuddyRequest extends BaseRequest
 		_sfso.putUtfString(KEY_BUDDY_NAME, _name);
 	}
 }
-#end

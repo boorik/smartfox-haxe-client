@@ -1,9 +1,4 @@
 package com.smartfoxserver.v2.entities.managers;
-#if html5
-import com.smartfoxserver.v2.entities.managers.SFSRoomManager;
-typedef IRoomManager = SFSRoomManager;
-#else
-
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
@@ -196,4 +191,3 @@ interface IRoomManager
 	var smartFox(get, null):SmartFox;
 	//function get smartFox():SmartFox
 }
-#end

@@ -1,12 +1,6 @@
 package com.smartfoxserver.v2.requests.game;
 
 import com.smartfoxserver.v2.requests.game.SFSGameSettings;
-#if html5
-@:native('SFS2X.CreateSFSGameRequest')
-extern class CreateSFSGameRequest{
-	public function new(settings:SFSGameSettings);
-}
-#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.entities.User;
@@ -193,4 +187,3 @@ class CreateSFSGameRequest extends BaseRequest
 			_sfso.putSFSObject(KEY_INVITATION_PARAMS, _settings.invitationParams);
 	}
 }
-#end

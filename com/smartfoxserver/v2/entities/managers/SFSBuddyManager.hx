@@ -3,32 +3,6 @@ package com.smartfoxserver.v2.entities.managers;
 
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.entities.variables.BuddyVariable;
-
-#if html5
-@:native('SFS2X.SFSBuddyManager')
-extern class SFSBuddyManager{
-	public var buddyList(get,null):Array<Buddy>;
-	inline function get_buddyList():Array<Buddy>
-	{
-		return getBuddyList();
-	}
-	var isInited:Bool;
-	function containsBuddy(name:String):Bool;
-	function getBuddyById(id:Int):Buddy;
-	function getBuddyByName(name:String):Buddy;
-	function getBuddyByNickName(nickName:String):Buddy;
-	function getBuddyList():Array<Buddy>;
-	function getBuddyStates():Array<String>;
-	function getMyNickName():String;
-	function getMyOnlineState():Bool;
-	function getMyState():String;
-	function getMyVariable(varName:String):BuddyVariable;
-	function getMyVariables():Array<BuddyVariable>;
-	function getOfflineBuddies():Array<Buddy>;
-	function getOnlineBuddies():Array<Buddy>;
-}
-#else
-
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.variables.ReservedBuddyVariables;
 import com.smartfoxserver.v2.entities.variables.SFSBuddyVariable;
@@ -299,4 +273,3 @@ class SFSBuddyManager implements IBuddyManager
 		_buddyStates = states;
 	}
 }
-#end

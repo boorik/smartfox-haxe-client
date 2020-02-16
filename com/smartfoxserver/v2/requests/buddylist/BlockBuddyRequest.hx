@@ -1,11 +1,5 @@
 
 package com.smartfoxserver.v2.requests.buddylist;
-#if html5
-@:native('SFS2X.BlockBuddyRequest')
-extern class BlockBuddyRequest{
-	public function new(buddyName:String,blocked:Bool);
-}
-#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
@@ -109,4 +103,3 @@ class BlockBuddyRequest extends BaseRequest
 		_sfso.putBool(BlockBuddyRequest.KEY_BUDDY_BLOCK_STATE, _blocked);
 	}
 }
-#end

@@ -1,23 +1,5 @@
 package com.smartfoxserver.v2.requests;
 import com.smartfoxserver.v2.entities.variables.RoomVariable;
-#if html5
-extern class RoomSettings
-{
-	var allowOwnerOnlyInvitation:Bool;
-	var events:RoomEvents;
-	var extension:RoomExtension;
-	var groupId:String;
-	var isGame:Bool;
-	var maxSpectators:Int;
-	var maxUsers:Int;
-	var maxVariables:Int;
-	var name:String;
-	var password:String;
-	var permissions:RoomPermissions;
-	var variables:Array<RoomVariable>;
-	function new(name:String);
-}
-#else
 import com.smartfoxserver.v2.entities.SFSConstants;
 
 
@@ -261,4 +243,3 @@ class RoomSettings
 		return _groupId = value;
 	}
 }
-#end

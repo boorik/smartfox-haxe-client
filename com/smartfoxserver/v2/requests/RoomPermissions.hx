@@ -1,14 +1,4 @@
 package com.smartfoxserver.v2.requests;
-#if html5
-@:native('SFS2X.RoomPermissions')
-extern class RoomPermissions{
-	var allowNameChange:Bool;
-	var allowPasswordStateChange:Bool;
-	var allowPublicMessages:Bool;
-	var allowResizing:Bool;
-	function new();
-}
-#else
 /**
  * The<em>RoomPermissions</em>class contains a specific subset of the<em>RoomSettings</em>required to create a Room.
  * It defines which operations users will be able to execute on the Room after its creation.
@@ -120,4 +110,3 @@ class RoomPermissions
 		return _allowResizing = value;
 	}
 }
-#end

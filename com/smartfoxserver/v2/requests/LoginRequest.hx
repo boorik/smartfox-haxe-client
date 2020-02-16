@@ -1,12 +1,4 @@
 package com.smartfoxserver.v2.requests;
-/*
-#if html5
-@:native('SFS2X.LoginRequest')
-extern class LoginRequest{
-	public function new(userName:String = "", password:String = null, params:Dynamic = null, zoneName:String = "");
-}
-#else
-*/
 
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
@@ -154,4 +146,3 @@ class LoginRequest extends BaseRequest
 		return haxe.crypto.Md5.encode(text);
 	}
 }
-//#end

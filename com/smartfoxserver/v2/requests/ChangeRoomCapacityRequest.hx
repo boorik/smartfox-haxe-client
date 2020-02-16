@@ -1,10 +1,4 @@
 package com.smartfoxserver.v2.requests;
-#if html5
-@:native('SFS2X.ChangeRoomCapacityRequest')
-extern class ChangeRoomCapacityRequest{
-	public function new(room:SFSRoom, newMaxUsers:Int, newMaxSpect:Int);
-}
-#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
@@ -105,4 +99,3 @@ class ChangeRoomCapacityRequest extends BaseRequest
 		_sfso.putInt(KEY_SPEC_SIZE, _newMaxSpect);
 	}
 }
-#end

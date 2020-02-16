@@ -1,7 +1,4 @@
 package com.smartfoxserver.v2.entities.data;
-#if html5
-typedef ISFSArray = SFSArray;
-#else
 import flash.utils.ByteArray;
 
 /**
@@ -538,4 +535,3 @@ interface ISFSArray
 	 */
 	function getClass(index:Int):Dynamic;
 }
-#end

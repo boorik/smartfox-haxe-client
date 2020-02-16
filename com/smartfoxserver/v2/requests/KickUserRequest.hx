@@ -1,10 +1,4 @@
 package com.smartfoxserver.v2.requests;
-#if html5
-@:native('SFS2X.KickUserRequest')
-extern class KickUserRequest{
-	public function new(userId:Int, message:String=null, delaySeconds:Int = 5);
-}
-#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
@@ -93,4 +87,3 @@ class KickUserRequest extends BaseRequest
 			_sfso.putUtfString(KEY_MESSAGE, _message);
 	}
 }
-#end

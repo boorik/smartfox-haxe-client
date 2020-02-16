@@ -1,25 +1,5 @@
 package com.smartfoxserver.v2.entities;
 import com.smartfoxserver.v2.entities.variables.BuddyVariable;
-#if html5
-@:native('SFS2X.SFSBuddy')
-extern class SFSBuddy
-{
-	var id(default,null):Int;
-	var isBlocked(default,null):Bool;
-	var isOnline(default,null):Bool;
-	var isTemp(default,null):Bool;
-	var name(default,null):String;
-	var nickName(default,null):String;
-
-	function containsVariable(varName:String):Bool;
-	function getOfflineVariables():Array<BuddyVariable>;
-	function getOnlineVariables():Array<BuddyVariable>;
-	function getVariable(varName:String):BuddyVariable;
-	function getVariables():Array<BuddyVariable>;
-	function toString():String;
-	function setVariable(bVar:BuddyVariable):Void;
-}
-#else
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.variables.ReservedBuddyVariables;
 import com.smartfoxserver.v2.entities.variables.SFSBuddyVariable;
@@ -272,4 +252,3 @@ class SFSBuddy implements Buddy
 		return "[Buddy:" + name + ", id:" + id + "]";
 	}
 }
-#end

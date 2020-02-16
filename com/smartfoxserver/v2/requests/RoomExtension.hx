@@ -1,13 +1,4 @@
 package com.smartfoxserver.v2.requests;
-#if html5
-@:native('SFS2X.RoomExtension')
-extern class RoomExtension{
-	var id:String;
-	var className:String;
-	var propertiesFile:String;
-	function new(id:String, className:String);
-}
-#else
 /**
  * The<em>RoomExtension</em>class contains a specific subset of the<em>RoomSettings</em>required to create a Room.
  * It defines which server-side Extension should be attached to the Room upon creation.
@@ -86,4 +77,3 @@ class RoomExtension
 		return _propertiesFile = fileName;
 	}
 }
-#end

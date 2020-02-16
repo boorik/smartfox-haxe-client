@@ -1,11 +1,5 @@
 package com.smartfoxserver.v2.requests;
 import com.smartfoxserver.v2.entities.Room;
-#if html5
-@:native('SFS2X.SpectatorToPlayerRequest')
-extern class SpectatorToPlayerRequest{
-	public function new(targetRoom:Room=null);
-}
-#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 
@@ -92,4 +86,3 @@ class SpectatorToPlayerRequest extends BaseRequest
 		_sfso.putInt(KEY_ROOM_ID, _room.id);
 	}
 }
-#end

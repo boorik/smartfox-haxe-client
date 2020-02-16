@@ -2,12 +2,6 @@ package com.smartfoxserver.v2.requests.game;
 
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.match.MatchExpression;
-#if html5
-@:native('SFS2X.QuickJoinGameRequest')
-extern class QuickJoinGameRequest{
-	public function new(matchExpression:MatchExpression, whereToSearch:Array<Room>, roomToLeave:Room=null);
-}
-#else
 import openfl.errors.ArgumentError;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
@@ -143,4 +137,3 @@ class QuickJoinGameRequest extends BaseRequest
 			_sfso.putSFSArray(KEY_MATCH_EXPRESSION, _matchExpression.toSFSArray());
 	}
 }
-#end
