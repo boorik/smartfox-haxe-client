@@ -55,6 +55,7 @@ class WSClient extends EventDispatcher
 			throw new IllegalOperationError("WebSocket session is already connected");
 		}
 		_useWSS = useWSS;
+		trace(protocol + url + ":" + port +"/BlueBox/websocket");
 		ws = WebSocket.create(protocol + url + ":" + port +"/BlueBox/websocket", null, _debug);
 		ws.onopen = function () {
 			dispatchEvent(new WSEvent(WSEvent.CONNECT, {}));
