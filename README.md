@@ -8,7 +8,7 @@ SmartFoxServer 2X Haxe client API
 Haxe OpenFL translation of the as3 client for the Smartfox server http://www.smartfoxserver.com/  
   
 **WebSocket fully supports on all OpenFL targets!** (Including Flash)  
-WebSocket support it seems to be working but I could not test it.  
+WebSocket support it seems to be working but I could not test it. (Adobe AIR target WSS Protocol may be not working.)
   
 Tested on flash, windows, ios and android, html5 targets.  
   
