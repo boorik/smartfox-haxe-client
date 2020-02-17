@@ -1,8 +1,9 @@
 
-SmartFoxServer 2X Haxe client API =======================    
-    
- **Special Thanks** [Originally created by **Vincent Blanchet**](https://github.com/boorik/smartfox-haxe-client)    
-    
+SmartFoxServer 2X Haxe client API   
+======================= 
+
+**Special Thanks** [Originally created by **Vincent Blanchet**](https://github.com/boorik/smartfox-haxe-client)    
+
 **WebSocket fully supports on all OpenFL targets!** (Including Flash)    
 
 |Platform|Support|
