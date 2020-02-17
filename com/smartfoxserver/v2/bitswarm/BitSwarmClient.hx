@@ -125,10 +125,16 @@ class BitSwarmClient extends EventDispatcher
 		return _reconnectionDelayMillis;
 	}
 
+	public var useWSS(get, never):Bool;
+	private function get_useWSS():Bool
+	{
+		return sfs.useWSS;
+	}
+
 	public var useWebSocket(get, set):Bool;
 	private function get_useWebSocket():Bool
 	{
-		return _useWebSocket;
+		return sfs.useWebSocket;
 	}
 
 	private function set_useWebSocket(value:Bool):Bool
@@ -315,7 +321,7 @@ class BitSwarmClient extends EventDispatcher
 
 		if(_useWebSocket)
 		{
-			_wsClient.connect(host, port);
+			_wsClient.connect(host, port, useWSS);
 			_connectionMode = ConnectionMode.WEBSOCKET;
 		}
 		else if(_useBlueBox)

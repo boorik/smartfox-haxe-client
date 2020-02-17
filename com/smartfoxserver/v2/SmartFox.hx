@@ -829,6 +829,9 @@ class SmartFox extends EventDispatcher
 
 	// WebSocket support
 	public var useWebSocket:Bool = false;
+
+    //https WebSocket protocol (Adobe AIR Target may does not support WSS protocol)
+    public var useWSS:Bool = true;
 	
 	// If true the client is connected
 	private var _isConnected:Bool = false;
@@ -1310,7 +1313,7 @@ class SmartFox extends EventDispatcher
 			_log.warn("Already connected");
 			return;
 		}
-		
+
 		// Skip attempt, if already trying to connect
 		if(_isConnecting)
 		{
@@ -1340,6 +1343,7 @@ class SmartFox extends EventDispatcher
 		#if html5
 			_bitSwarm.useWebSocket = true;
 		#end
+
 		_lastIpAddress = host;
 		_isConnecting = true;
 		_bitSwarm.connect(host, port);	

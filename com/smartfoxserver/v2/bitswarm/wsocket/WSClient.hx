@@ -14,6 +14,7 @@ class WSClient extends EventDispatcher
 	private var ws:WebSocket = null;
 	private var _debug : Bool = false;
 	private var _connected:Bool = false;
+	private var _useWSS:Bool = true;
 
 	public function new(debug : Bool = false)
 	{
@@ -40,13 +41,21 @@ class WSClient extends EventDispatcher
 		return value;
 	}
 
-	public function connect(url : String, port:Int) : Void
+	public var protocol(get, never) : String;
+
+	private function get_protocol():String
+	{
+		return _useWSS ? "wss://" : "ws://";
+	}
+
+	public function connect(url : String, port:Int, useWSS:Bool) : Void
 	{
 		if (connected)
 		{
 			throw new IllegalOperationError("WebSocket session is already connected");
 		}
-		ws = WebSocket.create("ws://" + url + ":" + port +"/BlueBox/websocket", null, _debug);
+		_useWSS = useWSS;
+		ws = WebSocket.create(protocol + url + ":" + port +"/BlueBox/websocket", null, _debug);
 		ws.onopen = function () {
 			dispatchEvent(new WSEvent(WSEvent.CONNECT, {}));
 			_connected = true;
