@@ -8,6 +8,7 @@ SmartFoxServer 2X Haxe client API
 
 |Platform|Support|
 |--|--|
+|HTML5|WS/WSS|
 |Flash|WS/WSS/Socket|
 |Adobe AIR|WS/Socket|
 |Windows|WS/WSS/Socket|
