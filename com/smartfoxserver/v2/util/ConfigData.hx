@@ -83,11 +83,11 @@ class ConfigData
 	public var useBlueBox:Bool = true;
 
 	/**
-	 * Indicates whether the SmartFoxServer's BlueBox should be enabled or not.
+	 * Indicates whether the SmartFoxServer's WebSocket should be enabled or not.
 	 * 
-	 * @default true
+	 * @default false
 	 */
-	public var useWebSocket:Bool = true;
+	public var useWebSocket:Bool = false;
 
 	/**
 	 * Specifies the BlueBox polling speed.
