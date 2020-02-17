@@ -1,5 +1,5 @@
 
-SmartFoxServer 2X Haxe client API   
+SmartFoxServer 2X Haxe Client API   
 ======================= 
 
 **Special Thanks**
@@ -49,7 +49,7 @@ Installation
 ```
 haxelib git smartfox-haxe-client https://github.com/barisyild/smartfox-haxe-client.git
 ```    
- add in your project.xml :    
+add in your project.xml:    
 ```
 <haxelib name="smartfox-haxe-client"/>
 ```
