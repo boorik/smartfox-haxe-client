@@ -131,10 +131,15 @@ class BitSwarmClient extends EventDispatcher
 		return sfs.useWSS;
 	}
 
-	public var useWebSocket(get, never):Bool;
+	public var useWebSocket(get, set):Bool;
 	private function get_useWebSocket():Bool
 	{
 		return _useWebSocket;
+	}
+
+	private function set_useWebSocket(value:Bool):Bool
+	{
+		return _useWebSocket = value;
 	}
 	
 	public var useBlueBox(get, never):Bool;
