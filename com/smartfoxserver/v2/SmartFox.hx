@@ -1368,7 +1368,7 @@ class SmartFox extends EventDispatcher
 		validateAndStoreConfig(cfg);
 		
 		// Connect
-		connect(_config.host, _config.port);
+		connect();
 	}
 	
 	/**
