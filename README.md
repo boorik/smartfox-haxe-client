@@ -6,7 +6,8 @@ SmartFoxServer 2X Haxe Client API
 
 [Originally created by **Vincent Blanchet**](https://github.com/boorik/smartfox-haxe-client)    
 
-**WebSocket fully supports on all OpenFL targets!** (Including Flash)    
+
+**OpenFL Dependency is will removing soon!** (Coming Soon)
 
 |Platform|Support|
 |--|--|
@@ -20,21 +21,19 @@ SmartFoxServer 2X Haxe Client API
 |iOS|Untested|
 |Neko|Untested|
 |Emscripten|Untested|
+|Python|Coming Soon|
+|HashLink|Coming Soon|
     
 Pull requests are welcome    
     
 Let me know how it works on other targets
 
-Haxe OpenFL translation of the as3 client for the Smartfox server http://www.smartfoxserver.com/    
+Pure Haxe translation of the as3 client for the Smartfox server http://www.smartfoxserver.com/    
 
 CURRENTLY WORKING WITH :  
 ----------------------------------  
 
 haxe: 4.0.5  
-    
-lime: 7.6.3   
-    
-openfl: 8.9.5  
     
 haxe-crypto: 0.0.7    
   
