@@ -1,5 +1,6 @@
 package com.smartfoxserver.v2.exceptions;
-import openfl.errors.Error;
+
+import com.smartfoxserver.v2.errors.Error;
 
 /** @private */
 class SFSValidationError extends Error

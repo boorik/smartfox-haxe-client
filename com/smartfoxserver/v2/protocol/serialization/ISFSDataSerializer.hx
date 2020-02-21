@@ -3,7 +3,7 @@ package com.smartfoxserver.v2.protocol.serialization;
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 
-import flash.utils.ByteArray;
+import com.smartfoxserver.v2.util.ByteArray;
 
 /** @private */
 interface ISFSDataSerializer

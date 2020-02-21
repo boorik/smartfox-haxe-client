@@ -28,7 +28,6 @@ class ExtensionController extends BaseController
 	{
 		if(sfs.debug)
 			log.info(Std.string(message));
-		
 		var obj:ISFSObject = message.content;
 		var evtParams:Dynamic = { };
 		

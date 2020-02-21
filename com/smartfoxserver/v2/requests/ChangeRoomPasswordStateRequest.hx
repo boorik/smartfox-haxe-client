@@ -2,7 +2,6 @@ package com.smartfoxserver.v2.requests;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
-import openfl.errors.Error;
 
 /**
  * Changes the password of a Room.

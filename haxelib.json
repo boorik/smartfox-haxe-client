@@ -5,13 +5,13 @@
         "openfl",
         "server"
     ],
-    "description": "use smartfox in your openfl projects without plateform specific libraries",
+    "description": "use smartfox in your haxe project",
     "contributors": [
         "boorik <Vincent Blanchet>",
 		"barisyild <Baris Cagri Yildirim>"
     ],
-    "releasenote": "WebSocket support added.",
-    "version": "0.2.0",
+    "releasenote": "new targets added.",
+    "version": "0.2.2",
     "url": "https://github.com/barisyild/smartfox-haxe-client",
     "dependencies": {
         "lime": "",

@@ -1,5 +1,5 @@
 package com.smartfoxserver.v2.util;
-import openfl.errors.ArgumentError;
+import com.smartfoxserver.v2.errors.ArgumentError;
 
 /**
  * The<em>ConnectionMode</em>class contains the costants defining the possible connection modes of the client with the server.

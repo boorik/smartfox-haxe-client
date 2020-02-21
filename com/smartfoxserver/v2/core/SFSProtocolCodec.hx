@@ -12,7 +12,7 @@ import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.logging.Logger;
 import com.smartfoxserver.v2.protocol.IProtocolCodec;
 
-import flash.utils.ByteArray;
+import com.smartfoxserver.v2.util.ByteArray;
 
 /** @private */
 class SFSProtocolCodec implements IProtocolCodec
@@ -41,7 +41,7 @@ class SFSProtocolCodec implements IProtocolCodec
 		/*
 		* TCP Data provides a ByteArray
 		*/
-		if(Std.is(packet, #if flash ByteArray #else openfl.utils.ByteArray.ByteArrayData #end))
+		if(Std.is(packet, com.smartfoxserver.v2.util.ByteArray.ByteArrayData))
 			sfsObj = SFSObject.newFromBinaryData(packet);
 				
 		/*
@@ -137,6 +137,7 @@ class SFSProtocolCodec implements IProtocolCodec
 		message.id =id;
 		var content:ISFSObject = requestObject.getSFSObject(PARAM_ID);
 		message.content = content;
+		trace(content.toObject());
 		var isUDP:Bool = requestObject.containsKey(UDP_PACKET_ID);
 		message.isUDP = isUDP;
 		

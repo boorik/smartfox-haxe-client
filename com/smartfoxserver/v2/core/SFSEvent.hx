@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.core;
 
-import flash.events.Event;
+import com.smartfoxserver.v2.events.Event;
 
 /**
  *<em>SFSEvent</em>is the class representing most of the events dispatched by the SmartFoxServer 2X ActionScript 3 API.

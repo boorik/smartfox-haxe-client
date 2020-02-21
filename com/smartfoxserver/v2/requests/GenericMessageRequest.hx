@@ -8,7 +8,7 @@ import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.logging.Logger;
-import openfl.errors.ArgumentError;
+import com.smartfoxserver.v2.errors.ArgumentError;
 
 /** @private */
 class GenericMessageRequest extends BaseRequest

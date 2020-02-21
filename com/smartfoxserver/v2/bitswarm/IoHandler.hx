@@ -2,7 +2,7 @@ package com.smartfoxserver.v2.bitswarm;
 
 import com.smartfoxserver.v2.protocol.IProtocolCodec;
 
-import flash.utils.ByteArray;
+import com.smartfoxserver.v2.util.ByteArray;
 
 /** @private */
 interface IoHandler

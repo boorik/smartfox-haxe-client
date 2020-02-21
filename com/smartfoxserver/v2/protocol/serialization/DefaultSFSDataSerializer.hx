@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.protocol.serialization;
 
-import flash.utils.ByteArray;
+import com.smartfoxserver.v2.util.ByteArray;
 /*
 #if html5
 @native(_DataSerializer.SFSDataSerializer)
@@ -24,7 +24,7 @@ import com.smartfoxserver.v2.entities.data.SFSDataType;
 import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSCodecError;
-import openfl.utils.Endian;
+import com.hurlant.util.Endian;
 
 /** @private */
 class DefaultSFSDataSerializer implements ISFSDataSerializer

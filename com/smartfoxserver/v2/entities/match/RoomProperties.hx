@@ -1,5 +1,5 @@
 package com.smartfoxserver.v2.entities.match;
-import openfl.errors.ArgumentError;
+import com.smartfoxserver.v2.errors.ArgumentError;
 
 /**
  * The<em>RoomProperties</em>class contains the names of predefined properties that can be used in matching expressions to search/filter Rooms.

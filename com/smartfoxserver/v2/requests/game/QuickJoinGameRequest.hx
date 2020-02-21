@@ -2,7 +2,7 @@ package com.smartfoxserver.v2.requests.game;
 
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.match.MatchExpression;
-import openfl.errors.ArgumentError;
+import com.smartfoxserver.v2.errors.ArgumentError;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.exceptions.SFSValidationError;
 import com.smartfoxserver.v2.requests.BaseRequest;

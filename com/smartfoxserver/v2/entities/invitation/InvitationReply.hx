@@ -1,5 +1,5 @@
 package com.smartfoxserver.v2.entities.invitation;
-import openfl.errors.ArgumentError;
+import com.smartfoxserver.v2.errors.ArgumentError;
 
 /**
  * The<em>InvitationReply</em>class contains the constants describing the possible replies to an invitation.

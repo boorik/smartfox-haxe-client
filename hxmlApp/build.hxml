@@ -1,0 +1,13 @@
+-cp src
+-dce full
+-lib haxe-crypto
+-lib haxe-ws
+#-lib hxssl
+#-lua bin/lua.lua
+#-php bin/php
+#-hl bin/test.hl #Working correctly
+#-cpp bin/cpp.exe
+-python bin/py.py
+#-cs bin/cs.exe
+#-java bin/java.exe
+-main HXMLMain

@@ -16,7 +16,6 @@
 	<source path="src" />
 	<!--<source path=".." />-->
 	<haxelib name="openfl" />
-	<haxelib name="actuate" />
 	<haxelib name="smartfox-haxe-client"/>
 	
 	<!-- assets -->

@@ -2,7 +2,7 @@ package com.smartfoxserver.v2.requests;
 
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.requests.MessageRecipientMode;
-import openfl.errors.ArgumentError;
+import com.smartfoxserver.v2.errors.ArgumentError;
 
 /**
  * Sends a moderator message to a specific user or a group of users.

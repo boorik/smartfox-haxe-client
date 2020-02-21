@@ -6,7 +6,7 @@ import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
 import com.smartfoxserver.v2.protocol.serialization.ISFSDataSerializer;
 import haxe.ds.StringMap;
 
-import flash.utils.ByteArray;
+import com.smartfoxserver.v2.util.ByteArray;
 
 /**
  * The<em>SFSObject</em>class is used by SmartFoxServer in client-server data transfer.

@@ -1,5 +1,6 @@
 package com.smartfoxserver.v2.core;
 
+import haxe.io.Bytes;
 import com.smartfoxserver.v2.bitswarm.BitSwarmClient;
 import com.smartfoxserver.v2.bitswarm.IMessage;
 import com.smartfoxserver.v2.bitswarm.IoHandler;
@@ -12,10 +13,10 @@ import com.smartfoxserver.v2.logging.Logger;
 import com.smartfoxserver.v2.protocol.IProtocolCodec;
 import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
 import com.smartfoxserver.v2.protocol.serialization.DefaultSFSDataSerializer;
-import openfl.utils.Endian;
+import com.hurlant.util.Endian;
 
-import flash.errors.IOError;
-import flash.utils.ByteArray;
+import com.smartfoxserver.v2.errors.IOError;
+import com.smartfoxserver.v2.util.ByteArray;
 
 /** @private */
 class SFSIOHandler implements IoHandler
@@ -200,7 +201,7 @@ class SFSIOHandler implements IoHandler
 	{
 		log.debug("Handling Size fragment. Data:" + data.length);
 		
-		var remaining:UInt = pendingPacket.header.bigSized ? 4 - pendingPacket.buffer.position:2 - pendingPacket.buffer.position;
+		var remaining:Int = pendingPacket.header.bigSized ? 4 - pendingPacket.buffer.position:2 - pendingPacket.buffer.position;
 		
 		// Ok, we have enough data to finish
 		if(data.length>=remaining)
@@ -237,7 +238,7 @@ class SFSIOHandler implements IoHandler
 	private function handlePacketData(data:ByteArray):ByteArray
 	{	
 		// is there more data for the next incoming packet?
-		var remaining:UInt = pendingPacket.header.expectedLen - pendingPacket.buffer.length;
+		var remaining:Int = pendingPacket.header.expectedLen - pendingPacket.buffer.length;
 		var isThereMore:Bool = (data.length > remaining);
 		
 		log.debug("Handling Data:" + data.length + ", previous state:" + pendingPacket.buffer.length + "/" + pendingPacket.header.expectedLen);
@@ -252,8 +253,9 @@ class SFSIOHandler implements IoHandler
 				packetEncrypter.decrypt(pendingPacket.buffer);
 			
 			// Handle compression
-			if(pendingPacket.header.compressed)
-				pendingPacket.buffer.uncompress();
+			/*if(pendingPacket.header.compressed)
+				pendingPacket.buffer.uncompress();*/
+				///TODO: Enable!
 			
 			// Send to protocol codec
 			protocolCodec.onPacketRead(pendingPacket.buffer);
@@ -298,9 +300,10 @@ class SFSIOHandler implements IoHandler
 		// 1. Handle Compression
 		if (cast(binData.length,Int) > bitSwarm.compressionThreshold)
 		{
-			//trace("Before compression:" + binData.length);
-			binData.compress();
-			//trace("After compression:" + binData.length);
+			trace("Before compression:" + binData.length);
+			//binData.compress();
+			///TODO: Enable!
+			trace("After compression:" + binData.length);
 			isCompressed = true;
 		}	
 		
@@ -346,33 +349,45 @@ class SFSIOHandler implements IoHandler
 		if(bitSwarm.useWebSocket)
 		{
 			bitSwarm.webSocket.send(writeBuffer);
+			if(bitSwarm.sfs.debug)
+				trace("webSocketSend");
 		}else if(bitSwarm.useBlueBox)
 		{
 			bitSwarm.httpSocket.send(writeBuffer);
+			if(bitSwarm.sfs.debug)
+				trace("blueBoxSend");
 		}
 		else
 		{
+			#if !html5
 			if(bitSwarm.socket.connected)
 			{
 				if(message.isUDP)
+				{
 					writeUDP(message, writeBuffer);
+					trace("udpSend");
+				}
 				else
+				{
 					writeTCP(message, writeBuffer);
+					trace("tcpSend");
+				}
 			}
+			#end
 		}
 	}
-	
+
+	#if !html5
 	private function writeTCP(message:IMessage, writeBuffer:ByteArray):Void
 	{
 		try
 		{
-			bitSwarm.socket.writeBytes(writeBuffer);
-			bitSwarm.socket.flush();
+			var bytes:Bytes = writeBuffer.getBytes();
+			bitSwarm.socket.send(bytes);
 			
 			if (bitSwarm.sfs.debug)
 			{
 				log.info("Data written:" + message.content.getHexDump());
-				trace(writeBuffer.length);
 			}
 		}
 		catch(error:IOError)
@@ -385,5 +400,5 @@ class SFSIOHandler implements IoHandler
 	{
 		bitSwarm.udpManager.send(writeBuffer);
 	}
-	
+	#end
 }

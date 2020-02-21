@@ -2,7 +2,7 @@ package com.smartfoxserver.v2.test;
 
 import com.smartfoxserver.v2.core.SFSIOHandler;
 
-import flash.utils.ByteArray<Dynamic>;
+import com.smartfoxserver.v2.util.ByteArray<Dynamic>;
 
 class ProtocolExcerciser
 {

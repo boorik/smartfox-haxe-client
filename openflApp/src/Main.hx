@@ -1,10 +1,10 @@
 package;
 
+import com.smartfoxserver.v2.core.SFSEvent;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.requests.JoinRoomRequest;
-import com.smartfoxserver.v2.requests.PublicMessageRequest;
 import com.smartfoxserver.v2.requests.LoginRequest;
-import com.smartfoxserver.v2.core.SFSEvent;
+import com.smartfoxserver.v2.requests.PublicMessageRequest;
 import com.smartfoxserver.v2.SmartFox;
 import openfl.display.Sprite;
 
@@ -22,14 +22,14 @@ class Main extends Sprite
 		super();
 		sfs = new SmartFox(true);
 		sfs.useWebSocket = useWebSocket; //Optional for non-html5 platforms
-		sfs.useWSS = true; //Optional, Default enabled (Adobe AIR Target does not support WSS protocol)
+		sfs.useSSL = false;
 		sfs.addEventListener(SFSEvent.CONNECTION, onConnection);
 		sfs.addEventListener(SFSEvent.LOGIN, onLogin);
 		sfs.addEventListener(SFSEvent.ROOM_JOIN, onRoomJoin);
 		sfs.addEventListener(SFSEvent.PUBLIC_MESSAGE, onPublicMessage);
 		if(useWebSocket)
 		{
-			sfs.connect("127.0.0.1", sfs.useWSS ? WSS_PORT : WS_PORT);
+			sfs.connect("127.0.0.1", sfs.useSSL ? WSS_PORT : WS_PORT);
 		}else{
 			sfs.connect("127.0.0.1", SOCKET_PORT);
 		}
@@ -38,7 +38,7 @@ class Main extends Sprite
 	private function onConnection(e:SFSEvent):Void
 	{
 		trace("onConnection");
-		sfs.send(new LoginRequest("Guest#100000","","BasicExamples"));
+		sfs.send(new LoginRequest("Guest#" + Std.random(10000),"","BasicExamples"));
 	}
 
 	private function onLogin(e:SFSEvent):Void
