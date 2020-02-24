@@ -16,11 +16,9 @@ class EventDispatcher {
         }
 
         var callbackList:Array<Dynamic->Void> = cast eventList.get(type);
-        for(callback in callbackList)
-        {
-            if(callback == listener)
-                return; //Listener already added.
-        }
+
+        if(callbackList.indexOf(listener) != -1)
+            return; //Listener already added.
 
         callbackList.push(listener);
 
@@ -43,7 +41,7 @@ class EventDispatcher {
             return; //Any listener not found!
 
         var callbackList:Array<Dynamic->Void> = cast eventList.get(type);
-        callbackList.remove(callbackList.indexOf(listener));
+        callbackList.remove(listener);
 
         if(callbackList.length == 0)
         {
@@ -60,7 +58,14 @@ class EventDispatcher {
             return; //Any Listener Not Found!
         for(callback in callbackList)
         {
-            callback(event);
+            try
+            {
+                callback(event);
+            }
+            catch(e:Dynamic)
+            {
+                trace(event.type, "Dispatch Error!", e);
+            }
         }
     }
 }
