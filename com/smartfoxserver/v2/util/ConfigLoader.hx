@@ -16,7 +16,7 @@ class ConfigLoader extends EventDispatcher
 	public function loadConfig(filePath:String):Void
 	{
 		var httpReq:Http = new Http(filePath);
-		httpReq.cnxTimeout = 30;
+		//httpReq.cnxTimeout = 30;
 		httpReq.onData = function(rawData:String)
 		{
 			var xmlDoc:Xml = Xml.parse(rawData);

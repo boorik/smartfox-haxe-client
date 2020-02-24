@@ -43,7 +43,7 @@ class EventDispatcher {
             return; //Any listener not found!
 
         var callbackList:Array<Dynamic->Void> = cast eventList.get(type);
-        callbackList.remove(listener);
+        callbackList.remove(callbackList.indexOf(listener));
 
         if(callbackList.length == 0)
         {

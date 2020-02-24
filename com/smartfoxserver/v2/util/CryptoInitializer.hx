@@ -37,7 +37,7 @@ class CryptoInitializer
 								TARGET_SERVLET;
 
 		var httpReq:Http = new Http(targetUrl);
-		httpReq.cnxTimeout = 30;
+		//httpReq.cnxTimeout = 30;
 		httpReq.onError = function(msg:String)
 		{
 			sfs.logger.warn("onError: " + msg);

@@ -183,7 +183,7 @@ class BBClient extends EventDispatcher
 	private function getLoader(url:String):Http
 	{
 		var httpLoader:Http = new Http(url);
-		httpLoader.cnxTimeout = 30;
+		//httpLoader.cnxTimeout = 30;
 		httpLoader.onError = function(msg:String)
 		{
 			var bbEvt:BBEvent = new BBEvent(BBEvent.IO_ERROR, {message:msg});
