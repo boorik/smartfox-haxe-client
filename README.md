@@ -1,6 +1,8 @@
 SmartFoxServer 2X Haxe Client API (Very Experimental)
 =======================
 
+**Decompress doesn't work but the problem will be solved as soon as possible.**
+
 OpenFL Platforms
 ----------------------------------
 |Platform|Support|
