@@ -1,13 +1,20 @@
 package com.smartfoxserver.v2.bitswarm.bbox;
 
 //import com.hurlant.util.Base64;
-import com.hurlant.util.Endian;
-import com.smartfoxserver.v2.events.Event;
-import com.smartfoxserver.v2.events.EventDispatcher;
-import com.smartfoxserver.v2.util.ByteArray;
+
+import flash.errors.IllegalOperationError;
+import flash.events.Event;
+import flash.events.EventDispatcher;
+import flash.events.IOErrorEvent;
+import flash.events.SecurityErrorEvent;
+import flash.net.URLLoader;
+import flash.net.URLLoaderDataFormat;
+import flash.net.URLRequest;
+import flash.net.URLRequestMethod;
+import flash.net.URLVariables;
+import flash.utils.ByteArray;
 import haxe.crypto.Base64;
 import haxe.Timer;
-import haxe.Http;
 
 /** @private */
 class BBClient extends EventDispatcher
@@ -35,8 +42,9 @@ class BBClient extends EventDispatcher
 	private var _bbUrl:String;
 	private var _debug:Bool;
 	private var _sessId:String;
+	private var _loader:URLLoader;
+	private var _urlRequest:URLRequest;
 	private var _pollSpeed:Int;
-	private var _useSSL:Bool;
 	
 	public function new(host:String="localhost", port:Int=8080, debug:Bool=false)
 	{
@@ -114,30 +122,23 @@ class BBClient extends EventDispatcher
 	// Public methods
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	
-	public function connect(host:String="127.0.0.1", port:Int=8080, useSSL:Bool = false):Void
+	public function connect(host:String="127.0.0.1", port:Int=8080):Void
 	{
 		if(isConnected)
-			throw "BlueBox session is already connected";
-
-		_useSSL = useSSL;
+			throw new IllegalOperationError("BlueBox session is already connected");
 		
 		_host = host;
 		_port = port;
 			
-		_bbUrl = get_protocol() + _host + ":" + port + "/" + BB_SERVLET;
+		_bbUrl = "http://" + _host + ":" + port + "/" + BB_SERVLET;
 			
 		sendRequest(CMD_CONNECT);
-	}
-
-	private function get_protocol():String
-	{
-		return _useSSL ? "https://" : "http://";
 	}
 	
 	public function send(binData:ByteArray):Void
 	{
 		if(!isConnected)
-			throw "Can't send data, BlueBox connection is not active";
+			throw new IllegalOperationError("Can't send data, BlueBox connection is not active");
 		
 		sendRequest(CMD_DATA, binData);
 	}
@@ -158,6 +159,72 @@ class BBClient extends EventDispatcher
 		handleConnectionLost(false);
 	}
 	
+	
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	// Event handlers methods
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	
+	private function onHttpResponse(evt:Event):Void
+	{
+		var loader:URLLoader=cast evt.target;
+		var rawData:String=cast loader.data;
+		
+		if(_debug)
+			trace("[ BB-Receive ]:" + rawData);
+		
+		// Obtain splitted params
+		var reqBits:Array<Dynamic>=rawData.split(SEP);
+		
+		var cmd:String=reqBits[0];
+		var data:String=reqBits[1];
+		
+		if(cmd==CMD_CONNECT)
+		{
+			_sessId=data;
+			_isConnected=true;
+			
+			dispatchEvent(new BBEvent(BBEvent.CONNECT, { } ));
+			
+			// Start the polling cycle
+			poll();
+		}
+		
+		else if(cmd==CMD_POLL)
+		{
+			var binData:ByteArray = null;
+			
+			// Decode Base64-Encoded string to real ByteArray
+			if(data !=BB_NULL)
+				binData = decodeResponse(data);
+				
+			// Pre-launch next polling request
+			if(_isConnected)
+				Timer.delay(poll, _pollSpeed);
+				
+			// Dispatch the event
+			dispatchEvent(new BBEvent(BBEvent.DATA, { data:binData } ));
+		}
+		
+		// Connection was lost
+		else if(cmd==ERR_INVALID_SESSION)
+		{
+			handleConnectionLost();
+		}
+		
+	}
+	
+	private function onHttpIOError(evt:IOErrorEvent):Void
+	{
+		var bbEvt:BBEvent=new BBEvent(BBEvent.IO_ERROR, {message:evt.text});
+		dispatchEvent(bbEvt);
+	}
+	
+	private function onSecurityError(evt:SecurityErrorEvent):Void
+	{
+		var bbEvt:BBEvent=new BBEvent(BBEvent.IO_ERROR, {message:evt.text});
+		dispatchEvent(bbEvt);
+	}
+	
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Private methods
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -166,69 +233,37 @@ class BBClient extends EventDispatcher
 		sendRequest(CMD_POLL);
 	}
 	
-	private function sendRequest(cmd:String, data:ByteArray=null):Void
+	private function sendRequest(cmd:String, data:Dynamic=null):Void
 	{
-		var vars:String =  encodeRequest(cmd, data);
-		// Create HTTP loader and send
-
-		var httpLoader:Http = getLoader(_bbUrl);
-		httpLoader.setPostData(SFS_HTTP + "=" + vars);
-		httpLoader.addHeader("Content-Type","application/x-www-form-urlencoded");
-		httpLoader.request(true);
-
+		// Prepare request
+		_urlRequest=new URLRequest(_bbUrl);
+		_urlRequest.method=URLRequestMethod.POST;
+		
+		// Encode request variables
+		var vars:URLVariables=new URLVariables();
+		Reflect.setField(vars, SFS_HTTP, encodeRequest(cmd, data));
+		_urlRequest.data=vars;
+		
 		if(_debug)
-			trace("[BB-Send]:" + vars);
+			trace("[ BB-Send ]:" + vars);
+		
+		// Create HTTP loader and send
+		var urlLoader:URLLoader=getLoader();
+		urlLoader.data=vars;
+		urlLoader.load(_urlRequest);
 	}
 	
-	private function getLoader(url:String):Http
+	private function getLoader():URLLoader
 	{
-		var httpLoader:Http = new Http(url);
-		//httpLoader.cnxTimeout = 30;
-		httpLoader.onError = function(msg:String)
-		{
-			var bbEvt:BBEvent = new BBEvent(BBEvent.IO_ERROR, {message:msg});
-			dispatchEvent(bbEvt);
-		};
-		httpLoader.onData = function(rawData:String)
-		{
-			if(_debug)
-				trace("[ BB-Receive ]:" + rawData);
-
-			// Obtain splitted params
-			var reqBits:Array<Dynamic>=rawData.split(SEP);
-
-			var cmd:String=reqBits[0];
-			var data:String=reqBits[1];
-
-			if(cmd==CMD_CONNECT) {
-				_sessId=data;
-				_isConnected=true;
-
-				dispatchEvent(new BBEvent(BBEvent.CONNECT, { } ));
-
-				// Start the polling cycle
-				poll();
-			} else if(cmd==CMD_POLL) {
-				var binData:ByteArray = null;
-
-				// Decode Base64-Encoded string to real ByteArray
-				if(data !=BB_NULL)
-					binData = decodeResponse(data);
-
-				// Pre-launch next polling request
-				if(_isConnected)
-				{
-					Timer.delay(poll, _pollSpeed);
-				}
-
-				// Dispatch the event
-				dispatchEvent(new BBEvent(BBEvent.DATA, { data:binData } ));
-			} else if(cmd==ERR_INVALID_SESSION) {
-				// Connection was lost
-				handleConnectionLost();
-			}
-		}
-		return httpLoader;
+		var urlLoader:URLLoader=new URLLoader();
+		
+		urlLoader.dataFormat=URLLoaderDataFormat.TEXT;
+		urlLoader.addEventListener(Event.COMPLETE, onHttpResponse);
+		urlLoader.addEventListener(IOErrorEvent.IO_ERROR, onHttpIOError);
+		//urlLoader.addEventListener(IOErrorEvent.NETWORK_ERROR, onHttpIOError);
+		urlLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
+		
+		return urlLoader;
 	}
 	
 	private function handleConnectionLost(fireEvent:Bool=true):Void
@@ -247,20 +282,27 @@ class BBClient extends EventDispatcher
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Message Codec
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	private function encodeRequest(cmd:String, byteArray:ByteArray=null):String
+	private function encodeRequest(cmd:String, data:Dynamic=null):String
 	{
 		var encoded:String="";
-		var data:String;
 		
 		if(cmd==null)
 			cmd=BB_NULL;
 		
-		if(byteArray==null)
-			data = BB_NULL;
-		else
-			data = Base64.encode(byteArray.getBytes());
-
+		if(data==null)
+			data=BB_NULL;
+		
+		// Encode from ByteArray to Base64-String
+		#if flash
+		else if(Std.is(data, ByteArray))
+			data = Base64.encode(haxe.io.Bytes.ofData(cast(data, ByteArray)));
+		#else
+		else if(Std.is(data, openfl.utils.ByteArray.ByteArrayData))
+			data = Base64.encode(data);
+		#end
+		
 		encoded +=(_sessId==null ? BB_NULL:_sessId)+ SEP + cmd + SEP + data;
+		
 		return encoded;
 	}
 	
@@ -270,10 +312,11 @@ class BBClient extends EventDispatcher
 		if(rawData.substr(0, SFS_HTTP.length)!=SFS_HTTP)
 			throw new ArgumentError("Unexpected Response format. Missing BlueBox header:" +(rawData.length<1024 ? rawData:"[too big data]"));
 		*/
-
-		var byteArray:ByteArray = ByteArray.fromBytes(Base64.decode(rawData));
-		byteArray.endian = Endian.BIG_ENDIAN;
-		return byteArray;
+		#if flash
+		return Base64.decode(rawData).getData();
+		#else
+		return ByteArray.fromBytes(Base64.decode(rawData));
+		#end
 	}
 	
 	

@@ -3,7 +3,7 @@ package com.smartfoxserver.v2.protocol;
 import com.smartfoxserver.v2.bitswarm.IMessage;
 import com.smartfoxserver.v2.bitswarm.IoHandler;
 
-import com.smartfoxserver.v2.util.ByteArray;
+import flash.utils.ByteArray;
 
 /** @private */
 interface IProtocolCodec

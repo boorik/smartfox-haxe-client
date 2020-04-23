@@ -80,7 +80,7 @@ class ConfigData
 	 * 
 	 * @default true
 	 */
-	public var useBlueBox:Bool = false;
+	public var useBlueBox:Bool = true;
 
 	/**
 	 * Indicates whether the SmartFoxServer's WebSocket should be enabled or not.

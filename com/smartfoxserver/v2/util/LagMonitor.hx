@@ -1,12 +1,14 @@
 package com.smartfoxserver.v2.util;
 
-import haxe.Timer;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.core.SFSEvent;
 import com.smartfoxserver.v2.requests.PingPongRequest;
+import openfl.utils.Timer;
 
-import com.smartfoxserver.v2.events.Event;
-import com.smartfoxserver.v2.events.EventDispatcher;
+import flash.events.Event;
+import flash.events.EventDispatcher;
+import flash.events.TimerEvent;
+//import flash.utils.Timer;
 
 /**
  * @private
@@ -31,23 +33,14 @@ class LagMonitor extends EventDispatcher
 		_valueQueue=[];
 		_interval=interval;
 		_queueSize=queueSize;
-		start();
+		_thread=new Timer(interval * 1000);
+		_thread.addEventListener(TimerEvent.TIMER, threadRunner);	
 	}
 	
 	public function start():Void
 	{
 		if(!isRunning)
-		{
-			if(_thread != null)
-				_thread.stop();
-			_thread = new Timer(cast (_interval * 1000));
-			_thread.run = function()
-			{
-				_lastReqTime=haxe.Timer.stamp();
-				_sfs.send(new PingPongRequest());
-			};
-			_thread.run();
-		}
+			_thread.start();
 	}
 	
 	public function stop():Void
@@ -61,7 +54,7 @@ class LagMonitor extends EventDispatcher
 		if(_thread !=null)
 		{
 			stop();
-			_thread.stop();
+			_thread.removeEventListener(TimerEvent.TIMER, threadRunner);
 			_thread=null;
 			_sfs=null;
 		}
@@ -70,7 +63,7 @@ class LagMonitor extends EventDispatcher
 	public var isRunning(get, null):Bool;
  	private function get_isRunning():Bool
 	{
-		return (_lastReqTime + (_interval * 1000)) > haxe.Timer.stamp();
+		return _thread.running;
 	}
 	
 	public function onPingPong():Float
@@ -108,5 +101,14 @@ class LagMonitor extends EventDispatcher
 			lagAverage += lagValue;
 				
 		return lagAverage / _valueQueue.length;
+	}
+	
+	
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	
+	private function threadRunner(evt:Event):Void
+	{
+		_lastReqTime=haxe.Timer.stamp();
+		_sfs.send(new PingPongRequest());
 	}
 }

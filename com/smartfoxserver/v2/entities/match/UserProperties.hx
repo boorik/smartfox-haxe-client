@@ -1,5 +1,5 @@
 package com.smartfoxserver.v2.entities.match;
-import com.smartfoxserver.v2.errors.ArgumentError;
+import openfl.errors.ArgumentError;
 
 /**
  * The<em>UserProperties</em>class contains the names of predefined properties that can be used in matching expressions to search/filter users.

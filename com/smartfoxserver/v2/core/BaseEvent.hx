@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.core;
 
-import com.smartfoxserver.v2.events.Event;
+import flash.events.Event;
 
 /**
  * This is the base class of all the events dispatched by the SmartFoxServer 2X ActionScript 3 API.
@@ -41,5 +41,17 @@ class BaseEvent extends Event
 	public override function clone():Event
 	{
 		return new BaseEvent(this.type, this.params);
+	}
+	
+	/**
+	 * @private
+	 * 
+	 * Generates a string containing all the properties of the<em>BaseEvent</em>object.
+	 * 
+	 * @return		A string containing all the properties of the<em>BaseEvent</em>object.
+	 */
+	public override function toString():String
+	{
+		return super.toString();
 	}
 }

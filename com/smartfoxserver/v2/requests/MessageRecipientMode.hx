@@ -1,6 +1,6 @@
 package com.smartfoxserver.v2.requests;
 
-import com.smartfoxserver.v2.errors.ArgumentError;
+import openfl.errors.ArgumentError;
 
 /**
  * The<em>MessageRecipientMode</em>class is used to specify the recipient/s of moderator and administrator messages.

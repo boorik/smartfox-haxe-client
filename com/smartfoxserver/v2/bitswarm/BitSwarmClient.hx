@@ -1,6 +1,5 @@
 package com.smartfoxserver.v2.bitswarm;
 
-import com.smartfoxserver.v2.bitswarm.socket.SocketEvent;
 import com.smartfoxserver.v2.bitswarm.wsocket.WSEvent;
 import com.smartfoxserver.v2.bitswarm.wsocket.WSClient;
 import com.smartfoxserver.v2.SmartFox;
@@ -8,21 +7,28 @@ import com.smartfoxserver.v2.bitswarm.bbox.BBClient;
 import com.smartfoxserver.v2.bitswarm.bbox.BBEvent;
 import com.smartfoxserver.v2.controllers.ExtensionController;
 import com.smartfoxserver.v2.controllers.SystemController;
+import com.smartfoxserver.v2.exceptions.SFSError;
+import com.smartfoxserver.v2.logging.Logger;
 import com.smartfoxserver.v2.util.ClientDisconnectionReason;
 import com.smartfoxserver.v2.util.ConnectionMode;
 import com.smartfoxserver.v2.util.CryptoKey;
-import com.smartfoxserver.v2.errors.ArgumentError;
-import com.smartfoxserver.v2.events.Event;
-import com.smartfoxserver.v2.events.EventDispatcher;
-import com.smartfoxserver.v2.events.IOErrorEvent;
-import com.smartfoxserver.v2.util.ByteArray;
+import haxe.CallStack;
+import openfl.errors.ArgumentError;
+import openfl.utils.Endian;
+
+import openfl.errors.IllegalOperationError;
+import openfl.events.Event;
+import openfl.events.EventDispatcher;
+import openfl.events.IOErrorEvent;
+import openfl.events.ProgressEvent;
+import openfl.events.SecurityErrorEvent;
+import openfl.net.Socket;
+import openfl.utils.ByteArray;
 
 /** @private */
 class BitSwarmClient extends EventDispatcher 
 {
-	#if !html5
-	private var _socketClient:com.smartfoxserver.v2.bitswarm.socket.SocketClient;
-	#end
+	private var _socket:Socket;
 	private var _wsClient:WSClient;
 	private var _bbClient:BBClient;
 	private var _ioHandler:IoHandler;
@@ -61,6 +67,8 @@ class BitSwarmClient extends EventDispatcher
 	public var sfs(get, null):SmartFox;
 
 	public var connected(get, null):Bool;
+	
+	
 	
 	public var connectionMode(get, never):String;
 	private function get_connectionMode():String
@@ -117,10 +125,10 @@ class BitSwarmClient extends EventDispatcher
 		return _reconnectionDelayMillis;
 	}
 
-	public var useSSL(get, never):Bool;
-	private function get_useSSL():Bool
+	public var useWSS(get, never):Bool;
+	private function get_useWSS():Bool
 	{
-		return sfs.useSSL;
+		return sfs.useWSS;
 	}
 
 	public var useWebSocket(get, set):Bool;
@@ -145,7 +153,7 @@ class BitSwarmClient extends EventDispatcher
 		if(!connected)
 			_useBlueBox = value;
 		else
-			throw "You can't change the BlueBox mode while the connection is running";
+			throw new IllegalOperationError("You can't change the BlueBox mode while the connection is running");
 	}
 	
 	private function set_reconnectionDelayMillis(millis:Int):Int
@@ -167,18 +175,16 @@ class BitSwarmClient extends EventDispatcher
 			_controllersInited = true;
 		}
 
-		#if !html5
-		_socketClient = new com.smartfoxserver.v2.bitswarm.socket.SocketClient();
+		_socket = new Socket();
 		
-		//if(_socketClient.hasOwnProperty("timeout"))// condition required to avoide FP<10.0 to throw an error at runtime
-			//_socketClient.timeout = 5000;
-
-		_socketClient.addEventListener(SocketEvent.CONNECT, onSocketConnect);
-		_socketClient.addEventListener(SocketEvent.DATA, onSocketData);
-		_socketClient.addEventListener(SocketEvent.CLOSED, onSocketClose);
-		_socketClient.addEventListener(SocketEvent.IO_ERROR, onSocketIOError);
-		_socketClient.addEventListener(SocketEvent.SECURITY_ERROR, onSocketSecurityError);
-		#end
+		//if(_socket.hasOwnProperty("timeout"))// condition required to avoide FP<10.0 to throw an error at runtime
+			//_socket.timeout = 5000;
+		
+		_socket.addEventListener(Event.CONNECT, onSocketConnect);
+		_socket.addEventListener(Event.CLOSE, onSocketClose);
+		_socket.addEventListener(ProgressEvent.SOCKET_DATA, onSocketData);
+		_socket.addEventListener(IOErrorEvent.IO_ERROR, onSocketIOError);
+		_socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSocketSecurityError);
 			
 		_bbClient = new BBClient();
 		_bbClient.addEventListener(BBEvent.CONNECT, onBBConnect);
@@ -234,18 +240,16 @@ class BitSwarmClient extends EventDispatcher
 	
 	public function destroy():Void
 	{
-		#if !html5
-		_socketClient.removeEventListener(SocketEvent.CONNECT, onSocketConnect);
-		_socketClient.removeEventListener(SocketEvent.CLOSED, onSocketClose);
-		_socketClient.removeEventListener(SocketEvent.DATA, onSocketData);
-		_socketClient.removeEventListener(SocketEvent.IO_ERROR, onSocketIOError);
-		_socketClient.removeEventListener(SocketEvent.SECURITY_ERROR, onSocketSecurityError);
+		_socket.removeEventListener(Event.CONNECT, onSocketConnect);
+		_socket.removeEventListener(Event.CLOSE, onSocketClose);
+		_socket.removeEventListener(ProgressEvent.SOCKET_DATA, onSocketData);
+		_socket.removeEventListener(IOErrorEvent.IO_ERROR, onSocketIOError);
+		_socket.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, onSocketSecurityError);
 		
-		if(_socketClient.connected)
-			_socketClient.close();
-
-		_socketClient = null;
-		#end
+		if(_socket.connected)
+			_socket.close();
+			
+		_socket = null;
 	}
 	
 	public function getController(id:Int):IController
@@ -315,29 +319,21 @@ class BitSwarmClient extends EventDispatcher
 		_lastIpAddress = host;
 		_lastTcpPort = port;
 
-		//DEBUG
-		//_useWebSocket = false;
-		//_useBlueBox = true;
-
 		if(_useWebSocket)
 		{
-			_wsClient.connect(host, port, useSSL);
+			_wsClient.connect(host, port, useWSS);
 			_connectionMode = ConnectionMode.WEBSOCKET;
 		}
 		else if(_useBlueBox)
 		{
 			_bbClient.pollSpeed=(sfs.config !=null)? sfs.config.blueBoxPollingRate:750;
-			_bbClient.connect(host, port, useSSL);
+			_bbClient.connect(host, port);
 			_connectionMode = ConnectionMode.HTTP;
 		}
 		else
 		{
-			#if html5
-				throw "html5 does not support sockets.";
-			#else
-				_socketClient.connect(host, port, useSSL);
-				_connectionMode = ConnectionMode.SOCKET;
-			#end
+			_socket.connect(host, port);
+			_connectionMode = ConnectionMode.SOCKET;
 		}
 	}
 	
@@ -345,6 +341,8 @@ class BitSwarmClient extends EventDispatcher
 	{	
 		_ioHandler.codec.onPacketWrite(message);
 	}
+	
+	public var socket(get, null):Socket;
 	
  	//private function get_socket():Socket
 	//{
@@ -364,15 +362,6 @@ class BitSwarmClient extends EventDispatcher
 	{
 		return _wsClient;
 	}
-
-	#if !html5
-	public var socket(get, never):com.smartfoxserver.v2.bitswarm.socket.SocketClient;
-
-	function get_socket():com.smartfoxserver.v2.bitswarm.socket.SocketClient
-	{
-		return _socketClient;
-	}
-	#end
 	
 	public function disconnect(reason:String=null):Void
 	{
@@ -380,13 +369,11 @@ class BitSwarmClient extends EventDispatcher
 			_bbClient.close();
 		else
 		{
-			#if !html5
 			if(socket.connected)
-				_socketClient.close();
-			#end
+				_socket.close();
 		}
 				
-		onSocketClose(new SocketEvent(SocketEvent.CLOSED, { reason:reason } ));
+		onSocketClose(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, { reason:reason } ));
 	}
 	
 	public function nextUdpPacketId():Float
@@ -400,21 +387,17 @@ class BitSwarmClient extends EventDispatcher
 	*/
 	public function killConnection():Void
 	{
-		#if !html5
-		socket.close();
-		#end
-		onSocketClose(new SocketEvent(SocketEvent.CLOSED));
+		_socket.close();
+		onSocketClose(new Event(Event.CLOSE));
 	}
 	
 	public function stopReconnection():Void
 	{
 		_attemptingReconnection=false;
 		_firstReconnAttempt=-1;
-
-		#if !html5
-		if(_socketClient.connected)
-			_socketClient.close();
-		#end
+		
+		if(_socket.connected)
+			_socket.close();
 		
 		executeDisconnection(null);
 	}
@@ -459,7 +442,7 @@ class BitSwarmClient extends EventDispatcher
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Socket handlers
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	private function onSocketConnect(evt:SocketEvent):Void
+	private function onSocketConnect(evt:Event):Void
 	{
 		_connected = true;
 		
@@ -471,13 +454,13 @@ class BitSwarmClient extends EventDispatcher
 		dispatchEvent(event);
 	}
 	
-	private function onSocketClose(evt:SocketEvent):Void
+	private function onSocketClose(evt:Event):Void
 	{
 		// Connection is off
 		_connected = false;
 		
 		var isRegularDisconnection:Bool = !_attemptingReconnection && sfs.getReconnectionSeconds() == 0;
-		var isManualDisconnection:Bool = (Std.is(evt, SocketEvent)) && cast(evt,SocketEvent).params.reason == ClientDisconnectionReason.MANUAL;
+		var isManualDisconnection:Bool = (Std.is(evt, BitSwarmEvent)) && cast(evt,BitSwarmEvent).params.reason == ClientDisconnectionReason.MANUAL;
 
 		if(isRegularDisconnection || isManualDisconnection)
 		{
@@ -553,11 +536,14 @@ class BitSwarmClient extends EventDispatcher
 			dispatchEvent(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, { reason:ClientDisconnectionReason.UNKNOWN } ));
 	}
 	
-	private function onSocketData(evt:SocketEvent):Void
+	private function onSocketData(evt:ProgressEvent):Void
 	{
-		var buffer:ByteArray = evt.params.data;
+		var buffer:ByteArray = new ByteArray();
+		buffer.endian = Endian.BIG_ENDIAN;
 		try
 		{
+			
+			_socket.readBytes(buffer);
 			_ioHandler.onDataRead(buffer);
 		}
 		catch(error:Dynamic)
@@ -576,7 +562,7 @@ class BitSwarmClient extends EventDispatcher
 		}
 	}
 	
-	private function onSocketIOError(evt:SocketEvent):Void
+	private function onSocketIOError(evt:IOErrorEvent):Void
 	{
 		trace("## SocketError:" + evt.toString());
 		var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.IO_ERROR);
@@ -585,7 +571,7 @@ class BitSwarmClient extends EventDispatcher
 		dispatchEvent(event);
 	}
 	
-	private function onSocketSecurityError(evt:SocketEvent):Void
+	private function onSocketSecurityError(evt:SecurityErrorEvent):Void
 	{
 		// Reconnection failure
 		if(_attemptingReconnection)
@@ -596,7 +582,7 @@ class BitSwarmClient extends EventDispatcher
 		
 		trace("## SecurityError:" + evt.toString());
 		var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.SECURITY_ERROR);
-		event.params = { message:evt.params.text };
+		event.params = { message:evt.text };
 		
 		dispatchEvent(event);
 	}
@@ -665,7 +651,10 @@ class BitSwarmClient extends EventDispatcher
 		return _connected;
 	}
 	
-
+	function get_socket():Socket 
+	{
+		return _socket;
+	}
 	
 	function get_cryptoKey():CryptoKey 
 	{

@@ -42,8 +42,11 @@ import com.smartfoxserver.v2.util.ConfigLoader;
 import com.smartfoxserver.v2.util.CryptoInitializer;
 import com.smartfoxserver.v2.util.LagMonitor;
 import com.smartfoxserver.v2.util.SFSErrorCodes;
-import com.smartfoxserver.v2.errors.ArgumentError;
-import com.smartfoxserver.v2.events.EventDispatcher;
+import openfl.errors.ArgumentError;
+
+import flash.errors.IllegalOperationError;
+import flash.events.EventDispatcher;
+import flash.system.Capabilities;
 
 //--------------------------------------
 //  Connection events
@@ -822,10 +825,10 @@ class SmartFox extends EventDispatcher
 	private var _lagMonitor:LagMonitor;
 	
 	// If true the client will fall back to BlueBox if no socket connection is available
-	private var _useBlueBox:Bool = false;
+	private var _useBlueBox:Bool = true;
 
     //https WebSocket protocol (Adobe AIR Target may does not support WSS protocol)
-    public var useSSL:Bool = true;
+    public var useWSS:Bool = true;
 	
 	// If true the client is connected
 	private var _isConnected:Bool = false;
@@ -835,8 +838,6 @@ class SmartFox extends EventDispatcher
 	
 	// References the client's User object
 	private var _mySelf:User;
-
-	private var _configLoader:ConfigLoader;
 	
 	// A unique session token, sent by the server during the handshake
 	private var _sessionToken:String;
@@ -881,21 +882,13 @@ class SmartFox extends EventDispatcher
 	#if flash
  	"Flash"
 	#elseif neko
-	"NekoVM"
+	"Neko"
 	#elseif linux
 	"Linux"
 	#elseif windows
 	"Windows"
-	#elseif cpp
-	"C++"
-	#elseif js
-	"JavaScript"
 	#elseif html5
 	"JavaScript"
-	#elseif hl
-	"HashLink"
-	#elseif python
-	"Python"
 	#else
 	"Unknown"
 	#end
@@ -1042,7 +1035,7 @@ class SmartFox extends EventDispatcher
 		if(!_isConnected && !_isConnecting)
 			_bitSwarm.ioHandler = ioHandler;
 		else
-			throw "This operation must be executed before connecting!";
+			throw new IllegalOperationError("This operation must be executed before connecting!");
 	}
 
 
@@ -1767,11 +1760,7 @@ class SmartFox extends EventDispatcher
 	// Checks if application is running as a standalone Adobe Air application
 	private function isAirRuntime():Bool
 	{
-		#if (flash && air)
-			return flash.system.Capabilities.playerType.toLowerCase() == "desktop";
-			#else
-			return false;
-		#end
+		return Capabilities.playerType.toLowerCase() == "desktop";
 	}
 	
 	/**
@@ -2001,12 +1990,12 @@ class SmartFox extends EventDispatcher
 	 */
 	public function loadConfig(filePath:String="sfs-config.xml", connectOnSuccess:Bool=true):Void
 	{
-		_configLoader = new ConfigLoader();
-		_configLoader.addEventListener(SFSEvent.CONFIG_LOAD_SUCCESS, onConfigLoadSuccess);
-		_configLoader.addEventListener(SFSEvent.CONFIG_LOAD_FAILURE, onConfigLoadFailure);
+		var configLoader:ConfigLoader = new ConfigLoader();
+		configLoader.addEventListener(SFSEvent.CONFIG_LOAD_SUCCESS, onConfigLoadSuccess);
+		configLoader.addEventListener(SFSEvent.CONFIG_LOAD_FAILURE, onConfigLoadFailure);
 		
 		_autoConnectOnConfig = connectOnSuccess;
-		_configLoader.loadConfig(filePath);
+		configLoader.loadConfig(filePath);
 	}
 	
 	/** @private */
@@ -2085,11 +2074,12 @@ class SmartFox extends EventDispatcher
 	
 	private function onConfigLoadSuccess(evt:SFSEvent):Void
 	{
+		var cfgLoader:ConfigLoader = cast evt.target;
 		var cfgData:ConfigData = cast evt.params.cfg;
 		
 		// Remove listeners
-		_configLoader.removeEventListener(SFSEvent.CONFIG_LOAD_SUCCESS, onConfigLoadSuccess);
-		_configLoader.removeEventListener(SFSEvent.CONFIG_LOAD_FAILURE, onConfigLoadFailure);
+		cfgLoader.removeEventListener(SFSEvent.CONFIG_LOAD_SUCCESS, onConfigLoadSuccess);
+		cfgLoader.removeEventListener(SFSEvent.CONFIG_LOAD_FAILURE, onConfigLoadFailure);
 		
 		// Validate and store configuration
 		validateAndStoreConfig(cfgData);
@@ -2103,21 +2093,19 @@ class SmartFox extends EventDispatcher
 		{
 			connect(_config.host, _config.port);
 		}
-
-		_configLoader = null;
 	}
 	
 	private function onConfigLoadFailure(evt:SFSEvent):Void
 	{
+		var cfgLoader:ConfigLoader = cast evt.target;
+		
 		// remove listeners
-		_configLoader.removeEventListener(SFSEvent.CONFIG_LOAD_SUCCESS, onConfigLoadSuccess);
-		_configLoader.removeEventListener(SFSEvent.CONFIG_LOAD_FAILURE, onConfigLoadFailure);
+		cfgLoader.removeEventListener(SFSEvent.CONFIG_LOAD_SUCCESS, onConfigLoadSuccess);
+		cfgLoader.removeEventListener(SFSEvent.CONFIG_LOAD_FAILURE, onConfigLoadFailure);
 		
 		// Fire event;
 		var sfsEvt:SFSEvent = new SFSEvent(SFSEvent.CONFIG_LOAD_FAILURE, { } );
 		dispatchEvent(sfsEvt);
-
-		_configLoader = null;
 	}
 	
 	

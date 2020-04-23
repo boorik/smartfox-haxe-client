@@ -5,7 +5,7 @@ import com.smartfoxserver.v2.exceptions.SFSError;
 import com.smartfoxserver.v2.protocol.serialization.DefaultObjectDumpFormatter;
 import com.smartfoxserver.v2.protocol.serialization.ISFSDataSerializer;
 
-import com.smartfoxserver.v2.util.ByteArray;
+import flash.utils.ByteArray;
 
 /**
  * The<em>SFSArray</em>class is used by SmartFoxServer in client-server data transfer.

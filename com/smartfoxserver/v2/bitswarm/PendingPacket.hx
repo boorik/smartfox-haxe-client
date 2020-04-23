@@ -1,9 +1,9 @@
 package com.smartfoxserver.v2.bitswarm;
 
 import com.smartfoxserver.v2.core.PacketHeader;
-import com.hurlant.util.Endian;
+import openfl.utils.Endian;
 
-import com.smartfoxserver.v2.util.ByteArray;
+import flash.utils.ByteArray;
 
 /** @private */
 class PendingPacket

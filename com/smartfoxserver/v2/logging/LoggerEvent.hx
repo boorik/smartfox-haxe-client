@@ -1,7 +1,7 @@
 package com.smartfoxserver.v2.logging;
 
 import com.smartfoxserver.v2.core.BaseEvent;
-import com.smartfoxserver.v2.events.Event;
+import flash.events.Event;
 
 /**
  *<em>LoggerEvent</em>is the class representing all the events dispatched by the SmartFoxServer 2X ActionScript 3 API Internal logger.

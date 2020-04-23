@@ -1,5 +1,5 @@
 package com.smartfoxserver.v2.util;
-import com.smartfoxserver.v2.util.ByteArray;
+import openfl.utils.ByteArray;
 
 /**
  * ...

@@ -130,8 +130,8 @@ class SystemController extends BaseController
 		if(command !=null)
 		{
 			if(sfs.debug)
-				log.info("handleMessage, " + command.name + ", " + message);
-
+				log.info(command.name + ", " + message);
+					
 			// Execute
 			command.handler(message);
 		}

@@ -3,7 +3,7 @@ package com.smartfoxserver.v2.bitswarm;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.logging.Logger;
 
-import com.smartfoxserver.v2.util.ByteArray;
+import flash.utils.ByteArray;
 
 /** @private */
 class DefaultUDPManager implements IUDPManager

@@ -2,7 +2,7 @@ package com.smartfoxserver.v2.requests;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.requests.GenericMessageRequest;
 import com.smartfoxserver.v2.requests.MessageRecipientMode;
-import com.smartfoxserver.v2.errors.ArgumentError;
+import flash.errors.ArgumentError;
 /**
  * Sends an administrator message to a specific user or a group of users.
  * 

@@ -4,7 +4,7 @@ import com.hurlant.crypto.hash.IHash;
 import com.hurlant.crypto.hash.MD5;
 import com.hurlant.util.Hex;
 
-import com.smartfoxserver.v2.util.ByteArray<Dynamic>;
+import flash.utils.ByteArray<Dynamic>;
 
 /**
  * Helper class for logging in with a pre-hashed password.
