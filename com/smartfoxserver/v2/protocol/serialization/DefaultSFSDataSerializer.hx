@@ -1227,7 +1227,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 				sfsa.addNull();
 
 				// See notes for SFSObject
-			else if(item.toString()=="[object Dynamic]"  && !(Std.is(item, Array)))
+			else if((item.toString()=="[object Dynamic]" || item.toString() == "[object Object]")  && !(Std.is(item, Array)))
 				sfsa.addSFSObject(genericObjectToSFSObject(item, forceToNumber));
 
 			else if(Std.is(item, Array))
