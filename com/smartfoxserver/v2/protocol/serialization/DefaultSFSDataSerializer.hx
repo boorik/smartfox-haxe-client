@@ -145,7 +145,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		/*
 		 * NOTE:we catch codec exceptions OUTSIDE of the loop
 		 * meaning that any exception of that type will stop the process of looping through the
-		 * object data and immediately discard the whole packet of data. 
+		 * object data and immediately discard the whole packet of data.
 		 */
 
 		try
@@ -205,7 +205,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		/*
 		 * NOTE:we catch codec exceptions OUTSIDE of the loop
 		 * meaning that any exception of that type will stop the process of looping through the
-		 * object data and immediately discard the whole packet of data. 
+		 * object data and immediately discard the whole packet of data.
 		 */
 
 		try
@@ -874,9 +874,9 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 
 	/*
 	 *::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	 * 
+	 *
 	 *<<<ASObj 2 SFSObject>>>
-	 * 
+	 *
 	 *::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	 */
 
@@ -924,7 +924,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			var fieldValue:Dynamic = Reflect.field(asObj,fieldName);
 
 			/*
-			* Transient fields in Actionscript 3 are by convention marked with a starting $ 
+			* Transient fields in Actionscript 3 are by convention marked with a starting $
 			* Public fields such as:$posx, $name, $gameId won't be serialized.
 			*/
 			if(fieldName.charAt(0)=="$")
@@ -1009,9 +1009,9 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 
 	/*
 	 *::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	 * 
+	 *
 	 *<<<SFSObject 2 POJO>>>
-	 * 
+	 *
 	 *::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	 */
 
@@ -1109,9 +1109,9 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 
 	/*
 	*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	* 
+	*
 	* Generic Dynamic==>SFSObject
-	* 
+	*
 	*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	*/
 	public function genericObjectToSFSObject(obj:Dynamic, forceToNumber:Bool=false):SFSObject
@@ -1136,7 +1136,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			 * ADDENDUM:	there is a special case in which the Dynamic is actually an Array with one element as Dynamic
 			 * 				in such case an Array is recognized as Dynamic!
 			 */
-			else if(item.toString()=="[object Dynamic]" && !(Std.is(item, Array)))
+			else if((item.toString()=="[object Dynamic]" || item.toString() == "[object Object]")  && !(Std.is(item, Array)))
 			{
 				var subSfso:ISFSObject = new SFSObject();
 				sfso.putSFSObject(key, subSfso);
@@ -1204,9 +1204,9 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 
 	/*
 	*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	* 
+	*
 	* Generic Array<Dynamic>==>SFSArray
-	* 
+	*
 	*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	*/
 	public function genericArrayToSFSArray(arr:Array<Dynamic>, forceToNumber:Bool=false):SFSArray
