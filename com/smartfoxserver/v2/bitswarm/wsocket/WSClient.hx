@@ -1,5 +1,7 @@
 ﻿package com.smartfoxserver.v2.bitswarm.wsocket;
 
+import openfl.events.Event;
+import openfl.Lib;
 import haxe.io.Bytes;
 import haxe.net.WebSocket;
 import openfl.errors.IllegalOperationError;
@@ -77,18 +79,20 @@ class WSClient extends EventDispatcher
 			_connected = false;
 		};
 
-		#if sys
-		sys.thread.Thread.create(() -> {
-			while (true) {
-				ws.process();
-				Sys.sleep(0.1);
-			}
-		});
+		#if (target.threaded)
+			Lib.current.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		#end
+	}
+
+	private function onEnterFrame(e:Event):Void
+	{
+		//trace("onEnterFrame");
+		ws.process();
 	}
 
 	public function send(binData : ByteArray) : Void
 	{
+		binData.position = 0;
 		ws.sendBytes(binData);
 	}
 

@@ -10,11 +10,12 @@
         "boorik <Vincent Blanchet>",
 		"barisyild <Baris Cagri Yildirim>"
     ],
-    "releasenote": "new targets added.",
-    "version": "0.2.2",
+    "releasenote": "thread fix",
+    "version": "0.2.3",
     "url": "https://github.com/barisyild/smartfox-haxe-client",
     "dependencies": {
 		"haxe-crypto":"",
-		"haxe-ws":""
+		"haxe-ws":"",
+        "openfl":""
     }
 }
