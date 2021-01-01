@@ -222,6 +222,8 @@ class BitSwarmClient extends EventDispatcher
 
 	private function onWSClosed(evt : WSEvent) : Void
 	{
+		_connected = false;
+
 		//TODO: Add reconnect support for WebSocket?
 		dispatchEvent(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, {
 			reason : ClientDisconnectionReason.UNKNOWN

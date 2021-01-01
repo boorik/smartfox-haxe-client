@@ -68,15 +68,15 @@ class WSClient extends EventDispatcher
 			}));
 		};
 		ws.onclose = function() {
-			dispatchEvent(new WSEvent(WSEvent.CLOSED, { }));
 			_connected = false;
+			dispatchEvent(new WSEvent(WSEvent.CLOSED, { }));
 		};
 		ws.onerror = function(error:String) {
+			_connected = false;
 			var wsEvt : WSEvent = new WSEvent(WSEvent.IO_ERROR, {
 				message : error
 			});
 			dispatchEvent(wsEvt);
-			_connected = false;
 		};
 
 		#if (target.threaded)
