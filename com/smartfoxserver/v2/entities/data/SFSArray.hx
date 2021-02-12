@@ -47,11 +47,7 @@ extern class SFSArray
 		return getWrappedItem(index);
 	}
 	function getWrappedItem(index:Int):Dynamic;
-	@:overload(function (value:Dynamic, typeId:Int):Void{})
-	inline function add(data:SFSDataWrapper):Void
-	{
-		add(data.data,data.type);
-	}
+	function add(value:Dynamic, typeId:Int):Void;
 	
 
 	function addBool(value:Bool):Void;

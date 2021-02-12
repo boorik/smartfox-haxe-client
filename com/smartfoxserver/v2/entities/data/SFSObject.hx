@@ -51,11 +51,7 @@ extern class SFSObject
 	function getUtfStringArray(key:String):Array<String>;
 	function getWrappedItem(key:String):SFSDataWrapper;
 	function isNull(key:String):Bool;
-	@:overload(function (key:String, value:Dynamic, typeId:Int):Void{})
-	inline function put(key:String,dataWrapper:SFSDataWrapper):Void
-	{
-		put(key,dataWrapper.data,dataWrapper.type);
-	}
+	function put(key:String, value:Dynamic, typeId:Int):Void;
 	function putBool(key:String, value:Bool):Void;
 	function putBoolArray(key:String, array:Array<Bool>):Void;
 	function putByte(key:String, value:Int):Void;

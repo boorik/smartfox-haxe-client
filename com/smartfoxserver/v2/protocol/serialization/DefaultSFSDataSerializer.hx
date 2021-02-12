@@ -158,8 +158,14 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		 		var decodedObject:SFSDataWrapper = decodeObject(buffer);
 		 		
 		 		// Store decoded object and keep going
-		 		if(decodedObject !=null)
-		 			sfsObject.put(key, decodedObject);
+				if(decodedObject !=null)
+				{
+					#if html5
+					sfsObject.put(key, decodedObject.data, decodedObject.type);
+					#else
+					sfsObject.put(key, decodedObject);
+					#end
+				}
 		 		else
 		 			throw new SFSCodecError("Could not decode value for SFSObject with key:" + key);
 		 	}	
@@ -216,8 +222,14 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		 		var decodedObject:SFSDataWrapper = decodeObject(buffer);
 
 		 		// Store decoded object and keep going
-		 		if(decodedObject !=null)
-		 			sfsArray.add(decodedObject);
+				if(decodedObject !=null)
+				{
+					#if html5
+					sfsArray.add(decodedObject.data, decodedObject.type);
+					#else
+					sfsArray.add(decodedObject);
+					#end
+				}
 		 		else
 		 			throw new SFSCodecError("Could not decode SFSArray item at index:" + i);
 		 	}	
@@ -916,7 +928,12 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			fieldDescriptor.putUtfString(FIELD_NAME_KEY, fieldName);
 			
 			// store field value
-			fieldDescriptor.put(FIELD_VALUE_KEY, wrapASField(fieldValue));
+			var data = wrapASField(fieldValue);
+			#if html5
+			fieldDescriptor.put(FIELD_VALUE_KEY, data.data, data.type);
+			#else
+			fieldDescriptor.put(FIELD_VALUE_KEY, data);
+			#end
 			
 			// add to the list of fields
 			fieldList.addSFSObject(fieldDescriptor);
@@ -970,7 +987,14 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		var sfsArray:ISFSArray = SFSArray.newInstance();
 		
 		for(j in 0...arr.length)
-			sfsArray.add(wrapASField(arr[j]));
+		{
+			var data = wrapASField(arr[j]);
+			#if html5
+			sfsArray.add(data.data, data.type);
+			#else
+			sfsArray.add(data);
+			#end
+		}
 			
 		return sfsArray;
 	}
@@ -980,7 +1004,14 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		var sfsObj:ISFSObject = SFSObject.newInstance();
 		
 		for(key in Reflect.fields(dict))
-			sfsObj.put(key, wrapASField(Reflect.field(dict,key)));
+		{
+			var data = wrapASField(Reflect.field(dict,key));
+			#if html5
+			sfsObj.put(key, data.data, data.type);
+			#else
+			sfsObj.put(key, data);
+			#end
+		}
 			
 		return sfsObj;
 	}
