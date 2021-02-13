@@ -2,37 +2,6 @@ package com.smartfoxserver.v2.entities;
 import com.smartfoxserver.v2.entities.managers.SFSUserManager;
 import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
-
-#if html5
-@:native('Object')
-extern class SFSUser
-{
-	public var aoiEntryPoint:Dynamic;
-	public var id:Int;
-	public var isItMe:Bool;
-	public var name:String;
-	public var privilegeId:Int;
-	public var properties:Dynamic;
-	public var isPlayer:Bool;
-	public var isSpectator:Bool;
-	
-	public function setVariable(userVariable:UserVariable):Void;
-	public function containsVariable(varName:String):Bool;
-	public function getPlayerId(room:SFSRoom):Int;
-	public function getUserManager():SFSUserManager;
-	public function getVariable(varName:String):SFSUserVariable;
-	public function getVariables():Array<SFSUserVariable>;
-	public function isAdmin():Bool;
-	public function isGuest():Bool;
-	public function isJoinedInRoom(room:SFSRoom):Bool;
-	public function isModerator():Bool;
-	public function isPlayerInRoom(room:SFSRoom):Bool;
-	public function isSpectatorInRoom(room:SFSRoom):Bool;
-	public function isStandardUser():Bool;
-	public function toString():String;		
-}
-#else
-
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.managers.IUserManager;
@@ -349,4 +318,3 @@ class SFSUser implements User
 		return "[User:" + _name + ", Id:" + _id + ", isMe:" + _isItMe + "]";
 	}
 }
-#end

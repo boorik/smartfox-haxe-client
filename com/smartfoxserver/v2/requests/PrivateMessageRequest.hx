@@ -2,13 +2,6 @@ package com.smartfoxserver.v2.requests;
 
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 
-#if html5
-@:native('SFS2X.PrivateMessageRequest')
-extern class PrivateMessageRequest
-{
-	public function new(message:String, recipientId:Int, params:ISFSObject=null):Void;
-}
-#else
 /**
  * Sends a private chat message.
  * 
@@ -66,4 +59,3 @@ class PrivateMessageRequest extends GenericMessageRequest
 		_params = params;
 	}
 }
-#end

@@ -1,8 +1,4 @@
 package com.smartfoxserver.v2.entities.variables;
-#if html5
-import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
-typedef RoomVariable = SFSRoomVariable;
-#else
 /**
  * The<em>RoomVariable</em>interface defines all the public methods and properties that an object representing a SmartFoxServer Room Variable exposes.
  *<p>In the SmartFoxServer 2X client API this Interface is implemented by the<em>SFSRoomVariable</em>class. Read the class description for additional informations.</p>
@@ -29,4 +25,3 @@ interface RoomVariable extends UserVariable
 	 */
 		 var isPersistent(get,set):Bool;
 }
-#end

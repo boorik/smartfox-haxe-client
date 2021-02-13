@@ -1,14 +1,6 @@
 package com.smartfoxserver.v2.requests.mmo;
 
 import com.smartfoxserver.v2.entities.data.Vec3D;
-#if html5
-@:native('SFS2X.MapLimits')
-extern class MapLimits{
-	var higherLimit:Vec3D;
-	var lowerLimit:Vec3D;
-}
-#else
-
 import openfl.errors.ArgumentError;
 
 /**
@@ -60,4 +52,3 @@ class MapLimits
 		return _higherLimit;
 	}
 }
-#end

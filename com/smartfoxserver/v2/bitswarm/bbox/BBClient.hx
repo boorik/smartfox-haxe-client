@@ -315,7 +315,7 @@ class BBClient extends EventDispatcher
 		#if flash
 		return Base64.decode(rawData).getData();
 		#else
-		return cast(Base64.decode(rawData), ByteArray);			
+		return ByteArray.fromBytes(Base64.decode(rawData));
 		#end
 	}
 	

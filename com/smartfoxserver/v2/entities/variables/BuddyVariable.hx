@@ -1,8 +1,4 @@
 package com.smartfoxserver.v2.entities.variables;
-#if html5
-import com.smartfoxserver.v2.entities.variables.SFSBuddyVariable;
-typedef BuddyVariable = SFSBuddyVariable;
-#else
 /**
  * The<em>BuddyVariable</em>interface defines all the public methods and properties that an object representing a SmartFoxServer Buddy Variable exposes.
  *<p>In the SmartFoxServer 2X client API this Interface is implemented by the<em>SFSBuddyVariable</em>class. Read the class description for additional informations.</p>
@@ -20,4 +16,3 @@ interface BuddyVariable extends UserVariable
 	 */
 	public var isOffline(get, null):Bool;
 }
-#end

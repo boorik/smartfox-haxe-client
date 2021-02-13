@@ -48,12 +48,7 @@ import flash.events.Event;
  * 
  * @see 	SFSBuddyEvent
  */
-#if html5
-@:native('SFS2X.SFSEvent')
-extern class SFSEvent implements Dynamic
-#else
- class SFSEvent extends BaseEvent
-#end
+class SFSEvent extends BaseEvent
 {
 	/** @private */
 	public static inline var HANDSHAKE:String = "handshake";
@@ -1664,9 +1659,7 @@ extern class SFSEvent implements Dynamic
 	 * @eventType	cryptoInit
 	 */
 	 public static inline var CRYPTO_INIT:String = "CryptoInit";
-	
-	 #if !html5
-	
+
 	//==========================================================================================================
 	
 	
@@ -1707,11 +1700,4 @@ extern class SFSEvent implements Dynamic
 	{
 		return this.params;
 	}
-	#else
-	public var parameters(get, null):Dynamic;
-	inline function get_parameters():Dynamic 
-	{
-		return this;
-	}
-	#end
 }

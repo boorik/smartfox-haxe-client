@@ -1,12 +1,6 @@
 package com.smartfoxserver.v2.requests.game;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
-#if html5
-@:native('SFS2X.InviteUsersRequest')
-extern class InviteUsersRequest{
-	public function new(invitedUsers:Array<User>, secondsForAnswer:Int, params:ISFSObject=null);
-}
-#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.entities.data.ISFSArray;
@@ -170,4 +164,3 @@ class InviteUsersRequest extends BaseRequest
 			_sfso.putSFSObject(KEY_PARAMS, _params);
 	}
 }
-#end

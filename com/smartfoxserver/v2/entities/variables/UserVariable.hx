@@ -1,9 +1,4 @@
 package com.smartfoxserver.v2.entities.variables;
-
-#if html5
-import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
-typedef UserVariable = SFSUserVariable;
-#else
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 
@@ -87,4 +82,3 @@ interface UserVariable
 	/** @private */
 	function toSFSArray():ISFSArray;
 }
-#end

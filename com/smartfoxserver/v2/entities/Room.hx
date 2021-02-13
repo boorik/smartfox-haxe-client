@@ -1,7 +1,4 @@
 package com.smartfoxserver.v2.entities;
-#if html5
-typedef Room = SFSRoom;
-#else
 import com.smartfoxserver.v2.entities.managers.IRoomManager;
 import com.smartfoxserver.v2.entities.variables.RoomVariable;
 
@@ -227,4 +224,3 @@ interface Room
 	function setPasswordProtected(isProtected:Bool):Bool;
 
 }
-#end

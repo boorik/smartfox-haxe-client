@@ -1,5 +1,7 @@
 package com.smartfoxserver.v2.bitswarm;
 
+import com.smartfoxserver.v2.bitswarm.wsocket.WSEvent;
+import com.smartfoxserver.v2.bitswarm.wsocket.WSClient;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.bitswarm.bbox.BBClient;
 import com.smartfoxserver.v2.bitswarm.bbox.BBEvent;
@@ -27,6 +29,7 @@ import openfl.utils.ByteArray;
 class BitSwarmClient extends EventDispatcher 
 {
 	private var _socket:Socket;
+	private var _wsClient:WSClient;
 	private var _bbClient:BBClient;
 	private var _ioHandler:IoHandler;
 	private var _controllers:Map<Int,IController>;
@@ -45,7 +48,7 @@ class BitSwarmClient extends EventDispatcher
 	private var _controllersInited:Bool = false;
 	@:isVar
 	public var cryptoKey(get, set):CryptoKey;
-	
+	private var _useWebSocket:Bool = false;
 	private var _useBlueBox:Bool = false;
 	private var _connectionMode:String;
 	private var _firstReconnAttempt:Float=-1;
@@ -121,8 +124,25 @@ class BitSwarmClient extends EventDispatcher
 	{
 		return _reconnectionDelayMillis;
 	}
+
+	public var useWSS(get, never):Bool;
+	private function get_useWSS():Bool
+	{
+		return sfs.useWSS;
+	}
+
+	public var useWebSocket(get, set):Bool;
+	private function get_useWebSocket():Bool
+	{
+		return _useWebSocket;
+	}
+
+	private function set_useWebSocket(value:Bool):Bool
+	{
+		return _useWebSocket = value;
+	}
 	
-	public var useBlueBox(get, null):Bool;
+	public var useBlueBox(get, never):Bool;
  	private function get_useBlueBox():Bool
 	{
 		return _useBlueBox;	
@@ -172,6 +192,52 @@ class BitSwarmClient extends EventDispatcher
 		_bbClient.addEventListener(BBEvent.DISCONNECT, onBBDisconnect);
 		_bbClient.addEventListener(BBEvent.IO_ERROR, onBBError);
 		_bbClient.addEventListener(BBEvent.SECURITY_ERROR, onBBError);
+
+		_wsClient = new WSClient();
+		_wsClient.addEventListener(WSEvent.CONNECT, this.onWSConnect);
+		_wsClient.addEventListener(WSEvent.DATA, this.onWSData);
+		_wsClient.addEventListener(WSEvent.CLOSED, this.onWSClosed);
+		_wsClient.addEventListener(WSEvent.IO_ERROR, this.onWSError);
+		_wsClient.addEventListener(WSEvent.SECURITY_ERROR, this.onWSError);
+	}
+
+	private function onWSConnect(evt : WSEvent) : Void
+	{
+		this._connected = true;
+		var event : BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.CONNECT);
+		event.params = {
+			success : true
+		};
+		dispatchEvent(event);
+	}
+
+	private function onWSData(evt : WSEvent) : Void
+	{
+		var buffer : ByteArray = evt.params.data;
+		if (buffer != null)
+		{
+			this._ioHandler.onDataRead(buffer);
+		}
+	}
+
+	private function onWSClosed(evt : WSEvent) : Void
+	{
+		_connected = false;
+
+		//TODO: Add reconnect support for WebSocket?
+		dispatchEvent(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, {
+			reason : ClientDisconnectionReason.UNKNOWN
+		}));
+	}
+
+	private function onWSError(evt : WSEvent) : Void
+	{
+		trace("## WebSocket Error: " + evt.params.message);
+		var event : BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.IO_ERROR);
+		event.params = {
+			message : evt.params.message
+		};
+		dispatchEvent(event);
 	}
 	
 	public function destroy():Void
@@ -254,8 +320,13 @@ class BitSwarmClient extends EventDispatcher
 	{
 		_lastIpAddress = host;
 		_lastTcpPort = port;
-		
-		if(_useBlueBox)
+
+		if(_useWebSocket)
+		{
+			_wsClient.connect(host, port, useWSS);
+			_connectionMode = ConnectionMode.WEBSOCKET;
+		}
+		else if(_useBlueBox)
 		{
 			_bbClient.pollSpeed=(sfs.config !=null)? sfs.config.blueBoxPollingRate:750;
 			_bbClient.connect(host, port);
@@ -286,8 +357,13 @@ class BitSwarmClient extends EventDispatcher
 	{
 		return _bbClient;
 	}
-	
-	
+
+	public var webSocket(get , never):WSClient;
+
+	public function get_webSocket():WSClient
+	{
+		return _wsClient;
+	}
 	
 	public function disconnect(reason:String=null):Void
 	{

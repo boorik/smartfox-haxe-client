@@ -5,16 +5,17 @@
         "openfl",
         "server"
     ],
-    "description": "use smartfox in your openfl projects without plateform specific libraries",
+    "description": "use smartfox in your haxe project",
     "contributors": [
-        "boorik <Vincent Blanchet>"
+        "boorik <Vincent Blanchet>",
+		"barisyild <Baris Cagri Yildirim>"
     ],
-    "releasenote": "now match as3 version 1.6.0",
-    "version": "0.2.0",
-    "url": "https://github.com/chapatiz/smartfox-haxe-client",
+    "releasenote": "thread fix",
+    "version": "0.2.3",
+    "url": "https://github.com/barisyild/smartfox-haxe-client",
     "dependencies": {
-        "lime": "",
-        "openfl": "",
-		"haxe-crypto":""
+		"haxe-crypto":"",
+		"haxe-ws":"",
+        "openfl":""
     }
 }

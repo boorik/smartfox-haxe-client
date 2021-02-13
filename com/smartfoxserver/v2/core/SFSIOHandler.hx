@@ -343,9 +343,13 @@ class SFSIOHandler implements IoHandler
 		writeBuffer.writeBytes(binData);
 			
 		// 4. Send in hyperspace!
-		if(bitSwarm.useBlueBox)
+		if(bitSwarm.useWebSocket)
+		{
+			bitSwarm.webSocket.send(writeBuffer);
+		}else if(bitSwarm.useBlueBox)
+		{
 			bitSwarm.httpSocket.send(writeBuffer);
-
+		}
 		else
 		{
 			if(bitSwarm.socket.connected)

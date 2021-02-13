@@ -17,6 +17,11 @@ class ConnectionMode
 	 * A tunnelled http connection(through the BlueBox)is established between the client and the server.
 	 */
 	public static inline var HTTP:String="http";
+
+	/**
+	 * WebSocket support
+	 */
+	public static inline var WEBSOCKET:String="WS";
 	
 	// Avoid construction
 	public function new()

@@ -13,58 +13,6 @@ import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.managers.IRoomManager;
 import com.smartfoxserver.v2.util.ConnectionMode;
-#if html5
-@:jsRequire("SFS2X")
-typedef ConfigObj = {
-	var host:String;
-	var port:Int;
-	var useSSL:Bool;
-	var zone:String;
-	var debug:Bool;
-}
-@:native('SFS2X.SmartFox')
-extern class SmartFox
-{
-	public var buddyManager:IBuddyManager;
-	public var config:Dynamic;
-	public var debug:Bool;
-	public var lastJoinedRoom:Room;
-	public var logger:Dynamic;
-	public var mySelf:User;
-	public var roomManager:IRoomManager;
-	public var sessionToken:Dynamic;	
-	public var userManager:com.smartfoxserver.v2.entities.managers.SFSUserManager;
-	public var version:String;
-	public var isConnected:Bool;
-	public function new(?configObj:ConfigObj):Void;
-	inline function addEventListener(evtType:String, listener:Dynamic, ?scope:Dynamic):Void
-	{
-		addEventListener(evtType,listener,untyped __js__('this'));
-	}
-	public function connect(?host:String, ?port:Float, ?useSSL:Bool):Void;
-	public function disconnect():Void;
-	public function enableLagMonitor(enabled:Bool, interval:Float, queueSize:Float):Void;
-	public function getJoinedRooms():Dynamic;
-	public function getMaxMessageSize():Float;
-	public function getRoomById(id:Int):Dynamic;
-	public function getRoomByName(name:String):Dynamic;
-	public function getRoomList():Array<Room>;
-	public function getRoomListFromGroup(groupId:Int):Array<Room>;
-	public function removeEventListener(evtType:Dynamic, listener:Dynamic):Void;
-	public function send(request:Dynamic):Void;
-	public function setClientDetails(platformId:Int, version:String):Void;
-	public var roomList(get, null):Array<Room>;
- 	inline function get_roomList():Array<Room>
-	{
-		return this.getRoomList();
-	}
-	public var connectionMode(get, null):String;
-	inline function get_connectionMode():String
-	{
-		return ConnectionMode.SOCKET;
-	}
-}
-#else
 
 import com.smartfoxserver.v2.bitswarm.BitSwarmClient;
 import com.smartfoxserver.v2.bitswarm.BitSwarmEvent;
@@ -878,6 +826,9 @@ class SmartFox extends EventDispatcher
 	
 	// If true the client will fall back to BlueBox if no socket connection is available
 	private var _useBlueBox:Bool = true;
+
+    //https WebSocket protocol (Adobe AIR Target may does not support WSS protocol)
+    public var useWSS:Bool = true;
 	
 	// If true the client is connected
 	private var _isConnected:Bool = false;
@@ -936,6 +887,8 @@ class SmartFox extends EventDispatcher
 	"Linux"
 	#elseif windows
 	"Windows"
+	#elseif html5
+	"JavaScript"
 	#else
 	"Unknown"
 	#end
@@ -1083,6 +1036,26 @@ class SmartFox extends EventDispatcher
 			_bitSwarm.ioHandler = ioHandler;
 		else
 			throw new IllegalOperationError("This operation must be executed before connecting!");
+	}
+
+
+	// WebSocket support
+	public var _useWebSocket:Bool = false;
+
+	public var useWebSocket(get, set):Bool;
+ 	private function get_useWebSocket():Bool
+	{
+		return _useWebSocket;
+	}
+
+	private function set_useWebSocket(value:Bool):Bool
+	{
+		if(this._isConnecting || this.isConnected)
+		{
+			_log.warn("A connection attempt is already in progress");
+			return _useWebSocket;
+		}
+		return _useWebSocket = value;
 	}
 	
 	/**
@@ -1349,6 +1322,7 @@ class SmartFox extends EventDispatcher
 	 * @see		#disconnect()
 	 * @see		#event:connection connection event
 	 */
+
 	public function connect(host:String=null, port:Int=-1):Void
 	{
 		if(isConnected)
@@ -1356,7 +1330,7 @@ class SmartFox extends EventDispatcher
 			_log.warn("Already connected");
 			return;
 		}
-		
+
 		// Skip attempt, if already trying to connect
 		if(_isConnecting)
 		{
@@ -1380,8 +1354,14 @@ class SmartFox extends EventDispatcher
 		
 		if(port<0 || port>65535)
 			throw new ArgumentError("Invalid connection port");
-		
+
+		_bitSwarm.useWebSocket = useWebSocket;
+
 		// All fine and dandy, let's proceed with the connection
+		#if html5
+			_bitSwarm.useWebSocket = true;
+		#end
+
 		_lastIpAddress = host;
 		_isConnecting = true;
 		_bitSwarm.connect(host, port);	
@@ -2110,7 +2090,9 @@ class SmartFox extends EventDispatcher
 		
 		// AutoConnect?
 		if(_autoConnectOnConfig)
+		{
 			connect(_config.host, _config.port);
+		}
 	}
 	
 	private function onConfigLoadFailure(evt:SFSEvent):Void
@@ -2270,9 +2252,11 @@ class SmartFox extends EventDispatcher
 		
 		// Enable BlueBox
 		_useBlueBox = cfgData.useBlueBox;
+
+		//Enable WebSocket
+		useWebSocket = cfgData.useWebSocket;
 		
 		// Store globally
 		_config = cfgData;
 	}
 }
-#end

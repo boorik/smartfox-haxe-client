@@ -1,13 +1,6 @@
 package com.smartfoxserver.v2.requests.buddylist;
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
-#if html5
-@:native('SFS2X.BuddyMessageRequest')
-extern class BuddyMessageRequest{
-	public function new(message:String,targetBuddy:Buddy,params:ISFSObject=null);
-}
-#else
-
 import com.smartfoxserver.v2.requests.GenericMessageRequest;
 import com.smartfoxserver.v2.requests.GenericMessageType;
 
@@ -76,4 +69,3 @@ class BuddyMessageRequest extends GenericMessageRequest
 		_params = params;
 	}
 }
-#end

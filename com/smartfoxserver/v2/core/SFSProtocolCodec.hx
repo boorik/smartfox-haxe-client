@@ -147,7 +147,7 @@ class SFSProtocolCodec implements IProtocolCodec
 		}
 		
 		var controllerId:Int = requestObject.getByte(CONTROLLER_ID);
-		
+
 		var controller:IController = bitSwarm.getController(controllerId);
 		
 		if(controller==null)

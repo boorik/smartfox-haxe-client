@@ -1,17 +1,4 @@
 package com.smartfoxserver.v2.entities.managers;
-#if html5
-@:native('SFS2X.Managers.UserManager')
-extern class SFSUserManager
-{
-	function containsUser(user:com.smartfoxserver.v2.entities.SFSUser):Bool;
-	function containsUserId(userId:Int):Bool;
-	function containsUserName(userName:String):Bool;
-	function getUserById(userId:Int):SFSUser;
-	function getUserByName(userName:String):SFSUser;
-	function getUserCount():Float;
-	function getUserList():Array<SFSUser>;
-}
-#else
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.logging.Logger;
@@ -139,4 +126,3 @@ class SFSUserManager implements IUserManager
 		_usersById = new IntMap<User>();
 	}
 }
-#end
