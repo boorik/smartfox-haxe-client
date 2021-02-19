@@ -504,6 +504,12 @@ class SFSObject implements ISFSObject
 		dataHolder[key] = new SFSDataWrapper(SFSDataType.UTF_STRING, value);
 	}
 	
+	/** @inheritDoc */
+	public function putText(key:String, value:String):Void
+	{
+		dataHolder[key] = new SFSDataWrapper(SFSDataType.TEXT, value);
+	}
+	
 	// Arrays
 	
 	/** @inheritDoc */
