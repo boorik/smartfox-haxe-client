@@ -294,10 +294,10 @@ class BBClient extends EventDispatcher
 		
 		// Encode from ByteArray to Base64-String
 		#if flash
-		else if(Std.is(data, ByteArray))
+		else if(Std.isOfType(data, ByteArray))
 			data = Base64.encode(haxe.io.Bytes.ofData(cast(data, ByteArray)));
 		#else
-		else if(Std.is(data, openfl.utils.ByteArray.ByteArrayData))
+		else if(Std.isOfType(data, openfl.utils.ByteArray.ByteArrayData))
 			data = Base64.encode(data);
 		#end
 		

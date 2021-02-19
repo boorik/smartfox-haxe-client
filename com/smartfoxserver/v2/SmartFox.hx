@@ -1743,7 +1743,7 @@ class SmartFox extends EventDispatcher
 			* If it's already inited with success we don't allow re-assigning a new UDP manager
 			* Also we make sure that we overwrite the class only if it's the default type(==DefaultUDPManager)
 			*/
-			if(!_bitSwarm.udpManager.inited && Std.is(_bitSwarm.udpManager,DefaultUDPManager))
+			if(!_bitSwarm.udpManager.inited && Std.isOfType(_bitSwarm.udpManager,DefaultUDPManager))
 			{
 				manager.sfs = this;
 				_bitSwarm.udpManager = manager;
@@ -1888,7 +1888,7 @@ class SmartFox extends EventDispatcher
 		try
 		{
 			// Activate joining flag
-			if(Std.is(request, JoinRoomRequest))
+			if(Std.isOfType(request, JoinRoomRequest))
 			{
 				if(_isJoining)
 					return;

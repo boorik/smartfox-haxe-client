@@ -274,7 +274,7 @@ class SFSObject implements ISFSObject
 		if(wrapper != null)
 		{
 			var value:Dynamic = wrapper.data;
-			if(Std.is(value, Int))
+			if(Std.isOfType(value, Int))
 			{
 				return value;
 			}
