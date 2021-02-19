@@ -273,13 +273,16 @@ class SFSObject implements ISFSObject
 		var wrapper:SFSDataWrapper = cast dataHolder[key];
 		if(wrapper != null)
 		{
+			#if (js || flash)
+			return wrapper.data;
+			#else
 			var value:Dynamic = wrapper.data;
 			if(Std.is(value, Int))
 			{
 				return value;
 			}
-			value = Std.parseInt(value);
-			return value;
+			return Std.parseInt(""+value);
+			#end
 		}else{
 			return 0; //==0
 		}

@@ -168,8 +168,12 @@ class GenericMessageRequest extends BaseRequest
 			
 		if(_message==null || _message.length==0)
 			errors.push("Buddy message is empty!");
-			
-		var recipientId:Int = Std.parseInt(_recipient);
+
+		var recipientId:Int = switch Std.parseInt("" + _recipient) {
+			case null: 0;
+			case v: v;
+		}
+
 		if(recipientId<0)
 			errors.push("Recipient is not online or not in your buddy list");
 	}
