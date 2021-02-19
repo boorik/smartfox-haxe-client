@@ -906,7 +906,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		if(classFullName==null)
 			throw new SFSCodecError("Cannot detect class name:" + sfsObj);
 
-		if(!(Std.is(asObj, SerializableSFSType)))
+		if(!(Std.isOfType(asObj, SerializableSFSType)))
 			throw new SFSCodecError("Cannot serialize object:" + asObj + ", type:" + classFullName + " -- It doesn't implement the SerializableSFSType Interface");
 
 		var fieldList:ISFSArray = SFSArray.newInstance();
@@ -957,13 +957,13 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		var wrapper:SFSDataWrapper=null;
 		var type:String = Type.getClassName(Type.getClass(value));
 
-		if(Std.is(value, Bool))
+		if(Std.isOfType(value, Bool))
 			wrapper = new SFSDataWrapper(SFSDataType.BOOL, value);
 
-		else if(Std.is(value, Int) || Std.is(value,Int))
+		else if(Std.isOfType(value, Int) || Std.isOfType(value,Int))
 			wrapper = new SFSDataWrapper(SFSDataType.INT, value);
 
-		else if(Std.is(value, Float))
+		else if(Std.isOfType(value, Float))
 		{
 			// Differntiate between decimal(Double)and non-decimal(Long)
 			if(value==Math.floor(value))
@@ -972,16 +972,16 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 				wrapper = new SFSDataWrapper(SFSDataType.DOUBLE, value);
 		}
 
-		else if(Std.is(value, String))
+		else if(Std.isOfType(value, String))
 			wrapper = new SFSDataWrapper(SFSDataType.UTF_STRING, value);
 
-		else if(Std.is(value, Array))
+		else if(Std.isOfType(value, Array))
 			wrapper = new SFSDataWrapper(SFSDataType.SFS_ARRAY, unrollArray(value));
 
-		else if(Std.is(value, SerializableSFSType))
+		else if(Std.isOfType(value, SerializableSFSType))
 			wrapper = new SFSDataWrapper(SFSDataType.SFS_OBJECT, as2sfs(value));
 
-		else if(Std.is(value, Dynamic))
+		else if(Std.isOfType(value, Dynamic))
 			wrapper = new SFSDataWrapper(SFSDataType.SFS_OBJECT, unrollDictionary(value));
 
 		return wrapper;
@@ -1026,7 +1026,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 		var theClass:Class<Dynamic> = Type.resolveClass(className);
 		asObj = Type.createInstance(theClass,[]);
 
-		if(!(Std.is(asObj, SerializableSFSType)))
+		if(!(Std.isOfType(asObj, SerializableSFSType)))
 			throw new SFSCodecError("Cannot deserialize object:" + asObj + ", type:" + className + " -- It doesn't implement the SerializableSFSType Interface");
 
 		//trace("CLASS:" + className)
@@ -1136,7 +1136,7 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 			 * ADDENDUM:	there is a special case in which the Dynamic is actually an Array with one element as Dynamic
 			 * 				in such case an Array is recognized as Dynamic!
 			 */
-			else if((item.toString()=="[object Dynamic]" || item.toString() == "[object Object]")  && !(Std.is(item, Array)))
+			else if((item.toString()=="[object Dynamic]" || item.toString() == "[object Object]")  && !(Std.isOfType(item, Array)))
 			{
 				var subSfso:ISFSObject = new SFSObject();
 				sfso.putSFSObject(key, subSfso);
@@ -1144,19 +1144,19 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 				// Call recursively
 				_scanGenericObject(item, subSfso, forceToNumber);
 			}
-			else if(Std.is(item, Array))
+			else if(Std.isOfType(item, Array))
 				sfso.putSFSArray(key, genericArrayToSFSArray(item, forceToNumber));
 
-			else if(Std.is(item, Bool))
+			else if(Std.isOfType(item, Bool))
 				sfso.putBool(key, item);
 
-			else if(Std.is(item, Int) && !forceToNumber)
+			else if(Std.isOfType(item, Int) && !forceToNumber)
 				sfso.putInt(key, item);
 
-			else if(Std.is(item, Float))
+			else if(Std.isOfType(item, Float))
 				sfso.putDouble(key, item);
 
-			else if(Std.is(item, String))
+			else if(Std.isOfType(item, String))
 				sfso.putUtfString(key, item);
 
 		}
@@ -1227,10 +1227,10 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 				sfsa.addNull();
 
 				// See notes for SFSObject
-			else if((item.toString()=="[object Dynamic]" || item.toString() == "[object Object]")  && !(Std.is(item, Array)))
+			else if((item.toString()=="[object Dynamic]" || item.toString() == "[object Object]")  && !(Std.isOfType(item, Array)))
 				sfsa.addSFSObject(genericObjectToSFSObject(item, forceToNumber));
 
-			else if(Std.is(item, Array))
+			else if(Std.isOfType(item, Array))
 			{
 				var subSfsa:ISFSArray = new SFSArray();
 				sfsa.addSFSArray(subSfsa);
@@ -1239,16 +1239,16 @@ class DefaultSFSDataSerializer implements ISFSDataSerializer
 				_scanGenericArray(item, subSfsa, forceToNumber);
 			}
 
-			else if(Std.is(item, Bool))
+			else if(Std.isOfType(item, Bool))
 				sfsa.addBool(item);
 
-			else if(Std.is(item, Int) && !forceToNumber)
+			else if(Std.isOfType(item, Int) && !forceToNumber)
 				sfsa.addInt(item);
 
-			else if(Std.is(item, Float))
+			else if(Std.isOfType(item, Float))
 				sfsa.addDouble(item);
 
-			else if(Std.is(item, String))
+			else if(Std.isOfType(item, String))
 				sfsa.addUtfString(item);
 
 		}

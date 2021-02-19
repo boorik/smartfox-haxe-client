@@ -143,7 +143,7 @@ class InviteUsersRequest extends BaseRequest
 		// Check items validity, accept any User or Buddy object(s)
 		for(item in _invitedUsers)
 		{
-			if(Std.is(item, User) || Std.is(item,Buddy))
+			if(Std.isOfType(item, User) || Std.isOfType(item,Buddy))
 			{
 				// Can't invite myself!
 				if(item==sfs.mySelf)

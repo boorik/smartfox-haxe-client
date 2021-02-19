@@ -89,11 +89,11 @@ class JoinRoomRequest extends BaseRequest
 	{
 		super(BaseRequest.JoinRoom);
 
-		if(Std.is(id, String))
+		if(Std.isOfType(id, String))
 			_name = id;
-		else if(Std.is(id, Float))
+		else if(Std.isOfType(id, Float))
 			_roomId = id;
-		else if(Std.is(id, Room))
+		else if(Std.isOfType(id, Room))
 			_roomId = cast(id, Room).id;
 		
 		_pass = pass;

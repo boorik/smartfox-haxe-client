@@ -41,7 +41,7 @@ class SFSProtocolCodec implements IProtocolCodec
 		/*
 		* TCP Data provides a ByteArray
 		*/
-		if(Std.is(packet, #if flash ByteArray #else openfl.utils.ByteArray.ByteArrayData #end))
+		if(Std.isOfType(packet, #if flash ByteArray #else openfl.utils.ByteArray.ByteArrayData #end))
 			sfsObj = SFSObject.newFromBinaryData(packet);
 				
 		/*

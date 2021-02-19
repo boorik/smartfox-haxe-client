@@ -172,7 +172,7 @@ class CreateSFSGameRequest extends BaseRequest
 			
 			for(player in _settings.invitedPlayers)
 			{
-				if(Std.is(player, User) || Std.is(player,Buddy))
+				if(Std.isOfType(player, User) || Std.isOfType(player,Buddy))
 					playerIds.push(player.id);
 			} 
 			_sfso.putIntArray(KEY_INVITED_PLAYERS, playerIds);
