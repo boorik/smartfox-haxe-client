@@ -15,7 +15,7 @@
     "url": "https://github.com/barisyild/smartfox-haxe-client",
     "dependencies": {
 		"haxe-crypto":"",
-		"haxe-ws":"",
+		"colyseus-websocket":"",
         "openfl":""
     }
 }
