@@ -1,6 +1,7 @@
 package com.smartfoxserver.v2.logging;
 
 import flash.events.EventDispatcher;
+import haxe.PosInfos;
 
 //--------------------------------------
 //  Events
@@ -140,25 +141,25 @@ class Logger extends EventDispatcher
 	}
 	
 	/** @private */
-	public function debug(msg:String, ?pos:haxe.PosInfos):Void
+	public function debug(msg:String, ?pos:PosInfos):Void
 	{
 		log(LogLevel.DEBUG, msg, pos);
 	}
 	
 	/** @private */
-	public function info(msg:String, ?pos:haxe.PosInfos):Void
+	public function info(msg:String, ?pos:PosInfos):Void
 	{
 		log(LogLevel.INFO, msg, pos);
 	}
 	
 	/** @private */
-	public function warn(msg:String, ?pos:haxe.PosInfos):Void
+	public function warn(msg:String, ?pos:PosInfos):Void
 	{
 		log(LogLevel.WARN, msg, pos);
 	}
 	
 	/** @private */
-	public function error(msg:String, ?pos:haxe.PosInfos):Void
+	public function error(msg:String, ?pos:PosInfos):Void
 	{
 		log(LogLevel.ERROR, msg, pos);
 	}
@@ -166,7 +167,7 @@ class Logger extends EventDispatcher
 	/**
 	 * Traces a log message in the console and dispatches the related event.
 	 */
-	private function log(level:Int, message:String, pos:haxe.PosInfos):Void
+	private function log(level:Int, message:String, pos:PosInfos):Void
 	{
 		if(level<_loggingLevel)
 			return;
