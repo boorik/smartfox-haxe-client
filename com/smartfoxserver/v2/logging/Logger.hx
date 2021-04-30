@@ -140,33 +140,33 @@ class Logger extends EventDispatcher
 	}
 	
 	/** @private */
-	public function debug(msg:String):Void
+	public function debug(msg:String, ?pos:haxe.PosInfos):Void
 	{
-		log(LogLevel.DEBUG, msg);
+		log(LogLevel.DEBUG, msg, pos);
 	}
 	
 	/** @private */
-	public function info(msg:String):Void
+	public function info(msg:String, ?pos:haxe.PosInfos):Void
 	{
-		log(LogLevel.INFO, msg);
+		log(LogLevel.INFO, msg, pos);
 	}
 	
 	/** @private */
-	public function warn(msg:String):Void
+	public function warn(msg:String, ?pos:haxe.PosInfos):Void
 	{
-		log(LogLevel.WARN, msg);
+		log(LogLevel.WARN, msg, pos);
 	}
 	
 	/** @private */
-	public function error(msg:String):Void
+	public function error(msg:String, ?pos:haxe.PosInfos):Void
 	{
-		log(LogLevel.ERROR, msg);
+		log(LogLevel.ERROR, msg, pos);
 	}
 	
 	/**
 	 * Traces a log message in the console and dispatches the related event.
 	 */
-	private function log(level:Int, message:String):Void
+	private function log(level:Int, message:String, pos:haxe.PosInfos):Void
 	{
 		if(level<_loggingLevel)
 			return;
@@ -175,13 +175,14 @@ class Logger extends EventDispatcher
 		
 		// Trace message in console
 		if(_enableConsoleTrace)
-			trace("[" + _loggingPrefix + "|" + levelStr + "]", message);
+			haxe.Log.trace("[" + _loggingPrefix + "|" + levelStr + "] " + message, pos);
 		
 		if(_enableEventDispatching)
 		{
 			// Dispatch event
 			var params:Dynamic = { };
 			params.message = message;
+			params.pos = pos;
 
 			var evt:LoggerEvent = new LoggerEvent(levelStr.toLowerCase(), params);
 			dispatchEvent(evt);
