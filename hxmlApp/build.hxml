@@ -1,7 +1,7 @@
 -cp src
 -dce full
 -lib haxe-crypto
--lib haxe-ws
+-lib colyseus-websocket
 #-lib hxssl
 #-lua bin/lua.lua
 #-php bin/php
