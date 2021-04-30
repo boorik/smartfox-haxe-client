@@ -369,11 +369,10 @@ class BitSwarmClient extends EventDispatcher
 	{
 		if(_useBlueBox)
 			_bbClient.close();
-		else
-		{
-			if(socket.connected)
-				_socket.close();
-		}
+		else if(_wsClient.connected)
+			_wsClient.close();
+		else if(_socket.connected)
+			_socket.close();
 				
 		onSocketClose(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, { reason:reason } ));
 	}
