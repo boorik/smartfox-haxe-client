@@ -182,15 +182,15 @@ class GenericMessageRequest extends BaseRequest
 		switch(_sendMode)
 		{
 			case MessageRecipientMode.TO_USER:
-				if(!(Std.is(_recipient, User)))
+				if(!(Std.isOfType(_recipient, User)))
 					errors.push("TO_USER expects a User object as recipient");
 				
 			case MessageRecipientMode.TO_ROOM:
-				if(!(Std.is(_recipient, Room)))
+				if(!(Std.isOfType(_recipient, Room)))
 					errors.push("TO_ROOM expects a Room object as recipient");
 			
 			case MessageRecipientMode.TO_GROUP:
-				if(!(Std.is(_recipient, String)))
+				if(!(Std.isOfType(_recipient, String)))
 					errors.push("TO_GROUP expects a String object(the groupId)as recipient");
 		}
 	}
@@ -274,7 +274,7 @@ class GenericMessageRequest extends BaseRequest
 		// Populate a recipient list, no duplicates allowed
 		var recipients:Map<Int,Bool> = new Map<Int,Bool>();
 		
-		if(Std.is(_recipient, Array))
+		if(Std.isOfType(_recipient, Array))
 		{
 			var potentialRecipients:Array<Dynamic> = cast(_recipient, Array<Dynamic>);
 			
@@ -285,7 +285,7 @@ class GenericMessageRequest extends BaseRequest
 			// Filter out potential wrong elements
 			for(item in potentialRecipients)
 			{
-				if(Std.is(item, User))
+				if(Std.isOfType(item, User))
 					recipients.set(item.id,true);
 				else
 					sfs.logger.warn("Bad recipient in DynamicMessage recipient list:" +Type.typeof(item) + ", expected type:User");

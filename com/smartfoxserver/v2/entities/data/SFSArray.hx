@@ -91,7 +91,7 @@ class SFSArray implements ISFSArray
 	/** @inheritDoc */
 	public function contains(obj:Dynamic):Bool
 	{
-		if(Std.is(obj, ISFSArray) || Std.is(obj,ISFSObject))
+		if(Std.isOfType(obj, ISFSArray) || Std.isOfType(obj,ISFSObject))
 			throw new SFSError("ISFSArray and ISFSObject are not supported by this method.");
 			
 		var found:Bool = false;

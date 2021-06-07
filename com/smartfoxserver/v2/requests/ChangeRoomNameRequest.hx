@@ -12,7 +12,7 @@ import openfl.errors.Error;
  * who subscribed the Group to which the target Room belongs, including the user who renamed it.
  * If the user is not the creator(owner)of the Room, or if the Room was configured so that renaming is not allowed
  *(see the<em>RoomSettings.permissions</em>parameter), the<em>roomNameChangeError</em>event is fired.
- * An administrator or moderator can override the first constrain(Std.is(he, not) requested to be the Room's owner).</p>
+ * An administrator or moderator can override the first constrain(Std.isOfType(he, not) requested to be the Room's owner).</p>
  * 
  * @example	The following example renames an existing Room:
  *<listing version="3.0">

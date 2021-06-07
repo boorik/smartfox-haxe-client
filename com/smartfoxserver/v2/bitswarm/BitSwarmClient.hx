@@ -198,17 +198,12 @@ class BitSwarmClient extends EventDispatcher
 		_wsClient.addEventListener(WSEvent.DATA, this.onWSData);
 		_wsClient.addEventListener(WSEvent.CLOSED, this.onWSClosed);
 		_wsClient.addEventListener(WSEvent.IO_ERROR, this.onWSError);
-		_wsClient.addEventListener(WSEvent.SECURITY_ERROR, this.onWSError);
+		_wsClient.addEventListener(WSEvent.SECURITY_ERROR, this.onWSSecurityError);
 	}
 
 	private function onWSConnect(evt : WSEvent) : Void
 	{
-		this._connected = true;
-		var event : BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.CONNECT);
-		event.params = {
-			success : true
-		};
-		dispatchEvent(event);
+		processConnect();
 	}
 
 	private function onWSData(evt : WSEvent) : Void
@@ -216,28 +211,23 @@ class BitSwarmClient extends EventDispatcher
 		var buffer : ByteArray = evt.params.data;
 		if (buffer != null)
 		{
-			this._ioHandler.onDataRead(buffer);
+			processData(buffer);
 		}
 	}
 
 	private function onWSClosed(evt : WSEvent) : Void
 	{
-		_connected = false;
-
-		//TODO: Add reconnect support for WebSocket?
-		dispatchEvent(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, {
-			reason : ClientDisconnectionReason.UNKNOWN
-		}));
+		processClose(false);
 	}
 
 	private function onWSError(evt : WSEvent) : Void
 	{
-		trace("## WebSocket Error: " + evt.params.message);
-		var event : BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.IO_ERROR);
-		event.params = {
-			message : evt.params.message
-		};
-		dispatchEvent(event);
+		processIOError(evt.params.message);
+	}
+
+	private function onWSSecurityError(evt : WSEvent) : Void
+	{
+		processSecurityError(evt.params.message);
 	}
 	
 	public function destroy():Void
@@ -414,10 +404,7 @@ class BitSwarmClient extends EventDispatcher
 	{
 		return _udpManager = manager;
 	}
-	
-	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	// Socket handlers
-	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 	private function initControllers():Void
 	{
 		_sysController = new SystemController(this);
@@ -440,31 +427,33 @@ class BitSwarmClient extends EventDispatcher
 		else
 			return _reconnectionSeconds = seconds;	
 	}
-	
+
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	// Socket handlers
+	// Handler processes
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	private function onSocketConnect(evt:Event):Void
+
+	private function processConnect():Void
 	{
 		_connected = true;
 		
 		var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.CONNECT);
 		
-		// 2nd argument not publicly documented, used Internally
-		event.params = { success:true, _isReconnection:_attemptingReconnection } ; 
+		event.params = {
+			success: true, 
+			_isReconnection: _attemptingReconnection // internal
+		}; 
 		
 		dispatchEvent(event);
 	}
-	
-	private function onSocketClose(evt:Event):Void
+
+	private function processClose(manual:Bool, ?evt:BitSwarmEvent):Void
 	{
 		// Connection is off
 		_connected = false;
 		
 		var isRegularDisconnection:Bool = !_attemptingReconnection && sfs.getReconnectionSeconds() == 0;
-		var isManualDisconnection:Bool = (Std.is(evt, BitSwarmEvent)) && cast(evt,BitSwarmEvent).params.reason == ClientDisconnectionReason.MANUAL;
-
-		if(isRegularDisconnection || isManualDisconnection)
+		
+		if(isRegularDisconnection || manual)
 		{
 			// Reset UDP Manager
 			_udpManager.reset();
@@ -528,7 +517,7 @@ class BitSwarmClient extends EventDispatcher
 		* A BitSwarmEvent is passed if the disconnection was requested by the server
 		* The event includes a reason for the disconnection(idle, kick, ban...)
 		*/
-		if(Std.is(evt, BitSwarmEvent))
+		if(Std.isOfType(evt, BitSwarmEvent))
 			dispatchEvent(evt);
 			
 			/*
@@ -538,42 +527,39 @@ class BitSwarmClient extends EventDispatcher
 			dispatchEvent(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, { reason:ClientDisconnectionReason.UNKNOWN } ));
 	}
 	
-	private function onSocketData(evt:ProgressEvent):Void
+	/**
+	@param buffer - Big endian byte array.
+	*/
+	private function processData(buffer:ByteArray):Void
 	{
-		var buffer:ByteArray = new ByteArray();
-		buffer.endian = Endian.BIG_ENDIAN;
-		try
-		{
-			
-			_socket.readBytes(buffer);
+		try {
 			_ioHandler.onDataRead(buffer);
-		}
-		catch(error:Dynamic)
-		{
-			try{
-			trace("## SocketDataError:" + error + " " + error.message);
-			trace(haxe.CallStack.toString( haxe.CallStack.exceptionStack()));
-			trace(buffer.toString());
-			var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.DATA_ERROR);
-			event.params = { message:error.message, details:error.details };
-			
-			dispatchEvent(event);
-			}catch (e:Dynamic){
+		} catch(error:Dynamic) {
+			try {
+				trace("## SocketDataError:" + error + " " + error.message);
+				trace(haxe.CallStack.toString( haxe.CallStack.exceptionStack()));
+				trace(buffer.toString());
+				var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.DATA_ERROR);
+				event.params = { message:error.message, details:error.details };
+				dispatchEvent(event);
+			} catch (e:Dynamic) {
 				trace(e);
 			}
 		}
 	}
 	
-	private function onSocketIOError(evt:IOErrorEvent):Void
+	private function processIOError(error:String):Void
 	{
-		trace("## SocketError:" + evt.toString());
+		trace("## SocketError:" + error);
 		var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.IO_ERROR);
-		event.params = { message:evt.toString() };
-		
+		event.params = { 
+			message: error
+		};
+
 		dispatchEvent(event);
 	}
 	
-	private function onSocketSecurityError(evt:SecurityErrorEvent):Void
+	private function processSecurityError(error:String):Void
 	{
 		// Reconnection failure
 		if(_attemptingReconnection)
@@ -582,13 +568,51 @@ class BitSwarmClient extends EventDispatcher
 			return;
 		}
 		
-		trace("## SecurityError:" + evt.toString());
+		trace("## SecurityError:" + error);
 		var event:BitSwarmEvent = new BitSwarmEvent(BitSwarmEvent.SECURITY_ERROR);
-		event.params = { message:evt.text };
-		
+		event.params = {
+			message: error
+		};
+
 		dispatchEvent(event);
 	}
+
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	// Socket handlers
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+	private function onSocketConnect(evt:Event):Void
+	{
+		processConnect();
+	}
 	
+	private function onSocketClose(evt:Event):Void
+	{
+		if (Std.isOfType(evt, BitSwarmEvent)) {
+			var evt : BitSwarmEvent = cast evt;
+			processClose(evt.params.reason == ClientDisconnectionReason.MANUAL, evt);
+		} else {
+			processClose(false);
+		}
+	}
+	
+	private function onSocketData(evt:ProgressEvent):Void
+	{
+		var buffer:ByteArray = new ByteArray();
+		buffer.endian = Endian.BIG_ENDIAN;
+		_socket.readBytes(buffer);
+		processData(buffer);
+	}
+	
+	private function onSocketIOError(evt:IOErrorEvent):Void
+	{
+		processIOError(evt.toString());
+	}
+	
+	private function onSocketSecurityError(evt:SecurityErrorEvent):Void
+	{
+		processSecurityError(evt.toString());
+	}
 	
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// BlueBox handlers
