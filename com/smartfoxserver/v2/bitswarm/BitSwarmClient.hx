@@ -376,7 +376,7 @@ class BitSwarmClient extends EventDispatcher
 			_socket.close();
 		}else if(_wsClient.connected)
 		{
-			_wsClient.close();
+			_wsClient.close(true);
 		}
 				
 		onSocketClose(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, { reason:reason } ));
