@@ -368,11 +368,15 @@ class BitSwarmClient extends EventDispatcher
 	public function disconnect(reason:String=null):Void
 	{
 		if(_useBlueBox)
-			_bbClient.close();
-		else
 		{
-			if(socket.connected)
-				_socket.close();
+			_bbClient.close();
+		}
+		else if(socket.connected)
+		{
+			_socket.close();
+		}else if(_wsClient.connected)
+		{
+			_wsClient.close();
 		}
 				
 		onSocketClose(new BitSwarmEvent(BitSwarmEvent.DISCONNECT, { reason:reason } ));
@@ -389,7 +393,11 @@ class BitSwarmClient extends EventDispatcher
 	*/
 	public function killConnection():Void
 	{
-		_socket.close();
+		if(_wsClient.connected)
+			_wsClient.close();
+
+		if(_socket.connected)
+			_socket.close();
 		onSocketClose(new Event(Event.CLOSE));
 	}
 	
