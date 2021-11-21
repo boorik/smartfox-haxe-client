@@ -70,6 +70,8 @@ class WSClient extends EventDispatcher
 			}));
 		};
 		ws.onclose = function() {
+			if(!_connected)
+				return;
 			_connected = false;
 			dispatchEvent(new WSEvent(WSEvent.CLOSED, { }));
 		};
@@ -96,8 +98,6 @@ class WSClient extends EventDispatcher
 
 	public function close(manual:Bool = false) : Void
 	{
-		if(manual)
-			ws.onclose = function() {};
 		ws.close();
 		_connected = false;
 	}
