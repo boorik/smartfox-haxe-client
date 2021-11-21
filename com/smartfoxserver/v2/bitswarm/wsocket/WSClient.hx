@@ -26,9 +26,7 @@ class WSClient extends EventDispatcher
 	private function get_connected() : Bool
 	{
 		if (ws == null)
-		{
 			return false;
-		}
 		return _connected;
 	}
 
@@ -99,6 +97,7 @@ class WSClient extends EventDispatcher
 	public function close() : Void
 	{
 		ws.close();
+		_connected = false;
 	}
 }
 
