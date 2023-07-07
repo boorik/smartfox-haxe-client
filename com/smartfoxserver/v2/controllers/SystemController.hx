@@ -565,6 +565,13 @@ class SystemController extends BaseController
 				*/	
 				if(!room.isManaged)
 					sfs.roomManager.removeRoom(room);
+
+				// Clear the players already joined in the room.
+				for(roomUser in room.userList)
+				{
+					room.removeUser(roomUser);
+					sfs.userManager.removeUser(roomUser);
+				}
 			}
 			
 			evtParams.user = user;

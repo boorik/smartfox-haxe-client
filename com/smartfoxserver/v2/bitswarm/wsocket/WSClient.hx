@@ -21,14 +21,16 @@ class WSClient extends EventDispatcher
 	public function new(debug : Bool = false)
 	{
 		super();
+
+		#if (target.threaded)
+			Lib.current.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+		#end
 	}
 
 	private function get_connected() : Bool
 	{
 		if (ws == null)
-		{
 			return false;
-		}
 		return _connected;
 	}
 
@@ -68,6 +70,8 @@ class WSClient extends EventDispatcher
 			}));
 		};
 		ws.onclose = function() {
+			if(!_connected)
+				return;
 			_connected = false;
 			dispatchEvent(new WSEvent(WSEvent.CLOSED, { }));
 		};
@@ -78,16 +82,12 @@ class WSClient extends EventDispatcher
 			});
 			dispatchEvent(wsEvt);
 		};
-
-		#if (target.threaded)
-			Lib.current.addEventListener(Event.ENTER_FRAME, onEnterFrame);
-		#end
 	}
 
 	private function onEnterFrame(e:Event):Void
 	{
-		//trace("onEnterFrame");
-		ws.process();
+		if(ws != null)
+			ws.process();
 	}
 
 	public function send(binData : ByteArray) : Void
@@ -96,8 +96,9 @@ class WSClient extends EventDispatcher
 		ws.sendBytes(binData);
 	}
 
-	public function close() : Void
+	public function close(manual:Bool = false) : Void
 	{
+		_connected = false;
 		ws.close();
 	}
 }

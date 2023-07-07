@@ -2,27 +2,14 @@
 SmartFoxServer 2X Haxe Client API   
 ======================= 
 
-**Special Thanks**
+Haxe openfl translation of the as3 client for the Smartfox server http://www.smartfoxserver.com/
 
-[Originally created by **Vincent Blanchet**](https://github.com/boorik/smartfox-haxe-client)    
+Tested on flash, windows, ios and android targets.
 
-**WebSocket fully supports on all OpenFL targets!** (Including Flash)    
+You can have a look at https://github.com/boorik/smartfox-haxe-fullstack to check a sample project that use the api and haxe all the way.
 
-|Platform|Support|
-|--|--|
-|HTML5|WS/WSS|
-|Flash|WS/WSS/Socket/BlueBox|
-|Adobe AIR|WS/Socket/BlueBox|
-|Windows|WS/WSS/Socket/BlueBox|
-|Linux|Untested|
-|Mac OS|Untested|
-|Android|Untested|
-|iOS|Untested|
-|Neko|Untested|
-|Emscripten|Untested|
-    
-Pull requests are welcome    
-    
+Pull requests are welcome
+
 Let me know how it works on other targets
 
 Haxe OpenFL translation of the as3 client for the Smartfox server http://www.smartfoxserver.com/    
@@ -47,9 +34,9 @@ Instructions:
 Installation
  
 ```
-haxelib git smartfox-haxe-client https://github.com/barisyild/smartfox-haxe-client.git
-```    
-add in your project.xml:    
+haxelib git smartfox-haxe-client https://github.com/boorik/smartfox-haxe-client
+```
+add in your project.xml :
 ```
 <haxelib name="smartfox-haxe-client"/>
 ```
@@ -60,3 +47,5 @@ TODO:
 ====
 * test app    
 * improve typing
+* make it framework agnostic pure haxe without openfl dependency
+* make it work with html5 target
