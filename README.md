@@ -25,7 +25,7 @@ openfl: 8.9.5
     
 haxe-crypto: 0.0.7    
   
-haxe-ws: 1.0.5  
+colyseus-websocket: 1.0.10  
     
 ----------------------------------    
     
